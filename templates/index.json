@@ -1,0 +1,102 @@
+{
+    "sections": {
+        "rich_text_bloc": {
+            "type": "rich_text_bloc",
+            "blocks": {
+                "heading-h2": {
+                    "name": "Heading-H2",
+                    "type": "heading-h2",
+                    "settings": [
+                        {
+                            "id": "text_heading",
+                            "type": "text",
+                            "label": "Heading",
+                            "default": "Heading"
+                        }
+                    ]
+                },
+                "h1-gros-titre": {
+                    "name": "H1-gros-titre",
+                    "type": "h1-gros-titre",
+                    "settings": [
+                        {
+                            "id": "text_heading",
+                            "type": "text",
+                            "label": "Heading",
+                            "default": "Heading"
+                        }
+                    ]
+                },
+                "paragraph": {
+                    "name": "paragraph",
+                    "type": "paragraph",
+                    "settings": [
+                        {
+                            "id": "text_paragraph",
+                            "type": "text",
+                            "label": "Paragraph",
+                            "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+                        }
+                    ]
+                },
+                "bouton": {
+                    "name": "bouton",
+                    "type": "bouton",
+                    "settings": [
+                        {
+                            "id": "url_link",
+                            "type": "url",
+                            "label": "Link"
+                        },
+                        {
+                            "id": "text_text",
+                            "type": "text",
+                            "label": "Text",
+                            "default": "Button Text"
+                        }
+                    ]
+                }
+            },
+            "block_order": [
+                "heading-h2",
+                "h1-gros-titre",
+                "paragraph",
+                "bouton"
+            ]
+        },
+        "image_with_text": {
+            "type": "image_with_text"
+        },
+        "featured_products": {
+            "type": "featured_products"
+        },
+        "featured_collections": {
+            "type": "featured_collections",
+            "blocks": {
+                "block": {
+                    "type": "block",
+                    "name": "Block"
+                }
+            },
+            "block_order": [
+                "block"
+            ]
+        },
+        "blog_posts": {
+            "type": "blog_posts"
+        },
+        "custom_liquid": {
+            "type": "custom_liquid"
+        }
+    },
+    "layout": "theme",
+    "wrapper": "main.main-wrapper",
+    "order": [
+        "rich_text_bloc",
+        "image_with_text",
+        "featured_products",
+        "featured_collections",
+        "blog_posts",
+        "custom_liquid"
+    ]
+}
