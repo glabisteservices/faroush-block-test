@@ -1,12 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections": {
-        "404": {
-            "type": "404"
-        }
+  "sections": {
+    "404": {
+      "type": "404",
+      "settings": {
+        "text_heading": "Page Not Found",
+        "text_paragraph": "The page you are looking for doesn't exist or has been moved",
+        "text_button_text": "Back to Home"
+      }
     },
-    "layout": "theme",
-    "wrapper": "main.main-wrapper",
-    "order": [
-        "404"
-    ]
+    "rich_text_bloc_3NptYN": {
+      "type": "rich_text_bloc",
+      "blocks": {
+        "heading_h2_X7Tg6L": {
+          "type": "heading-h2",
+          "settings": {
+            "text_heading": "Heading"
+          }
+        },
+        "h1_gros_titre_HHCwME": {
+          "type": "h1-gros-titre",
+          "settings": {
+            "text_heading": "Heading"
+          }
+        },
+        "paragraph_mKH6dE": {
+          "type": "paragraph",
+          "settings": {
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+          }
+        },
+        "bouton_XMr9Ax": {
+          "type": "bouton",
+          "settings": {
+            "url_link": "",
+            "text_text": "Button Text"
+          }
+        }
+      },
+      "block_order": [
+        "heading_h2_X7Tg6L",
+        "h1_gros_titre_HHCwME",
+        "paragraph_mKH6dE",
+        "bouton_XMr9Ax"
+      ],
+      "name": "rich-text-bloc",
+      "settings": {}
+    }
+  },
+  "layout": "theme",
+  "wrapper": "main.main-wrapper",
+  "order": [
+    "404",
+    "rich_text_bloc_3NptYN"
+  ]
 }
