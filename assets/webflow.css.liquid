@@ -1788,3 +1788,34 @@ textarea.w-select {
 .wf-layout-layout {
   display: grid;
 }
+
+/* AJOUTEZ LE CODE ICI - Dropdown Navigation Fixes */
+.nav_menu-dropdown {
+  position: relative;
+}
+
+.nav_dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 250px;
+  width: auto;
+  z-index: 1000;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  padding: 20px;
+}
+
+.nav_dropdown-content {
+  padding: 0;
+  max-width: none;
+}
+
+.nav_dropdown-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
