@@ -39,7 +39,7 @@
     {% when 'image-desktop' %}
       <div class="choix-image-desktop" li-block="image-desktop">
         {% if block.settings.image_image %}
-          {{ block.settings.image_image | image_url | image_tag: class: 'image-full-width-desktop', alt: 'inherit', loading: 'lazy' }}
+          {{ block.settings.image_image | image_url: width: 1200 | image_tag: class: 'image-full-width-desktop', alt: 'inherit', loading: 'lazy' }}
         {% else %}
           <img class="image-full-width-desktop" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946aa1adf18a56010a9059_Header%20image.jpg" loading="lazy">
         {% endif %}
@@ -47,7 +47,7 @@
     {% when 'image-mobile' %}
       <div class="choix-image-mobile" li-block="image-mobile">
         {% if block.settings.image_image %}
-          {{ block.settings.image_image | image_url | image_tag: class: 'image-full-width-mobile', alt: 'inherit', loading: 'lazy' }}
+          {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-full-width-mobile', alt: 'inherit', loading: 'lazy' }}
         {% else %}
           <img class="image-full-width-mobile" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68947d5d1b9d583b83bf82ad_Mobile_HP_image.jpg" loading="lazy">
         {% endif %}
