@@ -29,6 +29,26 @@
     height: auto;
     border-radius: 9px;
   }
+  .paragraph-text {
+    font-family: Karla;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 20px;
+    padding: 0 20px;
+  }
+  @media screen and (max-width: 767px) {
+    .paragraph-text {
+      font-size: 0.9rem;
+      text-align: left;
+    }
+  }
+  .text-color-brown {
+    color: #6e612b;
+  }
+  .text-color-black {
+    color: #000000;
+  }
 </style>
 
 <div li-content-for-blocks="">
@@ -51,6 +71,16 @@
         {% else %}
           <img class="image-full-width-mobile" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68947d5d1b9d583b83bf82ad_Mobile_HP_image.jpg" loading="lazy">
         {% endif %}
+      </div>
+    {% when 'paragraph' %}
+      <div class="paragraph-wrapper" li-block="paragraph">
+        {% assign text_color_class = 'text-color-brown' %}
+        {% if block.settings.text_color == 'black' %}
+          {% assign text_color_class = 'text-color-black' %}
+        {% endif %}
+        <p class="paragraph-text {{ text_color_class }}">
+          {{ block.settings.paragraph_text }}
+        </p>
       </div>
   {% endcase %}
 {% endfor %}
@@ -85,6 +115,34 @@
       ]
     },
     {
+      "name": "paragraph",
+      "type": "paragraph",
+      "settings": [
+        {
+          "id": "paragraph_text",
+          "type": "textarea",
+          "label": "Texte du paragraphe",
+          "default": "Votre texte ici..."
+        },
+        {
+          "id": "text_color",
+          "type": "select",
+          "label": "Couleur du texte",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "black",
+              "label": "Noir"
+            }
+          ],
+          "default": "brown"
+        }
+      ]
+    },
+    {
       "type": "@app"
     }
   ],
@@ -98,6 +156,9 @@
         },
         {
           "type": "image-mobile"
+        },
+        {
+          "type": "paragraph"
         }
       ]
     }
