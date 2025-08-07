@@ -61,7 +61,7 @@
       
                     <div class="Div Block">
         {% if block.settings.image_image %}
-{{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'Image', width: 'auto', height: 'auto', alt: 'inherit', loading: 'lazy' }}
+{{ block.settings.image_image | image_tag: class: 'Image', alt: 'inherit', loading: 'lazy' }}
 {% else %}
 <img class="Image" width="auto" height="auto" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg" loading="lazy">
 {% endif %}
