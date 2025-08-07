@@ -1,10 +1,8 @@
-<div class="header_background-image-wrapper">
-          <div class="header_overlay-layer"></div>{% if section.settings.image_image %}
-{{ section.settings.image_image | image_url: width: 1000 | image_tag: loading: 'eager', class: 'header_background-image' }}
+<div class="header_background-image-wrapper">{% if section.settings.image_image %}
+{{ section.settings.image_image | image_url: width: 100% | image_tag: class: 'header_background-image', sizes: '(max-width: 1848px) 100vw, 1848px', loading: 'eager' }}
 {% else %}
  {{ 'detailed-apparel-1' | placeholder_svg_tag: 'header_background-image' }} 
-{% endif %}
-        </div>
+{% endif %}</div>
         <div class="padding-global">
           <div class="container-large">
             <div class="header_card text-color-white">
@@ -13,11 +11,11 @@
 {{ section.settings.text_heading }}
 </h1>
                 <div class="spacer-small"></div>
-                <div class="text-size-medium"> {{ section.settings.richtext_paragraph }} </div>
+                <div class="text-size-medium green"> {{ section.settings.richtext_paragraph }} </div>
               </div>
               <div class="spacer-medium"></div>
               <div class="button-group">
-                <a href="{{ section.settings.url_button_link }}" class="button w-button"> {{ section.settings.text_button_text }} </a>
+                <a href="{{ section.settings.url_button_link }}" class="button sur-image w-button"> {{ section.settings.text_button_text }} </a>
               </div>
             </div>
           </div>
