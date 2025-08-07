@@ -1,1 +1,42 @@
-{"type":"footer","name":"Footer Group","sections":{"footer":{"type":"footer","settings":{}}},"order":["footer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer Group",
+  "sections": {
+    "newsletter_Km3ayd": {
+      "type": "newsletter",
+      "name": "Newsletter",
+      "settings": {
+        "text_heading": "Inscrivez-vous à la newsletter et recevez 10% de réduction",
+        "text_paragraph": "Ne manquez plus aucune de nos nouveautés, conseils ou événements !",
+        "placeholder_text": "Votre adresse email",
+        "text_button_text": "Je m'inscris à la Newsletter",
+        "show_marketing_checkbox": true,
+        "marketing_default_checked": false,
+        "text_checkbox": "En vous abonnant, vous acceptez notre <a href=\"/policies/privacy-policy\">Politique de Confidentialité</a> et consentez à recevoir des actualités de notre entreprise.",
+        "success_message": "Merci ! Votre inscription a été confirmée !"
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "text_delivery": "Delivery",
+        "text_payment_method": "Payment Method",
+        "text_social_media": "Social Media",
+        "menu": "footer"
+      }
+    }
+  },
+  "order": [
+    "newsletter_Km3ayd",
+    "footer"
+  ]
+}
