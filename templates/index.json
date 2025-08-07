@@ -187,6 +187,34 @@
       ],
       "name": "image-pleine-largeur",
       "settings": {}
+    },
+    "faq_pAztkk": {
+      "type": "faq",
+      "blocks": {
+        "faq_question_Jdkjdi": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Comment nettoyer les chaussures ?",
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+          }
+        },
+        "faq_question_gnbgLC": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "C'est quoi le zéro drop ?",
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+          }
+        }
+      },
+      "block_order": [
+        "faq_question_Jdkjdi",
+        "faq_question_gnbgLC"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "text_heading": "Questions fréquentes",
+        "image_image": "shopify://shop_images/Mobile_HP_image.jpg"
+      }
     }
   },
   "layout": "theme",
@@ -200,6 +228,7 @@
     "blog_posts",
     "custom_liquid",
     "picto_v2_PNrcCe",
-    "image_pleine_largeur_CJ6868"
+    "image_pleine_largeur_CJ6868",
+    "faq_pAztkk"
   ]
 }
