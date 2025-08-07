@@ -217,66 +217,61 @@
 <div class="newsletter-form">
   <div class="footer_newsletter">
     <div class="div-block">
-      <div>
-        <h2 class="heading-style-h1 form-title">
-          {{ section.settings.text_heading }}
-        </h2>
-      </div>
+      <h2 class="heading-style-h1 form-title">
+        {{ section.settings.text_heading }}
+      </h2>
       
-      <div class="footer_form-block">
-        {% form 'customer', return_to: request.path %}
-          {% if form.posted_successfully? %}
-            <div class="success-message">
-              <p>{{ section.settings.success_message | default: 'Merci ! Votre inscription a été confirmée !' }}</p>
-            </div>
-          {% else %}
-            <div class="footer_form">
-              <div>
-                <label class="form_field-label" for="newsletter-email-{{ section.id }}">
-                  {{ section.settings.text_paragraph }}
-                </label>
-                <input 
-                  class="form_input" 
-                  id="newsletter-email-{{ section.id }}" 
-                  name="contact[email]" 
-                  maxlength="256" 
-                  placeholder="{{ section.settings.placeholder_text }}" 
-                  type="email" 
-                  required
-                  {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
-                >
-                
-                {% if form.errors %}
-                  <div class="text-size-tiny text-color-red">
-                    {{ form.errors | default_errors }}
-                  </div>
-                {% endif %}
+      <label class="form_field-label" for="newsletter-email-{{ section.id }}">
+        {{ section.settings.text_paragraph }}
+      </label>
+      
+      {% form 'customer', return_to: request.path %}
+        {% if form.posted_successfully? %}
+          <div class="success-message">
+            <p>{{ section.settings.success_message | default: 'Merci ! Votre inscription a été confirmée !' }}</p>
+          </div>
+        {% else %}
+          <div class="footer_form">
+            <input 
+              class="form_input" 
+              id="newsletter-email-{{ section.id }}" 
+              name="contact[email]" 
+              maxlength="256" 
+              placeholder="{{ section.settings.placeholder_text }}" 
+              type="email" 
+              required
+              {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+            >
+            
+            {% if form.errors %}
+              <div class="text-size-tiny text-color-red">
+                {{ form.errors | default_errors }}
               </div>
-              
-              {% if section.settings.show_marketing_checkbox %}
-                <input type="hidden" name="contact[accepts_marketing]" value="false">
-                <div class="form_checkbox">
-                  <input 
-                    class="form_checkbox-icon" 
-                    type="checkbox" 
-                    name="contact[accepts_marketing]" 
-                    id="accepts-marketing-{{ section.id }}" 
-                    value="true"
-                    {% if section.settings.marketing_default_checked %}checked{% endif %}
-                  >
-                  <label class="form_checkbox-label text-size-tiny" for="accepts-marketing-{{ section.id }}">
-                    {{ section.settings.text_checkbox }}
-                  </label>
-                </div>
-              {% endif %}
-              
-              <button class="button" type="submit">
-                {{ section.settings.text_button_text }}
-              </button>
-            </div>
-          {% endif %}
-        {% endform %}
-      </div>
+            {% endif %}
+            
+            {% if section.settings.show_marketing_checkbox %}
+              <input type="hidden" name="contact[accepts_marketing]" value="false">
+              <div class="form_checkbox">
+                <input 
+                  class="form_checkbox-icon" 
+                  type="checkbox" 
+                  name="contact[accepts_marketing]" 
+                  id="accepts-marketing-{{ section.id }}" 
+                  value="true"
+                  {% if section.settings.marketing_default_checked %}checked{% endif %}
+                >
+                <label class="form_checkbox-label text-size-tiny" for="accepts-marketing-{{ section.id }}">
+                  {{ section.settings.text_checkbox }}
+                </label>
+              </div>
+            {% endif %}
+            
+            <button class="button" type="submit">
+              {{ section.settings.text_button_text }}
+            </button>
+          </div>
+        {% endif %}
+      {% endform %}
     </div>
   </div>
 </div>
