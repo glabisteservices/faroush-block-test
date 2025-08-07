@@ -5,19 +5,29 @@
     padding-bottom: 20px;
     padding-left: 20px;
   }
+  .image-desktop-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
   .image-full-width-desktop {
     border-radius: 15px;
     width: 100%;
     height: auto;
+    display: block;
   }
   @media screen and (max-width: 479px) {
     .image-full-width-desktop {
       border-radius: 9px;
       display: none;
     }
+    .image-desktop-container {
+      display: none;
+    }
   }
   .choix-image-mobile {
     display: none;
+    position: relative;
   }
   @media screen and (max-width: 479px) {
     .choix-image-mobile {
@@ -28,26 +38,45 @@
     width: 100%;
     height: auto;
     border-radius: 9px;
+    display: block;
   }
   .paragraph-text {
     font-family: Karla;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.5;
     text-align: center;
-    margin-top: 20px;
-    padding: 0 20px;
+    font-weight: 500;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+  }
+  .paragraph-desktop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 80%;
+    z-index: 2;
+  }
+  .paragraph-mobile {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    z-index: 2;
   }
   @media screen and (max-width: 767px) {
     .paragraph-text {
-      font-size: 0.9rem;
-      text-align: left;
+      font-size: 1rem;
     }
   }
   .text-color-brown {
     color: #6e612b;
   }
-  .text-color-black {
-    color: #000000;
+  .text-color-white {
+    color: #ffffff;
   }
 </style>
 
@@ -57,11 +86,22 @@
     {% when '@app' %}
       {% render block %}
     {% when 'image-desktop' %}
-      <div class="choix-image-desktop" li-block="image-desktop">
+      <div class="image-desktop-container" li-block="image-desktop">
         {% if block.settings.image_image %}
           {{ block.settings.image_image | image_url: width: 1200 | image_tag: class: 'image-full-width-desktop', alt: 'inherit', loading: 'lazy' }}
         {% else %}
           <img class="image-full-width-desktop" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946aa1adf18a56010a9059_Header%20image.jpg" loading="lazy">
+        {% endif %}
+        {% if block.settings.paragraph_text != blank %}
+          {% assign text_color_class = 'text-color-brown' %}
+          {% if block.settings.text_color == 'white' %}
+            {% assign text_color_class = 'text-color-white' %}
+          {% endif %}
+          <div class="paragraph-desktop">
+            <p class="paragraph-text {{ text_color_class }}">
+              {{ block.settings.paragraph_text }}
+            </p>
+          </div>
         {% endif %}
       </div>
     {% when 'image-mobile' %}
@@ -71,17 +111,20 @@
         {% else %}
           <img class="image-full-width-mobile" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68947d5d1b9d583b83bf82ad_Mobile_HP_image.jpg" loading="lazy">
         {% endif %}
+        {% if block.settings.paragraph_text != blank %}
+          {% assign text_color_class = 'text-color-brown' %}
+          {% if block.settings.text_color == 'white' %}
+            {% assign text_color_class = 'text-color-white' %}
+          {% endif %}
+          <div class="paragraph-mobile">
+            <p class="paragraph-text {{ text_color_class }}">
+              {{ block.settings.paragraph_text }}
+            </p>
+          </div>
+        {% endif %}
       </div>
     {% when 'paragraph' %}
-      <div class="paragraph-wrapper" li-block="paragraph">
-        {% assign text_color_class = 'text-color-brown' %}
-        {% if block.settings.text_color == 'black' %}
-          {% assign text_color_class = 'text-color-black' %}
-        {% endif %}
-        <p class="paragraph-text {{ text_color_class }}">
-          {{ block.settings.paragraph_text }}
-        </p>
-      </div>
+      <!-- Le texte est maintenant intégré directement dans les blocs image-desktop et image-mobile -->
   {% endcase %}
 {% endfor %}
 </div>
@@ -100,6 +143,28 @@
           "id": "image_image",
           "type": "image_picker",
           "label": "Image"
+        },
+        {
+          "id": "paragraph_text",
+          "type": "textarea",
+          "label": "Texte sur l'image",
+          "default": ""
+        },
+        {
+          "id": "text_color",
+          "type": "select",
+          "label": "Couleur du texte",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "white",
+              "label": "Blanc (#ffffff)"
+            }
+          ],
+          "default": "brown"
         }
       ]
     },
@@ -111,6 +176,28 @@
           "id": "image_image",
           "type": "image_picker",
           "label": "Image"
+        },
+        {
+          "id": "paragraph_text",
+          "type": "textarea",
+          "label": "Texte sur l'image",
+          "default": ""
+        },
+        {
+          "id": "text_color",
+          "type": "select",
+          "label": "Couleur du texte",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "white",
+              "label": "Blanc (#ffffff)"
+            }
+          ],
+          "default": "brown"
         }
       ]
     },
@@ -134,8 +221,8 @@
               "label": "Marron (#6e612b)"
             },
             {
-              "value": "black",
-              "label": "Noir"
+              "value": "white",
+              "label": "Blanc (#ffffff)"
             }
           ],
           "default": "brown"
