@@ -20,6 +20,9 @@
     white-space: nowrap;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: block !important;
+    width: auto !important;
+    max-width: 300px;
   }
   
   .button:hover {
@@ -27,7 +30,8 @@
   }
   
   .form_input {
-    width: 100%;
+    width: 100% !important;
+    max-width: 400px;
     min-height: 2.6rem;
     margin-top: 10px;
     margin-bottom: 0px;
@@ -37,6 +41,7 @@
     background-color: transparent;
     font-family: Karla;
     color: #6e612b;
+    display: block !important;
   }
   
   .form_input:focus {
@@ -46,13 +51,15 @@
   }
   
   .form_checkbox {
-    display: flex;
+    display: flex !important;
     margin-bottom: 0px;
     padding-left: 0rem;
-    flex-direction: row;
+    flex-direction: row !important;
     align-items: flex-start;
-    justify-content: center;
-    text-align: center;
+    justify-content: flex-start;
+    text-align: left;
+    width: 100%;
+    max-width: 400px;
   }
   
   .div-block {
@@ -119,7 +126,7 @@
     line-height: 1.1;
     font-weight: 600;
     margin-bottom: 1rem;
-    text-align: center;
+    text-align: left;
   }
   
   @media screen and (max-width: 767px) {
@@ -169,7 +176,7 @@
     color: #6e612b;
     margin-bottom: 0.5rem;
     display: block;
-    text-align: center;
+    text-align: left;
   }
   
   @media screen and (max-width: 767px) {
