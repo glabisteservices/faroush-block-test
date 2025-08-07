@@ -22,11 +22,9 @@
                   </a>
                 </div>
                             
-                
-                            {% if link.links.size > 0  %}    <nav li-if="link.links.size > 0 " class="nav_dropdown-list no-scrollbar w-dropdown-list">
+                {% if link.links.size > 0  %}    <nav li-if="link.links.size > 0 " class="nav_dropdown-list no-scrollbar w-dropdown-list">
     
-                  <div class="padding-global max-width-full">
-                    <div class="container-large">
+                  <div class="nav_dropdown-content">
                       <div class="nav_dropdown-grid">
                         {% for child_link in link.links %}    <div li-for="child_link in link.links" id="w-node-_9132635a-7891-b0d1-9b20-ecb0d5a86e09-d5a86df8">
                                     
@@ -50,8 +48,7 @@
                         
                         </div>
 {% endfor %}
-                      </div>
-                    </div>
+                     </div>
                   </div>
                     </nav>
 {% endif %}
