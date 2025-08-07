@@ -14,10 +14,11 @@
   }
   
   .faq-image {
-    max-height: none;
-    border-radius: 15px;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 15px;
   }
   
   .accordion-toggle {
@@ -128,6 +129,8 @@
     width: 50%;
     border-radius: 15px;
     overflow: hidden;
+    min-height: 400px; /* Hauteur minimum */
+    display: flex;
   }
   
   .right-div-faq.medium {
@@ -148,6 +151,7 @@
     justify-content: center;
     align-items: flex-start;
     padding: 40px 20px;
+    min-height: 400px; /* Hauteur minimum pour synchroniser avec l'image */
   }
   
   .left-div-faq.medium {
