@@ -1,6 +1,6 @@
 <style>
   .faq-bloc {
-    margin-top: 40px;
+    margin-top: 0;
   }
   
   .faq-container {
@@ -43,6 +43,7 @@
     width: 20px;
     height: 20px;
     transition: transform 0.3s ease;
+    transform: rotate(180deg); /* État initial : flèche vers le bas */
   }
   
   .accordion-icon svg {
@@ -52,7 +53,7 @@
   }
   
   .accordion-toggle[aria-expanded="true"] .accordion-icon {
-    transform: rotate(180deg);
+    transform: rotate(0deg); /* Quand ouvert : flèche vers le haut */
   }
   
   .faq-reponse {
