@@ -58,11 +58,12 @@
   .faq-reponse {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
+    transition: all 0.3s ease;
+    padding: 0 20px;
   }
   
   .faq-reponse.open {
-    max-height: 500px;
+    max-height: 1000px;
     padding: 20px;
   }
   
@@ -190,8 +191,7 @@
                     role="button" 
                     tabindex="0" 
                     aria-expanded="false"
-                    onclick="toggleAccordion(this)"
-                    onkeydown="handleAccordionKeydown(event, this)"
+                    data-faq-toggle
                   >
                     <h4 class="heading-style-h4">
                       {{ block.settings.text_text }}
@@ -226,42 +226,65 @@
 </div>
 
 <script>
-function toggleAccordion(element) {
-  const isExpanded = element.getAttribute('aria-expanded') === 'true';
-  const content = element.nextElementSibling;
+(function() {
+  'use strict';
   
-  // Fermer tous les autres accordéons
-  const allToggles = document.querySelectorAll('.accordion-toggle');
-  allToggles.forEach(toggle => {
-    if (toggle !== element) {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.nextElementSibling.classList.remove('open');
-      toggle.nextElementSibling.setAttribute('aria-hidden', 'true');
-    }
-  });
-  
-  // Basculer l'accordéon actuel
-  element.setAttribute('aria-expanded', !isExpanded);
-  content.classList.toggle('open', !isExpanded);
-  content.setAttribute('aria-hidden', isExpanded);
-}
-
-function handleAccordionKeydown(event, element) {
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault();
-    toggleAccordion(element);
-  }
-}
-
-// Initialisation au chargement de la page
-document.addEventListener('DOMContentLoaded', function() {
-  const accordions = document.querySelectorAll('.accordion-toggle');
-  accordions.forEach(accordion => {
-    accordion.addEventListener('click', function() {
-      toggleAccordion(this);
+  function initFAQ() {
+    const toggles = document.querySelectorAll('[data-faq-toggle]');
+    
+    toggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function() {
+        handleToggle(this);
+      });
+      
+      toggle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleToggle(this);
+        }
+      });
     });
-  });
-});
+  }
+  
+  function handleToggle(element) {
+    const content = element.nextElementSibling;
+    const isExpanded = element.getAttribute('aria-expanded') === 'true';
+    
+    // Fermer tous les autres accordéons
+    const allToggles = document.querySelectorAll('[data-faq-toggle]');
+    allToggles.forEach(function(toggle) {
+      if (toggle !== element) {
+        toggle.setAttribute('aria-expanded', 'false');
+        const otherContent = toggle.nextElementSibling;
+        otherContent.classList.remove('open');
+        otherContent.setAttribute('aria-hidden', 'true');
+      }
+    });
+    
+    // Basculer l'accordéon actuel
+    if (isExpanded) {
+      element.setAttribute('aria-expanded', 'false');
+      content.classList.remove('open');
+      content.setAttribute('aria-hidden', 'true');
+    } else {
+      element.setAttribute('aria-expanded', 'true');
+      content.classList.add('open');
+      content.setAttribute('aria-hidden', 'false');
+    }
+  }
+  
+  // Initialiser quand le DOM est prêt
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFAQ);
+  } else {
+    initFAQ();
+  }
+  
+  // Pour Shopify (sections dynamiques)
+  if (typeof Shopify !== 'undefined' && Shopify.designMode) {
+    document.addEventListener('shopify:section:load', initFAQ);
+  }
+})();
 </script>
 
 {% schema %}
