@@ -1,125 +1,101 @@
 <div class="announcement-wrapper">
-          <div id="w-node-_83d473b7-e557-566f-74be-ecc1a2818a2d-a2818a2b" class="w-layout-layout quick-stack wf-layout-layout">
-            <div li-content-for-blocks="" class="w-layout-cell cell">
-{% for block in section.blocks %}
-{% case block.type %}
-{% when '@app' %}
-{% render block %}
-
-              {% when 'social-media-icon' %}
-            <div li-block="social-media-icon" class="lien-social-media-header">
-                    
-                
-                    <a href="{{ block.settings.url_link }}" class="social-media-header w-inline-block"> {% if block.settings.image_image %} {{ block.settings.image_image | image_url: width: 1000 | image_tag: loading: 'lazy' }} {% else %} <img src="{{ 'Social-Icon.svg' | asset_url }}" loading="lazy" alt=""> {% endif %} </a>
-                    
-              
-                </div>
-            {% endcase %}
-{% endfor %}
-
+  <div id="w-node-_83d473b7-e557-566f-74be-ecc1a2818a2d-a2818a2b" class="w-layout-layout quick-stack wf-layout-layout">
+    <div class="w-layout-cell cell">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when '@app' %}
+            {% render block %}
+          {% when 'social-media-icon' %}
+            <div class="lien-social-media-header">
+              <a href="{{ block.settings.url_link }}" class="social-media-header w-inline-block">
+                {% if block.settings.image_image %}
+                  {{ block.settings.image_image | image_url: width: 1000 | image_tag: loading: 'lazy' }}
+                {% else %}
+                  <img src="{{ 'Social-Icon.svg' | asset_url }}" loading="lazy" alt="">
+                {% endif %}
+              </a>
+            </div>
+        {% endcase %}
+      {% endfor %}
     </div>
-            <div id="w-node-_83d473b7-e557-566f-74be-ecc1a2818a32-a2818a2b" class="w-layout-cell cell-2">
-              <a href="{{ section.settings.url_link }}" class="w-inline-block"> <div class="text-block">{{ section.settings.text_text }}</div> </a>
-            </div>
-            <div class="w-layout-cell cell-3">
-        {% if localization.available_languages.size > 1 %}
-  <div class="simple-language-selector">
-    <p>Langues disponibles : {{ localization.available_languages.size }}</p>
     
-    {% form 'localization' %}
-      <select name="language_code" onchange="this.form.submit();" style="padding: 10px; font-size: 16px;">
-        {% for language in localization.available_languages %}
-          <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
-            {{ language.endonym_name }}
-          </option>
-        {% endfor %}
-      </select>
-    {% endform %}
+    <div id="w-node-_83d473b7-e557-566f-74be-ecc1a2818a32-a2818a2b" class="w-layout-cell cell-2">
+      <a href="{{ section.settings.url_link }}" class="w-inline-block">
+        <div class="text-block">{{ section.settings.text_text }}</div>
+      </a>
+    </div>
+    
+    <div class="w-layout-cell cell-3">
+      {% if localization.available_languages.size > 1 %}
+        <div class="simple-language-selector">
+          <p>Langues disponibles : {{ localization.available_languages.size }}</p>
+          
+          {% form 'localization' %}
+            <select name="language_code" onchange="this.form.submit();" style="padding: 10px; font-size: 16px;">
+              {% for language in localization.available_languages %}
+                <option value="{{ language.iso_code }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>
+                  {{ language.endonym_name }}
+                </option>
+              {% endfor %}
+            </select>
+          {% endform %}
+        </div>
+      {% else %}
+        <p>Une seule langue disponible</p>
+      {% endif %}
+    </div>
   </div>
-{% else %}
-  <p>Une seule langue disponible</p>
-{% endif %}
-                    </div>
-                    <nav li-for:inside="language in localization.available_languages" class="language_list w-dropdown-list">
-        {% for language in localization.available_languages %}                            
-                      
-                            {% unless localization.language.iso_code == language.iso_code %}    <div li-unless="localization.language.iso_code == language.iso_code">
-    
-                        <a href="#" li-object="language.name" lang="{{ language.iso_code }}" data-value="{{ language.iso_code }}" hreflang="{{ language.iso_code }}" class="language_link w-dropdown-link">{{ language.name }}</a>
-                          </div>
-{% endunless %}
-                            
-                    
-                    {% endfor %}    </nav>
-                  </div><input type="hidden" name="language_code" value="{{ localization.language.iso_code }}">
-                {% endform %}
-                <div class="hide-2 w-embed w-script">
-                  <script>
-  document.querySelectorAll(".language_component").forEach((wrapper) => {
-  const form = wrapper.querySelector("form");
-  const input = wrapper.querySelector("input[name='language_code']");
-  if (form && input) {
-    form.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", (event) => {
-        input.value = event.currentTarget.dataset.value;
-        form.submit();
-      });
-    });
-  }
-});
-</script>
-                </div>
-                  </div>
-{% endif %}
-            </div>
-          </div>
-        </div> {% schema %} {
-    "tag": "section",
-    "name": "Header-announcement",
-    "class": "announcement-header",
-    "blocks": [
+</div>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Header-announcement",
+  "class": "announcement-header",
+  "blocks": [
+    {
+      "name": "social-media-icon",
+      "type": "social-media-icon",
+      "settings": [
         {
-            "name": "social-media-icon",
-            "type": "social-media-icon",
-            "settings": [
-                {
-                    "id": "url_link",
-                    "type": "url",
-                    "label": "Link"
-                },
-                {
-                    "id": "image_image",
-                    "type": "image_picker",
-                    "label": "Image"
-                }
-            ]
+          "id": "url_link",
+          "type": "url",
+          "label": "Link"
         },
         {
-            "type": "@app"
+          "id": "image_image",
+          "type": "image_picker",
+          "label": "Image"
         }
-    ],
-    "settings": [
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "id": "url_link",
+      "type": "url",
+      "label": "Link"
+    },
+    {
+      "id": "text_text",
+      "type": "text",
+      "label": "Text",
+      "default": "10% offert sur votre prochaine commande"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header-announcement",
+      "category": "Liquify",
+      "blocks": [
         {
-            "id": "url_link",
-            "type": "url",
-            "label": "Link"
-        },
-        {
-            "id": "text_text",
-            "type": "text",
-            "label": "Text",
-            "default": "10% offert sur votre prochaine commande"
+          "type": "social-media-icon"
         }
-    ],
-    "presets": [
-        {
-            "name": "Header-announcement",
-            "category": "Liquify",
-            "blocks": [
-                {
-                    "type": "social-media-icon"
-                }
-            ]
-        }
-    ]
-} {% endschema %}
+      ]
+    }
+  ]
+}
+{% endschema %}
