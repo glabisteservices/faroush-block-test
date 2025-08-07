@@ -159,16 +159,24 @@
           "type": "image-desktop",
           "settings": {
             "image_image": "shopify://shop_images/Header_bleu.jpg",
-            "paragraph_text": "test",
-            "text_color": "white"
+            "heading_text": "test",
+            "paragraph_text": "blablabla",
+            "button_text": "Bouton",
+            "button_link": "shopify://products/mimi-siku-bleu-vert",
+            "text_color": "white",
+            "button_color": "white"
           }
         },
         "image_mobile_MdqRqN": {
           "type": "image-mobile",
           "settings": {
-            "image_image": "shopify://shop_images/Botte_Black_Profil.png",
-            "paragraph_text": "",
-            "text_color": "brown"
+            "image_image": "shopify://shop_images/Mobile_HP_image.jpg",
+            "heading_text": "test",
+            "paragraph_text": "blabkblabla",
+            "button_text": "bouton",
+            "button_link": "shopify://collections/basket",
+            "text_color": "brown",
+            "button_color": "brown"
           }
         }
       },
