@@ -144,6 +144,29 @@
       ],
       "name": "picto-V2",
       "settings": {}
+    },
+    "image_pleine_largeur_CJ6868": {
+      "type": "image-pleine-largeur",
+      "blocks": {
+        "image_desktop_KtF4e7": {
+          "type": "image-desktop",
+          "settings": {
+            "image_image": "shopify://shop_images/Header_bleu.jpg"
+          }
+        },
+        "image_mobile_MdqRqN": {
+          "type": "image-mobile",
+          "settings": {
+            "image_image": "shopify://shop_images/Botte_Black_Profil.png"
+          }
+        }
+      },
+      "block_order": [
+        "image_desktop_KtF4e7",
+        "image_mobile_MdqRqN"
+      ],
+      "name": "image-pleine-largeur",
+      "settings": {}
     }
   },
   "layout": "theme",
@@ -156,6 +179,7 @@
     "featured_collections",
     "blog_posts",
     "custom_liquid",
-    "picto_v2_PNrcCe"
+    "picto_v2_PNrcCe",
+    "image_pleine_largeur_CJ6868"
   ]
 }
