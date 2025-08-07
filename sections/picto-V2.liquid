@@ -1,0 +1,117 @@
+<style>
+  .Section {
+    padding-top: 40px;
+     padding-bottom: 40px
+  }
+  .icon-bloc-wrapper {
+    display: flex;
+     justify-content: center;
+     align-items: center
+  }
+  @media screen and (max-width: 479px) {
+    .icon-bloc-wrapper {
+      display: grid;
+       grid-auto-columns: 1fr;
+       grid-column-gap: 16px;
+       grid-row-gap: 16px;
+       grid-template-columns: 1fr 1fr;
+       grid-template-rows: auto auto
+    }
+  }
+  .icon-et-text-wrapper {
+    margin-right: 10px;
+     margin-left: 10px
+  }
+  .Div Block {
+    display: flex;
+     margin-bottom: 10px;
+     justify-content: center;
+     align-items: center
+  }
+  .Image {
+    height: 60px
+  }
+  @media screen and (max-width: 767px) {
+    .Image {
+      height: 40px
+    }
+  }
+  .Text Block 2 {
+    font-family: Karla;
+     color: #6e612b;
+     font-weight: 500;
+     text-align: center
+  }
+  @media screen and (max-width: 767px) {
+    .Text Block 2 {
+      font-size: 0.8rem;
+       line-height: 1.2
+    }
+  }
+</style>
+  <div class="icon-bloc-wrapper" li-content-for-blocks="">
+{% for block in section.blocks %}
+{% case block.type %}
+{% when '@app' %}
+{% render block %}
+
+    {% when 'icon-et-texte' %}
+            <div class="icon-et-text-wrapper" li-block="icon-et-texte">
+                    
+      
+                    <div class="Div Block">
+        {% if block.settings.image_image %}
+{{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'Image', width: 'auto', height: 'auto', alt: 'inherit', loading: 'lazy' }}
+{% else %}
+<img class="Image" width="auto" height="auto" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg" loading="lazy">
+{% endif %}
+      </div>
+                    
+      
+                    <div class="Text Block 2">
+{{ block.settings.text_text }}
+</div>
+                    
+    
+                </div>
+  {% endcase %}
+{% endfor %}
+
+    </div> {% schema %} {
+    "tag": "section",
+    "name": "picto-V2",
+    "class": "Section",
+    "blocks": [
+        {
+            "name": "icon-et-texte",
+            "type": "icon-et-texte",
+            "settings": [
+                {
+                    "id": "image_image",
+                    "type": "image_picker",
+                    "label": "Image"
+                },
+                {
+                    "id": "text_text",
+                    "type": "text",
+                    "label": "Text",
+                    "default": "\n          SAV international\n      "
+                }
+            ]
+        },
+        {
+            "type": "@app"
+        }
+    ],
+    "presets": [
+        {
+            "name": "picto-V2",
+            "category": "Liquify",
+            "blocks": [
+                {
+                    "type": "icon-et-texte"
+                }
+            ]
+        }
+    ]
+} {% endschema %}
