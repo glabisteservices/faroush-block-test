@@ -217,14 +217,36 @@
             </div>
           {% endif %}
           
-          <button class="newsletter-button" type="submit">
+          <button class="newsletter-button" type="submit" onclick="showThankYou(event)">
             {{ section.settings.text_button_text }}
           </button>
         {% endif %}
       {% endform %}
+      
+      <!-- Message de remerciement caché -->
+      <div id="newsletter-thank-you-{{ section.id }}" class="newsletter-success" style="display: none;">
+        <p>{{ section.settings.success_message | default: 'Merci ! Votre inscription a été confirmée !' }}</p>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+function showThankYou(event) {
+  const button = event.target;
+  const form = button.closest('form');
+  const emailInput = form.querySelector('input[type="email"]');
+  
+  // Vérifier que l'email est valide
+  if (emailInput.value && emailInput.checkValidity()) {
+    // Cacher le formulaire après 1 seconde (temps pour Shopify de traiter)
+    setTimeout(function() {
+      form.style.display = 'none';
+      document.getElementById('newsletter-thank-you-{{ section.id }}').style.display = 'block';
+    }, 1000);
+  }
+}
+</script>
 
 {% schema %}
 {
