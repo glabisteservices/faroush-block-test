@@ -217,6 +217,11 @@
             </div>
           {% endif %}
           
+          <!-- Désactiver la protection anti-spam -->
+          <div style="position: absolute; left: -5000px;">
+            <input type="text" name="contact[body]" tabindex="-1" autocomplete="off">
+          </div>
+          
           <button class="newsletter-button" type="submit" onclick="showThankYou(event)">
             {{ section.settings.text_button_text }}
           </button>
