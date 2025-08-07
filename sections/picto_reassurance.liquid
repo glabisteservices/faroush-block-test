@@ -1,0 +1,64 @@
+<div li-content-for-blocks="" class="icon-bloc-wrapper">
+{% for block in section.blocks %}
+{% case block.type %}
+{% when '@app' %}
+{% render block %}
+
+          {% when 'icon-et-texte' %}
+            <div li-block="icon-et-texte" class="icon-et-text-wrapper">
+                    
+            
+                    <div class="div-block">{% if block.settings.image_image %}
+{{ block.settings.image_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'image' }}
+{% else %}
+<img src="{{ 'SAV.svg' | asset_url }}" loading="lazy" alt="" class="image">
+{% endif %}</div>
+                    
+            
+                    <div class="text-block-2">
+{{ block.settings.text_text }}
+</div>
+                    
+          
+                </div>
+        {% endcase %}
+{% endfor %}
+
+    </div> {% schema %} {
+    "tag": "section",
+    "name": "picto-reassurance",
+    "class": "reassurance-icons",
+    "blocks": [
+        {
+            "name": "icon-et-texte",
+            "type": "icon-et-texte",
+            "settings": [
+                {
+                    "id": "image_image",
+                    "type": "image_picker",
+                    "label": "Image"
+                },
+                {
+                    "id": "text_text",
+                    "type": "text",
+                    "label": "Text",
+                    "default": "SAV international"
+                }
+            ]
+        },
+        {
+            "type": "@app"
+        }
+    ],
+    "presets": [
+        {
+            "name": "picto-reassurance",
+            "category": "Liquify",
+            "blocks": [
+                {
+                    "type": "icon-et-texte"
+                }
+            ]
+        }
+    ]
+} {% endschema %}

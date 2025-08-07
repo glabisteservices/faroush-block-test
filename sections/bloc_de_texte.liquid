@@ -1,0 +1,130 @@
+<div li-content-for-blocks="" class="bloc-de-texte-wrapper">
+{% for block in section.blocks %}
+{% case block.type %}
+{% when '@app' %}
+{% render block %}
+
+          {% when 'sous-titre' %}
+            <div li-block="Sous-titre" class="bloc-titre-h2">
+                    
+            
+                    <h2 class="heading-style-h2 centre">
+{{ block.settings.text_heading }}
+</h2>
+                    
+          
+                </div>
+          {% when 'grand-texte' %}
+            <div li-block="Grand-texte" class="bloc-gros-texte">
+                    
+            
+                    <h1 class="heading-style-h1 centre">
+{{ block.settings.text_heading }}
+</h1>
+                    
+          
+                </div>
+          {% when 'paragraphe' %}
+            <div li-block="Paragraphe" class="bloc-paragraph">
+                    
+            
+                    <p class="paragraph centre">
+{{ block.settings.text_paragraph }}
+</p>
+                    
+          
+                </div>
+          {% when 'bouton' %}
+            <div li-block="Bouton" class="bloc-bouton-hp">
+                    
+            
+                    <a href="{{ block.settings.url_link }}" class="button-2 w-button"> {{ block.settings.text_text }} </a>
+                    
+          
+                </div>
+        {% endcase %}
+{% endfor %}
+
+    </div> {% schema %} {
+    "tag": "section",
+    "name": "bloc-de-texte",
+    "class": "bloc-text-hp",
+    "blocks": [
+        {
+            "name": "Sous-titre",
+            "type": "sous-titre",
+            "settings": [
+                {
+                    "id": "text_heading",
+                    "type": "text",
+                    "label": "Heading",
+                    "default": "Heading"
+                }
+            ]
+        },
+        {
+            "name": "Grand-texte",
+            "type": "grand-texte",
+            "settings": [
+                {
+                    "id": "text_heading",
+                    "type": "text",
+                    "label": "Heading",
+                    "default": "Heading"
+                }
+            ]
+        },
+        {
+            "name": "Paragraphe",
+            "type": "paragraphe",
+            "settings": [
+                {
+                    "id": "text_paragraph",
+                    "type": "text",
+                    "label": "Paragraph",
+                    "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+                }
+            ]
+        },
+        {
+            "name": "Bouton",
+            "type": "bouton",
+            "settings": [
+                {
+                    "id": "text_text",
+                    "type": "text",
+                    "label": "Text",
+                    "default": "Button Text"
+                },
+                {
+                    "id": "url_link",
+                    "type": "url",
+                    "label": "Link"
+                }
+            ]
+        },
+        {
+            "type": "@app"
+        }
+    ],
+    "presets": [
+        {
+            "name": "bloc-de-texte",
+            "category": "Liquify",
+            "blocks": [
+                {
+                    "type": "sous-titre"
+                },
+                {
+                    "type": "grand-texte"
+                },
+                {
+                    "type": "paragraphe"
+                },
+                {
+                    "type": "bouton"
+                }
+            ]
+        }
+    ]
+} {% endschema %}
