@@ -1,282 +1,214 @@
 <style>
-  .text-size-tiny {
-    font-size: 0.75rem;
-    color: #6e612b;
+  /* Reset et styles de base pour forcer l'affichage */
+  .newsletter-section * {
+    box-sizing: border-box;
   }
   
-  .hide {
-    display: none;
-  }
-  
-  .button {
-    padding: 0.65rem 1.5rem;
-    border: none;
-    border-radius: 12px;
-    background-color: hsla(53.571428571428534, 58.33%, 90.59%, 1.00);
-    font-family: Karla;
-    color: hsla(48.35820895522387, 43.79%, 30.00%, 1.00);
-    font-weight: 500;
-    text-align: center;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: block !important;
-    width: auto !important;
-    max-width: 300px;
-  }
-  
-  .button:hover {
-    opacity: 0.9;
-  }
-  
-  .form_input {
+  .newsletter-container {
     width: 100% !important;
-    max-width: 400px;
-    min-height: 2.6rem;
-    margin-top: 10px;
-    margin-bottom: 0px;
-    padding: 0.5rem 1rem;
-    border: 1px solid #6e612b;
-    border-radius: 10px;
-    background-color: transparent;
-    font-family: Karla;
-    color: #6e612b;
+    padding: 2.5rem !important;
+    background-color: #a6d4f2 !important;
+    border-radius: 15px !important;
+    display: block !important;
+    text-align: center !important;
+  }
+  
+  .newsletter-content {
+    max-width: 600px !important;
+    margin: 0 auto !important;
     display: block !important;
   }
   
-  .form_input:focus {
-    outline: none;
-    border-color: #a6d4f2;
-    box-shadow: 0 0 0 2px rgba(166, 212, 242, 0.3);
+  .newsletter-title {
+    font-family: Karla, sans-serif !important;
+    color: #6e612b !important;
+    font-size: 2.8rem !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+    margin: 0 0 1rem 0 !important;
+    text-align: center !important;
+    display: block !important;
   }
   
-  .form_checkbox {
-    display: flex !important;
-    margin-bottom: 0px;
-    padding-left: 0rem;
-    flex-direction: row !important;
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  .div-block {
-    width: 100%;
-    max-width: 600px;
-  }
-  
-  .div-block.medium {
-    width: 100%;
-    max-width: 650px;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .div-block {
-      width: 80%;
-    }
-  }
-  
-  @media screen and (max-width: 479px) {
-    .div-block {
-      width: 100%;
-    }
-  }
-  
-  .footer_form-block {
-    width: 100%;
-    margin-bottom: 0rem;
-  }
-  
-  .footer_form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-    width: 100%;
-  }
-  
-  @media screen and (max-width: 479px) {
-    .footer_form {
-      flex-direction: column;
-      grid-row-gap: 12px;
-      grid-template-columns: 1fr;
-    }
+  .newsletter-description {
+    font-family: Karla, sans-serif !important;
+    color: #6e612b !important;
+    margin: 0 0 1.5rem 0 !important;
+    text-align: center !important;
+    display: block !important;
   }
   
   .newsletter-form {
-    display: flex;
-    padding: 0 20px;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
+    display: block !important;
+    width: 100% !important;
+  }
+  
+  .newsletter-input {
+    width: 100% !important;
+    max-width: 400px !important;
+    min-height: 2.6rem !important;
+    padding: 0.5rem 1rem !important;
+    border: 1px solid #6e612b !important;
+    border-radius: 10px !important;
+    background-color: transparent !important;
+    font-family: Karla, sans-serif !important;
+    color: #6e612b !important;
+    margin: 0 auto 1rem auto !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+  
+  .newsletter-input:focus {
+    outline: none !important;
+    border-color: #a6d4f2 !important;
+    box-shadow: 0 0 0 2px rgba(166, 212, 242, 0.3) !important;
+  }
+  
+  .newsletter-checkbox-container {
+    display: block !important;
+    margin: 1rem auto !important;
+    max-width: 400px !important;
+    text-align: left !important;
+  }
+  
+  .newsletter-checkbox-wrapper {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 0.5rem !important;
+    justify-content: flex-start !important;
+  }
+  
+  .newsletter-checkbox {
+    width: 0.875rem !important;
+    height: 0.875rem !important;
+    margin: 0.3rem 0 0 0 !important;
+    flex-shrink: 0 !important;
+  }
+  
+  .newsletter-checkbox-label {
+    font-size: 0.75rem !important;
+    color: #6e612b !important;
+    font-family: Karla, sans-serif !important;
+    line-height: 1.4 !important;
+    flex: 1 !important;
+  }
+  
+  .newsletter-button {
+    padding: 0.65rem 1.5rem !important;
+    border: none !important;
+    border-radius: 12px !important;
+    background-color: hsla(53.571428571428534, 58.33%, 90.59%, 1.00) !important;
+    font-family: Karla, sans-serif !important;
+    color: hsla(48.35820895522387, 43.79%, 30.00%, 1.00) !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    display: block !important;
+    margin: 1rem auto 0 auto !important;
+    max-width: 300px !important;
+    width: auto !important;
+  }
+  
+  .newsletter-button:hover {
+    opacity: 0.9 !important;
+  }
+  
+  .newsletter-error {
+    color: #dc3545 !important;
+    font-size: 0.75rem !important;
+    margin: 0.5rem auto !important;
+    text-align: center !important;
+    max-width: 400px !important;
+  }
+  
+  .newsletter-success {
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    margin: 1rem auto !important;
+    text-align: center !important;
+    background-color: #d4edda !important;
+    color: #155724 !important;
+    border: 1px solid #c3e6cb !important;
+    max-width: 500px !important;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .newsletter-title {
+      font-size: 2.2rem !important;
+    }
+    
+    .newsletter-container {
+      padding: 1.5rem 1rem !important;
+    }
   }
   
   @media screen and (max-width: 479px) {
-    .newsletter-form {
-      padding: 0 10px;
+    .newsletter-title {
+      font-size: 1.8rem !important;
     }
-  }
-  
-  .heading-style-h1 {
-    font-family: Karla;
-    color: #6e612b;
-    font-size: 2.8rem;
-    line-height: 1.1;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    text-align: left;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .heading-style-h1 {
-      font-size: 2.5rem;
+    
+    .newsletter-container {
+      padding: 1.2rem 0.8rem !important;
     }
-  }
-  
-  .form_checkbox-icon {
-    margin: 0.3rem 0.5rem 0rem 0rem;
-    padding: 0px;
-    flex: 0 0 auto;
-    width: 0.875rem;
-    height: 0.875rem;
-    border-radius: 0.125rem;
-  }
-  
-  .form_checkbox-icon:checked {
-    background-size: 90%;
-  }
-  
-  .form_checkbox-icon:focus {
-    box-shadow: 0 0 0.25rem 0rem rgba(56, 152, 236, 1);
-  }
-  
-  .footer_newsletter {
-    display: flex;
-    width: 100%;
-    padding: 2.5rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    border-radius: 15px;
-    background-color: #a6d4f2;
-    color: black;
-  }
-  
-  @media screen and (max-width: 479px) {
-    .footer_newsletter {
-      padding: 1.7rem 10px;
-    }
-  }
-  
-  .form_field-label {
-    font-family: Karla;
-    color: #6e612b;
-    margin-bottom: 0.5rem;
-    display: block;
-    text-align: left;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .form_field-label {
-      margin-top: 10px;
-      line-height: 1.1;
-    }
-  }
-  
-  .form-title {
-    font-size: 2rem;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .form-title {
-      font-size: 1.6rem;
-    }
-  }
-  
-  .text-color-red {
-    color: #dc3545;
-  }
-  
-  .success-message,
-  .error-message {
-    padding: 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    text-align: center;
-  }
-  
-  .success-message {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-  }
-  
-  .error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
   }
 </style>
 
-<div class="newsletter-form">
-  <div class="footer_newsletter">
-    <div class="div-block">
-      <h2 class="heading-style-h1 form-title">
+<div class="newsletter-section">
+  <div class="newsletter-container">
+    <div class="newsletter-content">
+      <h2 class="newsletter-title">
         {{ section.settings.text_heading }}
       </h2>
       
-      <label class="form_field-label" for="newsletter-email-{{ section.id }}">
+      <p class="newsletter-description">
         {{ section.settings.text_paragraph }}
-      </label>
+      </p>
       
-      {% form 'customer', return_to: request.path %}
+      {% form 'customer', return_to: request.path, class: 'newsletter-form' %}
         {% if form.posted_successfully? %}
-          <div class="success-message">
+          <div class="newsletter-success">
             <p>{{ section.settings.success_message | default: 'Merci ! Votre inscription a été confirmée !' }}</p>
           </div>
         {% else %}
-          <div class="footer_form">
-            <input 
-              class="form_input" 
-              id="newsletter-email-{{ section.id }}" 
-              name="contact[email]" 
-              maxlength="256" 
-              placeholder="{{ section.settings.placeholder_text }}" 
-              type="email" 
-              required
-              {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
-            >
-            
-            {% if form.errors %}
-              <div class="text-size-tiny text-color-red">
-                {{ form.errors | default_errors }}
-              </div>
-            {% endif %}
-            
-            {% if section.settings.show_marketing_checkbox %}
-              <input type="hidden" name="contact[accepts_marketing]" value="false">
-              <div class="form_checkbox">
+          <input 
+            class="newsletter-input" 
+            id="newsletter-email-{{ section.id }}" 
+            name="contact[email]" 
+            maxlength="256" 
+            placeholder="{{ section.settings.placeholder_text }}" 
+            type="email" 
+            required
+            {% if form.errors contains 'email' %}aria-invalid="true"{% endif %}
+          >
+          
+          {% if form.errors %}
+            <div class="newsletter-error">
+              {{ form.errors | default_errors }}
+            </div>
+          {% endif %}
+          
+          {% if section.settings.show_marketing_checkbox %}
+            <input type="hidden" name="contact[accepts_marketing]" value="false">
+            <div class="newsletter-checkbox-container">
+              <div class="newsletter-checkbox-wrapper">
                 <input 
-                  class="form_checkbox-icon" 
+                  class="newsletter-checkbox" 
                   type="checkbox" 
                   name="contact[accepts_marketing]" 
                   id="accepts-marketing-{{ section.id }}" 
                   value="true"
                   {% if section.settings.marketing_default_checked %}checked{% endif %}
                 >
-                <label class="form_checkbox-label text-size-tiny" for="accepts-marketing-{{ section.id }}">
+                <label class="newsletter-checkbox-label" for="accepts-marketing-{{ section.id }}">
                   {{ section.settings.text_checkbox }}
                 </label>
               </div>
-            {% endif %}
-            
-            <button class="button" type="submit">
-              {{ section.settings.text_button_text }}
-            </button>
-          </div>
+            </div>
+          {% endif %}
+          
+          <button class="newsletter-button" type="submit">
+            {{ section.settings.text_button_text }}
+          </button>
         {% endif %}
       {% endform %}
     </div>
