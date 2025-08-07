@@ -204,16 +204,40 @@
             "text_text": "C'est quoi le zéro drop ?",
             "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
           }
+        },
+        "faq_question_6q4Tq4": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Question FAQ",
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+          }
+        },
+        "faq_question_YYzVQV": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Question FAQ",
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+          }
+        },
+        "faq_question_U3EHxA": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Question FAQ",
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+          }
         }
       },
       "block_order": [
         "faq_question_Jdkjdi",
-        "faq_question_gnbgLC"
+        "faq_question_gnbgLC",
+        "faq_question_6q4Tq4",
+        "faq_question_YYzVQV",
+        "faq_question_U3EHxA"
       ],
       "name": "FAQ",
       "settings": {
         "text_heading": "Questions fréquentes",
-        "image_image": "shopify://shop_images/Mobile_HP_image.jpg"
+        "image_image": "shopify://shop_images/12.jpg"
       }
     }
   },
