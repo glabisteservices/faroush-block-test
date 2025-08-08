@@ -335,20 +335,7 @@
           {% endif %}
         </div>
         
-        <!-- Stock Status -->
-        <div class="stock-status" id="stock-status"
-             {% if product.selected_or_first_available_variant.available %}class="in-stock"{% else %}class="out-of-stock"{% endif %}>
-          {% if product.selected_or_first_available_variant.available %}En stock{% else %}Rupture de stock{% endif %}
-        </div>
-        
-        <!-- Product Tags -->
-        {% if product.tags.size > 0 %}
-          <div class="product-tags">
-            {% for tag in product.tags limit: 3 %}
-              <span class="product-item_tag">{{ tag }}</span>
-            {% endfor %}
-          </div>
-        {% endif %}
+
         
         <!-- Product Description -->
         {% if product.description != blank %}
@@ -509,18 +496,13 @@ function updatePrice(variant) {
 }
 
 function updateStockStatus(variant) {
-  const stockElement = document.getElementById('stock-status');
   const addToCartBtn = document.getElementById('add-to-cart-btn');
   
-  if (stockElement && addToCartBtn) {
+  if (addToCartBtn) {
     if (variant.available) {
-      stockElement.textContent = 'En stock';
-      stockElement.className = 'stock-status in-stock';
       addToCartBtn.disabled = false;
       addToCartBtn.textContent = 'Ajouter au panier';
     } else {
-      stockElement.textContent = 'Rupture de stock';
-      stockElement.className = 'stock-status out-of-stock';
       addToCartBtn.disabled = true;
       addToCartBtn.textContent = 'Rupture de stock';
     }
