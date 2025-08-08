@@ -112,7 +112,7 @@
     </button>
     <div class="dropdown-content" data-dropdown-content="details">
       <div class="rich-text-content">
-        {{ product.metafields.custom.details_product }}
+        {{ product.metafields.custom.details_product.value }}
       </div>
     </div>
   </div>
@@ -136,7 +136,7 @@
   {% endif %}
 
   <!-- Livraison & retours -->
-  {% if product.metafields.custom.livraison_retours != blank %}
+  {% if shop.metafields.custom.livraison_retours != blank %}
   <div class="dropdown">
     <button class="dropdown-toggle" aria-expanded="false" data-dropdown="livraison">
       <div class="heading-style-h4 texte-weight-bold">
@@ -146,7 +146,7 @@
     </button>
     <div class="dropdown-content" data-dropdown-content="livraison">
       <div class="rich-text-content">
-        {{ product.metafields.custom.livraison_retours }}
+        {{ shop.metafields.custom.livraison_retours.value }}
       </div>
     </div>
   </div>
