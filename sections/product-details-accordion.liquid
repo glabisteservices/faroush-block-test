@@ -102,7 +102,7 @@
 
 <div class="product-details-accordion-container">
   <!-- Détails produit -->
-  {% if product.metafields.custom.details_product != blank %}
+  {% if product.metafields.custom.details_produit != blank %}
   <div class="dropdown">
     <button class="dropdown-toggle" aria-expanded="false" data-dropdown="details">
       <div class="heading-style-h4 texte-weight-bold">
@@ -112,7 +112,7 @@
     </button>
     <div class="dropdown-content" data-dropdown-content="details">
       <div class="rich-text-content">
-        {{ product.metafields.custom.details_product.value }}
+        {{ product.metafields.custom.details_produit.value }}
       </div>
     </div>
   </div>
