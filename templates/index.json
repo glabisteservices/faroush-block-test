@@ -250,6 +250,17 @@
         "collection_collection": "basket",
         "collection_collection_limit": 8
       }
+    },
+    "collection_product_d_pDcmKn": {
+      "type": "collection-product-d",
+      "name": "Collection Products",
+      "settings": {
+        "text_heading": "Short heading here",
+        "text_button_text": "VOIR TOUT",
+        "url_button_link": "",
+        "collection_collection": "",
+        "collection_collection_limit": 8
+      }
     }
   },
   "layout": "theme",
@@ -265,6 +276,7 @@
     "picto_v2_PNrcCe",
     "image_pleine_largeur_CJ6868",
     "faq_pAztkk",
-    "collection_product_d_B6id3N"
+    "collection_product_d_B6id3N",
+    "collection_product_d_pDcmKn"
   ]
 }
