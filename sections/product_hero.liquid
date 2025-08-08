@@ -59,7 +59,7 @@
   
   .gallery-slides-container {
     display: flex;
-    width: calc(120%);
+    width: auto;
     height: 100%;
     transition: transform 0.3s ease;
   }
@@ -449,11 +449,18 @@ function setCurrentImage(index) {
 
 function updateGalleryDisplay() {
   const slidesContainer = document.getElementById('slides-container');
-  if (slidesContainer) {
-    // Calculer le décalage pour montrer l'image courante avec un aperçu de la suivante
-    const slideWidth = 100; // Pourcentage de largeur d'une slide
-    const offset = currentImageIndex * slideWidth;
-    slidesContainer.style.transform = `translateX(-${offset}%)`;
+  const slides = document.querySelectorAll('.gallery-slide');
+  
+  if (slidesContainer && slides.length > 0) {
+    // Calculer la largeur cumulative des slides précédentes
+    let offset = 0;
+    for (let i = 0; i < currentImageIndex; i++) {
+      const slideWidth = slides[i].offsetWidth;
+      const marginRight = 16; // 1rem = 16px
+      offset += slideWidth + marginRight;
+    }
+    
+    slidesContainer.style.transform = `translateX(-${offset}px)`;
   }
   
   // Mettre à jour les thumbnails
@@ -545,6 +552,11 @@ function updateStockStatus(variant) {
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
+  
+  // Re-calculer lors du redimensionnement de la fenêtre
+  window.addEventListener('resize', function() {
+    setTimeout(updateGalleryDisplay, 100);
+  });
 });
 </script>
 
