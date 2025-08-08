@@ -179,6 +179,12 @@
 </div>
 
 <style>
+/* Container principal avec padding personnalisé */
+.padding-global {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 /* Layout principal */
 .collection-wrapper {
   position: relative;
@@ -561,7 +567,7 @@
   visibility: visible;
 }
 
-/* Media queries */
+/* Media queries pour les paddings personnalisés */
 @media (max-width: 1024px) {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -575,6 +581,12 @@
 }
 
 @media (max-width: 768px) {
+  /* Padding tablette - 20px */
+  .padding-global {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -601,6 +613,12 @@
 }
 
 @media (max-width: 480px) {
+  /* Padding mobile - 10px */
+  .padding-global {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
   .filter-sidebar {
     width: 100vw;
     right: -100vw;
