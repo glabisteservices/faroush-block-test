@@ -1,148 +1,178 @@
 <style>
-  .Dropdown Toggle {
+  .product-details-accordion .dropdown-toggle {
     width: 100%;
-    padding-left: 0px;
-    cursor: pointer;
+    padding: 15px 0;
     border: none;
     background: none;
     text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+  
   .product-details-accordion {
-    padding-left: 20px
+    padding-left: 20px;
   }
+  
   .product-details-accordion.medium {
-    padding-right: 20px
+    padding-right: 20px;
   }
-  .Dropdown {
+  
+  .dropdown {
     width: 100%;
-    border-top-style: solid;
-    border-top-width: 1px;
-    border-top-color: #6e612b;
-    font-family: Karla
+    border-top: 1px solid #6e612b;
+    font-family: Karla;
   }
+  
+  .dropdown:last-child {
+    border-bottom: 1px solid #6e612b;
+  }
+  
   .heading-style-h4 {
     font-family: Karla;
     color: #6e612b;
     font-size: 1.25rem;
     line-height: 1.2;
-    font-weight: 400
+    font-weight: 400;
+    margin: 0;
   }
+  
   @media screen and (max-width: 767px) {
     .heading-style-h4 {
-      font-size: 1.25rem
+      font-size: 1.25rem;
     }
   }
+  
   @media screen and (max-width: 479px) {
     .heading-style-h4 {
-      font-size: 1.25rem
+      font-size: 1.25rem;
     }
   }
+  
   .product-details-accordion-container {
     width: 50%;
     padding-left: 0px;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: #6e612b
   }
+  
   .product-details-accordion-container.medium {
-    width: 100%
+    width: 100%;
   }
-  .texte-weigt-bold {
+  
+  .texte-weight-bold {
     font-weight: 500;
-    text-transform: none
+    text-transform: none;
   }
-  .Dropdown List {
-    position: static;
-    margin-bottom: 40px;
+  
+  .dropdown-content {
     display: none;
+    padding: 0 0 20px 0;
+    margin-bottom: 0;
   }
-  .Dropdown List.main_open {
+  
+  .dropdown-content.open {
+    display: block;
     padding-left: 20px;
-    background-color: hsla(0, 0.00%, 80.00%, 0.00);
-    display: block;
+    background-color: hsla(0, 0%, 80%, 0);
   }
-  .Dropdown List.medium_open {
+  
+  .dropdown-content.medium-open {
     padding-left: 0px;
-    display: block;
   }
-  .Icon {
+  
+  .dropdown-icon {
     transition: transform 0.3s ease;
-  }
-  .Dropdown Toggle[aria-expanded="true"] .Icon::after {
-    content: "−";
-  }
-  .Dropdown Toggle .Icon::after {
-    content: "+";
+    font-size: 1.2em;
     color: #6e612b;
-    font-weight: bold;
+  }
+  
+  .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
+    transform: rotate(180deg);
+  }
+  
+  .rich-text-content {
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .rich-text-content p {
+    margin-bottom: 10px;
   }
 </style>
 
 <div class="product-details-accordion-container">
   <!-- Détails produit -->
   {% if product.metafields.custom.details_product != blank %}
-  <div class="Dropdown">
-    <div class="Dropdown Toggle" data-dropdown="details" aria-expanded="false">
-      <div class="Icon"></div>
-      <div class="heading-style-h4 texte-weigt-bold">
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="details">
+      <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.details_title | default: "Détails produit" }}
       </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="details">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.details_product }}
+      </div>
     </div>
-    <nav class="Dropdown List" data-dropdown-content="details">
-      <div class="Rich Text Block">{{ product.metafields.custom.details_product }}</div>
-    </nav>
   </div>
   {% endif %}
 
   <!-- Matière -->
   {% if product.metafields.custom.texte_matiere_v2 != blank %}
-  <div class="Dropdown">
-    <div class="Dropdown Toggle" data-dropdown="matiere" aria-expanded="false">
-      <div class="Icon"></div>
-      <div class="heading-style-h4 texte-weigt-bold">
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="matiere">
+      <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.matiere_title | default: "Matière & composition" }}
       </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="matiere">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.texte_matiere_v2 }}
+      </div>
     </div>
-    <nav class="Dropdown List" data-dropdown-content="matiere">
-      <div class="Rich Text Block">{{ product.metafields.custom.texte_matiere_v2 }}</div>
-    </nav>
   </div>
   {% endif %}
 
   <!-- Livraison & retours -->
   {% if product.metafields.custom.livraison_retours != blank %}
-  <div class="Dropdown">
-    <div class="Dropdown Toggle" data-dropdown="livraison" aria-expanded="false">
-      <div class="Icon"></div>
-      <div class="heading-style-h4 texte-weigt-bold">
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="livraison">
+      <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.livraison_title | default: "Livraison & retours" }}
       </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="livraison">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.livraison_retours }}
+      </div>
     </div>
-    <nav class="Dropdown List" data-dropdown-content="livraison">
-      <div class="Rich Text Block">{{ product.metafields.custom.livraison_retours }}</div>
-    </nav>
   </div>
   {% endif %}
 
   <!-- Conseils d'entretien -->
   {% if product.metafields.custom.conseils_d_entretien != blank %}
-  <div class="Dropdown">
-    <div class="Dropdown Toggle" data-dropdown="entretien" aria-expanded="false">
-      <div class="Icon"></div>
-      <div class="heading-style-h4 texte-weigt-bold">
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="entretien">
+      <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.entretien_title | default: "Conseils d'entretien" }}
       </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="entretien">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.conseils_d_entretien }}
+      </div>
     </div>
-    <nav class="Dropdown List" data-dropdown-content="entretien">
-      <div class="Rich Text Block">{{ product.metafields.custom.conseils_d_entretien }}</div>
-    </nav>
   </div>
   {% endif %}
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const dropdownToggles = document.querySelectorAll('.Dropdown Toggle');
+  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
   
   dropdownToggles.forEach(function(toggle) {
     toggle.addEventListener('click', function() {
@@ -156,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
           otherToggle.setAttribute('aria-expanded', 'false');
           const otherContent = document.querySelector('[data-dropdown-content="' + otherToggle.getAttribute('data-dropdown') + '"]');
           if (otherContent) {
-            otherContent.classList.remove('main_open', 'medium_open');
+            otherContent.classList.remove('open');
           }
         }
       });
@@ -164,10 +194,10 @@ document.addEventListener('DOMContentLoaded', function() {
       // Basculer l'accordéon actuel
       if (isExpanded) {
         this.setAttribute('aria-expanded', 'false');
-        content.classList.remove('main_open', 'medium_open');
+        content.classList.remove('open');
       } else {
         this.setAttribute('aria-expanded', 'true');
-        content.classList.add('main_open');
+        content.classList.add('open');
       }
     });
   });
@@ -177,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
 {% schema %}
 {
   "tag": "section",
-  "name": "product-details",
+  "name": "Détails produit accordéon",
   "class": "product-details-accordion",
   "settings": [
     {
@@ -207,9 +237,8 @@ document.addEventListener('DOMContentLoaded', function() {
   ],
   "presets": [
     {
-      "name": "product-details",
-      "category": "Liquify",
-      "blocks": []
+      "name": "Détails produit accordéon",
+      "category": "Produit"
     }
   ],
   "enabled_on": {
