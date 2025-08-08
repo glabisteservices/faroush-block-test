@@ -1,7 +1,7 @@
-<!-- Section pleine largeur -->
-<div class="collection-full-width">
+<!-- Section collection avec padding correct -->
+<section class="collection-section">
   {% paginate collection.products by 50 %}
-  <div class="collection-wrapper">
+  <div class="collection-container">
     
     <!-- Header avec bouton filtre et tri -->
     <div class="collection-header">
@@ -175,29 +175,27 @@
   <div class="filter-overlay" id="filter-overlay"></div>
 
   {% endpaginate %}
-</div>
+</section>
 
 <style>
-/* Section pleine largeur avec padding personnalisé */
-.collection-full-width {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+/* Section principale avec padding correct */
+.collection-section {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.collection-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  /* Desktop padding - 20px */
   padding-left: 20px;
   padding-right: 20px;
   box-sizing: border-box;
 }
 
 /* Layout principal */
-.collection-wrapper {
-  position: relative;
-  max-width: none;
-  width: 100%;
-}
-
 .collection-header {
   display: flex;
   justify-content: space-between;
@@ -575,7 +573,7 @@
   visibility: visible;
 }
 
-/* Media queries pour les paddings responsive */
+/* Media queries - RESPONSIVE PADDING */
 @media (max-width: 1024px) {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -589,8 +587,8 @@
 }
 
 @media (max-width: 768px) {
-  /* Padding tablette - 20px */
-  .collection-full-width {
+  /* Tablette - 20px padding */
+  .collection-container {
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -621,16 +619,34 @@
 }
 
 @media (max-width: 480px) {
-  /* Padding mobile - 10px */
-  .collection-full-width {
+  /* Mobile - 10px padding */
+  .collection-container {
     padding-left: 10px;
     padding-right: 10px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
   }
   
   .filter-sidebar {
     width: 100vw;
     right: -100vw;
   }
+}
+
+/* Reset des styles par défaut qui pourraient interférer */
+.collection-section * {
+  box-sizing: border-box;
+}
+
+/* S'assurer que la section prend bien toute la largeur */
+.collection-section {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 </style>
 
