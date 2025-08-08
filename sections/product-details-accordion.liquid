@@ -1,0 +1,250 @@
+<style>
+  .product-details-accordion .dropdown-toggle {
+    width: 100%;
+    padding: 15px 0;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .product-details-accordion {
+    padding-left: 20px;
+  }
+  
+  .product-details-accordion.medium {
+    padding-right: 20px;
+  }
+  
+  .dropdown {
+    width: 100%;
+    border-top: 1px solid #6e612b;
+    font-family: Karla;
+  }
+  
+  .dropdown:last-child {
+    border-bottom: 1px solid #6e612b;
+  }
+  
+  .heading-style-h4 {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    font-weight: 400;
+    margin: 0;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .heading-style-h4 {
+      font-size: 1.25rem;
+    }
+  }
+  
+  @media screen and (max-width: 479px) {
+    .heading-style-h4 {
+      font-size: 1.25rem;
+    }
+  }
+  
+  .product-details-accordion-container {
+    width: 50%;
+    padding-left: 0px;
+  }
+  
+  .product-details-accordion-container.medium {
+    width: 100%;
+  }
+  
+  .texte-weight-bold {
+    font-weight: 500;
+    text-transform: none;
+  }
+  
+  .dropdown-content {
+    display: none;
+    padding: 0 0 20px 0;
+    margin-bottom: 0;
+  }
+  
+  .dropdown-content.open {
+    display: block;
+    padding-left: 20px;
+    background-color: hsla(0, 0%, 80%, 0);
+  }
+  
+  .dropdown-content.medium-open {
+    padding-left: 0px;
+  }
+  
+  .dropdown-icon {
+    transition: transform 0.3s ease;
+    font-size: 1.2em;
+    color: #6e612b;
+  }
+  
+  .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
+    transform: rotate(180deg);
+  }
+  
+  .rich-text-content {
+    color: #333;
+    line-height: 1.5;
+  }
+  
+  .rich-text-content p {
+    margin-bottom: 10px;
+  }
+</style>
+
+<div class="product-details-accordion-container">
+  <!-- Détails produit -->
+  {% if product.metafields.custom.details_product != blank %}
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="details">
+      <div class="heading-style-h4 texte-weight-bold">
+        {{ section.settings.details_title | default: "Détails produit" }}
+      </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="details">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.details_product }}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Matière -->
+  {% if product.metafields.custom.texte_matiere_v2 != blank %}
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="matiere">
+      <div class="heading-style-h4 texte-weight-bold">
+        {{ section.settings.matiere_title | default: "Matière & composition" }}
+      </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="matiere">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.texte_matiere_v2 }}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Livraison & retours -->
+  {% if product.metafields.custom.livraison_retours != blank %}
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="livraison">
+      <div class="heading-style-h4 texte-weight-bold">
+        {{ section.settings.livraison_title | default: "Livraison & retours" }}
+      </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="livraison">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.livraison_retours }}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Conseils d'entretien -->
+  {% if product.metafields.custom.conseils_d_entretien != blank %}
+  <div class="dropdown">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="entretien">
+      <div class="heading-style-h4 texte-weight-bold">
+        {{ section.settings.entretien_title | default: "Conseils d'entretien" }}
+      </div>
+      <div class="dropdown-icon">▼</div>
+    </button>
+    <div class="dropdown-content" data-dropdown-content="entretien">
+      <div class="rich-text-content">
+        {{ product.metafields.custom.conseils_d_entretien }}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+  
+  dropdownToggles.forEach(function(toggle) {
+    toggle.addEventListener('click', function() {
+      const dropdownId = this.getAttribute('data-dropdown');
+      const content = document.querySelector('[data-dropdown-content="' + dropdownId + '"]');
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      
+      // Fermer tous les autres accordéons
+      dropdownToggles.forEach(function(otherToggle) {
+        if (otherToggle !== toggle) {
+          otherToggle.setAttribute('aria-expanded', 'false');
+          const otherContent = document.querySelector('[data-dropdown-content="' + otherToggle.getAttribute('data-dropdown') + '"]');
+          if (otherContent) {
+            otherContent.classList.remove('open');
+          }
+        }
+      });
+      
+      // Basculer l'accordéon actuel
+      if (isExpanded) {
+        this.setAttribute('aria-expanded', 'false');
+        content.classList.remove('open');
+      } else {
+        this.setAttribute('aria-expanded', 'true');
+        content.classList.add('open');
+      }
+    });
+  });
+});
+</script>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Détails produit accordéon",
+  "class": "product-details-accordion",
+  "settings": [
+    {
+      "id": "details_title",
+      "type": "text",
+      "label": "Titre - Détails produit",
+      "default": "Détails produit"
+    },
+    {
+      "id": "matiere_title",
+      "type": "text",
+      "label": "Titre - Matière",
+      "default": "Matière & composition"
+    },
+    {
+      "id": "livraison_title",
+      "type": "text",
+      "label": "Titre - Livraison",
+      "default": "Livraison & retours"
+    },
+    {
+      "id": "entretien_title",
+      "type": "text",
+      "label": "Titre - Entretien",
+      "default": "Conseils d'entretien"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Détails produit accordéon",
+      "category": "Produit"
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  }
+}
+{% endschema %}
