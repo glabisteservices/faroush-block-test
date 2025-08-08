@@ -160,7 +160,7 @@
       <div class="dropdown-icon">▼</div>
     </button>
     <div class="dropdown-content" data-dropdown-content="livraison">
-      {{ shop.metafields.custom.livraison_retours.value }}
+      {{ shop.metafields.custom.livraison_retours | metafield_tag }}
     </div>
   </div>
   {% endif %}
