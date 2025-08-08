@@ -267,7 +267,9 @@
         "bouton_bR6Lan"
       ],
       "name": "texte-bloc-home-page",
-      "settings": {}
+      "settings": {
+        "text_alignment": "left"
+      }
     }
   },
   "layout": "theme",
