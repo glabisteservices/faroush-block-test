@@ -8,9 +8,7 @@
   }
   .left-align {
     color: #6e612b;
-    text-align: left;
-    padding-left: 20px;
-    padding-right: 20px
+    text-align: left
   }
   @media screen and (max-width: 767px) {
     .centre {
@@ -75,9 +73,7 @@
     text-align: center
   }
   .left-align {
-    text-align: left;
-    padding-left: 20px;
-    padding-right: 20px
+    text-align: left
   }
   @media screen and (max-width: 767px) {
     .centre {
@@ -130,9 +126,7 @@
     width: 60%
   }
   .bloc-de-texte-wrapper.left-align {
-    width: 60%;
-    padding-left: 0;
-    padding-right: 0
+    width: 60%
   }
   @media screen and (max-width: 767px) {
     .bloc-de-texte-wrapper {
@@ -166,13 +160,15 @@
     justify-content: center;
     align-items: center
   }
+  .Section.left-align {
+    justify-content: flex-start;
+    padding-left: 20px
+  }
   .centre {
     text-align: center
   }
   .left-align {
-    text-align: left;
-    padding-left: 20px;
-    padding-right: 20px
+    text-align: left
   }
   @media screen and (max-width: 767px) {
     .centre {
@@ -201,7 +197,8 @@
   {% assign alignment_class = 'left-align' %}
 {% endif %}
 
-<div class="bloc-de-texte-wrapper {{ alignment_class }}" li-content-for-blocks="">
+<div class="Section {{ alignment_class }}">
+  <div class="bloc-de-texte-wrapper {{ alignment_class }}" li-content-for-blocks="">
   {% for block in section.blocks %}
     {% case block.type %}
       {% when '@app' %}
@@ -234,6 +231,7 @@
         </div>
     {% endcase %}
   {% endfor %}
+  </div>
 </div>
 
 {% schema %}
