@@ -35,116 +35,6 @@
         "text_text": "10% offert sur votre prochaine commande"
       }
     },
-    "rich_text_bloc": {
-      "type": "rich_text_bloc",
-      "settings": {}
-    },
-    "image_with_text": {
-      "type": "image_with_text",
-      "settings": {
-        "image_image": "shopify://shop_images/Header_bleu.jpg",
-        "text_heading": "Short heading here",
-        "richtext_paragraph": "<p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>",
-        "url_button_link": "",
-        "text_button_text": "More Information"
-      }
-    },
-    "featured_products": {
-      "type": "featured_products",
-      "settings": {
-        "text_heading": "Short heading here",
-        "url_button_link": "",
-        "text_button_text": "All products",
-        "collection_collection": "",
-        "collection_collection_limit": 6
-      }
-    },
-    "featured_collections": {
-      "type": "featured_collections",
-      "blocks": {
-        "block": {
-          "type": "block",
-          "name": "Block",
-          "settings": {
-            "url_link": "",
-            "text_heading": "Bestselling"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "block"
-      ],
-      "settings": {
-        "text_heading": "Short heading here"
-      }
-    },
-    "blog_posts": {
-      "type": "blog_posts",
-      "settings": {
-        "text_heading": "Short heading here",
-        "text_button_text": "All Articles",
-        "url_button_link": "",
-        "article_article": "",
-        "blog_blog": "",
-        "post_limit_blog": 3
-      }
-    },
-    "custom_liquid": {
-      "type": "custom_liquid",
-      "settings": {
-        "custom_liquid": ""
-      }
-    },
-    "picto_v2_PNrcCe": {
-      "type": "picto-V2",
-      "blocks": {
-        "icon_et_texte_mjBgMg": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/SAV.svg",
-            "text_text": "SAV international"
-          }
-        },
-        "icon_et_texte_MaYE7p": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/worldwide-8.png",
-            "text_text": "Worldwide delivery"
-          }
-        },
-        "icon_et_texte_QeYLLD": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/paiement_secure-8.png",
-            "text_text": "Paiement sécurisé"
-          }
-        },
-        "icon_et_texte_wLacLC": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/retours-8.png",
-            "text_text": "Retours & échanges"
-          }
-        },
-        "icon_et_texte_Qhbphx": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/ecologique-8.png",
-            "text_text": "Eco-responsable"
-          }
-        }
-      },
-      "block_order": [
-        "icon_et_texte_mjBgMg",
-        "icon_et_texte_MaYE7p",
-        "icon_et_texte_QeYLLD",
-        "icon_et_texte_wLacLC",
-        "icon_et_texte_Qhbphx"
-      ],
-      "name": "picto-V2",
-      "settings": {}
-    },
     "image_pleine_largeur_CJ6868": {
       "type": "image-pleine-largeur",
       "blocks": {
@@ -240,6 +130,55 @@
         "image_image": "shopify://shop_images/12.jpg"
       }
     },
+    "picto_v2_PNrcCe": {
+      "type": "picto-V2",
+      "blocks": {
+        "icon_et_texte_mjBgMg": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/SAV.svg",
+            "text_text": "SAV international"
+          }
+        },
+        "icon_et_texte_MaYE7p": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/worldwide-8.png",
+            "text_text": "Worldwide delivery"
+          }
+        },
+        "icon_et_texte_QeYLLD": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/paiement_secure-8.png",
+            "text_text": "Paiement sécurisé"
+          }
+        },
+        "icon_et_texte_wLacLC": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/retours-8.png",
+            "text_text": "Retours & échanges"
+          }
+        },
+        "icon_et_texte_Qhbphx": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/ecologique-8.png",
+            "text_text": "Eco-responsable"
+          }
+        }
+      },
+      "block_order": [
+        "icon_et_texte_mjBgMg",
+        "icon_et_texte_MaYE7p",
+        "icon_et_texte_QeYLLD",
+        "icon_et_texte_wLacLC",
+        "icon_et_texte_Qhbphx"
+      ],
+      "name": "picto-V2",
+      "settings": {}
+    },
     "collection_product_d_B6id3N": {
       "type": "collection-product-d",
       "name": "Collection Products",
@@ -248,18 +187,7 @@
         "text_button_text": "VOIR TOUT",
         "url_button_link": "shopify://collections/basket",
         "collection_collection": "basket",
-        "collection_collection_limit": 8
-      }
-    },
-    "collection_product_d_pDcmKn": {
-      "type": "collection-product-d",
-      "name": "Collection Products",
-      "settings": {
-        "text_heading": "Short heading here",
-        "text_button_text": "VOIR TOUT",
-        "url_button_link": "",
-        "collection_collection": "",
-        "collection_collection_limit": 8
+        "collection_collection_limit": 4
       }
     },
     "manual_products_d_hEiEXt": {
@@ -302,23 +230,55 @@
         "text_button_text": "VOIR TOUT",
         "url_button_link": ""
       }
+    },
+    "texte_bloc_home_page_BhjYtC": {
+      "type": "texte-bloc-home-page",
+      "blocks": {
+        "sous_titre_4fdam4": {
+          "type": "sous-titre",
+          "settings": {
+            "text_heading": "Heading"
+          }
+        },
+        "grand_texte_VTxd3D": {
+          "type": "grand-texte",
+          "settings": {
+            "text_heading": "Heading"
+          }
+        },
+        "paragraphe_cmLaGk": {
+          "type": "paragraphe",
+          "settings": {
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+          }
+        },
+        "bouton_bR6Lan": {
+          "type": "bouton",
+          "settings": {
+            "url_link": "",
+            "text_text": "Button Text"
+          }
+        }
+      },
+      "block_order": [
+        "sous_titre_4fdam4",
+        "grand_texte_VTxd3D",
+        "paragraphe_cmLaGk",
+        "bouton_bR6Lan"
+      ],
+      "name": "texte-bloc-home-page",
+      "settings": {}
     }
   },
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
     "header_announcement_3fgmhF",
-    "rich_text_bloc",
-    "image_with_text",
-    "featured_products",
-    "featured_collections",
-    "blog_posts",
-    "custom_liquid",
-    "picto_v2_PNrcCe",
     "image_pleine_largeur_CJ6868",
     "faq_pAztkk",
+    "picto_v2_PNrcCe",
     "collection_product_d_B6id3N",
-    "collection_product_d_pDcmKn",
-    "manual_products_d_hEiEXt"
+    "manual_products_d_hEiEXt",
+    "texte_bloc_home_page_BhjYtC"
   ]
 }
