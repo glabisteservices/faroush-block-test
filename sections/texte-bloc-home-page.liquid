@@ -15,10 +15,11 @@
   @media screen and (max-width: 767px) {
     .centre {
       font-size: 0.8rem;
-      text-align: left
+      text-align: center
     }
     .left-align {
-      font-size: 0.8rem
+      font-size: 0.8rem;
+      text-align: left
     }
   }
   .bloc-bouton-HP {
@@ -74,18 +75,21 @@
   @media screen and (max-width: 767px) {
     .centre {
       font-size: 2rem;
-      text-align: left
+      text-align: center
     }
     .left-align {
-      font-size: 2rem
+      font-size: 2rem;
+      text-align: left
     }
   }
   @media screen and (max-width: 479px) {
     .centre {
-      font-size: 1.9rem
+      font-size: 1.9rem;
+      text-align: center
     }
     .left-align {
-      font-size: 1.9rem
+      font-size: 1.9rem;
+      text-align: left
     }
   }
   .bloc-gros-texte {
@@ -118,9 +122,18 @@
   .bloc-de-texte-wrapper {
     width: 60%
   }
+  .bloc-de-texte-wrapper.left-align {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0
+  }
   @media screen and (max-width: 767px) {
     .bloc-de-texte-wrapper {
       width: 100%;
+      padding-right: 40px;
+      padding-left: 40px
+    }
+    .bloc-de-texte-wrapper.centre {
       padding-right: 40px;
       padding-left: 40px
     }
@@ -157,18 +170,21 @@
   @media screen and (max-width: 767px) {
     .centre {
       font-size: 1.2rem;
-      text-align: left
+      text-align: center
     }
     .left-align {
-      font-size: 1.2rem
+      font-size: 1.2rem;
+      text-align: left
     }
   }
   @media screen and (max-width: 479px) {
     .centre {
-      font-size: 1rem
+      font-size: 1rem;
+      text-align: center
     }
     .left-align {
-      font-size: 1rem
+      font-size: 1rem;
+      text-align: left
     }
   }
 </style>
