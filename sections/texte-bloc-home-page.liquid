@@ -34,8 +34,13 @@
   @media screen and (max-width: 767px) {
     .bloc-bouton-HP {
       margin-top: 40px;
-      justify-content: flex-start;
       align-items: center
+    }
+    .bloc-bouton-HP.centre {
+      justify-content: center
+    }
+    .bloc-bouton-HP.left-align {
+      justify-content: flex-start
     }
   }
   .bloc-paragraph {
@@ -54,14 +59,16 @@
     .heading-style-h2 {
       font-size: 2.5rem;
       font-weight: 600;
-      line-height: 1.1
+      line-height: 1.1;
+      text-transform: none
     }
   }
   @media screen and (max-width: 479px) {
     .heading-style-h2 {
       font-size: 2rem;
       font-weight: 600;
-      line-height: 1.1
+      line-height: 1.1;
+      text-transform: none
     }
   }
   .centre {
@@ -123,7 +130,7 @@
     width: 60%
   }
   .bloc-de-texte-wrapper.left-align {
-    width: 100%;
+    width: 60%;
     padding-left: 0;
     padding-right: 0
   }
