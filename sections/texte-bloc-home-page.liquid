@@ -4,25 +4,37 @@
   }
   .centre {
     color: #6e612b;
-     text-align: center
+    text-align: center
+  }
+  .left-align {
+    color: #6e612b;
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px
   }
   @media screen and (max-width: 767px) {
     .centre {
       font-size: 0.8rem;
-       text-align: left
+      text-align: left
+    }
+    .left-align {
+      font-size: 0.8rem
     }
   }
   .bloc-bouton-HP {
     display: flex;
-     margin-top: 20px;
-     justify-content: center;
-     align-items: center
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center
+  }
+  .bloc-bouton-HP.left-align {
+    justify-content: flex-start
   }
   @media screen and (max-width: 767px) {
     .bloc-bouton-HP {
       margin-top: 40px;
-       justify-content: flex-start;
-       align-items: center
+      justify-content: flex-start;
+      align-items: center
     }
   }
   .bloc-paragraph {
@@ -30,74 +42,99 @@
   }
   .heading-style-h2 {
     font-family: Karla;
-     color: #6e612b;
-     font-size: 1.5rem;
-     line-height: 1;
-     font-weight: 400;
-     text-transform: uppercase
+    color: #6e612b;
+    font-size: 1.5rem;
+    line-height: 1;
+    font-weight: 400;
+    text-transform: uppercase
   }
+  /* Style H1 pour mobile sur le 2e heading */
   @media screen and (max-width: 767px) {
     .heading-style-h2 {
-      font-size: 2rem
+      font-size: 2.5rem;
+      font-weight: 600;
+      line-height: 1.1
     }
   }
   @media screen and (max-width: 479px) {
     .heading-style-h2 {
-      font-size: 2rem
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1.1
     }
   }
   .centre {
     text-align: center
   }
+  .left-align {
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px
+  }
   @media screen and (max-width: 767px) {
     .centre {
       font-size: 2rem;
-       text-align: left
+      text-align: left
+    }
+    .left-align {
+      font-size: 2rem
     }
   }
   @media screen and (max-width: 479px) {
     .centre {
       font-size: 1.9rem
     }
+    .left-align {
+      font-size: 1.9rem
+    }
   }
   .bloc-gros-texte {
     margin-top: 10px
   }
-  .Button 2 {
+  .Button2 {
     padding-right: 30px;
-     padding-left: 30px;
-     border-top-left-radius: 8px;
-     border-top-right-radius: 8px;
-     border-bottom-left-radius: 8px;
-     border-bottom-right-radius: 8px;
-     background-color: #a6d4f2;
-     font-family: Karla;
-     color: #6e612b;
-     font-weight: 500;
-     text-transform: uppercase
+    padding-left: 30px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #a6d4f2;
+    font-family: Karla;
+    color: #f5f2d9;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 12px;
+    padding-bottom: 12px
   }
   @media screen and (max-width: 767px) {
-    .Button 2 {
+    .Button2 {
       font-size: 0.8rem;
-       line-height: 1.3;
-       text-transform: uppercase
+      line-height: 1.3;
+      text-transform: uppercase
     }
   }
   .bloc-de-texte-wrapper {
-    width: 60%}
+    width: 60%
+  }
   @media screen and (max-width: 767px) {
     .bloc-de-texte-wrapper {
       width: 100%;
-       padding-right: 40px;
-       padding-left: 40px
+      padding-right: 40px;
+      padding-left: 40px
+    }
+    .bloc-de-texte-wrapper.left-align {
+      padding-right: 0;
+      padding-left: 0
     }
   }
   .heading-style-h1 {
     font-family: Karla;
-     color: #6e612b;
-     font-size: 2.8rem;
-     line-height: 1.1;
-     font-weight: 600
+    color: #6e612b;
+    font-size: 2.8rem;
+    line-height: 1.1;
+    font-weight: 600
   }
   @media screen and (max-width: 767px) {
     .heading-style-h1 {
@@ -106,151 +143,176 @@
   }
   .Section {
     display: flex;
-     justify-content: center;
-     align-items: center
+    justify-content: center;
+    align-items: center
   }
   .centre {
     text-align: center
   }
+  .left-align {
+    text-align: left;
+    padding-left: 20px;
+    padding-right: 20px
+  }
   @media screen and (max-width: 767px) {
     .centre {
       font-size: 1.2rem;
-       text-align: left
+      text-align: left
+    }
+    .left-align {
+      font-size: 1.2rem
     }
   }
   @media screen and (max-width: 479px) {
     .centre {
       font-size: 1rem
     }
+    .left-align {
+      font-size: 1rem
+    }
   }
 </style>
-  <div class="bloc-de-texte-wrapper" li-content-for-blocks="">
-{% for block in section.blocks %}
-{% case block.type %}
-{% when '@app' %}
-{% render block %}
 
-    {% when 'sous-titre' %}
-            <div class="Bloc-titre-H2" li-block="Sous-titre">
-                    
-      
-                    <h2 class="heading-style-h2 centre">
-{{ block.settings.text_heading }}
-</h2>
-                    
-    
-                </div>
-    {% when 'grand-texte' %}
-            <div class="bloc-gros-texte" li-block="Grand-texte">
-                    
-      
-                    <h1 class="heading-style-h1 centre">
-{{ block.settings.text_heading }}
-</h1>
-                    
-    
-                </div>
-    {% when 'paragraphe' %}
-            <div class="bloc-paragraph" li-block="Paragraphe">
-                    
-      
-                    <p class="Paragraph centre">
-{{ block.settings.text_paragraph }}
-</p>
-                    
-    
-                </div>
-    {% when 'bouton' %}
-            <div class="bloc-bouton-HP" li-block="Bouton">
-                    
-      
-                    <a class="Button 2" href="{{ block.settings.url_link }}"> {{ block.settings.text_text }} </a>
-                    
-    
-                </div>
-  {% endcase %}
-{% endfor %}
+{% assign alignment_class = 'centre' %}
+{% if section.settings.text_alignment == 'left' %}
+  {% assign alignment_class = 'left-align' %}
+{% endif %}
 
-    </div> {% schema %} {
-    "tag": "section",
-    "name": "texte-bloc-home-page",
-    "class": "Section",
-    "blocks": [
+<div class="bloc-de-texte-wrapper {{ alignment_class }}" li-content-for-blocks="">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when '@app' %}
+        {% render block %}
+
+      {% when 'sous-titre' %}
+        <div class="Bloc-titre-H2" li-block="Sous-titre">
+          <h2 class="heading-style-h2 {{ alignment_class }}">
+            {{ block.settings.text_heading }}
+          </h2>
+        </div>
+
+      {% when 'grand-texte' %}
+        <div class="bloc-gros-texte" li-block="Grand-texte">
+          <h1 class="heading-style-h1 {{ alignment_class }}">
+            {{ block.settings.text_heading }}
+          </h1>
+        </div>
+
+      {% when 'paragraphe' %}
+        <div class="bloc-paragraph" li-block="Paragraphe">
+          <p class="Paragraph {{ alignment_class }}">
+            {{ block.settings.text_paragraph }}
+          </p>
+        </div>
+
+      {% when 'bouton' %}
+        <div class="bloc-bouton-HP {{ alignment_class }}" li-block="Bouton">
+          <a class="Button2" href="{{ block.settings.url_link }}">{{ block.settings.text_text }}</a>
+        </div>
+    {% endcase %}
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "texte-bloc-home-page",
+  "class": "Section",
+  "settings": [
+    {
+      "id": "text_alignment",
+      "type": "select",
+      "label": "Alignement du texte",
+      "options": [
         {
-            "name": "Sous-titre",
-            "type": "sous-titre",
-            "settings": [
-                {
-                    "id": "text_heading",
-                    "type": "text",
-                    "label": "Heading",
-                    "default": "\n          Heading\n      "
-                }
-            ]
+          "value": "center",
+          "label": "Centré"
         },
         {
-            "name": "Grand-texte",
-            "type": "grand-texte",
-            "settings": [
-                {
-                    "id": "text_heading",
-                    "type": "text",
-                    "label": "Heading",
-                    "default": "\n          Heading\n      "
-                }
-            ]
-        },
-        {
-            "name": "Paragraphe",
-            "type": "paragraphe",
-            "settings": [
-                {
-                    "id": "text_paragraph",
-                    "type": "text",
-                    "label": "Paragraph",
-                    "default": "\n          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.\n      "
-                }
-            ]
-        },
-        {
-            "name": "Bouton",
-            "type": "bouton",
-            "settings": [
-                {
-                    "id": "url_link",
-                    "type": "url",
-                    "label": "Link"
-                },
-                {
-                    "id": "text_text",
-                    "type": "text",
-                    "label": "Text",
-                    "default": "\n          Button Text\n      "
-                }
-            ]
-        },
-        {
-            "type": "@app"
+          "value": "left",
+          "label": "À gauche (padding 20px)"
         }
-    ],
-    "presets": [
+      ],
+      "default": "center"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Sous-titre",
+      "type": "sous-titre",
+      "settings": [
         {
-            "name": "texte-bloc-home-page",
-            "category": "Liquify",
-            "blocks": [
-                {
-                    "type": "sous-titre"
-                },
-                {
-                    "type": "grand-texte"
-                },
-                {
-                    "type": "paragraphe"
-                },
-                {
-                    "type": "bouton"
-                }
-            ]
+          "id": "text_heading",
+          "type": "text",
+          "label": "Heading",
+          "default": "Heading"
         }
-    ]
-} {% endschema %}
+      ]
+    },
+    {
+      "name": "Grand-texte",
+      "type": "grand-texte",
+      "settings": [
+        {
+          "id": "text_heading",
+          "type": "text",
+          "label": "Heading",
+          "default": "Heading"
+        }
+      ]
+    },
+    {
+      "name": "Paragraphe",
+      "type": "paragraphe",
+      "settings": [
+        {
+          "id": "text_paragraph",
+          "type": "text",
+          "label": "Paragraph",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+        }
+      ]
+    },
+    {
+      "name": "Bouton",
+      "type": "bouton",
+      "settings": [
+        {
+          "id": "url_link",
+          "type": "url",
+          "label": "Link"
+        },
+        {
+          "id": "text_text",
+          "type": "text",
+          "label": "Text",
+          "default": "Button Text"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "texte-bloc-home-page",
+      "category": "Liquify",
+      "blocks": [
+        {
+          "type": "sous-titre"
+        },
+        {
+          "type": "grand-texte"
+        },
+        {
+          "type": "paragraphe"
+        },
+        {
+          "type": "bouton"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
