@@ -33,24 +33,27 @@
     margin-bottom: 1rem;
     overflow: hidden;
     border-radius: 20px;
-    background-color: #eee;
+    background-color: transparent;
     display: flex;
   }
   
   .gallery-slide {
-    width: 100%;
+    width: auto;
     height: 100%;
     flex-shrink: 0;
     border-radius: 20px;
     overflow: hidden;
-    background-color: #eee;
+    background-color: transparent;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .gallery-image {
-    width: 100%;
+    width: auto;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
   }
   
