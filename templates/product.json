@@ -66,12 +66,61 @@
       "settings": {
         "text_heading": "Vous aimerez aussi"
       }
+    },
+    "picto_v2_ywBdCc": {
+      "type": "picto-V2",
+      "blocks": {
+        "icon_et_texte_JzXCJc": {
+          "type": "icon-et-texte",
+          "settings": {
+            "text_text": "SAV à l'écoute"
+          }
+        },
+        "icon_et_texte_n8FCfY": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/worldwide-8.png",
+            "text_text": "Livraison international"
+          }
+        },
+        "icon_et_texte_KhGH8x": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/paiement_secure-8.png",
+            "text_text": "Paiement sécurisé"
+          }
+        },
+        "icon_et_texte_nwG9jb": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/retours-8.png",
+            "text_text": "Retours & échanges"
+          }
+        },
+        "icon_et_texte_NiGdLF": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/ecologique-8.png",
+            "text_text": "Eco-responsable"
+          }
+        }
+      },
+      "block_order": [
+        "icon_et_texte_JzXCJc",
+        "icon_et_texte_n8FCfY",
+        "icon_et_texte_KhGH8x",
+        "icon_et_texte_nwG9jb",
+        "icon_et_texte_NiGdLF"
+      ],
+      "name": "picto-V2",
+      "settings": {}
     }
   },
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
     "product_hero",
-    "recommended_products"
+    "recommended_products",
+    "picto_v2_ywBdCc"
   ]
 }
