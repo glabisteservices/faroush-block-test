@@ -107,6 +107,16 @@
       ],
       "name": "picto-V2",
       "settings": {}
+    },
+    "product_details_accordion_8fNf6L": {
+      "type": "product-details-accordion",
+      "name": "Détails produit accordéon",
+      "settings": {
+        "details_title": "Détails produit",
+        "matiere_title": "Matière & composition",
+        "livraison_title": "Livraison & retours",
+        "entretien_title": "Conseils d'entretien"
+      }
     }
   },
   "layout": "theme",
@@ -114,6 +124,7 @@
   "order": [
     "product_hero",
     "recommended_products",
-    "picto_v2_ywBdCc"
+    "picto_v2_ywBdCc",
+    "product_details_accordion_8fNf6L"
   ]
 }
