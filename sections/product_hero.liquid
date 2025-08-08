@@ -1,166 +1,497 @@
-<div class="padding-global padding-section-small">
-          <div class="container-large">
-            <div class="product-header_component">
-              <script src="{{ 'li_custom.js' | asset_url }}" type="text/javascript"></script>
-<div li-element="product-variant-container" class="w-layout-grid product-header_layout" x-data="handleVariant({{ product | json | escape }}, {{ product.options_by_name | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})" x-init="$nextTick(() => { activateVariants() })" @setbundleitem.window="updateBundleItem($event.detail.product, $event.detail.quantity)">
-                <div id="w-node-_4b0e9b61-6f53-1185-9fdd-143753136862-5313685d" class="swiper-container is-product-gallery">
-                  <div class="swiper is-product-gallery">
-                    <div id="my-gallery" li-for:inside="media in product.media" class="swiper-wrapper is-product-gallery">
-        {% for media in product.media %}                            
-                      
-                            {% if media.media_type == 'image' %}    <div li-if="media.media_type == 'image'" class="swiper-slide is-product-gallery">
-    
-                        <div class="product-header_gallery-lightbox"><img loading="lazy" li-object:src="media | image_url: width: 1000" li-object:alt="media.alt" src="{{ media | image_url: width: 1000 }}" alt="{{ media.alt }}" class="product-header_gallery-image"></div>
-                          </div>
-{% endif %}
-                            
-                      
-                            {% if media.media_type == 'video' %}    <div li-if="media.media_type == 'video'" class="swiper-slide is-product-gallery">
-    
-                        <div class="product-header_gallery-lightbox">
-                          <div li-object="media | video_tag: controls: true" class="product-header_gallery-image">{{ media | video_tag: controls: true }}</div>
-                        </div>
-                          </div>
-{% endif %}
-                            
-                    
-                    {% endfor %}    </div>
-                  </div>
-                  <div class="product-header_slider-wrapper">
-                    <div class="swiper_button-wrapper is-product-slider pointer-events-off z-index-1 hide-mobile-landscape">
-                      <a aria-label="Previous Slide" href="#" class="swiper_button swiper-prev pointer-events-on w-inline-block">
-                        <div class="swiper_button-icon is-reversed w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 29.541 22.323">
-                            <g id="Group_44" data-name="Group 44" transform="translate(0 1.014)">
-                              <path id="Path_1" data-name="Path 1" d="M115.445,20.633l9.311-10.148L115.445.338" transform="translate(-97.25 -0.338)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></path>
-                              <line id="Line_1" data-name="Line 1" x1="27.506" transform="translate(0 10.148)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></line>
-                            </g>
-                          </svg></div>
-                      </a>
-                      <a aria-label="Next Slide" href="#" class="swiper_button swiper-next pointer-events-on w-inline-block">
-                        <div class="swiper_button-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 29.541 22.323">
-                            <g id="Group_44" data-name="Group 44" transform="translate(0 1.014)">
-                              <path id="Path_1" data-name="Path 1" d="M115.445,20.633l9.311-10.148L115.445.338" transform="translate(-97.25 -0.338)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></path>
-                              <line id="Line_1" data-name="Line 1" x1="27.506" transform="translate(0 10.148)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></line>
-                            </g>
-                          </svg></div>
-                      </a>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Hero Section</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Karla, Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
+
+        .product-header_component {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .product-header_layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .product-header_layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Gallery Styles */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .main-gallery {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 20px;
+            background-color: #eee;
+        }
+
+        .gallery-slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .gallery-slide.active {
+            display: block;
+        }
+
+        .gallery-slide img,
+        .gallery-slide video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        /* Navigation Arrows - Positioned at bottom right */
+        .gallery-navigation {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .nav-arrow {
+            width: 48px;
+            height: 48px;
+            background-color: #f5f2d9;
+            border: 1px solid #6e612b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .nav-arrow:hover {
+            background-color: #6e612b;
+            color: #f5f2d9;
+        }
+
+        .nav-arrow svg {
+            width: 20px;
+            height: 20px;
+            color: currentColor;
+        }
+
+        .nav-arrow.prev svg {
+            transform: rotate(180deg);
+        }
+
+        /* Thumbnails */
+        .thumbnail-gallery {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            overflow-x: auto;
+            padding: 5px 0;
+        }
+
+        .thumbnail {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+            position: relative;
+        }
+
+        .thumbnail:hover,
+        .thumbnail.active {
+            border-color: #6e612b;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background-color: rgba(0,0,0,0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Product Details */
+        .product-header_product-details {
+            padding: 2rem 0;
+        }
+
+        .product-name {
+            font-size: 2rem;
+            color: #6e612b;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .product-price-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .current-price {
+            font-size: 1.5rem;
+            color: #6e612b;
+            font-weight: 600;
+        }
+
+        .original-price {
+            font-size: 1.2rem;
+            color: #9e8c73;
+            text-decoration: line-through;
+        }
+
+        .product-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .product-tag {
+            padding: 0.3rem 1rem;
+            background-color: #9e8c73;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 8px;
+        }
+
+        .product-tag.sale {
+            background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+            color: #f5f2d9;
+        }
+
+        .shipping-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .shipping-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #6e612b;
+        }
+
+        .shipping-text {
+            color: #6e612b;
+            font-size: 1rem;
+        }
+
+        .product-description {
+            color: #9e8c73;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Variant Selection */
+        .variant-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .variant-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #6e612b;
+            font-weight: 500;
+        }
+
+        .variant-select {
+            width: 100%;
+            padding: 0.65rem 1.5rem;
+            border: 1px solid hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+            border-radius: 10px;
+            background-color: transparent;
+            color: #6e612b;
+            font-family: Karla;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Add to Cart Section */
+        .add-to-cart-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart-button {
+            width: 100%;
+            padding: 0.65rem 1.5rem;
+            background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+            color: #f5f2d9;
+            border: none;
+            border-radius: 9px;
+            font-family: Karla;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-to-cart-button:hover {
+            background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1.00);
+        }
+
+        .add-to-cart-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .out-of-stock {
+            width: 100%;
+            padding: 0.65rem 1.5rem;
+            background-color: #f0f0f0;
+            color: #999;
+            border: 1px solid #ddd;
+            border-radius: 9px;
+            font-family: Karla;
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="product-header_component">
+        <div class="product-header_layout">
+            <!-- Gallery Section -->
+            <div class="gallery-container">
+                <div class="main-gallery" id="mainGallery">
+                    <div class="gallery-slide active">
+                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&h=600&fit=crop" alt="Chaussure noire vue 1" />
                     </div>
-                    <div class="swiper is-product-thumbnail">
-                      <div li-for:inside="media in product.media" class="swiper-wrapper is-product-thumbnail">
-        {% for media in product.media %}                            
-                        
-                            {% if media.media_type == 'image' %}    <div li-if="media.media_type == 'image'" class="swiper-slide is-product-thumbnail">
-    <img loading="lazy" li-object:src="media | image_url: width: 200" li-object:alt="media.alt" src="{{ media | image_url: width: 200 }}" alt="{{ media.alt }}" class="product-header_thumbnail-image">    </div>
-{% endif %}
-                            
-                        
-                            {% if media.media_type == 'video' %}    <div li-if="media.media_type == 'video'" class="swiper-slide is-product-thumbnail">
-    <img loading="lazy" li-object:src="media | image_url: width: 200" li-object:alt="media.alt" src="{{ media | image_url: width: 200 }}" alt="{{ media.alt }}" class="product-header_thumbnail-image">
-                          <div aria-hidden="true" class="product-header_play-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="100%" height="100%" preserveaspectratio="xMidYMid meet" viewbox="0 0 24 24">
-                              <path fill="currentColor" d="M8 5v14l11-7z"></path>
-                            </svg></div>
-                            </div>
-{% endif %}
-                            
-                      
-                    {% endfor %}    </div>
+                    <div class="gallery-slide">
+                        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&h=600&fit=crop" alt="Chaussure noire vue 2" />
                     </div>
-                  </div>
-                  <div class="swiper-slide is-product-thumbnail is-active hide"></div>
+                    <div class="gallery-slide">
+                        <video controls>
+                            <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
+                            Votre navigateur ne supporte pas la vidéo.
+                        </video>
+                    </div>
+                    <div class="gallery-slide">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=600&fit=crop" alt="Chaussure noire vue 4" />
+                    </div>
                 </div>
-                <div li-content-for-theme-blocks="" id="w-node-_4b0e9b61-6f53-1185-9fdd-143753136879-5313685d" class="product-header_product-details">
-{% content_for 'blocks' %}
-</div>
-              </div>
+                
+                <!-- Navigation Arrows -->
+                <div class="gallery-navigation">
+                    <button class="nav-arrow prev" onclick="changeSlide(-1)" aria-label="Image précédente">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9,18 15,12 9,6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="nav-arrow next" onclick="changeSlide(1)" aria-label="Image suivante">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9,18 15,12 9,6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Thumbnails -->
+                <div class="thumbnail-gallery">
+                    <div class="thumbnail active" onclick="goToSlide(0)">
+                        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=80&h=80&fit=crop" alt="Miniature 1" />
+                    </div>
+                    <div class="thumbnail" onclick="goToSlide(1)">
+                        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=80&h=80&fit=crop" alt="Miniature 2" />
+                    </div>
+                    <div class="thumbnail" onclick="goToSlide(2)">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=80&h=80&fit=crop" alt="Miniature 3" />
+                        <div class="play-icon">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="thumbnail" onclick="goToSlide(3)">
+                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=80&h=80&fit=crop" alt="Miniature 4" />
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <!-- Product Details Section -->
+            <div class="product-header_product-details">
+                <h1 class="product-name">Chaussures Confort Noires</h1>
+                
+                <div class="product-price-wrapper">
+                    <span class="current-price" id="currentPrice">55€</span>
+                    <span class="original-price" id="originalPrice">65€</span>
+                </div>
+
+                <div class="product-tags">
+                    <span class="product-tag sale">Sale</span>
+                    <span class="product-tag">Not in Stock</span>
+                </div>
+
+                <div class="shipping-info">
+                    <svg class="shipping-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16,8 20,8 23,11 23,16 16,16 16,8"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                    <span class="shipping-text">Livraison 1 - 3 jours</span>
+                </div>
+
+                <div class="product-description">
+                    <p>The rich text element allows you to create and format headings, paragraphs, blockquotes, images, and video all in one place instead of having to add and format them individually. Just double-click and easily create content.</p>
+                </div>
+
+                <div class="variant-section">
+                    <label for="sizeSelect" class="variant-label">Pointure</label>
+                    <select id="sizeSelect" class="variant-select" onchange="updateVariant()">
+                        <option value="38" data-price="55" data-available="false">38 - 55€ (Rupture de stock)</option>
+                        <option value="39" data-price="55" data-available="true">39 - 55€</option>
+                        <option value="40" data-price="58" data-available="true">40 - 58€</option>
+                        <option value="41" data-price="58" data-available="true">41 - 58€</option>
+                        <option value="42" data-price="60" data-available="true">42 - 60€</option>
+                    </select>
+                </div>
+
+                <div class="add-to-cart-section">
+                    <button class="add-to-cart-button" id="addToCartBtn" disabled>
+                        Ajouter au panier
+                    </button>
+                    <div class="out-of-stock" id="outOfStockMsg">
+                        Not in Stock
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="hide w-embed w-script">
-          <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-          <script>
-  $(".swiper-container").each(function (index) {
-    const thumbsSwiper = new Swiper($(this).find(".swiper.is-product-thumbnail")[0], {
-      slidesPerView: "auto",
-      rewind: false,
-      loopedSlides: 8,
-      slideToClickedSlide: true,
-      spaceBetween: "4%",
-    });
-    const swiper = new Swiper($(this).find(".swiper.is-product-gallery")[0], {
-      mousewheel: {
-        forceToAxis: true
-      },
-      thumbs: {
-        swiper: thumbsSwiper,
-        slideThumbActiveClass: "is-active",
-      },
-      keyboard: {
-        enabled: true,
-        onlyInViewport: true
-      },
-      navigation: {
-        nextEl: $(this).find(".swiper-next")[0],
-        prevEl: $(this).find(".swiper-prev")[0],
-      }
-    });
-  }); 
-</script>
-        </div> {% schema %} {
-    "tag": "section",
-    "name": "Product Hero",
-    "class": "section_product-header",
-    "blocks": [
-        {
-            "type": "vendor"
-        },
-        {
-            "type": "product-name"
-        },
-        {
-            "type": "product-price"
-        },
-        {
-            "type": "availability"
-        },
-        {
-            "type": "add-to-cart"
-        },
-        {
-            "type": "description"
-        },
-        {
-            "type": "@app"
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.gallery-slide');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            // Remove active class from all slides and thumbnails
+            slides.forEach(slide => slide.classList.remove('active'));
+            thumbnails.forEach(thumb => thumb.classList.remove('active'));
+            
+            // Add active class to current slide and thumbnail
+            slides[index].classList.add('active');
+            thumbnails[index].classList.add('active');
         }
-    ],
-    "presets": [
-        {
-            "name": "Product Hero",
-            "category": "Liquify",
-            "blocks": [
-                {
-                    "type": "vendor"
-                },
-                {
-                    "type": "product-name"
-                },
-                {
-                    "type": "product-price"
-                },
-                {
-                    "type": "availability"
-                },
-                {
-                    "type": "add-to-cart"
-                },
-                {
-                    "type": "description"
-                }
-            ]
+
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            
+            // Loop around if we reach the end
+            if (currentSlideIndex >= totalSlides) {
+                currentSlideIndex = 0;
+            } else if (currentSlideIndex < 0) {
+                currentSlideIndex = totalSlides - 1;
+            }
+            
+            showSlide(currentSlideIndex);
         }
-    ],
-    "enabled_on": {
-        "templates": [
-            "product"
-        ]
-    }
-} {% endschema %}
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+
+        function updateVariant() {
+            const select = document.getElementById('sizeSelect');
+            const selectedOption = select.options[select.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+            const available = selectedOption.getAttribute('data-available') === 'true';
+            
+            // Update price
+            document.getElementById('currentPrice').textContent = price + '€';
+            
+            // Update availability
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            const outOfStockMsg = document.getElementById('outOfStockMsg');
+            
+            if (available) {
+                addToCartBtn.style.display = 'block';
+                addToCartBtn.disabled = false;
+                outOfStockMsg.style.display = 'none';
+                
+                // Update tag
+                const stockTag = document.querySelector('.product-tag:not(.sale)');
+                stockTag.textContent = 'En stock';
+                stockTag.style.backgroundColor = '#4CAF50';
+            } else {
+                addToCartBtn.style.display = 'none';
+                outOfStockMsg.style.display = 'block';
+                
+                // Update tag
+                const stockTag = document.querySelector('.product-tag:not(.sale)');
+                stockTag.textContent = 'Not in Stock';
+                stockTag.style.backgroundColor = '#9e8c73';
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeSlide(1);
+            }
+        });
+
+        // Initialize
+        updateVariant();
+    </script>
+</body>
+</html>
