@@ -2,6 +2,7 @@
   .product-details-accordion .dropdown-toggle {
     width: 100%;
     padding: 15px 0;
+    padding-left: 0px;
     border: none;
     background: none;
     text-align: left;
@@ -22,11 +23,17 @@
   .dropdown {
     width: 100%;
     border-top: 1px solid #6e612b;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #6e612b;
     font-family: Karla;
   }
   
   .dropdown:last-child {
     border-bottom: 1px solid #6e612b;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: #6e612b;
   }
   
   .heading-style-h4 {
@@ -67,7 +74,8 @@
   .dropdown-content {
     display: none;
     padding: 0 0 20px 0;
-    margin-bottom: 0;
+    margin-bottom: 40px;
+    position: static;
   }
   
   .dropdown-content.open {
@@ -84,6 +92,7 @@
     transition: transform 0.3s ease;
     font-size: 1.2em;
     color: #6e612b;
+    margin-left: auto;
   }
   
   .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
@@ -145,9 +154,7 @@
       <div class="dropdown-icon">▼</div>
     </button>
     <div class="dropdown-content" data-dropdown-content="livraison">
-      <div class="rich-text-content">
-        {{ shop.metafields.custom.livraison_retours.value }}
-      </div>
+      {{ shop.metafields.custom.livraison_retours.value }}
     </div>
   </div>
   {% endif %}
