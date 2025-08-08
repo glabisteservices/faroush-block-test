@@ -54,6 +54,16 @@
       ],
       "settings": {}
     },
+    "product_details_accordion_8fNf6L": {
+      "type": "product-details-accordion",
+      "name": "Détails produit accordéon",
+      "settings": {
+        "details_title": "Détails produit",
+        "matiere_title": "Matière & composition",
+        "livraison_title": "Livraison & retours",
+        "entretien_title": "Conseils d'entretien"
+      }
+    },
     "recommended_products": {
       "type": "recommended_products",
       "settings": {
@@ -107,24 +117,14 @@
       ],
       "name": "picto-V2",
       "settings": {}
-    },
-    "product_details_accordion_8fNf6L": {
-      "type": "product-details-accordion",
-      "name": "Détails produit accordéon",
-      "settings": {
-        "details_title": "Détails produit",
-        "matiere_title": "Matière & composition",
-        "livraison_title": "Livraison & retours",
-        "entretien_title": "Conseils d'entretien"
-      }
     }
   },
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
     "product_hero",
+    "product_details_accordion_8fNf6L",
     "recommended_products",
-    "picto_v2_ywBdCc",
-    "product_details_accordion_8fNf6L"
+    "picto_v2_ywBdCc"
   ]
 }
