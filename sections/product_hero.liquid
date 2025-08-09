@@ -1127,26 +1127,45 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   };
+
+  // Fonction pour forcer le style flex sur le wrapper du guide des tailles
+  const fixSizeGuideLayout = () => {
+    const wrappers = document.querySelectorAll('.variant-label-row');
+    wrappers.forEach(wrapper => {
+      wrapper.style.setProperty('display', 'flex', 'important');
+      wrapper.style.setProperty('justify-content', 'space-between', 'important');
+      wrapper.style.setProperty('align-items', 'center', 'important');
+      wrapper.style.setProperty('width', '100%', 'important');
+    });
+  };
   
   // Exécuter immédiatement et à intervalles
   protectTitle();
   adjustPictosOnMobile();
+  fixSizeGuideLayout();
   setTimeout(protectTitle, 50);
   setTimeout(adjustPictosOnMobile, 50);
+  setTimeout(fixSizeGuideLayout, 50);
   setTimeout(protectTitle, 100);
   setTimeout(adjustPictosOnMobile, 100);
+  setTimeout(fixSizeGuideLayout, 100);
   setTimeout(protectTitle, 200);
   setTimeout(adjustPictosOnMobile, 200);
+  setTimeout(fixSizeGuideLayout, 200);
   setTimeout(protectTitle, 500);
   setTimeout(adjustPictosOnMobile, 500);
+  setTimeout(fixSizeGuideLayout, 500);
   setTimeout(protectTitle, 1000);
   setTimeout(adjustPictosOnMobile, 1000);
+  setTimeout(fixSizeGuideLayout, 1000);
   setTimeout(protectTitle, 2000);
   setTimeout(adjustPictosOnMobile, 2000);
+  setTimeout(fixSizeGuideLayout, 2000);
   
   // Observer continu
   setInterval(protectTitle, 1000);
   setInterval(adjustPictosOnMobile, 1000);
+  setInterval(fixSizeGuideLayout, 1000);
   
   // Debug : surveiller les scroll automatiques non désirés
   if (isMobile()) {
@@ -1172,6 +1191,7 @@ document.addEventListener('DOMContentLoaded', function() {
       initializeSwipe();
       protectTitle(); // Reprotéger le titre
       adjustPictosOnMobile(); // Réajuster les pictos
+      fixSizeGuideLayout(); // Refixer le layout du guide des tailles
     }, 100);
   });
 });
