@@ -54,16 +54,7 @@
     min-width: 0;
   }
   
-  .sticky-cart-product-name {
-    font-family: Karla, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: #6e612b;
-    margin: 0 0 4px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+
   
   .sticky-cart-product-price {
     font-family: Karla, sans-serif;
@@ -145,10 +136,6 @@
       height: 40px;
     }
     
-    .sticky-cart-product-name {
-      font-size: 13px;
-    }
-    
     .sticky-cart-product-price {
       font-size: 15px;
     }
@@ -181,7 +168,6 @@
         />
       {% endif %}
       <div class="sticky-cart-product-details">
-        <h3 class="sticky-cart-product-name">{{ product.title }}</h3>
         <p class="sticky-cart-product-price">
           {% if product.price_varies %}
             À partir de {{ product.price_min | money }}
