@@ -207,23 +207,39 @@
     }
   }
   
-  .product-title {
+  /* Titre du produit - Protection renforcée */
+  .product-header_product-details .product-title,
+  .product-header_product-details h1.product-title,
+  h1.product-title {
     font-family: Karla, sans-serif !important;
     color: #6e612b !important;
     font-size: 1.75rem !important; /* Taille H4 */
     font-weight: 600 !important;
     margin: 0 !important;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    padding: 0 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
     line-height: 1.2 !important;
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
     position: relative !important;
+    z-index: 10 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
   }
   
   @media screen and (max-width: 768px) {
-    .product-title {
+    .product-header_product-details .product-title,
+    .product-header_product-details h1.product-title,
+    h1.product-title {
       font-size: 1.5rem !important;
     }
   }
@@ -501,7 +517,7 @@
       <div class="product-header_product-details">
         
         <!-- Product Title -->
-        <h1 class="product-title">{{ product.title }}</h1>
+        <h1 class="product-title product-main-title">{{ product.title }}</h1>
         
         <!-- Price -->
         <div class="product-price-wrapper">
@@ -837,28 +853,44 @@ document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
   initializeSwipe();
   
-  // Protection pour le titre du produit
-  const productTitle = document.querySelector('.product-title');
-  if (productTitle) {
-    // S'assurer que le titre reste visible
-    const ensureTitle = () => {
-      productTitle.style.display = 'block';
-      productTitle.style.visibility = 'visible';
-      productTitle.style.opacity = '1';
-    };
-    
-    // Vérifier plusieurs fois après le chargement
-    setTimeout(ensureTitle, 100);
-    setTimeout(ensureTitle, 500);
-    setTimeout(ensureTitle, 1000);
-    
-    // Observer les changements
-    const observer = new MutationObserver(ensureTitle);
-    observer.observe(productTitle, { 
-      attributes: true, 
-      attributeFilter: ['style', 'class'] 
+  // Protection renforcée pour le titre du produit
+  const protectTitle = () => {
+    const titles = document.querySelectorAll('.product-title, .product-main-title, h1.product-title');
+    titles.forEach(title => {
+      if (title) {
+        const styles = {
+          'display': 'block',
+          'visibility': 'visible',
+          'opacity': '1',
+          'position': 'relative',
+          'z-index': '10',
+          'font-size': window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
+          'font-family': 'Karla, sans-serif',
+          'color': '#6e612b',
+          'font-weight': '600',
+          'line-height': '1.2',
+          'margin': '0',
+          'padding': '0'
+        };
+        
+        Object.keys(styles).forEach(property => {
+          title.style.setProperty(property, styles[property], 'important');
+        });
+      }
     });
-  }
+  };
+  
+  // Exécuter immédiatement et à intervalles
+  protectTitle();
+  setTimeout(protectTitle, 50);
+  setTimeout(protectTitle, 100);
+  setTimeout(protectTitle, 200);
+  setTimeout(protectTitle, 500);
+  setTimeout(protectTitle, 1000);
+  setTimeout(protectTitle, 2000);
+  
+  // Observer continu
+  setInterval(protectTitle, 1000);
   
   // Debug : surveiller les scroll automatiques non désirés
   if (isMobile()) {
@@ -882,6 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       updateGalleryDisplay();
       initializeSwipe();
+      protectTitle(); // Reprotéger le titre
     }, 100);
   });
 });
