@@ -14,7 +14,7 @@
       grid-template-columns: 1fr;
       grid-column-gap: 0;
       min-height: auto;
-      padding: 2rem 1rem;
+      padding: 0 5px; /* Padding total de 10px (5px de chaque côté) */
     }
   }
   
@@ -27,6 +27,13 @@
     flex-direction: column;
   }
   
+  @media screen and (max-width: 768px) {
+    .product-gallery-container {
+      height: auto;
+      min-height: 300px;
+    }
+  }
+  
   .product-gallery-main {
     position: relative;
     width: 100%;
@@ -36,6 +43,7 @@
     border-radius: 20px;
     background-color: transparent;
     display: flex;
+    touch-action: pan-x; /* Permet le swipe horizontal sur mobile */
   }
   
   .gallery-slide {
@@ -49,6 +57,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .gallery-slide {
+      width: 100%;
+      min-height: 300px;
+    }
   }
   
   .gallery-image {
@@ -65,8 +80,21 @@
     transition: transform 0.3s ease;
   }
   
+  @media screen and (max-width: 768px) {
+    .gallery-slides-container {
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+  }
+  
   .gallery-slide:not(:last-child) {
     margin-right: 1rem;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .gallery-slide:not(:last-child) {
+      margin-right: 0;
+    }
   }
   
   /* Navigation Arrows */
@@ -77,6 +105,12 @@
     display: flex;
     gap: 0.5rem;
     z-index: 10;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .gallery-navigation {
+      display: none; /* Masquer les flèches sur mobile */
+    }
   }
   
   .nav-arrow {
@@ -119,12 +153,18 @@
     gap: 0.5rem;
     overflow-x: auto;
     padding: 0.5rem 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  
+  .product-thumbnails::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
   
   .thumbnail-item {
     flex-shrink: 0;
-    width: 64px;
-    height: 80px;
+    width: auto;
+    height: 3.7rem; /* Hauteur fixe de 3.7rem */
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
@@ -137,7 +177,7 @@
   }
   
   .thumbnail-image {
-    width: 100%;
+    width: auto;
     height: 100%;
     object-fit: cover;
     object-position: center;
@@ -153,18 +193,36 @@
     overflow-y: auto;
   }
   
+  @media screen and (max-width: 768px) {
+    .product-header_product-details {
+      height: auto;
+      padding: 1rem 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+  
   .product-title {
     font-family: Karla, sans-serif;
     color: #6e612b;
     font-size: 2rem;
     font-weight: 600;
     margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .product-title {
+      font-size: 1.5rem;
+    }
   }
   
   .product-price-wrapper {
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
   }
   
   .product-price {
@@ -174,11 +232,23 @@
     font-weight: 600;
   }
   
+  @media screen and (max-width: 768px) {
+    .product-price {
+      font-size: 1.3rem;
+    }
+  }
+  
   .product-compare-price {
     font-family: Karla, sans-serif;
     color: #9e8c73;
     font-size: 1.2rem;
     text-decoration: line-through;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .product-compare-price {
+      font-size: 1rem;
+    }
   }
   
   .product-item_tag {
@@ -222,6 +292,8 @@
     font-family: Karla, sans-serif;
     color: #6e612b;
     line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   /* Variant Selection */
@@ -229,6 +301,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
   }
   
   .variant-label {
@@ -247,6 +320,8 @@
     color: #6e612b;
     font-size: 1rem;
     cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   /* Add to Cart */
@@ -262,6 +337,7 @@
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-sizing: border-box;
   }
   
   .add-to-cart-button:hover {
@@ -281,12 +357,15 @@
     padding: 1rem 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .shipping-icon {
     width: 1.5rem;
     height: 1.5rem;
     color: #6e612b;
+    flex-shrink: 0;
   }
   
   .shipping-text {
@@ -302,7 +381,7 @@
       
       <!-- Gallery Section -->
       <div class="product-gallery-container">
-        <div class="product-gallery-main">
+        <div class="product-gallery-main" id="gallery-main">
           <div class="gallery-slides-container" id="slides-container">
             {% for media in product.media %}
               <div class="gallery-slide" data-slide="{{ forloop.index0 }}">
@@ -428,19 +507,40 @@ let currentImageIndex = 0;
 const totalImages = {{ product.media.size }};
 const productVariants = {{ product.variants | json }};
 
+// Variables pour le swipe mobile
+let startX = 0;
+let currentX = 0;
+let isDragging = false;
+let isSwipeActive = false;
+
+// Fonction pour déterminer si on est sur mobile
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
 // Navigation des images
 function nextImage() {
-  if (currentImageIndex < totalImages - 1) {
-    currentImageIndex++;
-    updateGalleryDisplay();
+  if (isMobile()) {
+    // Loop infinie sur mobile
+    currentImageIndex = (currentImageIndex + 1) % totalImages;
+  } else {
+    if (currentImageIndex < totalImages - 1) {
+      currentImageIndex++;
+    }
   }
+  updateGalleryDisplay();
 }
 
 function previousImage() {
-  if (currentImageIndex > 0) {
-    currentImageIndex--;
-    updateGalleryDisplay();
+  if (isMobile()) {
+    // Loop infinie sur mobile
+    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+  } else {
+    if (currentImageIndex > 0) {
+      currentImageIndex--;
+    }
   }
+  updateGalleryDisplay();
 }
 
 function setCurrentImage(index) {
@@ -453,15 +553,20 @@ function updateGalleryDisplay() {
   const slides = document.querySelectorAll('.gallery-slide');
   
   if (slidesContainer && slides.length > 0) {
-    // Calculer la largeur cumulative des slides précédentes
-    let offset = 0;
-    for (let i = 0; i < currentImageIndex; i++) {
-      const slideWidth = slides[i].offsetWidth;
-      const marginRight = 16; // 1rem = 16px
-      offset += slideWidth + marginRight;
+    if (isMobile()) {
+      // Sur mobile, chaque slide fait 100% de largeur
+      const offset = currentImageIndex * 100;
+      slidesContainer.style.transform = `translateX(-${offset}%)`;
+    } else {
+      // Sur desktop, calcul normal
+      let offset = 0;
+      for (let i = 0; i < currentImageIndex; i++) {
+        const slideWidth = slides[i].offsetWidth;
+        const marginRight = 16; // 1rem = 16px
+        offset += slideWidth + marginRight;
+      }
+      slidesContainer.style.transform = `translateX(-${offset}px)`;
     }
-    
-    slidesContainer.style.transform = `translateX(-${offset}px)`;
   }
   
   // Mettre à jour les thumbnails
@@ -470,12 +575,123 @@ function updateGalleryDisplay() {
     thumb.classList.toggle('active', index === currentImageIndex);
   });
   
-  // Mettre à jour les boutons
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
+  // Scroll automatique vers la thumbnail active
+  const activeThumbnail = document.querySelector('.thumbnail-item.active');
+  if (activeThumbnail) {
+    activeThumbnail.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
+  }
   
-  if (prevBtn) prevBtn.disabled = currentImageIndex === 0;
-  if (nextBtn) nextBtn.disabled = currentImageIndex === totalImages - 1;
+  // Mettre à jour les boutons (seulement sur desktop)
+  if (!isMobile()) {
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    if (prevBtn) prevBtn.disabled = currentImageIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentImageIndex === totalImages - 1;
+  }
+}
+
+// Gestion du swipe sur mobile
+function initializeSwipe() {
+  const galleryMain = document.getElementById('gallery-main');
+  
+  if (!galleryMain || !isMobile()) return;
+  
+  // Touch events
+  galleryMain.addEventListener('touchstart', handleTouchStart, { passive: true });
+  galleryMain.addEventListener('touchmove', handleTouchMove, { passive: false });
+  galleryMain.addEventListener('touchend', handleTouchEnd, { passive: true });
+  
+  // Mouse events pour tester sur desktop
+  galleryMain.addEventListener('mousedown', handleMouseStart);
+  galleryMain.addEventListener('mousemove', handleMouseMove);
+  galleryMain.addEventListener('mouseup', handleMouseEnd);
+  galleryMain.addEventListener('mouseleave', handleMouseEnd);
+}
+
+function handleTouchStart(e) {
+  startX = e.touches[0].clientX;
+  isDragging = true;
+  isSwipeActive = false;
+}
+
+function handleTouchMove(e) {
+  if (!isDragging) return;
+  
+  currentX = e.touches[0].clientX;
+  const diffX = Math.abs(currentX - startX);
+  
+  // Si le mouvement horizontal est suffisant, on active le swipe
+  if (diffX > 10) {
+    isSwipeActive = true;
+    e.preventDefault(); // Empêche le scroll vertical
+  }
+}
+
+function handleTouchEnd(e) {
+  if (!isDragging || !isSwipeActive) {
+    isDragging = false;
+    isSwipeActive = false;
+    return;
+  }
+  
+  const diffX = currentX - startX;
+  const threshold = 50; // Distance minimum pour déclencher le swipe
+  
+  if (Math.abs(diffX) > threshold) {
+    if (diffX > 0) {
+      previousImage(); // Swipe vers la droite
+    } else {
+      nextImage(); // Swipe vers la gauche
+    }
+  }
+  
+  isDragging = false;
+  isSwipeActive = false;
+}
+
+function handleMouseStart(e) {
+  if (!isMobile()) return;
+  startX = e.clientX;
+  isDragging = true;
+  isSwipeActive = false;
+}
+
+function handleMouseMove(e) {
+  if (!isDragging || !isMobile()) return;
+  
+  currentX = e.clientX;
+  const diffX = Math.abs(currentX - startX);
+  
+  if (diffX > 10) {
+    isSwipeActive = true;
+  }
+}
+
+function handleMouseEnd(e) {
+  if (!isDragging || !isSwipeActive || !isMobile()) {
+    isDragging = false;
+    isSwipeActive = false;
+    return;
+  }
+  
+  const diffX = currentX - startX;
+  const threshold = 50;
+  
+  if (Math.abs(diffX) > threshold) {
+    if (diffX > 0) {
+      previousImage();
+    } else {
+      nextImage();
+    }
+  }
+  
+  isDragging = false;
+  isSwipeActive = false;
 }
 
 // Mise à jour des variantes
@@ -553,10 +769,14 @@ function updateStockStatus(variant) {
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
+  initializeSwipe();
   
   // Re-calculer lors du redimensionnement de la fenêtre
   window.addEventListener('resize', function() {
-    setTimeout(updateGalleryDisplay, 100);
+    setTimeout(() => {
+      updateGalleryDisplay();
+      initializeSwipe();
+    }, 100);
   });
 });
 </script>
