@@ -603,16 +603,10 @@ function initializeSwipe() {
   
   if (!galleryMain || !isMobile()) return;
   
-  // Touch events
+  // Touch events avec passive: true pour ne pas bloquer le scroll
   galleryMain.addEventListener('touchstart', handleTouchStart, { passive: true });
-  galleryMain.addEventListener('touchmove', handleTouchMove, { passive: false });
+  galleryMain.addEventListener('touchmove', handleTouchMove, { passive: true });
   galleryMain.addEventListener('touchend', handleTouchEnd, { passive: true });
-  
-  // Mouse events pour tester sur desktop
-  galleryMain.addEventListener('mousedown', handleMouseStart);
-  galleryMain.addEventListener('mousemove', handleMouseMove);
-  galleryMain.addEventListener('mouseup', handleMouseEnd);
-  galleryMain.addEventListener('mouseleave', handleMouseEnd);
 }
 
 function handleTouchStart(e) {
@@ -630,11 +624,10 @@ function handleTouchMove(e) {
   const diffX = Math.abs(currentX - startX);
   const diffY = Math.abs(currentY - startY);
   
-  // Ne déclencher le swipe que si le mouvement horizontal est plus important que le vertical
-  // et que le mouvement horizontal dépasse un seuil minimum
-  if (diffX > 15 && diffX > diffY * 1.5) {
+  // Ne déclencher le swipe que si le mouvement horizontal est très clairement plus important
+  if (diffX > 30 && diffX > diffY * 2) {
     isSwipeActive = true;
-    e.preventDefault(); // Empêche le scroll vertical seulement si c'est un swipe horizontal
+    // Ne plus utiliser preventDefault pour laisser le scroll normal fonctionner
   }
 }
 
@@ -660,48 +653,7 @@ function handleTouchEnd(e) {
   isSwipeActive = false;
 }
 
-function handleMouseStart(e) {
-  if (!isMobile()) return;
-  startX = e.clientX;
-  startY = e.clientY;
-  isDragging = true;
-  isSwipeActive = false;
-}
 
-function handleMouseMove(e) {
-  if (!isDragging || !isMobile()) return;
-  
-  currentX = e.clientX;
-  currentY = e.clientY;
-  const diffX = Math.abs(currentX - startX);
-  const diffY = Math.abs(currentY - startY);
-  
-  if (diffX > 15 && diffX > diffY * 1.5) {
-    isSwipeActive = true;
-  }
-}
-
-function handleMouseEnd(e) {
-  if (!isDragging || !isSwipeActive || !isMobile()) {
-    isDragging = false;
-    isSwipeActive = false;
-    return;
-  }
-  
-  const diffX = currentX - startX;
-  const threshold = 50;
-  
-  if (Math.abs(diffX) > threshold) {
-    if (diffX > 0) {
-      previousImage();
-    } else {
-      nextImage();
-    }
-  }
-  
-  isDragging = false;
-  isSwipeActive = false;
-}
 
 // Mise à jour des variantes
 function updateVariant() {
