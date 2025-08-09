@@ -15,6 +15,9 @@
       grid-column-gap: 0;
       min-height: auto;
       padding: 0 10px; /* Padding de 10px de chaque côté */
+      /* S'assurer qu'il n'y a pas de comportement de scroll forcing */
+      scroll-behavior: auto;
+      align-items: start;
     }
   }
   
@@ -198,6 +201,9 @@
       padding: 1rem 0;
       width: 100%;
       box-sizing: border-box;
+      /* Supprimer toute propriété qui pourrait forcer le repositionnement */
+      position: static;
+      overflow-y: visible;
     }
   }
   
@@ -576,9 +582,10 @@ function updateGalleryDisplay() {
     thumb.classList.toggle('active', index === currentImageIndex);
   });
   
-  // Scroll automatique vers la thumbnail active
+  // Auto-scroll vers la thumbnail active seulement si nécessaire
   const activeThumbnail = document.querySelector('.thumbnail-item.active');
-  if (activeThumbnail) {
+  if (activeThumbnail && !isMobile()) {
+    // Seulement sur desktop pour éviter les interférences mobiles
     activeThumbnail.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
@@ -738,6 +745,23 @@ function updateStockStatus(variant) {
 document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
   initializeSwipe();
+  
+  // Debug : surveiller les scroll automatiques non désirés
+  if (isMobile()) {
+    let isUserScrolling = false;
+    
+    window.addEventListener('scroll', function() {
+      if (!isUserScrolling) {
+        console.log('Scroll automatique détecté');
+      }
+    }, { passive: true });
+    
+    // Marquer quand l'utilisateur scroll intentionnellement
+    document.addEventListener('touchstart', function() {
+      isUserScrolling = true;
+      setTimeout(() => { isUserScrolling = false; }, 300);
+    }, { passive: true });
+  }
   
   // Re-calculer lors du redimensionnement de la fenêtre
   window.addEventListener('resize', function() {
