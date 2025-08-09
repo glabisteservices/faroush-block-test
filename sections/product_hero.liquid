@@ -497,23 +497,6 @@
     overflow: hidden;
   }
 
-  .size-guide-header {
-    padding: 1.5rem 2rem;
-    border-bottom: 1px solid #e5e5e5;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #f8f8f8;
-  }
-
-  .size-guide-title {
-    font-family: Karla, sans-serif;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #6e612b;
-    margin: 0;
-  }
-
   .size-guide-close {
     background: none;
     border: none;
@@ -525,17 +508,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-  }
-
-  .size-guide-close:hover {
-    background-color: #e5e5e5;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1001;
   }
 
   .size-guide-content {
     padding: 2rem;
-    max-height: calc(90vh - 120px);
+    max-height: calc(90vh - 60px);
     overflow-y: auto;
     font-family: Karla, sans-serif;
     line-height: 1.6;
@@ -548,17 +529,9 @@
       max-height: 85vh;
     }
 
-    .size-guide-header {
-      padding: 1rem 1.5rem;
-    }
-
-    .size-guide-title {
-      font-size: 1.25rem;
-    }
-
     .size-guide-content {
-      padding: 1.5rem;
-      max-height: calc(85vh - 100px);
+      padding: 20px 10px;
+      max-height: calc(85vh - 60px);
     }
   }
 
@@ -783,10 +756,7 @@
   <!-- Popup Guide des tailles -->
   <div class="size-guide-overlay" id="sizeGuideOverlay" onclick="closeSizeGuide(event)">
     <div class="size-guide-popup" onclick="event.stopPropagation()">
-      <div class="size-guide-header">
-        <h2 class="size-guide-title">Guide des tailles</h2>
-        <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
-      </div>
+      <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
       <div class="size-guide-content" id="sizeGuideContent">
         <p>Chargement...</p>
       </div>
