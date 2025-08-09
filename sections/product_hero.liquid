@@ -191,8 +191,8 @@
     flex-direction: column;
     gap: 1.5rem;
     padding: 2rem 0;
-    height: calc(90vh - 4rem);
-    overflow-y: auto;
+    height: auto;
+    overflow-y: visible;
   }
   
   @media screen and (max-width: 768px) {
@@ -201,7 +201,6 @@
       padding: 1rem 0;
       width: 100%;
       box-sizing: border-box;
-      /* Supprimer toute propriété qui pourrait forcer le repositionnement */
       position: static;
       overflow-y: visible;
     }
