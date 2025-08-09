@@ -43,7 +43,6 @@
     border-radius: 20px;
     background-color: transparent;
     display: flex;
-    touch-action: pan-x; /* Permet le swipe horizontal sur mobile */
   }
   
   .gallery-slide {
@@ -614,6 +613,10 @@ function handleTouchStart(e) {
   startY = e.touches[0].clientY;
   isDragging = true;
   isSwipeActive = false;
+  
+  // Réinitialiser les positions pour éviter les conflits
+  currentX = startX;
+  currentY = startY;
 }
 
 function handleTouchMove(e) {
@@ -624,28 +627,32 @@ function handleTouchMove(e) {
   const diffX = Math.abs(currentX - startX);
   const diffY = Math.abs(currentY - startY);
   
-  // Ne déclencher le swipe que si le mouvement horizontal est très clairement plus important
-  if (diffX > 30 && diffX > diffY * 2) {
+  // Seulement déclencher le swipe si c'est clairement un mouvement horizontal intentionnel
+  if (diffX > 50 && diffX > diffY * 3) {
     isSwipeActive = true;
-    // Ne plus utiliser preventDefault pour laisser le scroll normal fonctionner
+  } else if (diffY > 20) {
+    // Si c'est un mouvement vertical, on arrête le dragging pour permettre le scroll
+    isDragging = false;
+    isSwipeActive = false;
   }
 }
 
 function handleTouchEnd(e) {
-  if (!isDragging || !isSwipeActive) {
-    isDragging = false;
-    isSwipeActive = false;
+  if (!isDragging) {
     return;
   }
   
-  const diffX = currentX - startX;
-  const threshold = 50; // Distance minimum pour déclencher le swipe
-  
-  if (Math.abs(diffX) > threshold) {
-    if (diffX > 0) {
-      previousImage(); // Swipe vers la droite
-    } else {
-      nextImage(); // Swipe vers la gauche
+  // Seulement traiter le swipe si on a vraiment détecté un mouvement horizontal intentionnel
+  if (isSwipeActive) {
+    const diffX = currentX - startX;
+    const threshold = 50;
+    
+    if (Math.abs(diffX) > threshold) {
+      if (diffX > 0) {
+        previousImage(); // Swipe vers la droite
+      } else {
+        nextImage(); // Swipe vers la gauche
+      }
     }
   }
   
