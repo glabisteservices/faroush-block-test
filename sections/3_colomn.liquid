@@ -1,0 +1,84 @@
+<div class="_3-column-wrapper">
+          <div id="w-node-e6e20239-9bcd-e3df-2cf5-df9f855b1847-01024571" class="w-layout-layout quick-stack-2 wf-layout-layout">
+            <div class="w-layout-cell">{% if section.settings.image_image %}
+{{ section.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-column', sizes: '(max-width: 3024px) 100vw, 3024px', loading: 'lazy' }}
+{% else %}
+<img class="image-column" src="{{ 'image00005.jpeg' | asset_url }}" alt="" sizes="(max-width: 3024px) 100vw, 3024px" loading="lazy" srcset="{{ 'image00005-p-500.jpeg' | asset_url }} 500w, {{ 'image00005-p-800.jpeg' | asset_url }} 800w, {{ 'image00005-p-1080.jpeg' | asset_url }} 1080w, {{ 'image00005-p-1600.jpeg' | asset_url }} 1600w, {{ 'image00005-p-2000.jpeg' | asset_url }} 2000w, {{ 'image00005-p-2600.jpeg' | asset_url }} 2600w, {{ 'image00005.jpeg' | asset_url }} 3024w">
+{% endif %}
+              <div class="text-column-div">
+                <h1 class="heading-style-h3">
+{{ section.settings.text_heading }}
+</h1>
+                <div class="spacer-small"></div>
+                <p class="paragraph">
+{{ section.settings.text_paragraph }}
+</p>
+              </div>
+            </div>
+            <div class="w-layout-cell">{% if section.settings.image_image %}
+{{ section.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-column', sizes: '(max-width: 3024px) 100vw, 3024px', loading: 'lazy' }}
+{% else %}
+<img class="image-column" src="{{ 'image00005.jpeg' | asset_url }}" alt="" sizes="(max-width: 3024px) 100vw, 3024px" loading="lazy" srcset="{{ 'image00005-p-500.jpeg' | asset_url }} 500w, {{ 'image00005-p-800.jpeg' | asset_url }} 800w, {{ 'image00005-p-1080.jpeg' | asset_url }} 1080w, {{ 'image00005-p-1600.jpeg' | asset_url }} 1600w, {{ 'image00005-p-2000.jpeg' | asset_url }} 2000w, {{ 'image00005-p-2600.jpeg' | asset_url }} 2600w, {{ 'image00005.jpeg' | asset_url }} 3024w">
+{% endif %}
+              <div class="text-column-div">
+                <h1 class="heading-style-h3">
+{{ section.settings.text_heading }}
+</h1>
+                <div class="spacer-small"></div>
+                <p class="paragraph">
+{{ section.settings.text_paragraph }}
+</p>
+              </div>
+            </div>
+            <div class="w-layout-cell">{% if section.settings.image_image %}
+{{ section.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-column', sizes: '(max-width: 3024px) 100vw, 3024px', loading: 'lazy' }}
+{% else %}
+<img class="image-column" src="{{ 'image00005.jpeg' | asset_url }}" alt="" sizes="(max-width: 3024px) 100vw, 3024px" loading="lazy" srcset="{{ 'image00005-p-500.jpeg' | asset_url }} 500w, {{ 'image00005-p-800.jpeg' | asset_url }} 800w, {{ 'image00005-p-1080.jpeg' | asset_url }} 1080w, {{ 'image00005-p-1600.jpeg' | asset_url }} 1600w, {{ 'image00005-p-2000.jpeg' | asset_url }} 2000w, {{ 'image00005-p-2600.jpeg' | asset_url }} 2600w, {{ 'image00005.jpeg' | asset_url }} 3024w">
+{% endif %}
+              <div class="text-column-div">
+                <h1 class="heading-style-h3">
+{{ section.settings.text_heading }}
+</h1>
+                <div class="spacer-small"></div>
+                <p class="paragraph">
+{{ section.settings.text_paragraph }}
+</p>
+              </div>
+            </div>
+          </div>
+        </div> {% schema %} {
+    "tag": "section",
+    "name": "3-colomn",
+    "class": "section-3-colomn",
+    "settings": [
+        {
+            "id": "image_image",
+            "type": "image_picker",
+            "label": "Image"
+        },
+        {
+            "id": "text_heading",
+            "type": "text",
+            "label": "Heading",
+            "default": "Souplesse &amp; l\u00e9geret\u00e9"
+        },
+        {
+            "id": "text_paragraph",
+            "type": "text",
+            "label": "Paragraph",
+            "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+        }
+    ],
+    "presets": [
+        {
+            "name": "3-colomn",
+            "category": "Liquify",
+            "blocks": []
+        }
+    ],
+    "enabled_on": {
+        "templates": [
+            "product"
+        ]
+    }
+} {% endschema %}

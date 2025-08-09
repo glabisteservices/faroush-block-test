@@ -5,7 +5,7 @@
 {% else %}
 <img src="{{ 'Faroush-light-yellow.svg' | asset_url }}" loading="lazy" alt="" class="nav_logo">
 {% endif %}</a>
-            <nav role="navigation" id="w-node-_9132635a-7891-b0d1-9b20-ecb0d5a86dfd-d5a86df8" class="nav_menu is-page-height-tablet w-nav-menu">
+            <nav role="navigation" class="nav_menu is-page-height-tablet w-nav-menu">
               {% for link in linklists[section.settings.menu].links %}    <div data-hover="true" data-delay="200" li-for="link in linklists[section.settings.menu].links" class="nav_menu-dropdown w-dropdown">
                                     
                 
@@ -22,34 +22,31 @@
                   </a>
                 </div>
                             
-                {% if link.links.size > 0  %}    <nav li-if="link.links.size > 0 " class="nav_dropdown-list no-scrollbar w-dropdown-list">
+                
+                            {% if link.links.size > 0  %}    <nav li-if="link.links.size > 0 " class="nav_dropdown-list no-scrollbar w-dropdown-list">
     
-                  <div class="nav_dropdown-content">
-                      <div class="nav_dropdown-grid">
-                        {% for child_link in link.links %}    <div li-for="child_link in link.links" id="w-node-_9132635a-7891-b0d1-9b20-ecb0d5a86e09-d5a86df8">
+                  {% for child_link in link.links %}    <div li-for="child_link in link.links" id="w-node-_9132635a-7891-b0d1-9b20-ecb0d5a86e09-d5a86df8">
                                     
-                          
+                    
                             <a href="{{ child_link.url }}" li-object="child_link.title" li-object:href="child_link.url" class="nav_dropdown-link w-dropdown-link">{{ child_link.title }}</a>
                             
-                          
+                    
                             {% if child_link.links.size > 0 %}    <div li-if="child_link.links.size > 0">
     
-                            {% for grandchild_link in child_link.links %}    <div li-for="grandchild_link in child_link.links">
+                      {% for grandchild_link in child_link.links %}    <div li-for="grandchild_link in child_link.links">
                                     
-                              
+                        
                             <a href="{{ grandchild_link.url }}" li-object="grandchild_link.title" li-object:href="grandchild_link.url" class="nav_dropdown-link_child w-dropdown-link">{{ grandchild_link.title }}</a>
                             
-                            
+                      
                         </div>
 {% endfor %}
-                              </div>
+                        </div>
 {% endif %}
                             
-                        
+                  
                         </div>
 {% endfor %}
-                     </div>
-                  </div>
                     </nav>
 {% endif %}
                             
@@ -57,6 +54,40 @@
                         </div>
 {% endfor %}
             </nav>
+            <div class="nav-2">
+              {% for link in linklists[section.settings.menu].links %}    <div data-hover="false" data-delay="0" li-for="link in linklists[section.settings.menu].links" class="w-dropdown">
+                                    
+                
+                            <div class="w-dropdown-toggle">
+                  {% if link.links.size > 0 %}    <div li-if="link.links.size > 0" class="icon-2 w-icon-dropdown-toggle">
+        </div>
+{% endif %}
+                  <div li-object="link.title" class="text-block-5">{{ link.title }}</div>
+                </div>
+                            
+                
+                            {% if link.links.size > 0  %}    <nav li-if="link.links.size > 0 " class="dropdown-list-2 w-dropdown-list">
+    
+                  <a href="{{ child_link.url }}" li-object="child_link.title" li-object:href="child_link.url" class="nav_dropdown-link w-dropdown-link">{{ child_link.title }}</a>
+                  {% if child_link.links.size > 0 %}    <div li-if="child_link.links.size > 0">
+    
+                    {% for grandchild_link in child_link.links %}    <div li-for="grandchild_link in child_link.links">
+                                    
+                      
+                            <a href="{{ grandchild_link.url }}" li-object="grandchild_link.title" li-object:href="grandchild_link.url" class="nav_dropdown-link_child w-dropdown-link">{{ grandchild_link.title }}</a>
+                            
+                    
+                        </div>
+{% endfor %}
+                      </div>
+{% endif %}
+                    </nav>
+{% endif %}
+                            
+              
+                        </div>
+{% endfor %}
+            </div>
             <div class="nav_shop-icons">
               <div class="nav_search">
                 <div data-hover="false" data-delay="0" class="nav_dropdown w-dropdown">
@@ -753,20 +784,7 @@
     "blocks": [
         {
             "name": "Search - Suggestion",
-            "type": "search-suggestion",
-            "settings": [
-                {
-                    "id": "url_link",
-                    "type": "url",
-                    "label": "Link"
-                },
-                {
-                    "id": "text_text",
-                    "type": "text",
-                    "label": "Text",
-                    "default": "Tag"
-                }
-            ]
+            "type": "search-suggestion"
         }
     ],
     "settings": [

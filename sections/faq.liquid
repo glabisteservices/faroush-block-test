@@ -1,360 +1,81 @@
-<style>
-  .faq-bloc {
-    margin-top: 0;
-  }
-  
-  .faq-container {
-    display: flex;
-    border-radius: 15px;
-    background-color: #f5f2d9;
-  }
-  
-  .faq-container.medium {
-    display: block;
-  }
-  
-  .faq-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 15px;
-  }
-  
-  .accordion-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 70px;
-    padding: 0 20px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .accordion-toggle:hover {
-    background-color: rgba(110, 97, 43, 0.1);
-  }
-  
-  .accordion-toggle:focus {
-    outline: 2px solid #6e612b;
-    outline-offset: 2px;
-  }
-  
-  .accordion-icon {
-    width: 20px;
-    height: 20px;
-    transition: transform 0.3s ease;
-    transform: rotate(180deg); /* État initial : flèche vers le bas */
-  }
-  
-  .accordion-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: #6e612b;
-  }
-  
-  .accordion-toggle[aria-expanded="true"] .accordion-icon {
-    transform: rotate(0deg); /* Quand ouvert : flèche vers le haut */
-  }
-  
-  .faq-reponse {
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    padding: 0 20px;
-  }
-  
-  .faq-reponse.open {
-    max-height: 1000px;
-    padding: 20px;
-  }
-  
-  .heading-style-h4 {
-    font-family: Karla, sans-serif;
-    color: #6e612b;
-    font-size: 1.25rem;
-    line-height: 1.2;
-    font-weight: 400;
-    margin: 0;
-    flex: 1;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .heading-style-h4 {
-      font-size: 1.125rem;
-    }
-  }
-  
-  .heading-style-h1 {
-    font-family: Karla, sans-serif;
-    color: #6e612b;
-    font-size: 2.8rem;
-    line-height: 1;
-    font-weight: 600;
-    margin-bottom: 30px;
-  }
-  
-  @media screen and (max-width: 767px) {
-    .heading-style-h1 {
-      font-size: 2.5rem;
-    }
-  }
-  
-  .faq-section {
-    margin: 40px 0;
-    padding: 20px;
-  }
-  
-  @media screen and (max-width: 479px) {
-    .faq-section {
-      padding: 10px;
-    }
-  }
-  
-  .faq-content {
-    width: 70%;
-  }
-  
-  .accordion-item {
-    position: relative;
-    width: 100%;
-    border-bottom: 1px solid rgba(110, 97, 43, 0.2);
-  }
-  
-  .accordion-item:last-child {
-    border-bottom: none;
-  }
-  
-  .right-div-faq {
-    width: 50%;
-    border-radius: 15px;
-    overflow: hidden;
-    min-height: 400px; /* Hauteur minimum */
-    display: flex;
-  }
-  
-  .right-div-faq.medium {
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .faq-paragraph {
-    font-family: Karla, sans-serif;
-    color: #6e612b;
-    margin: 0;
-    line-height: 1.6;
-  }
-  
-  .left-div-faq {
-    display: flex;
-    width: 50%;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 40px 20px;
-    min-height: 400px; /* Hauteur minimum pour synchroniser avec l'image */
-  }
-  
-  .left-div-faq.medium {
-    width: 100%;
-    padding: 20px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .faq-container {
-      flex-direction: column;
-    }
-    
-    .left-div-faq,
-    .right-div-faq {
-      width: 100%;
-    }
-    
-    .faq-content {
-      width: 100%;
-    }
-    
-    .right-div-faq {
-      min-height: auto; /* Supprimer la hauteur minimum sur mobile */
-      height: 300px; /* Hauteur fixe sur mobile */
-    }
-    
-    .left-div-faq {
-      min-height: auto; /* Supprimer la hauteur minimum sur mobile */
-    }
-  }
-</style>
+<div class="div-block-3">
+          <div class="left-div-faq">
+            <div class="div-block-4">
+              <h1 class="heading-style-h1">
+{{ section.settings.text_heading }}
+</h1>
+              <div li-content-for-blocks="">
+{% for block in section.blocks %}
+{% case block.type %}
+{% when '@app' %}
+{% render block %}
 
-<div class="faq-container">
-  <div class="left-div-faq">
-    <div class="faq-content">
-      <h1 class="heading-style-h1">
-        {{ section.settings.text_heading }}
-      </h1>
-      
-      <div>
-        {% for block in section.blocks %}
-          {% case block.type %}
-            {% when '@app' %}
-              {% render block %}
-            
-            {% when 'faq-question' %}
-              <div class="faq-bloc" {{ block.shopify_attributes }}>
-                <div class="accordion-item">
-                  <div 
-                    class="accordion-toggle" 
-                    role="button" 
-                    tabindex="0" 
-                    aria-expanded="false"
-                    data-faq-toggle
-                  >
-                    <h4 class="heading-style-h4">
-                      {{ block.settings.text_text }}
-                    </h4>
-                    <div class="accordion-icon">
-                      <svg viewBox="0 0 24 24">
-                        <path d="M7 14l5-5 5 5z"/>
-                      </svg>
-                    </div>
-                  </div>
+                {% when 'faq-question' %}
+            <div li-block="FAQ-Question" class="faq-bloc">
+                    
                   
-                  <div class="faq-reponse" aria-hidden="true">
-                    <p class="faq-paragraph">
-                      {{ block.settings.text_paragraph }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-          {% endcase %}
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-  
-  <div class="right-div-faq">
-    {% if section.settings.image_image %}
-      {{ section.settings.image_image | image_url: width: 1000 | image_tag: class: 'faq-image', alt: section.settings.image_image.alt | default: 'FAQ Image', loading: 'lazy' }}
-    {% else %}
-      <img class="faq-image" src="{{ 'faq-default-image.jpg' | asset_url }}" alt="FAQ" loading="lazy">
-    {% endif %}
-  </div>
+                    <div data-hover="false" data-delay="0" class="accordion-item w-dropdown">
+                    <div class="accordion-toggle w-dropdown-toggle">
+                      <div class="w-icon-dropdown-toggle"></div>
+                      <div class="heading-style-h4">
+{{ block.settings.text_text }}
 </div>
+                    </div>
+                    <nav class="faq-reponse w-dropdown-list">
+                      <p class="paragraph">
+{{ block.settings.text_paragraph }}
+</p>
+                    </nav>
+                  </div>
+                    
+                
+                </div>
+              {% endcase %}
+{% endfor %}
 
-<script>
-(function() {
-  'use strict';
-  
-  function initFAQ() {
-    const toggles = document.querySelectorAll('[data-faq-toggle]');
-    
-    toggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function() {
-        handleToggle(this);
-      });
-      
-      toggle.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleToggle(this);
-        }
-      });
-    });
-  }
-  
-  function handleToggle(element) {
-    const content = element.nextElementSibling;
-    const isExpanded = element.getAttribute('aria-expanded') === 'true';
-    
-    // Fermer tous les autres accordéons
-    const allToggles = document.querySelectorAll('[data-faq-toggle]');
-    allToggles.forEach(function(toggle) {
-      if (toggle !== element) {
-        toggle.setAttribute('aria-expanded', 'false');
-        const otherContent = toggle.nextElementSibling;
-        otherContent.classList.remove('open');
-        otherContent.setAttribute('aria-hidden', 'true');
-      }
-    });
-    
-    // Basculer l'accordéon actuel
-    if (isExpanded) {
-      element.setAttribute('aria-expanded', 'false');
-      content.classList.remove('open');
-      content.setAttribute('aria-hidden', 'true');
-    } else {
-      element.setAttribute('aria-expanded', 'true');
-      content.classList.add('open');
-      content.setAttribute('aria-hidden', 'false');
-    }
-  }
-  
-  // Initialiser quand le DOM est prêt
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFAQ);
-  } else {
-    initFAQ();
-  }
-  
-  // Pour Shopify (sections dynamiques)
-  if (typeof Shopify !== 'undefined' && Shopify.designMode) {
-    document.addEventListener('shopify:section:load', initFAQ);
-  }
-})();
-</script>
-
-{% schema %}
-{
-  "tag": "section",
-  "name": "FAQ",
-  "class": "faq-section",
-  "blocks": [
-    {
-      "name": "FAQ Question",
-      "type": "faq-question",
-      "settings": [
+    </div>
+            </div>
+          </div>
+          <div class="right-div-faq">{% if section.settings.image_image %}
+{{ section.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-2', sizes: '(max-width: 3024px) 100vw, 3024px', loading: 'lazy' }}
+{% else %}
+<img class="image-2" src="{{ 'image00005.jpeg' | asset_url }}" alt="" sizes="(max-width: 3024px) 100vw, 3024px" loading="lazy" srcset="{{ 'image00005-p-500.jpeg' | asset_url }} 500w, {{ 'image00005-p-800.jpeg' | asset_url }} 800w, {{ 'image00005-p-1080.jpeg' | asset_url }} 1080w, {{ 'image00005-p-1600.jpeg' | asset_url }} 1600w, {{ 'image00005-p-2000.jpeg' | asset_url }} 2000w, {{ 'image00005-p-2600.jpeg' | asset_url }} 2600w, {{ 'image00005.jpeg' | asset_url }} 3024w">
+{% endif %}</div>
+        </div> {% schema %} {
+    "tag": "section",
+    "name": "FAQ",
+    "class": "faq-section",
+    "blocks": [
         {
-          "id": "text_text",
-          "type": "text",
-          "label": "Question",
-          "default": "Question FAQ"
+            "name": "FAQ-Question",
+            "type": "faq-question"
         },
         {
-          "id": "text_paragraph",
-          "type": "textarea",
-          "label": "Réponse",
-          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+            "type": "@app"
         }
-      ]
-    },
-    {
-      "type": "@app"
-    }
-  ],
-  "settings": [
-    {
-      "id": "text_heading",
-      "type": "text",
-      "label": "Titre principal",
-      "default": "Questions fréquentes"
-    },
-    {
-      "id": "image_image",
-      "type": "image_picker",
-      "label": "Image"
-    }
-  ],
-  "presets": [
-    {
-      "name": "FAQ",
-      "category": "Contenu",
-      "blocks": [
+    ],
+    "settings": [
         {
-          "type": "faq-question"
+            "id": "text_heading",
+            "type": "text",
+            "label": "Heading",
+            "default": "Heading"
         },
         {
-          "type": "faq-question"
+            "id": "image_image",
+            "type": "image_picker",
+            "label": "Image"
         }
-      ]
-    }
-  ]
-}
-{% endschema %}
+    ],
+    "presets": [
+        {
+            "name": "FAQ",
+            "category": "Liquify",
+            "blocks": [
+                {
+                    "type": "faq-question"
+                }
+            ]
+        }
+    ]
+} {% endschema %}
