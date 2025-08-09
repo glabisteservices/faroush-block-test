@@ -1,126 +1,24 @@
-<style>
-  .collection-hero {
-    padding: 40px 20px;
-  }
-  
-  .collection-intro-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 40px;
-  }
-  
-  .collection-title-container {
-    flex: 0 0 30%;
-  }
-  
-  .collection-description-container {
-    flex: 1;
-    max-width: 60%;
-  }
-  
-  .heading-style-h1 {
-    font-family: Karla, sans-serif;
-    color: #6e612b;
-    font-size: 2.8rem;
-    line-height: 1;
-    font-weight: 600;
-    margin: 0;
-  }
-  
-  .paragraph {
-    font-family: Karla, sans-serif;
-    color: #6e612b;
-    margin: 0;
-    line-height: 1.6;
-  }
-  
-  @media screen and (max-width: 991px) {
-    .collection-intro-container {
-      flex-direction: column;
-      gap: 20px;
+<div class="collection-intro-container">
+          <div class="collection-title-container">
+            <h1 li-object="collection.title" class="heading-style-h1">{{ collection.title }}</h1>
+          </div>
+          <div class="collection-description-container">
+            <p li-object="collection.description" class="paragraph">{{ collection.description }}</p>
+          </div>
+        </div> {% schema %} {
+    "tag": "section",
+    "name": "Collection Hero",
+    "class": "collection-hero",
+    "presets": [
+        {
+            "name": "Collection Hero",
+            "category": "Liquify",
+            "blocks": []
+        }
+    ],
+    "enabled_on": {
+        "templates": [
+            "collection"
+        ]
     }
-    
-    .collection-title-container {
-      flex: none;
-      width: 100%;
-    }
-    
-    .collection-description-container {
-      flex: none;
-      width: 100%;
-      max-width: none;
-    }
-  }
-  
-  @media screen and (max-width: 767px) {
-    .collection-hero {
-      padding: 30px 16px;
-    }
-    
-    .heading-style-h1 {
-      font-size: 2.5rem;
-    }
-  }
-</style>
-
-<section class="collection-hero">
-  <div class="collection-intro-container">
-    <div class="collection-title-container">
-      <h1 class="heading-style-h1">{{ collection.title }}</h1>
-    </div>
-    {% if collection.description != blank %}
-      <div class="collection-description-container">
-        <div class="paragraph">{{ collection.description }}</div>
-      </div>
-    {% endif %}
-  </div>
-</section>
-
-{% schema %}
-{
-  "tag": "section",
-  "name": "Collection Hero",
-  "class": "collection-hero",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Collection Hero Settings"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#6e612b"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Top Padding",
-      "default": 40
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "px",
-      "label": "Bottom Padding",
-      "default": 40
-    }
-  ],
-  "presets": [
-    {
-      "name": "Collection Hero",
-      "category": "Collection"
-    }
-  ],
-  "enabled_on": {
-    "templates": ["collection"]
-  }
-}
-{% endschema %}
+} {% endschema %}

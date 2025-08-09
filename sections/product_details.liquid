@@ -1,0 +1,70 @@
+<div class="product-details-accordion-container">
+          <div data-hover="false" data-delay="0" class="dropdown w-dropdown">
+            <div class="dropdown-toggle w-dropdown-toggle">
+              <div class="icon w-icon-dropdown-toggle"></div>
+              <div class="heading-style-h4 texte-weigt-bold">
+{{ section.settings.text_text }}
+</div>
+            </div>
+            <nav class="dropdown-list w-dropdown-list">
+              <div li-object="custom.details_product" class="rich-text-block w-richtext">{{ custom.details_product }}</div>
+            </nav>
+          </div>
+          <div data-hover="false" data-delay="0" class="dropdown w-dropdown">
+            <div class="dropdown-toggle w-dropdown-toggle">
+              <div class="icon w-icon-dropdown-toggle"></div>
+              <div class="heading-style-h4 texte-weigt-bold">
+{{ section.settings.text_text }}
+</div>
+            </div>
+            <nav class="dropdown-list w-dropdown-list">
+              <div li-object="custom.texte_matiere_v2" class="rich-text-block w-richtext">{{ custom.texte_matiere_v2 }}</div>
+            </nav>
+          </div>
+          <div data-hover="false" data-delay="0" class="dropdown w-dropdown">
+            <div class="dropdown-toggle w-dropdown-toggle">
+              <div class="icon w-icon-dropdown-toggle"></div>
+              <div class="heading-style-h4 texte-weigt-bold">
+{{ section.settings.text_text }}
+</div>
+            </div>
+            <nav class="dropdown-list w-dropdown-list">
+              <div li-object="custom.livraison_retours" class="rich-text-block w-richtext">{{ custom.livraison_retours }}</div>
+            </nav>
+          </div>
+          <div data-hover="false" data-delay="0" class="dropdown w-dropdown">
+            <div class="dropdown-toggle w-dropdown-toggle">
+              <div class="icon w-icon-dropdown-toggle"></div>
+              <div class="heading-style-h4 texte-weigt-bold">
+{{ section.settings.text_text }}
+</div>
+            </div>
+            <nav class="dropdown-list w-dropdown-list">
+              <div li-object="custom.conseils_d_entretien" class="rich-text-block w-richtext">{{ custom.conseils_d_entretien }}</div>
+            </nav>
+          </div>
+        </div> {% schema %} {
+    "tag": "section",
+    "name": "product-details",
+    "class": "product-details-accordion",
+    "settings": [
+        {
+            "id": "text_text",
+            "type": "text",
+            "label": "Text",
+            "default": "D\u00e9tails produit"
+        }
+    ],
+    "presets": [
+        {
+            "name": "product-details",
+            "category": "Liquify",
+            "blocks": []
+        }
+    ],
+    "enabled_on": {
+        "templates": [
+            "product"
+        ]
+    }
+} {% endschema %}

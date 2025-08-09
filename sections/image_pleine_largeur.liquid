@@ -1,0 +1,57 @@
+<div li-content-for-blocks="">
+{% for block in section.blocks %}
+{% case block.type %}
+{% when '@app' %}
+{% render block %}
+
+          {% when 'image-desktop' %}
+            <div li-block="image-desktop" class="choix-image-desktop">
+                    {% if block.settings.image_image %}
+{{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-full-widht-desktop', sizes: '(max-width: 1848px) 100vw, 1848px', loading: 'lazy' }}
+{% else %}
+<img class="image-full-widht-desktop" src="{{ 'Header-image.jpg' | asset_url }}" alt="" sizes="(max-width: 1848px) 100vw, 1848px" loading="lazy" srcset="{{ 'Header-image-p-500.jpg' | asset_url }} 500w, {{ 'Header-image-p-800.jpg' | asset_url }} 800w, {{ 'Header-image-p-1080.jpg' | asset_url }} 1080w, {{ 'Header-image-p-1600.jpg' | asset_url }} 1600w, {{ 'Header-image.jpg' | asset_url }} 1848w">
+{% endif %}
+                </div>
+          {% when 'image-mobile' %}
+            <div li-block="image-mobile" class="choix-image-mobile">
+                    {% if block.settings.image_image %}
+{{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-full-width-mobile', width: 'Auto', height: 'Auto', sizes: '(max-width: 1080px) 100vw, 1080px', loading: 'lazy' }}
+{% else %}
+<img class="image-full-width-mobile" src="{{ 'Mobile_HP_image.jpg' | asset_url }}" width="Auto" height="Auto" alt="" sizes="(max-width: 1080px) 100vw, 1080px" loading="lazy" srcset="{{ 'Mobile_HP_image-p-500.jpg' | asset_url }} 500w, {{ 'Mobile_HP_image-p-800.jpg' | asset_url }} 800w, {{ 'Mobile_HP_image.jpg' | asset_url }} 1080w">
+{% endif %}
+                </div>
+        {% endcase %}
+{% endfor %}
+
+    </div> {% schema %} {
+    "tag": "section",
+    "name": "image-pleine-largeur",
+    "class": "image-full-width",
+    "blocks": [
+        {
+            "name": "image-desktop",
+            "type": "image-desktop"
+        },
+        {
+            "name": "image-mobile",
+            "type": "image-mobile"
+        },
+        {
+            "type": "@app"
+        }
+    ],
+    "presets": [
+        {
+            "name": "image-pleine-largeur",
+            "category": "Liquify",
+            "blocks": [
+                {
+                    "type": "image-desktop"
+                },
+                {
+                    "type": "image-mobile"
+                }
+            ]
+        }
+    ]
+} {% endschema %}

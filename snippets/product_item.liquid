@@ -1,301 +1,43 @@
-{% comment %}
-  Snippet: product_item.liquid
-  Usage: {% render 'product_item', product: product %}
-{% endcomment %}
-
-{% assign product_available = product.available %}
-{% assign featured_image = product.featured_image %}
-{% assign product_images = product.images %}
-{% assign second_image = product_images[1] %}
-
-<div class="product_list-item">
-  <a href="{{ product.url }}" class="product-card">
-    <div class="product-image-wrapper">
-      <!-- Badges -->
-      <div class="product-badges">
-        {% unless product_available %}
-          <div class="product-badge unavailable">Non disponible</div>
-        {% endunless %}
-        
-        {% if product.compare_at_price > product.price %}
-          {% assign discount = product.compare_at_price | minus: product.price %}
-          {% assign discount_percentage = discount | times: 100 | divided_by: product.compare_at_price %}
-          <div class="product-badge promotion">-{{ discount_percentage }}%</div>
-        {% endif %}
-      </div>
-
-      <!-- Images -->
-      {% if featured_image %}
-        <img 
-          src="{{ featured_image | image_url: width: 400 }}" 
-          alt="{{ featured_image.alt | escape }}"
-          class="product-image primary"
-          loading="lazy"
-          width="400"
-          height="400"
-        >
-        
-        {% if second_image %}
-          <img 
-            src="{{ second_image | image_url: width: 400 }}" 
-            alt="{{ second_image.alt | escape }}"
-            class="product-image secondary"
-            loading="lazy"
-            width="400"
-            height="400"
-          >
-        {% endif %}
-      {% else %}
-        <div class="product-image-placeholder">
-          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
-            <rect width="100" height="100" fill="#f5f2d9"/>
-            <path d="M30 70L50 50L70 70" stroke="#9e8c73" stroke-width="2" fill="none"/>
-            <circle cx="40" cy="35" r="5" fill="#9e8c73"/>
-          </svg>
-        </div>
-      {% endif %}
-    </div>
-
-    <div class="product-info">
-      <h3 class="product-title">{{ product.title }}</h3>
-      
-      <div class="product-price">
-        {% if product.compare_at_price > product.price %}
-          <span class="compare-price">{{ product.compare_at_price | money }}</span>
-          <span class="sale-price">{{ product.price | money }}</span>
-        {% else %}
-          <span class="regular-price">{{ product.price | money }}</span>
-        {% endif %}
-      </div>
-
-      {% if product_available %}
-        <div class="product-button">Voir le produit</div>
-      {% else %}
-        <div class="product-status">Non disponible</div>
-      {% endif %}
-    </div>
-  </a>
-</div>
-
-<style>
-  /* Styles pour le snippet product_item */
-  .product_list-item {
-    position: relative;
-    width: 100%;
-  }
-
-  .product-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    background: transparent;
-    position: relative;
-    width: 100%;
-  }
-
-  .product-image-wrapper {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    border-radius: 10px;
-    background: #f5f2d9;
-  }
-
-  .product-badges {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 2;
-  }
-
-  .product-badge {
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-family: Karla, sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    width: fit-content;
-  }
-
-  .product-badge.unavailable {
-    background-color: #9e8c73;
-    color: #f5f2d9;
-  }
-
-  .product-badge.promotion {
-    background-color: #ec8451;
-    color: #f5f2d9;
-  }
-
-  .product-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-    transition: opacity 0.3s ease;
-  }
-
-  .product-image.primary {
-    opacity: 1;
-    position: relative;
-  }
-
-  .product-image.secondary {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .product-image-placeholder {
-    width: 100%;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f5f2d9;
-  }
-
-  @media (hover: hover) {
-    .product-card:hover .product-image.primary {
-      opacity: 0;
-    }
-    .product-card:hover .product-image.secondary {
-      opacity: 1;
-    }
-  }
-
-  .product-info {
-    padding: 16px 0 0 0;
-    text-align: left;
-  }
-
-  .product-title {
-    font-family: Karla, sans-serif;
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #6e612b;
-    margin: 0 0 8px 0;
-    line-height: 1.4;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .product-price {
-    font-family: Karla, sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #6e612b;
-    margin: 0 0 16px 0;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .product-price .compare-price {
-    text-decoration: line-through;
-    color: #999;
-    font-weight: 400;
-  }
-
-  .product-price .sale-price {
-    color: #6e612b;
-    font-weight: 600;
-  }
-
-  .product-price .regular-price {
-    color: #6e612b;
-    font-weight: 600;
-  }
-
-  .product-button {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #6e612b;
-    border-radius: 8px;
-    background-color: transparent;
-    font-family: Karla, sans-serif;
-    color: #6e612b;
-    font-weight: 500;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    margin-bottom: 8px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-
-  .product-card:hover .product-button {
-    background-color: #6e612b;
-    color: white;
-  }
-
-  .product-status {
-    background-color: #f5f2d9;
-    padding: 8px 16px;
-    text-align: center;
-    font-family: Karla, sans-serif;
-    font-size: 12px;
-    color: #9e8c73;
-    font-weight: 500;
-    border-radius: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  /* Responsive */
-  @media screen and (max-width: 767px) {
-    .product-title {
-      font-size: 1rem;
-    }
+<script src="{{ 'li_custom.js' | asset_url }}" type="text/javascript"></script>
+<div li-element="product-variant-container" class="product-item_component" x-data="handleVariant({{ product | json | escape }}, {{ product.options_by_name | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})" x-init="$nextTick(() => { activateVariants() })" @setbundleitem.window="updateBundleItem($event.detail.product, $event.detail.quantity)">
+                      <div class="product-item_image-link">
+                        <a li-object:href="product.url" href="{{ product.url }}" class="product-item_image-wrapper w-inline-block"><img li-object:alt="product.featured_image.alt" loading="lazy" li-object:src="product.featured_image | image_url: width: 450" src="{{ product.featured_image | image_url: width: 450 }}" alt="{{ product.featured_image.alt }}" class="product-item_image"></a>
+                        <div class="product-item_tag_list">
+                          {% if product.selected_or_first_available_variant.available != true %}    <div li-if="product.selected_or_first_available_variant.available != true" class="product-item_tag">
+    Non disponible    </div>
+{% endif %}
+                          {% if product.compare_at_price_max > product.price %}    <div li-if="product.compare_at_price_max > product.price" class="product-item_tag is-red">
+    Promotion    </div>
+{% endif %}
+                        </div>
+                      </div>
+                      <div class="spacer-xxsmall"></div>
+                      <a li-object:href="product.url" href="{{ product.url }}" class="product-item_text-link w-inline-block">
+                        <div class="product-item_left">
+                          <div li-object="product.title" class="heading-style-h4">{{ product.title }}</div>
+                        </div>
+                        <div class="product-item_price">
+                          {% if product.compare_at_price_max > product.price %}    <div li-if="product.compare_at_price_max > product.price">
     
-    .product-price {
-      font-size: 0.9rem;
-    }
+                            <div li-object="product.compare_at_price | money" class="text-size-regular text-style-strikethrough text-style-muted">{{ product.compare_at_price | money }}</div>
+                              </div>
+{% endif %}
+                          <div li-object="product.price | money" class="text-size-regular">{{ product.price | money }}</div>
+                        </div>
+                      </a>
+                      <div class="spacer-small"></div>
+                      <div class="margin-top-auto">
+                        <div class="product-item_form-wrapper">
+                          {% if product.available == true %}    <div li-if="product.available == true">
     
-    .product-button {
-      padding: 10px 12px;
-      font-size: 0.9rem;
-    }
-  }
-
-  @media screen and (max-width: 479px) {
-    .product-badges {
-      top: 8px;
-      left: 8px;
-    }
+                            <a li-element="view-product" href="#" class="button max-width-full w-button">Voir le produit</a>
+                              </div>
+{% endif %}
+                          {% if product.available != true %}    <div li-if="product.available != true" class="div-block-6">
     
-    .product-badge {
-      padding: 6px 8px;
-      font-size: 10px;
-    }
-    
-    .product-info {
-      padding: 12px 0 0 0;
-    }
-    
-    .product-title {
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-    }
-    
-    .product-price {
-      font-size: 0.85rem;
-      margin-bottom: 12px;
-    }
-    
-    .product-button {
-      padding: 8px 12px;
-      font-size: 0.85rem;
-    }
-  }
-</style>
+                            <a href="#" class="button is-secondary pointer-events-off max-width-full w-button">Non disponible</a>
+                              </div>
+{% endif %}
+                        </div>
+                      </div>
+                    </div>

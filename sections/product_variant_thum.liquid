@@ -1,0 +1,34 @@
+{% for product in custom.variantes_couleurs_modele %}    <div li-for="product in custom.variantes_couleurs_modele" class="collection-list-wrapper w-dyn-list">
+                                    
+                  
+                            <div role="list" class="collection-list w-dyn-items">
+                    <div role="listitem" class="w-dyn-item">
+                      <a li-object:href="product.url" href="{{ product.url }}" class="w-inline-block"><img src="{{ custom.png_detoure | image_url: width: 100%}}" alt="" sizes="(max-width: 1186px) 100vw, 1186px" li-object:src="custom.png_detoure | image_url: width: 100%" loading="lazy" srcset="{{ 'Marron-p-500.png' | asset_url }} 500w, {{ 'Marron-p-800.png' | asset_url }} 800w, {{ 'Marron.png' | asset_url }} 1186w"></a>
+                    </div>
+                  </div>
+                            
+                  
+                            <div class="w-dyn-empty">
+                    <div>No items found.</div>
+                  </div>
+                            
+                
+                        </div>
+{% endfor %}
+                <div class="heading-style-h5">Voir plus de couleurs</div> {% schema %} {
+    "tag": "div",
+    "name": "product-variant-thum",
+    "class": "liste-variante-couleur",
+    "presets": [
+        {
+            "name": "product-variant-thum",
+            "category": "Liquify",
+            "blocks": []
+        }
+    ],
+    "enabled_on": {
+        "templates": [
+            "product"
+        ]
+    }
+} {% endschema %}
