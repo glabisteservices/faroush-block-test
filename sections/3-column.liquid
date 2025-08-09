@@ -1,0 +1,205 @@
+<style>
+  .Section-3-column {
+    padding-top: 40px;
+    padding-right: 20px;
+    padding-bottom: 40px;
+    padding-left: 20px;
+  }
+  .Quick-Stack-3 {
+    width: 80%;
+    padding: 0px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .Quick-Stack-3.medium {
+    width: 100%;
+  }
+  @media screen and (max-width: 991px) {
+    .Quick-Stack-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media screen and (max-width: 767px) {
+    .Quick-Stack-3 {
+      grid-template-columns: 1fr;
+    }
+  }
+  .column-item {
+    display: flex;
+    flex-direction: column;
+  }
+  .image-column {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .text-column-div {
+    width: 100%;
+    margin-top: 20px;
+    padding-bottom: 0px;
+  }
+  .heading-style-h3 {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    margin: 0;
+  }
+  @media screen and (max-width: 767px) {
+    .heading-style-h3 {
+      font-size: 1.3rem;
+    }
+  }
+  .spacer-small {
+    width: 100%;
+    padding-top: 1.5rem;
+  }
+  .Paragraph {
+    font-family: Karla;
+    color: #6e612b;
+    margin: 0;
+  }
+</style>
+
+<div class="3-column-wrapper">
+  <div class="Quick-Stack-3">
+    <!-- Colonne 1 -->
+    <div class="column-item">
+      {% if section.settings.image_1 %}
+        {{ section.settings.image_1 | image_url: width: 1000 | image_tag: class: 'image-column', width: 'auto', height: 'auto', alt: section.settings.heading_1, loading: 'lazy' }}
+      {% else %}
+        <img class="image-column" width="auto" height="auto" alt="{{ section.settings.heading_1 }}" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/6894a8b177996363958d7e3a_image00005.jpeg" loading="lazy">
+      {% endif %}
+      <div class="text-column-div">
+        <h3 class="heading-style-h3">
+          {{ section.settings.heading_1 }}
+        </h3>
+        <div class="spacer-small"></div>
+        <p class="Paragraph">
+          {{ section.settings.paragraph_1 }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Colonne 2 -->
+    <div class="column-item">
+      {% if section.settings.image_2 %}
+        {{ section.settings.image_2 | image_url: width: 1000 | image_tag: class: 'image-column', width: 'auto', height: 'auto', alt: section.settings.heading_2, loading: 'lazy' }}
+      {% else %}
+        <img class="image-column" width="auto" height="auto" alt="{{ section.settings.heading_2 }}" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/6894a8b177996363958d7e3a_image00005.jpeg" loading="lazy">
+      {% endif %}
+      <div class="text-column-div">
+        <h3 class="heading-style-h3">
+          {{ section.settings.heading_2 }}
+        </h3>
+        <div class="spacer-small"></div>
+        <p class="Paragraph">
+          {{ section.settings.paragraph_2 }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Colonne 3 -->
+    <div class="column-item">
+      {% if section.settings.image_3 %}
+        {{ section.settings.image_3 | image_url: width: 1000 | image_tag: class: 'image-column', width: 'auto', height: 'auto', alt: section.settings.heading_3, loading: 'lazy' }}
+      {% else %}
+        <img class="image-column" width="auto" height="auto" alt="{{ section.settings.heading_3 }}" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/6894a8b177996363958d7e3a_image00005.jpeg" loading="lazy">
+      {% endif %}
+      <div class="text-column-div">
+        <h3 class="heading-style-h3">
+          {{ section.settings.heading_3 }}
+        </h3>
+        <div class="spacer-small"></div>
+        <p class="Paragraph">
+          {{ section.settings.paragraph_3 }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "3-column",
+  "class": "Section-3-column",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Colonne 1"
+    },
+    {
+      "id": "image_1",
+      "type": "image_picker",
+      "label": "Image 1"
+    },
+    {
+      "id": "heading_1",
+      "type": "text",
+      "label": "Titre 1",
+      "default": "Souplesse & légèreté"
+    },
+    {
+      "id": "paragraph_1",
+      "type": "textarea",
+      "label": "Paragraphe 1",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
+    },
+    {
+      "type": "header",
+      "content": "Colonne 2"
+    },
+    {
+      "id": "image_2",
+      "type": "image_picker",
+      "label": "Image 2"
+    },
+    {
+      "id": "heading_2",
+      "type": "text",
+      "label": "Titre 2",
+      "default": "Qualité premium"
+    },
+    {
+      "id": "paragraph_2",
+      "type": "textarea",
+      "label": "Paragraphe 2",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
+    },
+    {
+      "type": "header",
+      "content": "Colonne 3"
+    },
+    {
+      "id": "image_3",
+      "type": "image_picker",
+      "label": "Image 3"
+    },
+    {
+      "id": "heading_3",
+      "type": "text",
+      "label": "Titre 3",
+      "default": "Design moderne"
+    },
+    {
+      "id": "paragraph_3",
+      "type": "textarea",
+      "label": "Paragraphe 3",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
+    }
+  ],
+  "presets": [
+    {
+      "name": "3-column",
+      "category": "Liquify"
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  }
+}
+{% endschema %}
