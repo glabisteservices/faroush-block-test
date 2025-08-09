@@ -60,9 +60,27 @@
     color: #6e612b;
     margin: 0;
   }
+  .main-title {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 0 40px 0;
+  }
+  @media screen and (max-width: 767px) {
+    .main-title {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+  }
 </style>
 
 <div class="3-column-wrapper">
+  {% if section.settings.main_title != blank %}
+    <h1 class="main-title">{{ section.settings.main_title }}</h1>
+  {% endif %}
   <div class="Quick-Stack-3">
     <!-- Colonne 1 -->
     <div class="column-item">
@@ -126,6 +144,16 @@
   "name": "3-column",
   "class": "Section-3-column",
   "settings": [
+    {
+      "type": "header",
+      "content": "Titre principal"
+    },
+    {
+      "id": "main_title",
+      "type": "text",
+      "label": "Titre principal (H1)",
+      "default": "Nos avantages"
+    },
     {
       "type": "header",
       "content": "Colonne 1"
