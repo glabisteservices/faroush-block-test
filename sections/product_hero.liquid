@@ -450,6 +450,117 @@
     margin-top: auto;
   }
 
+  /* Guide des tailles */
+  .size-guide-button {
+    font-family: Karla, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #6e612b;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 0.5rem;
+    text-align: left;
+  }
+
+  .size-guide-button:hover {
+    color: #5a4f23;
+  }
+
+  /* Popup Guide des tailles */
+  .size-guide-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .size-guide-popup {
+    background: white;
+    border-radius: 15px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .size-guide-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f8f8;
+  }
+
+  .size-guide-title {
+    font-family: Karla, sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #6e612b;
+    margin: 0;
+  }
+
+  .size-guide-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6e612b;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+  }
+
+  .size-guide-close:hover {
+    background-color: #e5e5e5;
+  }
+
+  .size-guide-content {
+    padding: 2rem;
+    max-height: calc(90vh - 120px);
+    overflow-y: auto;
+    font-family: Karla, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  @media screen and (max-width: 768px) {
+    .size-guide-popup {
+      max-width: 95%;
+      max-height: 85vh;
+    }
+
+    .size-guide-header {
+      padding: 1rem 1.5rem;
+    }
+
+    .size-guide-title {
+      font-size: 1.25rem;
+    }
+
+    .size-guide-content {
+      padding: 1.5rem;
+      max-height: calc(85vh - 100px);
+    }
+  }
+
   @media screen and (max-width: 768px) {
     .product-pictos-container {
       display: grid;
@@ -598,6 +709,11 @@
                   </option>
                 {% endfor %}
               </select>
+              {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
+                <button type="button" class="size-guide-button" onclick="openSizeGuide()">
+                  Guide des tailles
+                </button>
+              {% endif %}
             </div>
           {% endfor %}
           <input type="hidden" name="id" id="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
@@ -658,6 +774,19 @@
       </div>
     </div>
   </form>
+
+  <!-- Popup Guide des tailles -->
+  <div class="size-guide-overlay" id="sizeGuideOverlay" onclick="closeSizeGuide(event)">
+    <div class="size-guide-popup" onclick="event.stopPropagation()">
+      <div class="size-guide-header">
+        <h2 class="size-guide-title">Guide des tailles</h2>
+        <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
+      </div>
+      <div class="size-guide-content" id="sizeGuideContent">
+        <p>Chargement...</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -892,6 +1021,44 @@ function updateStockStatus(variant) {
       addToCartBtn.disabled = true;
       addToCartBtn.textContent = 'Rupture de stock';
     }
+  }
+}
+
+// Fonctions pour le guide des tailles
+function openSizeGuide() {
+  const overlay = document.getElementById('sizeGuideOverlay');
+  const content = document.getElementById('sizeGuideContent');
+  
+  // Afficher le popup
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  
+  // Charger le contenu de la page guide-des-tailles
+  fetch('/pages/guide-des-tailles')
+    .then(response => response.text())
+    .then(data => {
+      // Extraire le contenu principal de la page
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data, 'text/html');
+      const pageContent = doc.querySelector('.page-content, .rte, main, .content, .page') || doc.querySelector('body');
+      
+      if (pageContent) {
+        content.innerHTML = pageContent.innerHTML;
+      } else {
+        content.innerHTML = '<p>Impossible de charger le guide des tailles.</p>';
+      }
+    })
+    .catch(error => {
+      console.error('Erreur lors du chargement du guide des tailles:', error);
+      content.innerHTML = '<p>Erreur lors du chargement du guide des tailles.</p>';
+    });
+}
+
+function closeSizeGuide(event) {
+  if (!event || event.target === document.getElementById('sizeGuideOverlay') || event.target.classList.contains('size-guide-close')) {
+    const overlay = document.getElementById('sizeGuideOverlay');
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
   }
 }
 
