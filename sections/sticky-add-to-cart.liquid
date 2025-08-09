@@ -4,20 +4,18 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 102;
-    display: none;
+    z-index: 9999;
     background-color: #f5f2d9;
     padding: 15px 20px 20px;
     border-top: 1px solid rgba(110, 97, 43, 0.2);
-    transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
     box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    display: block !important;
   }
   
-  /* Affichage uniquement sur tablet et mobile */
-  @media screen and (max-width: 991px) {
+  /* Pour tester - toujours visible d'abord */
+  @media screen and (min-width: 992px) {
     .section-sticky-add-to-cart {
-      display: block;
+      display: none !important;
     }
   }
   
@@ -168,58 +166,9 @@
   }
 </style>
 
-<div class="section-sticky-add-to-cart" id="sticky-add-to-cart" x-data="stickyCart">
-  <div class="sticky-cart-container">
-    <!-- Informations produit -->
-    <div class="sticky-cart-product-info">
-      <img 
-        class="sticky-cart-product-image" 
-        :src="product.featured_image" 
-        :alt="product.title"
-        loading="lazy"
-      />
-      <div class="sticky-cart-product-details">
-        <h3 class="sticky-cart-product-name" x-text="product.title"></h3>
-        <p class="sticky-cart-product-price" x-text="formatPrice(selected_or_first_available_variant.price)"></p>
-      </div>
-    </div>
-    
-    <!-- Sélecteur de variantes et bouton d'ajout -->
-    <div class="sticky-cart-variant-selector">
-      <!-- Sélecteur de variantes si multiple options -->
-      <template x-if="product.variants.length > 1">
-        <select 
-          class="sticky-cart-select" 
-          x-model="selectedVariantId"
-          @change="updateSelectedVariant"
-        >
-          <template x-for="variant in product.variants" :key="variant.id">
-            <option 
-              :value="variant.id" 
-              :disabled="!variant.available"
-              x-text="variant.title"
-            ></option>
-          </template>
-        </select>
-      </template>
-      
-      <!-- Bouton d'ajout au panier -->
-      <template x-if="selected_or_first_available_variant.available">
-        <button 
-          class="sticky-cart-add-button"
-          @click="addToCart($event, true)"
-          :disabled="!addToCartButton"
-          x-text="addToCartButton ? 'Panier' : 'Ajout...'"
-        ></button>
-      </template>
-      
-      <!-- État rupture de stock -->
-      <template x-if="!selected_or_first_available_variant.available">
-        <div class="sticky-cart-out-of-stock">
-          Rupture
-        </div>
-      </template>
-    </div>
+<div class="section-sticky-add-to-cart" id="sticky-add-to-cart">
+  <div style="background: red; color: white; padding: 10px; text-align: center;">
+    TEST STICKY CART - Si tu vois ça, la section fonctionne !
   </div>
 </div>
 
@@ -292,13 +241,11 @@ document.addEventListener('alpine:init', () => {
 
 {% schema %}
 {
-  "tag": "section",
   "name": "Sticky Add to Cart",
   "class": "section-sticky-add-to-cart",
   "presets": [
     {
-      "name": "Sticky Add to Cart",
-      "category": "Product"
+      "name": "Sticky Add to Cart"
     }
   ],
   "enabled_on": {
