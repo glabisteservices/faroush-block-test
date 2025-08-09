@@ -206,10 +206,10 @@
     }
   }
   
-  /* Titre du produit - Protection renforcée */
-  .product-header_product-details .product-title,
-  .product-header_product-details h1.product-title,
-  h1.product-title {
+  /* Titre du produit - Protection renforcée SEULEMENT pour la section product-hero */
+  .product-header_component .product-header_product-details .product-title,
+  .product-header_component .product-header_product-details h1.product-title,
+  .product-header_component h1.product-title {
     font-family: Karla, sans-serif !important;
     color: #6e612b !important;
     font-size: 1.75rem !important; /* Taille H4 */
@@ -236,9 +236,9 @@
   }
   
   @media screen and (max-width: 768px) {
-    .product-header_product-details .product-title,
-    .product-header_product-details h1.product-title,
-    h1.product-title {
+    .product-header_component .product-header_product-details .product-title,
+    .product-header_component .product-header_product-details h1.product-title,
+    .product-header_component h1.product-title {
       font-size: 1.5rem !important;
     }
   }
@@ -852,9 +852,9 @@ document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
   initializeSwipe();
   
-  // Protection renforcée pour le titre du produit
+  // Protection renforcée pour le titre du produit - SEULEMENT dans notre section
   const protectTitle = () => {
-    const titles = document.querySelectorAll('.product-title, .product-main-title, h1.product-title');
+    const titles = document.querySelectorAll('.product-header_component .product-title, .product-header_component .product-main-title, .product-header_component h1.product-title');
     titles.forEach(title => {
       if (title) {
         const styles = {
