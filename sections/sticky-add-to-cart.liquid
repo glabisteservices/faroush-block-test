@@ -1,0 +1,310 @@
+<style>
+  .section-sticky-add-to-cart {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 102;
+    display: none;
+    background-color: #f5f2d9;
+    padding: 15px 20px 20px;
+    border-top: 1px solid rgba(110, 97, 43, 0.2);
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+  }
+  
+  /* Affichage uniquement sur tablet et mobile */
+  @media screen and (max-width: 991px) {
+    .section-sticky-add-to-cart {
+      display: block;
+    }
+  }
+  
+  .section-sticky-add-to-cart.is-visible {
+    transform: translateY(0);
+  }
+  
+  .sticky-cart-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    max-width: 100%;
+  }
+  
+  .sticky-cart-product-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .sticky-cart-product-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+    background-color: #fff;
+  }
+  
+  .sticky-cart-product-details {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .sticky-cart-product-name {
+    font-family: Karla;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6e612b;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .sticky-cart-product-price {
+    font-family: Karla;
+    font-size: 16px;
+    font-weight: 700;
+    color: #6e612b;
+    margin: 0;
+  }
+  
+  .sticky-cart-variant-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .sticky-cart-select {
+    min-width: 80px;
+    padding: 8px 12px;
+    border: 1px solid #6e612b;
+    border-radius: 8px;
+    background-color: transparent;
+    font-family: Karla;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6e612b;
+    text-align: center;
+  }
+  
+  .sticky-cart-add-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+    font-family: Karla;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f5f2d9;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  
+  .sticky-cart-add-button:hover {
+    background-color: hsla(19.74193548387097, 80.31%, 55%, 1.00);
+  }
+  
+  .sticky-cart-add-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .sticky-cart-out-of-stock {
+    padding: 12px 24px;
+    border: 1px solid #6e612b;
+    border-radius: 8px;
+    background-color: transparent;
+    font-family: Karla;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6e612b;
+    text-align: center;
+    min-width: 100px;
+  }
+  
+  /* Responsive ajustements */
+  @media screen and (max-width: 479px) {
+    .section-sticky-add-to-cart {
+      padding: 12px 15px 15px;
+    }
+    
+    .sticky-cart-container {
+      gap: 10px;
+    }
+    
+    .sticky-cart-product-image {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .sticky-cart-product-name {
+      font-size: 13px;
+    }
+    
+    .sticky-cart-product-price {
+      font-size: 15px;
+    }
+    
+    .sticky-cart-select {
+      min-width: 70px;
+      padding: 6px 8px;
+      font-size: 13px;
+    }
+    
+    .sticky-cart-add-button,
+    .sticky-cart-out-of-stock {
+      padding: 10px 18px;
+      font-size: 13px;
+      min-width: 90px;
+    }
+  }
+</style>
+
+<div class="section-sticky-add-to-cart" id="sticky-add-to-cart" x-data="stickyCart">
+  <div class="sticky-cart-container">
+    <!-- Informations produit -->
+    <div class="sticky-cart-product-info">
+      <img 
+        class="sticky-cart-product-image" 
+        :src="product.featured_image" 
+        :alt="product.title"
+        loading="lazy"
+      />
+      <div class="sticky-cart-product-details">
+        <h3 class="sticky-cart-product-name" x-text="product.title"></h3>
+        <p class="sticky-cart-product-price" x-text="formatPrice(selected_or_first_available_variant.price)"></p>
+      </div>
+    </div>
+    
+    <!-- Sélecteur de variantes et bouton d'ajout -->
+    <div class="sticky-cart-variant-selector">
+      <!-- Sélecteur de variantes si multiple options -->
+      <template x-if="product.variants.length > 1">
+        <select 
+          class="sticky-cart-select" 
+          x-model="selectedVariantId"
+          @change="updateSelectedVariant"
+        >
+          <template x-for="variant in product.variants" :key="variant.id">
+            <option 
+              :value="variant.id" 
+              :disabled="!variant.available"
+              x-text="variant.title"
+            ></option>
+          </template>
+        </select>
+      </template>
+      
+      <!-- Bouton d'ajout au panier -->
+      <template x-if="selected_or_first_available_variant.available">
+        <button 
+          class="sticky-cart-add-button"
+          @click="addToCart($event, true)"
+          :disabled="!addToCartButton"
+          x-text="addToCartButton ? 'Panier' : 'Ajout...'"
+        ></button>
+      </template>
+      
+      <!-- État rupture de stock -->
+      <template x-if="!selected_or_first_available_variant.available">
+        <div class="sticky-cart-out-of-stock">
+          Rupture
+        </div>
+      </template>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('alpine:init', () => {
+  Alpine.data('stickyCart', () => ({
+    selectedVariantId: null,
+    
+    init() {
+      this.selectedVariantId = this.selected_or_first_available_variant?.id;
+      this.initStickyBehavior();
+    },
+    
+    updateSelectedVariant() {
+      const variant = this.product.variants.find(v => v.id == this.selectedVariantId);
+      if (variant) {
+        this.selected_or_first_available_variant = variant;
+      }
+    },
+    
+    formatPrice(price) {
+      return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(price / 100);
+    },
+    
+    initStickyBehavior() {
+      const stickyCart = document.getElementById('sticky-add-to-cart');
+      const mainAddToCartButton = document.querySelector('[li-element="add-to-cart"]');
+      
+      if (!mainAddToCartButton || !stickyCart) return;
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Le bouton principal est visible, cacher le sticky
+            stickyCart.classList.remove('is-visible');
+          } else {
+            // Le bouton principal n'est pas visible, afficher le sticky
+            stickyCart.classList.add('is-visible');
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px' // Déclenche un peu avant que le bouton disparaisse
+      });
+      
+      observer.observe(mainAddToCartButton);
+      
+      // Cacher le sticky dans le footer
+      const footer = document.querySelector('footer');
+      if (footer) {
+        const footerObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              stickyCart.classList.remove('is-visible');
+            }
+          });
+        }, {
+          threshold: 0.1
+        });
+        
+        footerObserver.observe(footer);
+      }
+    }
+  }));
+});
+</script>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Sticky Add to Cart",
+  "class": "section-sticky-add-to-cart",
+  "presets": [
+    {
+      "name": "Sticky Add to Cart",
+      "category": "Product"
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  }
+}
+{% endschema %}
