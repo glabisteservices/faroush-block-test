@@ -115,6 +115,11 @@
     cursor: not-allowed;
   }
   
+  .sticky-cart-add-button.added-state {
+    background-color: #bdbf85;
+    color: #ec8451;
+  }
+  
   .sticky-cart-out-of-stock {
     padding: 12px 24px;
     border: 1px solid #6e612b;
@@ -283,9 +288,11 @@ function addToCartSticky() {
     if (button) {
       const originalText = button.textContent;
       button.textContent = 'Ajouté !';
+      button.classList.add('added-state');
       button.disabled = true;
       setTimeout(() => {
         button.textContent = originalText;
+        button.classList.remove('added-state');
         button.disabled = false;
       }, 2000);
     }
