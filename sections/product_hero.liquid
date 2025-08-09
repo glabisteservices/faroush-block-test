@@ -461,12 +461,9 @@
     text-decoration: underline;
     cursor: pointer;
     padding: 0;
-    text-align: left;
+    text-align: right;
     white-space: nowrap;
     flex-shrink: 0;
-    align-self: flex-end;
-    height: fit-content;
-    margin-bottom: 0.75rem;
   }
 
   .size-guide-button:hover {
@@ -700,44 +697,29 @@
         <!-- Variant Selection -->
         {% unless product.has_only_default_variant %}
           {% for option in product.options_with_values %}
-            {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
-              <div class="variant-selector">
-                <label class="variant-label">{{ option.name }}</label>
-                <div class="variant-selector-row">
-                  <div class="variant-select-wrapper">
-                    <select class="variant-select" 
-                            name="options[{{ option.name | escape }}]" 
-                            data-option-index="{{ forloop.index0 }}"
-                            onchange="updateVariant()">
-                      {% for value in option.values %}
-                        <option value="{{ value | escape }}" 
-                                {% if option.selected_value == value %}selected="selected"{% endif %}>
-                          {{ value }}
-                        </option>
-                      {% endfor %}
-                    </select>
-                  </div>
+            <div class="variant-selector">
+              {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
+                <div class="variant-label-row">
+                  <label class="variant-label">{{ option.name }}</label>
                   <button type="button" class="size-guide-button" onclick="openSizeGuide()">
                     Guide des tailles
                   </button>
                 </div>
-              </div>
-            {% else %}
-              <div class="variant-selector">
+              {% else %}
                 <label class="variant-label">{{ option.name }}</label>
-                <select class="variant-select" 
-                        name="options[{{ option.name | escape }}]" 
-                        data-option-index="{{ forloop.index0 }}"
-                        onchange="updateVariant()">
-                  {% for value in option.values %}
-                    <option value="{{ value | escape }}" 
-                            {% if option.selected_value == value %}selected="selected"{% endif %}>
-                      {{ value }}
-                    </option>
-                  {% endfor %}
-                </select>
-              </div>
-            {% endif %}
+              {% endif %}
+              <select class="variant-select" 
+                      name="options[{{ option.name | escape }}]" 
+                      data-option-index="{{ forloop.index0 }}"
+                      onchange="updateVariant()">
+                {% for value in option.values %}
+                  <option value="{{ value | escape }}" 
+                          {% if option.selected_value == value %}selected="selected"{% endif %}>
+                    {{ value }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
           {% endfor %}
           <input type="hidden" name="id" id="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
         {% else %}
