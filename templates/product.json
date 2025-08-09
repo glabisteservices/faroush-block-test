@@ -128,6 +128,18 @@
       ],
       "name": "picto-V2",
       "settings": {}
+    },
+    "3_column_DwLCVV": {
+      "type": "3-column",
+      "name": "3-column",
+      "settings": {
+        "heading_1": "Souplesse & légèreté",
+        "paragraph_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "heading_2": "Qualité premium",
+        "paragraph_2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "heading_3": "Design moderne",
+        "paragraph_3": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
+      }
     }
   },
   "layout": "theme",
@@ -135,6 +147,7 @@
   "order": [
     "product_hero",
     "product_details_accordion_8fNf6L",
+    "3_column_DwLCVV",
     "recommended_products",
     "picto_v2_ywBdCc"
   ]
