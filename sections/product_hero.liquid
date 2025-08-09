@@ -509,7 +509,9 @@ const productVariants = {{ product.variants | json }};
 
 // Variables pour le swipe mobile
 let startX = 0;
+let startY = 0;
 let currentX = 0;
+let currentY = 0;
 let isDragging = false;
 let isSwipeActive = false;
 
@@ -615,6 +617,7 @@ function initializeSwipe() {
 
 function handleTouchStart(e) {
   startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
   isDragging = true;
   isSwipeActive = false;
 }
@@ -623,12 +626,15 @@ function handleTouchMove(e) {
   if (!isDragging) return;
   
   currentX = e.touches[0].clientX;
+  currentY = e.touches[0].clientY;
   const diffX = Math.abs(currentX - startX);
+  const diffY = Math.abs(currentY - startY);
   
-  // Si le mouvement horizontal est suffisant, on active le swipe
-  if (diffX > 10) {
+  // Ne déclencher le swipe que si le mouvement horizontal est plus important que le vertical
+  // et que le mouvement horizontal dépasse un seuil minimum
+  if (diffX > 15 && diffX > diffY * 1.5) {
     isSwipeActive = true;
-    e.preventDefault(); // Empêche le scroll vertical
+    e.preventDefault(); // Empêche le scroll vertical seulement si c'est un swipe horizontal
   }
 }
 
@@ -657,6 +663,7 @@ function handleTouchEnd(e) {
 function handleMouseStart(e) {
   if (!isMobile()) return;
   startX = e.clientX;
+  startY = e.clientY;
   isDragging = true;
   isSwipeActive = false;
 }
@@ -665,9 +672,11 @@ function handleMouseMove(e) {
   if (!isDragging || !isMobile()) return;
   
   currentX = e.clientX;
+  currentY = e.clientY;
   const diffX = Math.abs(currentX - startX);
+  const diffY = Math.abs(currentY - startY);
   
-  if (diffX > 10) {
+  if (diffX > 15 && diffX > diffY * 1.5) {
     isSwipeActive = true;
   }
 }
