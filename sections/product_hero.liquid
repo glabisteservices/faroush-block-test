@@ -926,18 +926,55 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   };
+
+  // Fonction pour ajuster les images des pictos sur mobile
+  const adjustPictosOnMobile = () => {
+    if (window.innerWidth <= 768) {
+      // Sélectionner toutes les images dans les pictos
+      const pictoImages = document.querySelectorAll('.product-pictos-container img, .picto-produit img');
+      
+      pictoImages.forEach(img => {
+        img.style.setProperty('width', 'auto', 'important');
+        img.style.setProperty('height', '30px', 'important');
+        img.style.setProperty('max-width', '40px', 'important');
+        img.style.setProperty('max-height', '30px', 'important');
+        img.style.setProperty('object-fit', 'contain', 'important');
+        img.style.setProperty('object-position', 'center', 'important');
+      });
+
+      // Ajuster les conteneurs des images
+      const pictoContainers = document.querySelectorAll('.picto-produit > div:first-child');
+      pictoContainers.forEach(container => {
+        container.style.setProperty('width', '100%', 'important');
+        container.style.setProperty('height', '40px', 'important');
+        container.style.setProperty('max-height', '40px', 'important');
+        container.style.setProperty('display', 'flex', 'important');
+        container.style.setProperty('align-items', 'center', 'important');
+        container.style.setProperty('justify-content', 'center', 'important');
+        container.style.setProperty('overflow', 'hidden', 'important');
+      });
+    }
+  };
   
   // Exécuter immédiatement et à intervalles
   protectTitle();
+  adjustPictosOnMobile();
   setTimeout(protectTitle, 50);
+  setTimeout(adjustPictosOnMobile, 50);
   setTimeout(protectTitle, 100);
+  setTimeout(adjustPictosOnMobile, 100);
   setTimeout(protectTitle, 200);
+  setTimeout(adjustPictosOnMobile, 200);
   setTimeout(protectTitle, 500);
+  setTimeout(adjustPictosOnMobile, 500);
   setTimeout(protectTitle, 1000);
+  setTimeout(adjustPictosOnMobile, 1000);
   setTimeout(protectTitle, 2000);
+  setTimeout(adjustPictosOnMobile, 2000);
   
   // Observer continu
   setInterval(protectTitle, 1000);
+  setInterval(adjustPictosOnMobile, 1000);
   
   // Debug : surveiller les scroll automatiques non désirés
   if (isMobile()) {
@@ -962,6 +999,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateGalleryDisplay();
       initializeSwipe();
       protectTitle(); // Reprotéger le titre
+      adjustPictosOnMobile(); // Réajuster les pictos
     }, 100);
   });
 });
