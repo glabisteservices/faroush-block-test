@@ -615,8 +615,26 @@ document.addEventListener('alpine:init', () => {
         margin-top: 0.25rem !important;
     }
     
-    /* Webflow mobile menu interactions */
-    .w-dropdown.w--open .nav_dropdown-list {
+    /* Forces d'affichage pour mobile - Webflow compatibility */
+    .w-dropdown.w--open .nav_dropdown-list,
+    .nav_menu-dropdown.w--open .nav_dropdown-list,
+    .w-dropdown-toggle.w--open + .nav_dropdown-list {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+    }
+    
+    /* Force l'affichage même sans classes Webflow */
+    .nav_menu-dropdown:target .nav_dropdown-list,
+    .nav_menu-dropdown[aria-expanded="true"] .nav_dropdown-list {
+        display: flex !important;
+    }
+    
+    /* Fallback pour tous les dropdowns mobiles */
+    .nav_menu.w--open .nav_dropdown-list {
         display: flex !important;
     }
 }
