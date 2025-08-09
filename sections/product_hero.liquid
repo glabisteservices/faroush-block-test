@@ -378,6 +378,58 @@
     color: #6e612b;
     font-size: 0.9rem;
   }
+
+  /* Pictos Styles */
+  .product-pictos-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .picto-produit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .picto-produit .Div.Block.7 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+  }
+
+  .picto-produit .Image.3 {
+    width: 100%;
+    height: auto;
+    max-width: 40px;
+    max-height: 40px;
+  }
+
+  .picto-produit .texte-picto {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    .product-pictos-container {
+      justify-content: space-around;
+    }
+    
+    .picto-produit {
+      min-width: 70px;
+    }
+  }
 </style>
 
 <div class="product-header_component">
@@ -499,6 +551,36 @@
               Rupture de stock
             {% endif %}
           </button>
+        </div>
+
+        <!-- Product Pictos Section -->
+        <div class="product-pictos-container">
+          {% for block in section.blocks %}
+            {% if block.type == "picto-produit" %}
+              <div class="picto-produit" {{ block.shopify_attributes }}>
+                <div class="Div Block 7">
+                  {% if block.settings.picto_image %}
+                    <img class="Image 3" 
+                         width="auto" 
+                         height="auto" 
+                         alt="{{ block.settings.picto_alt | default: block.settings.picto_text | escape }}" 
+                         src="{{ block.settings.picto_image | image_url }}" 
+                         loading="lazy">
+                  {% else %}
+                    <img class="Image 3" 
+                         width="auto" 
+                         height="auto" 
+                         alt="inherit" 
+                         src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg" 
+                         loading="lazy">
+                  {% endif %}
+                </div>
+                <div class="texte-picto">
+                  {{ block.settings.picto_text | default: "Souple" }}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
         </div>
         
       </div>
@@ -826,6 +908,28 @@ document.addEventListener('DOMContentLoaded', function() {
       "limit": 1
     },
     {
+      "type": "picto-produit",
+      "name": "Picto produit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "picto_image",
+          "label": "Image du picto"
+        },
+        {
+          "type": "text",
+          "id": "picto_text",
+          "label": "Texte du picto",
+          "default": "Souple"
+        },
+        {
+          "type": "text",
+          "id": "picto_alt",
+          "label": "Texte alternatif de l'image"
+        }
+      ]
+    },
+    {
       "type": "@app"
     }
   ],
@@ -855,4 +959,3 @@ document.addEventListener('DOMContentLoaded', function() {
     ]
   }
 }
-{% endschema %}
