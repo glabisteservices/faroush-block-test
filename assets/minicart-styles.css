@@ -231,7 +231,7 @@ html body div.page-wrapper div.nav_component div.nav_container div.nav_shop-icon
   font-family: 'Karla', sans-serif !important;
 }
 
-/* Changer "Subtotal" en "Sous-total" */
+/* Changer "Subtotal" en "Sous-total" SANS toucher au prix */
 .nav_mini-cart .mini-cart_footer-total .text-size-regular.text-weight-bold:first-child {
   font-size: 0 !important;
 }
@@ -242,6 +242,22 @@ html body div.page-wrapper div.nav_component div.nav_container div.nav_shop-icon
   font-weight: 600 !important;
   color: #6e612b !important;
   font-family: 'Karla', sans-serif !important;
+}
+
+/* S'assurer que le prix reste visible et fonctionnel */
+.nav_mini-cart .mini-cart_footer-price {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 2px !important;
+}
+
+.nav_mini-cart .mini-cart_footer-price .text-size-regular.text-weight-bold {
+  color: #6e612b !important;
+  font-family: 'Karla', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  /* NE PAS masquer le prix - il doit rester dynamique */
 }
 
 /* Changer "Cart" en "Voir le panier" dans le bouton */
