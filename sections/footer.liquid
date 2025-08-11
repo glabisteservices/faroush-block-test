@@ -225,7 +225,7 @@
   position: relative;
 }
 
-/* Copie exacte du style language switcher pour currency switcher */
+/* Style identique pour les deux switchers */
 .li-lang_dropdown,
 .li-currency_dropdown {
   font-family: 'Karla', sans-serif;
@@ -236,6 +236,17 @@
 .li-currency_dd-toggle {
   font-family: 'Karla', sans-serif;
   color: #f5f2d9;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.li-lang_dd-toggle-icon,
+.li-currency_dd-toggle-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
 }
 
 .li-lang_dd-list,
