@@ -16,13 +16,15 @@
           "social_media_icon_jX7hxH": {
             "type": "social-media-icon",
             "settings": {
-              "url_link": ""
+              "url_link": "",
+              "image_image": "shopify://shop_images/Insta_Clair.svg"
             }
           },
           "social_media_icon_MDxAGR": {
             "type": "social-media-icon",
             "settings": {
-              "url_link": ""
+              "url_link": "",
+              "image_image": "shopify://shop_images/Tiktok_Clair.svg"
             }
           }
         },
