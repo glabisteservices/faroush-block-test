@@ -13,86 +13,86 @@
         {% endif %}
       </div>
     {% endfor %}
+  </div>
+  
+  <!-- Section logo et informations à droite -->
+  <div class="footer_sub-footer">
+    <a href="{{ routes.root_url }}" class="footer_logo-link w-inline-block">
+      {% if section.settings.image_logo %}
+        {{ section.settings.image_logo | image_url: width: 1000 | image_tag: loading: 'lazy', width: '182', class: 'footer_logo' }}
+      {% else %}
+        <img src="{{ 'Faroush-light-yellow.svg' | asset_url }}" loading="lazy" width="182" alt="" class="footer_logo">
+      {% endif %}
+    </a>
     
-    <!-- Logo et informations dans la même grille -->
-    <div class="footer_link-column footer_logo-column">
-      <a href="{{ routes.root_url }}" class="footer_logo-link w-inline-block">
-        {% if section.settings.image_logo %}
-          {{ section.settings.image_logo | image_url: width: 1000 | image_tag: loading: 'lazy', width: '182', class: 'footer_logo' }}
-        {% else %}
-          <img src="{{ 'Faroush-light-yellow.svg' | asset_url }}" loading="lazy" width="182" alt="" class="footer_logo">
-        {% endif %}
-      </a>
-      
-      {% if shop.enabled_payment_types.size > 0 %}
-        <div class="footer_icon-block">
-          <div class="text-size-regular footer">
-            {{ section.settings.text_payment_method }}
-          </div>
-          <ul role="list" class="footer_payment-list w-list-unstyled">
-            {% for type in shop.enabled_payment_types %}
-              <li class="footer_payment-item">
-                <div class="footer_payment-svg">
-                  {{ type | payment_type_svg_tag: class: 'footer_payment-img icon--full-color' }}
-                </div>
-              </li>
-            {% endfor %}
-          </ul>
+    {% if shop.enabled_payment_types.size > 0 %}
+      <div class="footer_icon-block">
+        <div class="text-size-regular footer">
+          {{ section.settings.text_payment_method }}
         </div>
-      {% endif %}
-
-      {% if localization.available_languages.size > 1 %}
-        <localization-form class="li-lang_wrapper">
-          {% form 'localization', class: 'li-lang_form' %}
-            <div data-hover="true" data-delay="500" class="li-lang_dropdown w-dropdown">
-              <div lang="{{ localization.language.iso_code }}" class="li-lang_dd-toggle w-dropdown-toggle">
-                <div>{{ localization.language.endonym_name | capitalize }}</div>
-                {% if localization.available_languages.size > 1 %}
-                  <div class="li-lang_dd-toggle-icon w-embed">
-                    <svg width="100%" height="100%" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path clip-rule="evenodd" d="M2.55806 6.29544C2.46043 6.19781 2.46043 6.03952 2.55806 5.94189L3.44195 5.058C3.53958 4.96037 3.69787 4.96037 3.7955 5.058L8.00001 9.26251L12.2045 5.058C12.3021 4.96037 12.4604 4.96037 12.5581 5.058L13.4419 5.94189C13.5396 6.03952 13.5396 6.19781 13.4419 6.29544L8.17678 11.5606C8.07915 11.6582 7.92086 11.6582 7.82323 11.5606L2.55806 6.29544Z" fill="currentColor"></path>
-                    </svg>
-                  </div>
-                {% endif %}
+        <ul role="list" class="footer_payment-list w-list-unstyled">
+          {% for type in shop.enabled_payment_types %}
+            <li class="footer_payment-item">
+              <div class="footer_payment-svg">
+                {{ type | payment_type_svg_tag: class: 'footer_payment-img icon--full-color' }}
               </div>
-              <nav class="li-lang_dd-list w-dropdown-list">
-                {% for language in localization.available_languages %}
-                  {% unless localization.language.iso_code == language.iso_code %}
-                    <div class="li-lang_dd-list-item">
-                      <a href="#" lang="{{ language.iso_code }}" hreflang="{{ language.iso_code }}" data-value="{{ language.iso_code }}" class="li-lang_dd-link w-dropdown-link">
-                        {{ language.endonym_name | capitalize }}
-                      </a>
-                    </div>
-                  {% endunless %}
-                {% endfor %}
-              </nav>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if localization.available_languages.size > 1 %}
+      <localization-form class="li-lang_wrapper">
+        {% form 'localization', class: 'li-lang_form' %}
+          <div data-hover="true" data-delay="500" class="li-lang_dropdown w-dropdown">
+            <div lang="{{ localization.language.iso_code }}" class="li-lang_dd-toggle w-dropdown-toggle">
+              <div>{{ localization.language.endonym_name | capitalize }}</div>
+              {% if localization.available_languages.size > 1 %}
+                <div class="li-lang_dd-toggle-icon w-embed">
+                  <svg width="100%" height="100%" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" d="M2.55806 6.29544C2.46043 6.19781 2.46043 6.03952 2.55806 5.94189L3.44195 5.058C3.53958 4.96037 3.69787 4.96037 3.7955 5.058L8.00001 9.26251L12.2045 5.058C12.3021 4.96037 12.4604 4.96037 12.5581 5.058L13.4419 5.94189C13.5396 6.03952 13.5396 6.19781 13.4419 6.29544L8.17678 11.5606C8.07915 11.6582 7.92086 11.6582 7.82323 11.5606L2.55806 6.29544Z" fill="currentColor"></path>
+                  </svg>
+                </div>
+              {% endif %}
             </div>
-            <input type="hidden" name="language_code" class="li-lang_hidden-input" value="{{ localization.language.iso_code }}">
-          {% endform %}
-          
-          <div class="li-lang_script w-embed w-script">
-            <script>
-              class LocalizationForm extends HTMLElement {
-                constructor() {
-                  super();
-                  this.input = this.querySelector('input[name="language_code"], input[name="country_code"]');
-                  this.querySelectorAll('a').forEach(item =>
-                    item.addEventListener('click', this.onItemClick.bind(this))
-                  );
-                }
-                onItemClick(event) {
-                  event.preventDefault();
-                  const form = this.querySelector('form');
-                  this.input.value = event.currentTarget.dataset.value;
-                  if (form) form.submit();
-                }
-              }
-              customElements.define('localization-form', LocalizationForm);
-            </script>
+            <nav class="li-lang_dd-list w-dropdown-list">
+              {% for language in localization.available_languages %}
+                {% unless localization.language.iso_code == language.iso_code %}
+                  <div class="li-lang_dd-list-item">
+                    <a href="#" lang="{{ language.iso_code }}" hreflang="{{ language.iso_code }}" data-value="{{ language.iso_code }}" class="li-lang_dd-link w-dropdown-link">
+                      {{ language.endonym_name | capitalize }}
+                    </a>
+                  </div>
+                {% endunless %}
+              {% endfor %}
+            </nav>
           </div>
-        </localization-form>
-      {% endif %}
-    </div>
+          <input type="hidden" name="language_code" class="li-lang_hidden-input" value="{{ localization.language.iso_code }}">
+        {% endform %}
+        
+        <div class="li-lang_script w-embed w-script">
+          <script>
+            class LocalizationForm extends HTMLElement {
+              constructor() {
+                super();
+                this.input = this.querySelector('input[name="language_code"], input[name="country_code"]');
+                this.querySelectorAll('a').forEach(item =>
+                  item.addEventListener('click', this.onItemClick.bind(this))
+                );
+              }
+              onItemClick(event) {
+                event.preventDefault();
+                const form = this.querySelector('form');
+                this.input.value = event.currentTarget.dataset.value;
+                if (form) form.submit();
+              }
+            }
+            customElements.define('localization-form', LocalizationForm);
+          </script>
+        </div>
+      </localization-form>
+    {% endif %}
   </div>
 </div>
 
@@ -142,9 +142,33 @@
   padding: 20px;
 }
 
+.footer_main-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer_link-grid {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  max-width: 60%;
+}
+
 @media (max-width: 767px) {
   .section_footer {
     padding: 20px 10px;
+  }
+  
+  .footer_main-wrapper {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .footer_link-grid {
+    flex-direction: column;
+    gap: 20px;
+    max-width: 100%;
   }
 }
 </style>
