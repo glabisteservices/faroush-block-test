@@ -90,6 +90,21 @@ Maintenant vous pouvez me donner vos références couleurs :
   border-top: 1px solid #f0f0f0 !important;
 }
 
+/* Force le padding sur desktop - règle plus spécifique */
+@media (min-width: 768px) {
+  .nav_mini-cart .nav_mini-cart-holder .mini-cart_footer {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+}
+
+/* Encore plus spécifique si nécessaire */
+.nav_dropdown.w-dropdown .mini-cart_footer {
+  padding: 20px !important;
+}
+
 .nav_mini-cart .mini-cart_footer-total {
   display: flex !important;
   justify-content: space-between !important;
