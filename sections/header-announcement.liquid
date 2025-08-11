@@ -78,9 +78,16 @@
   .announcement-wrapper {
     position: relative;
     z-index: 999;
-    padding: 4px 20px;
-    height: auto;
-    min-height: 24px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Quick stack layout */
+  .announcement-wrapper .quick-stack {
+    width: 100%;
+    padding: 0 20px;
   }
   
   /* Force l'affichage du texte central */
@@ -92,7 +99,7 @@
   
   /* Contrôle de la taille des icônes sociales */
   .announcement-wrapper .social-media-header img {
-    max-height: 16px !important;
+    height: 18px !important;
     width: auto !important;
     object-fit: contain !important;
   }
