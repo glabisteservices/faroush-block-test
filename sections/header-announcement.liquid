@@ -78,19 +78,29 @@
   .announcement-wrapper {
     position: relative;
     z-index: 999;
-    padding: 10px 0;
+    padding: 6px 20px;
+    height: auto;
+    min-height: 32px;
   }
   
   /* Force l'affichage du texte central */
   .announcement-wrapper .text-block {
     color: #f5f2d9 !important;
+    font-size: 14px;
+    line-height: 1.2;
   }
   
   /* Contrôle de la taille des icônes sociales */
   .announcement-wrapper .social-media-header img {
-    max-height: 24px !important;
+    max-height: 16px !important;
     width: auto !important;
     object-fit: contain !important;
+  }
+  
+  /* Assurer que les cellules restent alignées */
+  .announcement-wrapper .w-layout-cell {
+    display: flex;
+    align-items: center;
   }
 </style>
 
