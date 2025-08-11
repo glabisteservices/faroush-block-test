@@ -85,7 +85,7 @@ Maintenant vous pouvez me donner vos références couleurs :
 
 /* === FOOTER / TOTAL === */
 .nav_mini-cart .mini-cart_footer {
-  padding: 20px !important;
+  padding: 20px 20px 20px 20px !important;
   background-color: #ffffff !important;
   border-top: 1px solid #f0f0f0 !important;
 }
