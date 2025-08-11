@@ -32,7 +32,12 @@
 }
 
 .nav_mini-cart .mini-cart_line-item_img {
-  /* Images produits */
+  width: 5rem !important;
+  height: auto !important;
+  background-color: transparent !important;
+  background: none !important;
+  object-fit: contain !important;
+  border-radius: 0 !important;
 }
 
 .nav_mini-cart .text-size-regular.text-weight-bold {
