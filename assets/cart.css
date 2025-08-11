@@ -27,3 +27,21 @@
   color: white !important;
   border-radius: 10px !important;
 }
+
+/* Responsive mobile pour cart_wrapper-right */
+@media (max-width: 767px) {
+  .cart_wrapper-right {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 20px 0 0 0 !important;
+  }
+  
+  .cart_grid-wrapper {
+    flex-direction: column !important;
+  }
+  
+  .cart_table.outline-solid-1 {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+}
