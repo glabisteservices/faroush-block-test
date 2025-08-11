@@ -1,79 +1,29 @@
-/* CSS pour obtenir exactement le design de l'image */
+/* CSS minimal pour modifier seulement les couleurs et bordures sur votre code existant */
 
-/* Layout en deux colonnes */
-.cart_grid-wrapper {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-/* Bordures arrondies pour tous les conteneurs */
+/* Bordures arrondies */
 .cart_table.outline-solid-1,
 .cart_empty.outline-solid-1 {
   border-radius: 20px;
-  overflow: hidden;
-}
-
-/* Tableau principal (colonne de gauche) */
-.cart_grid-wrapper > .cart_table {
-  flex: 2;
-}
-
-/* Colonne de droite (résumé) */
-.cart_wrapper-right {
-  flex: 1;
-  min-width: 300px;
 }
 
 /* Bouton Checkout orange */
 .button.w-button[value="Checkout"] {
   background-color: #e67e22 !important;
   color: white !important;
-  border: none !important;
   border-radius: 10px !important;
-  padding: 15px 20px !important;
-  font-weight: 600 !important;
-  width: 100% !important;
 }
 
 /* Bouton Update cart avec bordure */
-.button.is-outline.w-button[value="Update cart"],
-.button.is-outline.w-button[value="Mettre à jour"] {
+.button.is-outline.w-button[value="Update cart"] {
   background-color: transparent !important;
-  color: #333 !important;
-  border: 1px solid #ddd !important;
+  color: #8B7355 !important;
+  border: 1px solid #8B7355 !important;
   border-radius: 10px !important;
-  padding: 15px 20px !important;
-  font-weight: 500 !important;
-  width: 100% !important;
-  margin-top: 10px !important;
 }
 
 /* Bouton "Continuer shopping" du panier vide */
 .cart_empty .button.w-button {
   background-color: #e67e22 !important;
   color: white !important;
-  border: none !important;
   border-radius: 10px !important;
-  padding: 15px 30px !important;
-  font-weight: 600 !important;
-}
-
-/* Actions du panier */
-.cart_action {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-/* Responsive pour mobile */
-@media (max-width: 991px) {
-  .cart_grid-wrapper {
-    flex-direction: column;
-  }
-  
-  .cart_wrapper-right {
-    min-width: unset;
-  }
 }
