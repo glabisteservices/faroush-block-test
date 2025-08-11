@@ -15,9 +15,20 @@ Maintenant vous pouvez me donner vos références couleurs :
   /* Sidebar styling de base */
 }
 
-/* === TOUS LES TEXTES EN #6e612b === */
-.nav_mini-cart * {
+/* === TOUS LES TEXTES EN #6e612b SAUF L'ICÔNE HEADER === */
+.nav_mini-cart .nav_mini-cart-holder *,
+.nav_mini-cart .mini-cart_component *,
+.nav_mini-cart .mini-cart_header *,
+.nav_mini-cart .mini-cart_line-item *,
+.nav_mini-cart .mini-cart_footer * {
   color: #6e612b !important;
+}
+
+/* Exclure explicitement l'icône du header et le compteur */
+.nav_mini-cart .nav_shop-icon,
+.nav_mini-cart .nav_shop-icon *,
+.nav_mini-cart .nav_shop-quantity {
+  color: inherit !important;
 }
 
 /* === HEADER DU MINICART === */
