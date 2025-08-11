@@ -3,7 +3,6 @@
     {% for link in linklists[section.settings.menu].links %}
       <div class="footer_link-column">
         <div class="titre-footer">{{ link.title }}</div>
-        <div class="text-weight-semibold">{{ link.title }}</div>
         
         {% if link.links.size > 0 %}
           <div class="footer_link-list">
