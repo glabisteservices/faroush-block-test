@@ -102,6 +102,21 @@
     display: flex;
     align-items: center;
   }
+  
+  /* MOBILE : Cacher les icônes et langues sur mobile */
+  @media screen and (max-width: 767px) {
+    .announcement-wrapper .cell {
+      display: none !important;
+    }
+    .announcement-wrapper .cell-3 {
+      display: none !important;
+    }
+    .announcement-wrapper .cell-2 {
+      display: flex !important;
+      justify-content: center;
+      width: 100%;
+    }
+  }
 </style>
 
 {% schema %}
