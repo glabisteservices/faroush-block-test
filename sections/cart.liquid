@@ -1,229 +1,205 @@
 <div class="padding-global padding-section-small">
-  <div class="container-large">
-    <div class="headline-wrapper">
-      <h2 id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a629-f594a625" class="heading-style-h2">
-        {{ section.settings.text_heading }}
-      </h2>
-      <a href="{{ routes.root_url }}" class="text-size-small text-style-link hide-mobile-landscape">
-        <span>{{ section.settings.text_continue_shopping }}</span>
-      </a>
-    </div>
+          <div class="container-large">
+            <div class="headline-wrapper">
+              <h2 id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a629-f594a625" class="heading-style-h2">
+{{ section.settings.text_heading }}
+</h2>
+              <a href="{{ routes.root_url }}" li-object:href="routes.root_url" class="text-size-small text-style-link hide-mobile-landscape"><span>
+{{ section.settings.text_continue_shopping }}
+</span></a>
+            </div>
+            {% if cart.item_count > 0 %}    <div li-if="cart.item_count > 0" class="cart_form-block w-form">
     
-    {% if cart.item_count > 0 %}
-    <div class="cart_form-block w-form">
-      {% form 'cart', cart, class: 'cart_grid-wrapper' %}
-        <div class="cart_table cart-rounded">
-          <!-- En-têtes du tableau -->
-          <div class="cart_grid is-header w-hidden-tiny">
-            <div class="cart_table-header">
-              <p class="text-size-regular">{{ section.settings.text_product }}</p>
-            </div>
-            <div class="cart_table-header">
-              <p class="text-size-regular">{{ section.settings.text_quantity }}</p>
-            </div>
-            <div class="cart_table-header">
-              <p class="text-size-regular">{{ section.settings.text_price }}</p>
-            </div>
-          </div>
-          
-          <!-- Articles du panier -->
-          {% for item in cart.items %}
-          <div class="cart_grid cart-item-row">
-            <div class="display-inlineflex">
-              <a href="{{ item.url }}" class="w-inline-block">
-                <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}" class="cart_image">
-              </a>
-              <div class="cart_info-order">
-                <a href="{{ item.url }}" class="text-size-regular cart-product-title">{{ item.title }}</a>
-                {% if item.variant.title != 'Default Title' %}
-                  <p class="cart-variant-info">{{ item.variant.title }}</p>
-                {% endif %}
-              </div>
-            </div>
-            
-            <div class="cart_table-item anzahl">
-              <div class="cart_quantity-wrapper">
-                <label class="quantity-label w-hidden-main w-hidden-medium">Quantité</label>
-                <input class="cart_quantity w-input" 
-                       maxlength="3" 
-                       min="1"
-                       name="updates[]" 
-                       type="number" 
-                       value="{{ item.quantity }}"
-                       data-id="{{ item.key }}">
-              </div>
-              <a href="{{ item.url_to_remove }}" class="text-size-tiny text-style-link text-align-center remove-link">
-                <div>{{ section.settings.text_remove }}</div>
-              </a>
-            </div>
-            
-            <div class="cart_price-info">
-              {% if item.original_line_price > item.final_line_price %}
-                <div class="price-original text-size-regular text-style-strikethrough">
-                  {{ item.original_line_price | money }}
-                </div>
-              {% endif %}
-              <div class="price-current text-size-regular">
-                {{ item.final_line_price | money }}
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
-        
-        <!-- Résumé du panier -->
-        <div class="cart_wrapper-right">
-          <div class="cart_table cart-summary-rounded">
-            <div class="cart_grid is-header w-hidden-tiny">
-              <div class="cart_table-header">
-                <p class="text-size-regular">{{ section.settings.text_summary }}</p>
-              </div>
-            </div>
-            <div class="cart_content">
-              <div class="cart_wrapper">
-                <div class="cart_details-wrapper">
-                  <div class="text-size-regular">{{ section.settings.text_sum_inkl_vat }}</div>
-                  <div class="cart_details-price">
-                    {% if cart.total_discounts > 0 %}
-                      <div class="price-original text-style-strikethrough">
-                        {{ cart.original_total_price | money }}
+              {% form 'cart', cart, class: 'cart_grid-wrapper' %}
+<div class="cart_table outline-solid-1">
+                  <div class="cart_grid is-header w-hidden-tiny">
+                    <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a632-f594a625" class="cart_table-header">
+                      <p class="text-size-regular">
+{{ section.settings.text_product }}
+</p>
+                    </div>
+                    <div class="cart_table-header">
+                      <p class="text-size-regular">
+{{ section.settings.text_quantity }}
+</p>
+                    </div>
+                    <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a638-f594a625" class="cart_table-header">
+                      <p class="text-size-regular">
+{{ section.settings.text_price }}
+</p>
+                    </div>
+                  </div>
+                  {% for item in cart.items %}    <div li-for="item in cart.items" class="cart_grid">
+                                    
+                    
+                            <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a63c-f594a625" class="display-inlineflex">
+                      <a href="{{ item.url }}" li-object:href="item.url" id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a63d-f594a625" class="w-inline-block"><img src="{{ item.image | image_url: width: 200 }}" li-object:src="item.image | image_url: width: 200" alt="" class="cart_image"></a>
+                      <div class="cart_info-order">
+                        <a href="{{ item.url }}" li-object:href="item.url" li-object="item.title" class="text-size-regular">{{ item.title }}</a>
+                        <div class="hide">
+                          <p item="price" class="cart_price">$13</p>
+                          <p item="original-price" class="cart_price away">$18</p>
+                        </div>
                       </div>
-                    {% endif %}
-                    <div class="heading-style-h3 cart-total-price">
-                      {{ cart.total_price | money }}
+                    </div>
+                            
+                    
+                            <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a647-f594a625" class="cart_table-item anzahl">
+                      <div class="cart_quantity-wrapper">
+                        <div class="text-block-6">Quantité</div><input class="cart_quantity w-input" maxlength="256" name="updates[]" data-name="updates[]" placeholder="1" type="number" id="updates[]" required="" value="{{ item.quantity }}">
+                      </div>
+                      <a href="{{ item.url_to_remove }}" li-object:href="item.url_to_remove" class="text-size-tiny text-style-link text-align-center w-inline-block">
+                        <div>
+{{ section.settings.text_remove }}
+</div>
+                      </a>
+                    </div>
+                            
+                    
+                            <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a64f-f594a625" class="cart_price-info">
+                      <div li-object="item.final_line_price | money" class="text-size-regular">{{ item.final_line_price | money }}</div>
+                      {% if item.original_line_price > item.final_line_price %}    <div li-if="item.original_line_price > item.final_line_price">
+    
+                        <div li-object="item.original_line_price | money" class="text-size-regular text-style-strikethrough">{{ item.original_line_price | money }}</div>
+                          </div>
+{% endif %}
+                    </div>
+                            
+                  
+                        </div>
+{% endfor %}
+                </div>
+                <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a655-f594a625" class="cart_wrapper-right">
+                  <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a656-f594a625" class="cart_table outline-solid-1">
+                    <div class="cart_grid is-header w-hidden-tiny">
+                      <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a658-f594a625" class="cart_table-header">
+                        <p class="text-size-regular">
+{{ section.settings.text_summary }}
+</p>
+                      </div>
+                    </div>
+                    <div class="cart_content">
+                      <div class="cart_wrapper">
+                        <div class="cart_details-wrapper">
+                          <div class="text-size-regular">
+{{ section.settings.text_sum_inkl_vat }}
+</div>
+                          <div class="cart_details-price">
+                            {% if cart.total_discounts > 0 %}    <div li-if="cart.total_discounts > 0">
+    
+                              <div li-object="cart.original_total_price | money" class="text-style-strikethrough">{{ cart.original_total_price | money }}</div>
+                                </div>
+{% endif %}
+                            <div li-object="cart.total_price | money" class="heading-style-h3">{{ cart.total_price | money }}</div>
+                          </div>
+                        </div>
+                        {% if cart.total_discounts > 0 %}    <div li-if="cart.total_discounts > 0" class="cart_details-wrapper">
+    
+                          <div class="text-size-regular">
+{{ section.settings.text_discount }}
+</div>
+                          <div li-object="cart.total_discount | money" class="text-block-8">{{ cart.total_discount | money }}</div>
+                            </div>
+{% endif %}
+                      </div>
+                      <div class="cart_action"><input type="submit" data-wait="En cours..." class="button w-button" value="Checkout" name="checkout"><input type="submit" data-wait="Mise à jour en cours..." class="button is-outline w-button" value="Update cart"></div>
                     </div>
                   </div>
                 </div>
-                
-                {% if cart.total_discounts > 0 %}
-                <div class="cart_details-wrapper discount-row">
-                  <div class="text-size-regular">{{ section.settings.text_discount }}</div>
-                  <div class="discount-amount">-{{ cart.total_discount | money }}</div>
+              {% endform %}
+              <div class="w-form-done">
+                <div>Thank you! Your submission has been received!</div>
+              </div>
+              <div class="w-form-fail">
+                <div>Oops! Something went wrong while submitting the form.</div>
+              </div>
                 </div>
-                {% endif %}
-              </div>
-              
-              <div class="cart_action">
-                <button type="submit" name="add" class="button checkout-btn w-button">
-                  {{ section.settings.text_checkout | default: 'Checkout' }}
-                </button>
-                <button type="submit" name="update" class="button is-outline update-btn w-button">
-                  {{ section.settings.text_update_cart | default: 'Mettre à jour' }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      {% endform %}
-    </div>
+{% endif %}
+            {% if cart.item_count == 0 %}    <div li-if="cart.item_count == 0" class="cart_empty outline-solid-1">
     
-    {% else %}
-    <!-- Panier vide -->
-    <div class="cart_empty cart-empty-rounded">
-      <div class="empty-cart-message">
-        {{ section.settings.text_cart_empty }}
-      </div>
-      <a href="{{ routes.root_url }}" class="button empty-cart-btn w-button">
-        {{ section.settings.text_continue_shopping_empty | default: 'Continuer shopping' }}
-      </a>
-    </div>
-    {% endif %}
-  </div>
+              <div class="text-block-7">
+{{ section.settings.text_cart_empty }}
 </div>
-
-{% schema %}
-{
-  "tag": "section",
-  "name": "Cart",
-  "class": "section_account",
-  "settings": [
-    {
-      "id": "text_heading",
-      "type": "text",
-      "label": "Heading",
-      "default": "PANIER"
-    },
-    {
-      "id": "text_continue_shopping",
-      "type": "text",
-      "label": "Continue shopping",
-      "default": "Continuer les achats"
-    },
-    {
-      "id": "text_product",
-      "type": "text",
-      "label": "Product",
-      "default": "Articles"
-    },
-    {
-      "id": "text_quantity",
-      "type": "text",
-      "label": "Quantity",
-      "default": "Quantité"
-    },
-    {
-      "id": "text_price",
-      "type": "text",
-      "label": "Price",
-      "default": "Prix"
-    },
-    {
-      "id": "text_remove",
-      "type": "text",
-      "label": "Remove",
-      "default": "Supprimer"
-    },
-    {
-      "id": "text_summary",
-      "type": "text",
-      "label": "Summary",
-      "default": "Résumé"
-    },
-    {
-      "id": "text_sum_inkl_vat",
-      "type": "text",
-      "label": "Sum (inkl. Vat.)",
-      "default": "Prix TTX"
-    },
-    {
-      "id": "text_discount",
-      "type": "text",
-      "label": "Discount",
-      "default": "Réduction"
-    },
-    {
-      "id": "text_cart_empty",
-      "type": "text",
-      "label": "Cart Empty",
-      "default": "Aucun produit dans le panier"
-    },
-    {
-      "id": "text_checkout",
-      "type": "text",
-      "label": "Checkout Button",
-      "default": "Checkout"
-    },
-    {
-      "id": "text_update_cart",
-      "type": "text",
-      "label": "Update Cart Button",
-      "default": "Mettre à jour"
-    },
-    {
-      "id": "text_continue_shopping_empty",
-      "type": "text",
-      "label": "Continue Shopping (Empty Cart)",
-      "default": "Continuer shopping"
+              <a href="{{ routes.root_url }}" li-object:href="routes.root_url" class="button w-button">Continuer shopping</a>
+                </div>
+{% endif %}
+          </div>
+        </div> {% schema %} {
+    "tag": "section",
+    "name": "Cart",
+    "class": "section_account",
+    "settings": [
+        {
+            "id": "text_heading",
+            "type": "text",
+            "label": "Heading",
+            "default": "PAnier"
+        },
+        {
+            "id": "text_continue_shopping",
+            "type": "text",
+            "label": "Continue shopping",
+            "default": "Continuer les achats"
+        },
+        {
+            "id": "text_product",
+            "type": "text",
+            "label": "Product",
+            "default": "Articles"
+        },
+        {
+            "id": "text_quantity",
+            "type": "text",
+            "label": "Quantity",
+            "default": "Quantit\u00e9"
+        },
+        {
+            "id": "text_price",
+            "type": "text",
+            "label": "Price",
+            "default": "Prix"
+        },
+        {
+            "id": "text_remove",
+            "type": "text",
+            "label": "Remove",
+            "default": "Supprimer"
+        },
+        {
+            "id": "text_summary",
+            "type": "text",
+            "label": "Summary",
+            "default": "R\u00e9sum\u00e9"
+        },
+        {
+            "id": "text_sum_inkl_vat",
+            "type": "text",
+            "label": "Sum (inkl. Vat.)",
+            "default": "Prix TTX"
+        },
+        {
+            "id": "text_discount",
+            "type": "text",
+            "label": "Discount",
+            "default": "R\u00e9duction"
+        },
+        {
+            "id": "text_cart_empty",
+            "type": "text",
+            "label": "Cart Empty",
+            "default": "Aucun produit dans le panier"
+        }
+    ],
+    "presets": [
+        {
+            "name": "Cart",
+            "category": "Liquify",
+            "blocks": []
+        }
+    ],
+    "enabled_on": {
+        "templates": [
+            "cart"
+        ]
     }
-  ],
-  "presets": [
-    {
-      "name": "Cart",
-      "category": "Liquify"
-    }
-  ],
-  "enabled_on": {
-    "templates": ["cart"]
-  }
-}
-{% endschema %}
+} {% endschema %}
