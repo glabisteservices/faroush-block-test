@@ -20,9 +20,13 @@
     </div>
     
     <div id="w-node-_83d473b7-e557-566f-74be-ecc1a2818a32-a2818a2b" class="w-layout-cell cell-2">
-      <a href="{{ section.settings.url_link }}" class="w-inline-block">
-        <div class="text-block" style="color: #bdbf85;">{{ section.settings.text_text }}</div>
-      </a>
+      {% if section.settings.url_link != blank %}
+        <a href="{{ section.settings.url_link }}" class="w-inline-block">
+          <div class="text-block announcement-text">{{ section.settings.text_text }}</div>
+        </a>
+      {% else %}
+        <div class="text-block announcement-text">{{ section.settings.text_text }}</div>
+      {% endif %}
     </div>
     
     <div class="w-layout-cell cell-3">
@@ -78,6 +82,47 @@
   .announcement-wrapper {
     position: relative;
     z-index: 999;
+    height: 40px !important;
+    min-height: 40px !important;
+    max-height: 40px !important;
+    overflow: hidden;
+  }
+  
+  .announcement-wrapper .w-layout-layout {
+    height: 100% !important;
+    align-items: center !important;
+  }
+  
+  .announcement-wrapper .w-layout-cell {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  .announcement-text {
+    color: #bdbf85 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+  
+  .lien-social-media-header {
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  .social-media-header {
+    height: 24px !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+  
+  .social-media-header img {
+    height: 24px !important;
+    width: auto !important;
+    object-fit: contain !important;
   }
 </style>
 
