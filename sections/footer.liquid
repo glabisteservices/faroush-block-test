@@ -82,7 +82,7 @@
                 <div>{{ localization.country.currency.iso_code }} {{ localization.country.currency.symbol }}</div>
                 <div class="li-currency_dd-toggle-icon w-embed">
                   <svg width="100%" height="100%" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd" d="M2.55806 6.29544C2.46043 6.19781 2.46043 6.03952 2.55806 5.94189L3.44195 5.058C3.53958 4.96037 3.69787 4.96037 3.7955 5.058L8.00001 9.26251L12.2045 5.058C12.3021 4.96037 12.4604 4.96037 12.5581 5.058L13.4419 5.94189C13.5396 6.03952 13.5396 6.19781 13.4419 6.29544L8.17678 11.5606C8.07915 11.6582 7.92086 11.6582 7.82323 11.5606L2.55806 6.29544Z" fill="currentColor"></path>
+                    <path clip-rule="evenodd" d="M13.4419 9.70456C13.5396 9.80219 13.5396 9.96048 13.4419 10.0581L12.5581 10.942C12.4604 11.0396 12.3021 11.0396 12.2045 10.942L8.00001 6.73749L3.7955 10.942C3.69787 11.0396 3.53958 11.0396 3.44195 10.942L2.55806 10.0581C2.46043 9.96048 2.46043 9.80219 2.55806 9.70456L7.82323 4.43939C7.92086 4.34176 8.07915 4.34176 8.17678 4.43939L13.4419 9.70456Z" fill="currentColor"></path>
                   </svg>
                 </div>
               </div>
@@ -225,44 +225,30 @@
   position: relative;
 }
 
+/* Copie exacte du style language switcher pour currency switcher */
 .li-lang_dropdown,
 .li-currency_dropdown {
   font-family: 'Karla', sans-serif;
   color: #f5f2d9;
-  position: relative;
 }
 
 .li-lang_dd-toggle,
 .li-currency_dd-toggle {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
   font-family: 'Karla', sans-serif;
   color: #f5f2d9;
-  background: rgba(0,0,0,0.5);
-  padding: 8px 12px;
-  border-radius: 4px;
-  min-height: 40px;
-  box-sizing: border-box;
 }
 
 .li-lang_dd-list,
 .li-currency_dd-list {
   font-family: 'Karla', sans-serif;
   position: absolute;
-  top: 100%;
+  bottom: 100%;
   left: 0;
+  margin-bottom: 5px;
   background: rgba(0,0,0,0.8);
   border-radius: 4px;
   min-width: 120px;
   z-index: 1000;
-  display: none;
-}
-
-.w-dropdown.w--open .li-lang_dd-list,
-.w-dropdown.w--open .li-currency_dd-list {
-  display: block;
 }
 
 .li-lang_dd-link,
