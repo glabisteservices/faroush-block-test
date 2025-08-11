@@ -64,7 +64,7 @@
             "heading_text": "test",
             "paragraph_text": "blabkblabla",
             "button_text": "bouton",
-            "button_link": "shopify://collections/basket",
+            "button_link": "shopify://collections/basket-barefoot-enfant",
             "text_color": "brown",
             "button_color": "brown"
           }
@@ -185,8 +185,8 @@
       "settings": {
         "text_heading": "Short heading here",
         "text_button_text": "VOIR TOUT",
-        "url_button_link": "shopify://collections/basket",
-        "collection_collection": "basket",
+        "url_button_link": "shopify://collections/basket-barefoot-enfant",
+        "collection_collection": "basket-barefoot-enfant",
         "collection_collection_limit": 4
       }
     },
