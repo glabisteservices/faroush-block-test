@@ -229,6 +229,7 @@
 .li-currency_dropdown {
   font-family: 'Karla', sans-serif;
   color: #f5f2d9;
+  position: relative;
 }
 
 .li-lang_dd-toggle,
@@ -239,11 +240,29 @@
   cursor: pointer;
   font-family: 'Karla', sans-serif;
   color: #f5f2d9;
+  background: rgba(0,0,0,0.5);
+  padding: 8px 12px;
+  border-radius: 4px;
+  min-height: 40px;
+  box-sizing: border-box;
 }
 
 .li-lang_dd-list,
 .li-currency_dd-list {
   font-family: 'Karla', sans-serif;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  border-radius: 4px;
+  min-width: 120px;
+  z-index: 1000;
+  display: none;
+}
+
+.w-dropdown.w--open .li-lang_dd-list,
+.w-dropdown.w--open .li-currency_dd-list {
+  display: block;
 }
 
 .li-lang_dd-link,
@@ -251,6 +270,13 @@
   font-family: 'Karla', sans-serif;
   color: #f5f2d9;
   text-decoration: none;
+  padding: 8px 12px;
+  display: block;
+}
+
+.li-lang_dd-link:hover,
+.li-currency_dd-link:hover {
+  background: rgba(255,255,255,0.1);
 }
 
 @media (max-width: 767px) {
