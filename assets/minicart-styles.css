@@ -1,0 +1,168 @@
+/* MINICART STYLES - Couleurs, typographie et design */
+
+/* === COULEURS ET RÉFÉRENCES === */
+/* 
+Maintenant vous pouvez me donner vos références couleurs :
+- Couleur principale orange/terracotta des boutons
+- Couleur du texte
+- Couleur de fond
+- Couleur des bordures
+- Etc.
+*/
+
+/* === STRUCTURE DE BASE === */
+.nav_mini-cart .nav_mini-cart-holder {
+  /* Sidebar styling de base */
+}
+
+/* === TOUS LES TEXTES EN #6e612b === */
+.nav_mini-cart * {
+  color: #6e612b !important;
+}
+
+/* === HEADER DU MINICART === */
+.nav_mini-cart .mini-cart_header {
+  /* Header styling */
+}
+
+.nav_mini-cart .mini-cart_header .heading-style-h3 {
+  color: #6e612b !important;
+  font-weight: 600 !important;
+}
+
+/* === PRODUITS === */
+.nav_mini-cart .mini-cart_line-item_item {
+  /* Style des items produits */
+}
+
+.nav_mini-cart .mini-cart_line-item_img {
+  /* Images produits */
+}
+
+.nav_mini-cart .text-size-regular.text-weight-bold {
+  color: #6e612b !important;
+}
+
+/* === PRIX === */
+.nav_mini-cart .mini-cart_line-item_price {
+  /* Container des prix */
+}
+
+.nav_mini-cart .text-size-small {
+  color: #6e612b !important;
+}
+
+.nav_mini-cart .text-style-strikethrough {
+  color: #6e612b !important;
+  opacity: 0.7;
+}
+
+/* === CONTRÔLES QUANTITÉ === */
+.nav_mini-cart .mini-cart_line-item_quantity {
+  /* Container quantité */
+}
+
+.nav_mini-cart .mini-cart_line-item_quantity-adjust {
+  color: #6e612b !important;
+}
+
+/* === BOUTON REMOVE === */
+.nav_mini-cart .text-style-link {
+  color: #6e612b !important;
+  text-decoration: underline;
+}
+
+/* === FOOTER / TOTAL === */
+.nav_mini-cart .mini-cart_footer {
+  padding: 20px !important;
+  background-color: #ffffff !important;
+  border-top: 1px solid #f0f0f0 !important;
+}
+
+.nav_mini-cart .mini-cart_footer-total {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 20px !important;
+}
+
+.nav_mini-cart .mini-cart_footer-total .text-size-regular.text-weight-bold:first-child {
+  color: #6e612b !important;
+  font-family: 'Karla', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.nav_mini-cart .mini-cart_footer-price {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-end !important;
+  gap: 2px !important;
+}
+
+.nav_mini-cart .mini-cart_footer-price .text-size-regular.text-weight-bold:first-child {
+  color: #6e612b !important;
+  font-family: 'Karla', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+}
+
+.nav_mini-cart .mini-cart_footer-price .text-style-strikethrough {
+  color: #999999 !important;
+  font-family: 'Karla', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  text-decoration: line-through !important;
+}
+
+/* === BOUTONS D'ACTION === */
+.nav_mini-cart .mini-cart_footer .button {
+  font-family: 'Karla', sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  padding: 16px 20px !important;
+  text-decoration: none !important;
+  display: block !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+  border: 1px solid transparent !important;
+  margin-bottom: 12px !important;
+  font-size: 14px !important;
+}
+
+/* Bouton CHECKOUT - Background orange, texte blanc, coins arrondis */
+.nav_mini-cart .mini-cart_footer .button:not(.is-secondary) {
+  background-color: #ec8451 !important;
+  color: #ffffff !important;
+  border: 1px solid #ec8451 !important;
+  margin-bottom: 12px !important;
+}
+
+.nav_mini-cart .mini-cart_footer .button:not(.is-secondary):hover {
+  background-color: #d67642 !important;
+  border-color: #d67642 !important;
+  color: #ffffff !important;
+}
+
+/* Bouton VOIR PANIER - Outline orange, texte orange, coins arrondis */
+.nav_mini-cart .mini-cart_footer .button.is-secondary {
+  background-color: transparent !important;
+  color: #ec8451 !important;
+  border: 1px solid #ec8451 !important;
+  margin-bottom: 0 !important;
+}
+
+.nav_mini-cart .mini-cart_footer .button.is-secondary:hover {
+  background-color: #ec8451 !important;
+  color: #ffffff !important;
+  border-color: #ec8451 !important;
+}
+
+/* === PANIER VIDE === */
+.nav_mini-cart .mini-cart_empty {
+  /* État panier vide */
+}
+
+.nav_mini-cart .mini-cart_empty * {
+  color: #6e612b !important;
+}
