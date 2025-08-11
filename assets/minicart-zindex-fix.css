@@ -1,0 +1,26 @@
+/* MINICART Z-INDEX FIX - Ne touche QUE au minicart */
+
+/* Dropdown container du minicart */
+.nav_mini-cart .nav_dropdown.w-dropdown {
+  z-index: 10000 !important;
+}
+
+/* Liste dropdown du minicart (sidebar) */
+.nav_mini-cart .nav_mini-cart-holder.w-dropdown-list {
+  z-index: 10000 !important;
+}
+
+/* Container général du minicart */
+.nav_mini-cart .mini-cart_component {
+  z-index: 10000 !important;
+}
+
+/* Header du minicart */
+.nav_mini-cart .mini-cart_header {
+  z-index: 10001 !important;
+}
+
+/* S'assurer que le minicart reste au-dessus de tout */
+.nav_mini-cart .w-dropdown-list.w--open {
+  z-index: 10000 !important;
+}
