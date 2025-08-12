@@ -127,6 +127,7 @@
   .arrow-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+    display: none; /* Cache les boutons disabled dans la boucle infinie */
   }
   .arrow-btn img {
     width: 24px;
@@ -214,15 +215,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     const itemWidth = (containerWidth * itemWidthPercent / 100) + 20; // + gap
-    const visibleItems = Math.floor(containerWidth / itemWidth);
-    const maxIndex = Math.max(0, items.length - 1); // Navigation item par item
+    const totalItems = items.length;
     
     sliders[sectionId] = {
       slider: slider,
       currentIndex: 0,
-      maxIndex: maxIndex,
-      itemWidth: itemWidth,
-      visibleItems: visibleItems
+      totalItems: totalItems,
+      itemWidth: itemWidth
     };
     
     updateSliderButtons(sectionId);
@@ -232,25 +231,33 @@ document.addEventListener('DOMContentLoaded', function() {
     const sliderData = sliders[sectionId];
     if (!sliderData) return;
     
+    // Dans une boucle infinie, les boutons ne sont jamais désactivés
     const prevBtn = document.querySelector(`[onclick*="${sectionId}"][onclick*="-1"]`);
     const nextBtn = document.querySelector(`[onclick*="${sectionId}"][onclick*="1"]`);
     
-    if (prevBtn) prevBtn.disabled = sliderData.currentIndex <= 0;
-    if (nextBtn) nextBtn.disabled = sliderData.currentIndex >= sliderData.maxIndex;
+    if (prevBtn) prevBtn.disabled = false;
+    if (nextBtn) nextBtn.disabled = false;
   }
   
   window.moveSlider = function(sectionId, direction) {
     const sliderData = sliders[sectionId];
     if (!sliderData) return;
     
-    const newIndex = sliderData.currentIndex + direction;
+    // Calculer le nouvel index avec boucle infinie
+    let newIndex = sliderData.currentIndex + direction;
     
-    if (newIndex >= 0 && newIndex <= sliderData.maxIndex) {
-      sliderData.currentIndex = newIndex;
-      const translateX = -newIndex * sliderData.itemWidth;
-      sliderData.slider.style.transform = `translateX(${translateX}px)`;
-      updateSliderButtons(sectionId);
+    // Gestion de la boucle infinie
+    if (newIndex < 0) {
+      newIndex = sliderData.totalItems - 1; // Aller au dernier item
+    } else if (newIndex >= sliderData.totalItems) {
+      newIndex = 0; // Revenir au premier item
     }
+    
+    sliderData.currentIndex = newIndex;
+    const translateX = -newIndex * sliderData.itemWidth;
+    sliderData.slider.style.transform = `translateX(${translateX}px)`;
+    
+    updateSliderButtons(sectionId);
   };
   
   // Initialize all sliders on page
