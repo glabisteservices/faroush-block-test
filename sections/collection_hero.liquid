@@ -16,6 +16,7 @@
   .collection-description-container {
     flex: 1;
     max-width: 60%;
+    position: relative;
   }
   
   .heading-style-h1 {
@@ -32,6 +33,49 @@
     color: #6e612b;
     margin: 0;
     line-height: 1.6;
+  }
+  
+  .description-wrapper {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .description-content {
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    max-height: 6.4em; /* 4 lignes approximativement (1.6 line-height * 4) */
+    position: relative;
+  }
+  
+  .description-content.expanded {
+    max-height: none;
+  }
+  
+  .description-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2em;
+    background: linear-gradient(transparent, white);
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+  }
+  
+  .description-gradient.hidden {
+    opacity: 0;
+  }
+  
+  .expand-indicator {
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+    font-weight: bold;
+    color: #6e612b;
+  }
+  
+  .expand-indicator.rotated {
+    transform: rotate(180deg);
   }
   
   @media screen and (max-width: 991px) {
@@ -60,6 +104,10 @@
     .heading-style-h1 {
       font-size: 2.5rem;
     }
+    
+    .description-content {
+      max-height: 6.4em; /* Même hauteur sur mobile */
+    }
   }
 </style>
 
@@ -70,11 +118,52 @@
     </div>
     {% if collection.description != blank %}
       <div class="collection-description-container">
-        <div class="paragraph">{{ collection.description }}</div>
+        <div class="description-wrapper" onclick="toggleDescription(this)">
+          <div class="description-content" id="description-content">
+            <div class="paragraph">{{ collection.description }}</div>
+          </div>
+          <div class="description-gradient" id="description-gradient"></div>
+          <span class="expand-indicator" id="expand-indicator">▼</span>
+        </div>
       </div>
     {% endif %}
   </div>
 </section>
+
+<script>
+function toggleDescription(wrapper) {
+  const content = wrapper.querySelector('#description-content');
+  const gradient = wrapper.querySelector('#description-gradient');
+  const indicator = wrapper.querySelector('#expand-indicator');
+  
+  if (content.classList.contains('expanded')) {
+    // Réduire
+    content.classList.remove('expanded');
+    gradient.classList.remove('hidden');
+    indicator.classList.remove('rotated');
+    indicator.textContent = '▼';
+  } else {
+    // Étendre
+    content.classList.add('expanded');
+    gradient.classList.add('hidden');
+    indicator.classList.add('rotated');
+    indicator.textContent = '▲';
+  }
+}
+
+// Vérifier si le texte dépasse 4 lignes au chargement
+document.addEventListener('DOMContentLoaded', function() {
+  const content = document.getElementById('description-content');
+  const gradient = document.getElementById('description-gradient');
+  const indicator = document.getElementById('expand-indicator');
+  
+  if (content && content.scrollHeight <= content.clientHeight) {
+    // Le texte ne dépasse pas, masquer le gradient et l'indicateur
+    gradient.style.display = 'none';
+    indicator.style.display = 'none';
+  }
+});
+</script>
 
 {% schema %}
 {
