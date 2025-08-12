@@ -9,32 +9,6 @@
  */
 {
   "sections": {
-    "header_announcement_3fgmhF": {
-      "type": "header_announcement",
-      "blocks": {
-        "social_media_icon_EtPL8J": {
-          "type": "social-media-icon",
-          "settings": {
-            "url_link": ""
-          }
-        },
-        "social_media_icon_cJTW3c": {
-          "type": "social-media-icon",
-          "settings": {
-            "url_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "social_media_icon_EtPL8J",
-        "social_media_icon_cJTW3c"
-      ],
-      "name": "Header-announcement",
-      "settings": {
-        "url_link": "",
-        "text_text": "10% offert sur votre prochaine commande"
-      }
-    },
     "image_pleine_largeur_CJ6868": {
       "type": "image-pleine-largeur",
       "blocks": {
@@ -84,8 +58,8 @@
         "faq_question_Jdkjdi": {
           "type": "faq-question",
           "settings": {
-            "text_text": "Comment nettoyer les chaussures ?",
-            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+            "text_text": "Qu'est-ce qu'une chaussure \"barefoot\" ou \"minimaliste\" ?",
+            "text_paragraph": "Une chaussure barefoot (ou minimaliste) est une chaussure conçue pour reproduire au maximum la sensation de marcher pieds nus, tout en protégeant le pied des agressions du sol (cailloux, échardes, température). Chez Faroush, nos baskets respectent 4 critères essentiels pour mériter cette appellation :\n\n- **Une semelle fine :** Pour permettre à l'enfant de bien ressentir le sol, ce qui est crucial pour développer sa proprioception (la perception de son corps dans l'espace).\n- **Une chaussure souple et légère :** Elle doit pouvoir se tordre et se plier facilement pour ne jamais entraver le mouvement naturel du pied.\n- **Une large \"toe box\" :** L'espace à l'avant de la chaussure est volontairement large pour que les orteils puissent s'étaler librement, comme ils le feraient pieds nus.\n- **Un \"drop\" de zéro :** La semelle est complètement plate du talon aux orteils. Il n'y a pas de talon surélevé, ce qui favorise une posture naturelle et un développement musculaire équilibré."
           }
         },
         "faq_question_gnbgLC": {
@@ -275,7 +249,6 @@
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
-    "header_announcement_3fgmhF",
     "image_pleine_largeur_CJ6868",
     "faq_pAztkk",
     "picto_v2_PNrcCe",
