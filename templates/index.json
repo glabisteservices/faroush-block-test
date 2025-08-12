@@ -44,6 +44,47 @@
       "name": "image-pleine-largeur",
       "settings": {}
     },
+    "manual_products_d_hEiEXt": {
+      "type": "manual_products_d",
+      "blocks": {
+        "product_q8GiQd": {
+          "type": "product",
+          "settings": {
+            "product": "ballerine-barefoot-enfant-ella-black-swan"
+          }
+        },
+        "product_e6WVkX": {
+          "type": "product",
+          "settings": {
+            "product": "baskets-barefoot-enfant-mimi-siku-captain"
+          }
+        },
+        "product_GdFLQf": {
+          "type": "product",
+          "settings": {
+            "product": "ballerine-barefoot-enfant-ella-midnight"
+          }
+        },
+        "product_3FBAtp": {
+          "type": "product",
+          "settings": {
+            "product": "basket-barefoot-enfant-mimi-siku-ninja"
+          }
+        }
+      },
+      "block_order": [
+        "product_q8GiQd",
+        "product_e6WVkX",
+        "product_GdFLQf",
+        "product_3FBAtp"
+      ],
+      "name": "Manual Products",
+      "settings": {
+        "text_heading": "Une rentrée avec style",
+        "text_button_text": "Voir les nouveautés",
+        "url_button_link": "shopify://collections/nouveautes-de-la-rentree"
+      }
+    },
     "faq_pAztkk": {
       "type": "faq",
       "blocks": {
@@ -147,47 +188,6 @@
         "collection_collection_limit": 4
       }
     },
-    "manual_products_d_hEiEXt": {
-      "type": "manual_products_d",
-      "blocks": {
-        "product_q8GiQd": {
-          "type": "product",
-          "settings": {
-            "product": "ballerine-barefoot-enfant-ella-black-swan"
-          }
-        },
-        "product_3FBAtp": {
-          "type": "product",
-          "settings": {
-            "product": "mimi-siku-navy"
-          }
-        },
-        "product_e6WVkX": {
-          "type": "product",
-          "settings": {
-            "product": "basket-barefoot-enfant-mimi-siku-ninja"
-          }
-        },
-        "product_GdFLQf": {
-          "type": "product",
-          "settings": {
-            "product": "basket-barefoot-enfant-mimi-siku-safari"
-          }
-        }
-      },
-      "block_order": [
-        "product_q8GiQd",
-        "product_3FBAtp",
-        "product_e6WVkX",
-        "product_GdFLQf"
-      ],
-      "name": "Manual Products",
-      "settings": {
-        "text_heading": "Produits sélectionnés",
-        "text_button_text": "VOIR TOUT",
-        "url_button_link": ""
-      }
-    },
     "texte_bloc_home_page_BhjYtC": {
       "type": "texte-bloc-home-page",
       "blocks": {
@@ -233,9 +233,9 @@
   "wrapper": "main.main-wrapper",
   "order": [
     "image_pleine_largeur_CJ6868",
+    "manual_products_d_hEiEXt",
     "faq_pAztkk",
     "collection_product_d_B6id3N",
-    "manual_products_d_hEiEXt",
     "texte_bloc_home_page_BhjYtC"
   ]
 }
