@@ -6,7 +6,7 @@
   .faq-container {
     display: flex;
     border-radius: 15px;
-    background-color: #f5f2d9;
+    /* background-color: #f5f2d9; - Fond supprimé */
   }
   
   .faq-container.medium {
@@ -131,6 +131,8 @@
     overflow: hidden;
     min-height: 400px; /* Hauteur minimum */
     display: flex;
+    /* Maintenant à droite dans l'ordre du DOM */
+    order: 2;
   }
   
   .right-div-faq.medium {
@@ -152,6 +154,8 @@
     align-items: flex-start;
     padding: 40px 20px;
     min-height: 400px; /* Hauteur minimum pour synchroniser avec l'image */
+    /* Maintenant à gauche dans l'ordre du DOM */
+    order: 1;
   }
   
   .left-div-faq.medium {
@@ -167,6 +171,7 @@
     .left-div-faq,
     .right-div-faq {
       width: 100%;
+      order: initial; /* Rétablit l'ordre normal sur mobile */
     }
     
     .faq-content {
@@ -185,6 +190,16 @@
 </style>
 
 <div class="faq-container">
+  <!-- L'image est maintenant en premier dans le DOM mais s'affiche à gauche grâce à order: 1 -->
+  <div class="right-div-faq">
+    {% if section.settings.image_image %}
+      {{ section.settings.image_image | image_url: width: 1000 | image_tag: class: 'faq-image', alt: section.settings.image_image.alt | default: 'FAQ Image', loading: 'lazy' }}
+    {% else %}
+      <img class="faq-image" src="{{ 'faq-default-image.jpg' | asset_url }}" alt="FAQ" loading="lazy">
+    {% endif %}
+  </div>
+  
+  <!-- Le contenu FAQ est maintenant en deuxième dans le DOM mais s'affiche à droite grâce à order: 2 -->
   <div class="left-div-faq">
     <div class="faq-content">
       <h1 class="heading-style-h1">
@@ -228,14 +243,6 @@
         {% endfor %}
       </div>
     </div>
-  </div>
-  
-  <div class="right-div-faq">
-    {% if section.settings.image_image %}
-      {{ section.settings.image_image | image_url: width: 1000 | image_tag: class: 'faq-image', alt: section.settings.image_image.alt | default: 'FAQ Image', loading: 'lazy' }}
-    {% else %}
-      <img class="faq-image" src="{{ 'faq-default-image.jpg' | asset_url }}" alt="FAQ" loading="lazy">
-    {% endif %}
   </div>
 </div>
 
