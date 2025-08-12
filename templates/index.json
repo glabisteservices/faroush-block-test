@@ -144,55 +144,6 @@
         "image_image": "shopify://shop_images/12.jpg"
       }
     },
-    "picto_v2_PNrcCe": {
-      "type": "picto-V2",
-      "blocks": {
-        "icon_et_texte_mjBgMg": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/SAV.svg",
-            "text_text": "SAV international"
-          }
-        },
-        "icon_et_texte_MaYE7p": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/worldwide-8.png",
-            "text_text": "Worldwide delivery"
-          }
-        },
-        "icon_et_texte_QeYLLD": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/paiement_secure-8.png",
-            "text_text": "Paiement sécurisé"
-          }
-        },
-        "icon_et_texte_wLacLC": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/retours-8.png",
-            "text_text": "Retours & échanges"
-          }
-        },
-        "icon_et_texte_Qhbphx": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/ecologique-8.png",
-            "text_text": "Eco-responsable"
-          }
-        }
-      },
-      "block_order": [
-        "icon_et_texte_mjBgMg",
-        "icon_et_texte_MaYE7p",
-        "icon_et_texte_QeYLLD",
-        "icon_et_texte_wLacLC",
-        "icon_et_texte_Qhbphx"
-      ],
-      "name": "picto-V2",
-      "settings": {}
-    },
     "collection_product_d_B6id3N": {
       "type": "collection-product-d",
       "name": "Collection Products",
@@ -291,7 +242,6 @@
   "order": [
     "image_pleine_largeur_CJ6868",
     "faq_pAztkk",
-    "picto_v2_PNrcCe",
     "collection_product_d_B6id3N",
     "manual_products_d_hEiEXt",
     "texte_bloc_home_page_BhjYtC"
