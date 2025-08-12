@@ -28,31 +28,42 @@
   }
   .slider-container {
     overflow: hidden;
-    width: 100%;
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
     position: relative;
   }
   .temoignage-slider {
     display: flex;
     transition: transform 0.3s ease-in-out;
     gap: 20px;
+    padding-left: calc(50vw - 50%);
   }
   .temoignage-item {
-    width: 300px;
-     height: 300px;
-     padding: 20px;
-     flex-shrink: 0;
-     border-radius: 9px;
-     background-color: #f5f2d9;
-     box-sizing: border-box;
+    width: 30%;
+    min-width: 300px;
+    height: 300px;
+    padding: 20px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background-color: #f5f2d9;
+    box-sizing: border-box;
+  }
+  @media screen and (max-width: 1024px) {
+    .temoignage-item {
+      width: 45%;
+      min-width: 280px;
+    }
   }
   @media screen and (max-width: 767px) {
     .temoignage-item {
-      width: 250px;
+      width: 70%;
+      min-width: 250px;
     }
   }
   @media screen and (max-width: 479px) {
     .temoignage-item {
-      width: 280px;
+      width: 70%;
+      min-width: 280px;
     }
   }
   .temoignages {
@@ -188,10 +199,23 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!slider) return;
     
     const items = slider.querySelectorAll('.temoignage-item');
-    const itemWidth = items[0].offsetWidth + 20; // width + gap
-    const containerWidth = slider.parentElement.offsetWidth;
+    if (items.length === 0) return;
+    
+    // Calculer la largeur d'un item en fonction du viewport
+    const containerWidth = window.innerWidth;
+    let itemWidthPercent;
+    
+    if (containerWidth > 1024) {
+      itemWidthPercent = 30;
+    } else if (containerWidth > 767) {
+      itemWidthPercent = 45;
+    } else {
+      itemWidthPercent = 70;
+    }
+    
+    const itemWidth = (containerWidth * itemWidthPercent / 100) + 20; // + gap
     const visibleItems = Math.floor(containerWidth / itemWidth);
-    const maxIndex = Math.max(0, items.length - visibleItems);
+    const maxIndex = Math.max(0, items.length - 1); // Navigation item par item
     
     sliders[sectionId] = {
       slider: slider,
