@@ -104,7 +104,8 @@
     padding-left: 0px;
   }
   
-  .dropdown-icon {
+  /* Styles spécifiques aux flèches de l'accordéon produit uniquement */
+  .product-details-accordion-container .dropdown-icon {
     transition: transform 0.3s ease;
     font-size: 1.2em;
     color: #6e612b;
@@ -124,7 +125,7 @@
     transform: rotate(90deg); /* Commence pointant vers le bas */
   }
   
-  .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
+  .product-details-accordion-container .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
     transform: rotate(270deg); /* Rotation pour pointer vers le haut quand ouvert */
   }
   
