@@ -14,8 +14,8 @@
       grid-auto-columns: 1fr;
       grid-column-gap: 16px;
       grid-row-gap: 16px;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
     }
   }
   .icon-et-text-wrapper {
@@ -50,7 +50,6 @@
     }
   }
 </style>
-
 <div class="icon-bloc-wrapper" li-content-for-blocks="">
 {% for block in section.blocks %}
   {% case block.type %}
@@ -72,7 +71,6 @@
   {% endcase %}
 {% endfor %}
 </div>
-
 {% schema %}
 {
   "tag": "section",
@@ -100,10 +98,12 @@
       "type": "@app"
     }
   ],
+  "templates": ["index", "page", "product", "collection", "blog", "article", "cart", "search"],
+  "default_group": "footer",
   "presets": [
     {
       "name": "picto-V2",
-      "category": "Liquify",
+      "category": "footer",
       "blocks": [
         {
           "type": "icon-et-texte"
