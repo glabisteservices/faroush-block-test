@@ -187,9 +187,18 @@
       <div class="sticky-cart-product-details">
         <p class="sticky-cart-product-price">
           {% if product.price_varies %}
-            À partir de {{ product.price_min | money }}
+            À partir de 
+            {% if product.price_min %}
+              {{ product.price_min | money }}
+            {% else %}
+              {{ product.variants.first.price | money }}
+            {% endif %}
           {% else %}
-            {{ product.price | money }}
+            {% if product.price %}
+              {{ product.price | money }}
+            {% else %}
+              {{ product.variants.first.price | money }}
+            {% endif %}
           {% endif %}
         </p>
       </div>
@@ -233,7 +242,7 @@ function stickyCart() {
     isVisible: false,
     isAdding: false,
     justAdded: false,
-    selectedVariant: {{ product.selected_or_first_available_variant.id }},
+    selectedVariant: {% if product.selected_or_first_available_variant %}{{ product.selected_or_first_available_variant.id }}{% else %}{{ product.variants.first.id }}{% endif %},
     buttonText: 'Ajouter au panier',
     
     init() {
@@ -331,7 +340,7 @@ function stickyCart() {
     openMiniCart() {
       // Délai pour laisser le temps à l'ajout de se terminer
       setTimeout(() => {
-        console.log('🛒 Tentative d\'ouverture du mini-cart...');
+        // Supprimer les logs de debug maintenant que ça fonctionne
         
         // Méthode spécifique pour ton thème - Cibler l'icône exacte
         const specificSelectors = [
@@ -344,7 +353,6 @@ function stickyCart() {
         for (let selector of specificSelectors) {
           const element = document.querySelector(selector);
           if (element) {
-            console.log(`🎯 Icône du panier trouvée avec: ${selector}`, element);
             element.click();
             return;
           }
@@ -353,8 +361,6 @@ function stickyCart() {
         // Méthode Alpine.js pour ton composant handleMiniCart
         const miniCartComponent = document.querySelector('[x-data="handleMiniCart()"]');
         if (miniCartComponent && miniCartComponent._x_dataStack) {
-          console.log('🎯 Composant Alpine handleMiniCart trouvé');
-          // Essayer de déclencher l'ouverture via Alpine
           const alpineData = miniCartComponent._x_dataStack[0];
           if (alpineData && typeof alpineData.open === 'function') {
             alpineData.open();
@@ -373,29 +379,14 @@ function stickyCart() {
         // Méthode Webflow dropdown (w-dropdown)
         const webflowDropdown = document.querySelector('[li-element="mini-cart"].w-dropdown');
         if (webflowDropdown) {
-          console.log('🎯 Dropdown Webflow trouvé');
-          // Simuler un clic sur le toggle
           const toggle = webflowDropdown.querySelector('.w-dropdown-toggle');
           if (toggle) {
             toggle.click();
             return;
           }
-          // Ou activer directement la classe w-open
           webflowDropdown.classList.add('w--open');
           return;
         }
-        
-        // Événements spécifiques à ton setup
-        this.$dispatch('mini-cart-open');
-        this.$dispatch('handleMiniCart');
-        
-        // Événements globaux
-        const events = ['cart:open', 'minicart:toggle', 'dropdown:open'];
-        events.forEach(eventName => {
-          window.dispatchEvent(new CustomEvent(eventName));
-        });
-        
-        console.log('⚠️ Aucune méthode n\'a fonctionné pour ouvrir le mini-cart');
         
       }, 100);
     }
