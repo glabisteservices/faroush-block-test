@@ -33,7 +33,6 @@
 
     <!-- Filtres actifs -->
     <div class="active-filters-wrapper" id="active-filters" style="display: none;">
-      <div class="active-filters-title">Filtres actifs :</div>
       <div class="active-filters-list">
         {% for filters in collection.filters %}
           {% for filter_value in filters.active_values %}
@@ -51,10 +50,7 @@
       <a href="{{ collection.url }}" class="clear-all-filters">Tout effacer</a>
     </div>
 
-    <!-- Résultats -->
-    <div class="results-info">
-      <span>{{ collection.all_products_count }} produit{% if collection.all_products_count > 1 %}s{% endif %}</span>
-    </div>
+
 
     <!-- Grille de produits -->
     <div class="products-grid">
@@ -270,17 +266,9 @@
 /* Filtres actifs */
 .active-filters-wrapper {
   margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #f8f9fa;
-  border-radius: 6px;
-}
-
-.active-filters-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  font-family: 'Karla', sans-serif;
-  color: #6e612b;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
 }
 
 .active-filters-list {
@@ -317,13 +305,6 @@
   font-family: 'Karla', sans-serif;
   color: #6e612b;
   text-decoration: underline;
-}
-
-/* Résultats */
-.results-info {
-  margin-bottom: 1.5rem;
-  color: #666;
-  font-size: 0.9rem;
 }
 
 /* Grille de produits */
