@@ -257,8 +257,12 @@ function stickyCart() {
         const observer = new MutationObserver(() => {
           const isOpen = miniCart.classList.contains('w--open') || 
                         miniCart.querySelector('.w-dropdown-list.w--open');
+          
           if (isOpen) {
             this.isVisible = false; // Masquer le sticky cart si mini-cart ouvert
+          } else {
+            // Quand le mini-cart se ferme, vérifier si on doit réafficher le sticky
+            this.checkStickyVisibility();
           }
         });
         
@@ -267,6 +271,22 @@ function stickyCart() {
           attributeFilter: ['class'],
           subtree: true
         });
+      }
+    },
+    
+    checkStickyVisibility() {
+      // Vérifier si le bouton principal est visible
+      const mainAddButton = document.querySelector('[li-element="add-to-cart"]') || 
+                           document.querySelector('.add-to-cart-button');
+      
+      if (mainAddButton) {
+        const rect = mainAddButton.getBoundingClientRect();
+        const isMainButtonVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        
+        // Si le bouton principal n'est pas visible, réafficher le sticky
+        if (!isMainButtonVisible) {
+          this.isVisible = true;
+        }
       }
     },
     
