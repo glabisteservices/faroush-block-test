@@ -112,11 +112,26 @@
   .accordion-item {
     position: relative;
     width: 100%;
-    border-top: 1px solid #6e612b;
   }
   
-  .accordion-item:last-child {
-    border-bottom: 1px solid #6e612b;
+  .accordion-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #6e612b;
+  }
+  
+  .accordion-item:last-child::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #6e612b;
   }
   
   .right-div-faq {
