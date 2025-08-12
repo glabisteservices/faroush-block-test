@@ -167,7 +167,12 @@
   }
 </style>
 
-<div class="section-sticky-add-to-cart" id="sticky-add-to-cart">
+<div 
+  class="section-sticky-add-to-cart" 
+  x-data="stickyCart()"
+  x-init="init()"
+  :class="{ 'is-visible': isVisible }"
+>
   <div class="sticky-cart-container">
     <!-- Informations produit -->
     <div class="sticky-cart-product-info">
@@ -194,7 +199,7 @@
     <div class="sticky-cart-actions">
       <!-- Sélecteur de variantes si nécessaire -->
       {% if product.variants.size > 1 and product.has_only_default_variant == false %}
-        <select class="sticky-cart-select" id="sticky-variant-selector">
+        <select class="sticky-cart-select" x-model="selectedVariant">
           {% for variant in product.variants %}
             <option value="{{ variant.id }}" {% if variant.available == false %}disabled{% endif %}>
               {{ variant.title }}
@@ -207,10 +212,11 @@
       {% if product.available %}
         <button 
           class="sticky-cart-add-button"
-          onclick="addToCartSticky()"
-          id="sticky-add-button"
+          @click="addToCart()"
+          :disabled="isAdding"
+          :class="{ 'added-state': justAdded }"
+          x-text="buttonText"
         >
-          Ajouter au panier
         </button>
       {% else %}
         <div class="sticky-cart-out-of-stock">
@@ -222,84 +228,138 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const stickyCart = document.getElementById('sticky-add-to-cart');
-  const mainAddButton = document.querySelector('[li-element="add-to-cart"]') || document.querySelector('.add-to-cart-button');
-  
-  if (!stickyCart || !mainAddButton) return;
-  
-  // Gestion de l'apparition/disparition
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        stickyCart.classList.remove('is-visible');
-      } else {
-        stickyCart.classList.add('is-visible');
-      }
-    });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  });
-  
-  observer.observe(mainAddButton);
-  
-  // Masquer dans le footer
-  const footer = document.querySelector('footer');
-  if (footer) {
-    const footerObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          stickyCart.classList.remove('is-visible');
-        }
-      });
-    }, { threshold: 0.1 });
+function stickyCart() {
+  return {
+    isVisible: false,
+    isAdding: false,
+    justAdded: false,
+    selectedVariant: {{ product.selected_or_first_available_variant.id }},
+    buttonText: 'Ajouter au panier',
     
-    footerObserver.observe(footer);
-  }
-});
-
-// Fonction d'ajout au panier
-function addToCartSticky() {
-  const variantSelector = document.getElementById('sticky-variant-selector');
-  const variantId = variantSelector ? variantSelector.value : {{ product.selected_or_first_available_variant.id }};
-  
-  const formData = {
-    'items': [{
-      'id': variantId,
-      'quantity': 1
-    }]
-  };
-  
-  fetch('/cart/add.js', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+    init() {
+      this.setupIntersectionObserver();
     },
-    body: JSON.stringify(formData)
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Déclencher l'événement d'ajout au panier (si tu as d'autres scripts qui l'écoutent)
-    window.dispatchEvent(new CustomEvent('cart:item-added', { detail: data }));
     
-    // Feedback visuel
-    const button = document.getElementById('sticky-add-button');
-    if (button) {
-      const originalText = button.textContent;
-      button.textContent = 'Ajouté !';
-      button.classList.add('added-state');
-      button.disabled = true;
+    setupIntersectionObserver() {
+      const mainAddButton = document.querySelector('[li-element="add-to-cart"]') || 
+                           document.querySelector('.add-to-cart-button');
+      
+      if (!mainAddButton) return;
+      
+      // Observer pour le bouton principal
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          this.isVisible = !entry.isIntersecting;
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      });
+      
+      observer.observe(mainAddButton);
+      
+      // Observer pour le footer
+      const footer = document.querySelector('footer');
+      if (footer) {
+        const footerObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              this.isVisible = false;
+            }
+          });
+        }, { threshold: 0.1 });
+        
+        footerObserver.observe(footer);
+      }
+    },
+    
+    async addToCart() {
+      if (this.isAdding) return;
+      
+      this.isAdding = true;
+      
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            items: [{
+              id: this.selectedVariant,
+              quantity: 1
+            }]
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          // Succès - déclencher les événements
+          this.$dispatch('cart-item-added', data);
+          window.dispatchEvent(new CustomEvent('cart:item-added', { detail: data }));
+          
+          // Ouvrir le mini-cart
+          this.openMiniCart();
+          
+          // Feedback visuel
+          this.showSuccessFeedback();
+        } else {
+          throw new Error(data.description || 'Erreur lors de l\'ajout au panier');
+        }
+      } catch (error) {
+        console.error('Erreur:', error);
+        this.buttonText = 'Erreur';
+        setTimeout(() => {
+          this.buttonText = 'Ajouter au panier';
+          this.isAdding = false;
+        }, 2000);
+      }
+    },
+    
+    showSuccessFeedback() {
+      this.justAdded = true;
+      this.buttonText = 'Ajouté !';
+      
       setTimeout(() => {
-        button.textContent = originalText;
-        button.classList.remove('added-state');
-        button.disabled = false;
+        this.justAdded = false;
+        this.buttonText = 'Ajouter au panier';
+        this.isAdding = false;
       }, 2000);
+    },
+    
+    openMiniCart() {
+      // Délai pour laisser le temps à l'ajout de se terminer
+      setTimeout(() => {
+        // Méthode 1 : Alpine.js store (si tu utilises un store global)
+        if (this.$store && this.$store.cart) {
+          this.$store.cart.open = true;
+          return;
+        }
+        
+        // Méthode 2 : Événement Alpine personnalisé
+        this.$dispatch('open-cart');
+        
+        // Méthode 3 : Clic sur l'icône du panier
+        const cartIcon = document.querySelector('[data-cart-toggle]') || 
+                         document.querySelector('[data-cart-drawer]') || 
+                         document.querySelector('.cart-icon') || 
+                         document.querySelector('.header__icon--cart') ||
+                         document.querySelector('[data-cart-open]') ||
+                         document.querySelector('.js-drawer-open-cart') ||
+                         document.querySelector('[x-data*="cart"]');
+        
+        if (cartIcon) {
+          cartIcon.click();
+          return;
+        }
+        
+        // Méthode 4 : Événement global
+        window.dispatchEvent(new CustomEvent('cart:open'));
+        
+      }, 100);
     }
-  })
-  .catch((error) => {
-    console.error('Erreur:', error);
-  });
+  }
 }
 </script>
 
