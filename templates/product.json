@@ -15,7 +15,7 @@
         "picto_produit_3TWQpQ": {
           "type": "picto-produit",
           "settings": {
-            "picto_image": "shopify://shop_images/worldwide-8.png",
+            "picto_image": "shopify://shop_images/Flexible_soft.png",
             "picto_text": "Souple",
             "picto_alt": ""
           }
@@ -23,32 +23,40 @@
         "picto_produit_naYXQV": {
           "type": "picto-produit",
           "settings": {
-            "picto_image": "shopify://shop_images/paiement_secure-8.png",
-            "picto_text": "test",
+            "picto_image": "shopify://shop_images/Breathable.png",
+            "picto_text": "Respirante",
             "picto_alt": ""
           }
         },
         "picto_produit_PwdCRQ": {
           "type": "picto-produit",
           "settings": {
-            "picto_image": "shopify://shop_images/retours-8.png",
-            "picto_text": "Souple",
+            "picto_image": "shopify://shop_images/Sustainable.png",
+            "picto_text": "Eco-conçue",
             "picto_alt": ""
           }
         },
         "picto_produit_iQrtMd": {
           "type": "picto-produit",
           "settings": {
-            "picto_image": "shopify://shop_images/ecologique-8.png",
-            "picto_text": "test",
+            "picto_image": "shopify://shop_images/Large_toe_box.png",
+            "picto_text": "Toe-Box large",
             "picto_alt": ""
           }
         },
         "picto_produit_9zDRFn": {
           "type": "picto-produit",
           "settings": {
-            "picto_image": "shopify://shop_images/ecologique-8.png",
-            "picto_text": "test",
+            "picto_image": "shopify://shop_images/Light.png",
+            "picto_text": "Légère",
+            "picto_alt": ""
+          }
+        },
+        "picto_produit_nQTAK4": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_image": "shopify://shop_images/Anti_bacteria.png",
+            "picto_text": "Anti-bactérienne",
             "picto_alt": ""
           }
         }
@@ -58,7 +66,8 @@
         "picto_produit_naYXQV",
         "picto_produit_PwdCRQ",
         "picto_produit_iQrtMd",
-        "picto_produit_9zDRFn"
+        "picto_produit_9zDRFn",
+        "picto_produit_nQTAK4"
       ],
       "settings": {
         "show_shipping_info": true,
