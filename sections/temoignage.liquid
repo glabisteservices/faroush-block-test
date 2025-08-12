@@ -5,7 +5,7 @@
   @media screen and (max-width: 767px) {
     .centre {
       font-size: 2rem;
-       text-align: center; /* Garde le centrage sur mobile */
+       text-align: left
     }
   }
   @media screen and (max-width: 479px) {
@@ -83,16 +83,17 @@
       padding: 20px 10px;
     }
   }
-  .heading-style-h1 {
+  .temoignages-title {
     font-family: Karla;
      color: #6e612b;
      font-size: 2.8rem;
      line-height: 1;
      font-weight: 600;
      margin-bottom: 40px;
+     text-align: center;
   }
   @media screen and (max-width: 767px) {
-    .heading-style-h1 {
+    .temoignages-title {
       font-size: 2.2rem;
       text-align: center;
     }
@@ -169,7 +170,7 @@
       {% when '@app' %}
         {% render block %}
       {% when 'titre' %}
-        <h1 class="heading-style-h1 centre">
+        <h1 class="temoignages-title">
           {{ block.settings.text_heading }}
         </h1>
       {% when 'temoignage-item' %}
