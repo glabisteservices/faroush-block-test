@@ -351,6 +351,9 @@ function stickyCart() {
           this.$dispatch('cart-item-added', data);
           window.dispatchEvent(new CustomEvent('cart:item-added', { detail: data }));
           
+          // Mettre à jour le mini-cart Alpine.js
+          this.updateMiniCart();
+          
           // Ouvrir le mini-cart
           this.openMiniCart();
           
@@ -378,6 +381,24 @@ function stickyCart() {
         this.buttonText = 'Ajouter au panier';
         this.isAdding = false;
       }, 2000);
+    },
+    
+    updateMiniCart() {
+      // Trouver le composant Alpine handleMinicart et déclencher getCart()
+      const miniCartComponent = document.querySelector('[x-data*="handleMinicart"]') || 
+                               document.querySelector('[x-data*="handleMiniCart"]') ||
+                               document.querySelector('[li-element="mini-cart"]');
+      
+      if (miniCartComponent && miniCartComponent._x_dataStack) {
+        const alpineData = miniCartComponent._x_dataStack[0];
+        if (alpineData && typeof alpineData.getCart === 'function') {
+          alpineData.getCart();
+        }
+      }
+      
+      // Événements supplémentaires pour forcer la mise à jour
+      this.$dispatch('cart-updated');
+      window.dispatchEvent(new CustomEvent('cart:updated'));
     },
     
     openMiniCart() {
