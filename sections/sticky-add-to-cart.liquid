@@ -331,31 +331,71 @@ function stickyCart() {
     openMiniCart() {
       // Délai pour laisser le temps à l'ajout de se terminer
       setTimeout(() => {
-        // Méthode 1 : Alpine.js store (si tu utilises un store global)
-        if (this.$store && this.$store.cart) {
-          this.$store.cart.open = true;
+        console.log('🛒 Tentative d\'ouverture du mini-cart...');
+        
+        // Méthode spécifique pour ton thème - Cibler l'icône exacte
+        const specificSelectors = [
+          '[li-element="mini-cart-toggle"]',
+          '[li-element="mini-cart"] .w-dropdown-toggle',
+          '.nav_shop-icon.w-dropdown-toggle',
+          '[li-element="mini-cart"]'
+        ];
+        
+        for (let selector of specificSelectors) {
+          const element = document.querySelector(selector);
+          if (element) {
+            console.log(`🎯 Icône du panier trouvée avec: ${selector}`, element);
+            element.click();
+            return;
+          }
+        }
+        
+        // Méthode Alpine.js pour ton composant handleMiniCart
+        const miniCartComponent = document.querySelector('[x-data="handleMiniCart()"]');
+        if (miniCartComponent && miniCartComponent._x_dataStack) {
+          console.log('🎯 Composant Alpine handleMiniCart trouvé');
+          // Essayer de déclencher l'ouverture via Alpine
+          const alpineData = miniCartComponent._x_dataStack[0];
+          if (alpineData && typeof alpineData.open === 'function') {
+            alpineData.open();
+            return;
+          }
+          if (alpineData && typeof alpineData.toggle === 'function') {
+            alpineData.toggle();
+            return;
+          }
+          if (alpineData) {
+            alpineData.isOpen = true;
+            return;
+          }
+        }
+        
+        // Méthode Webflow dropdown (w-dropdown)
+        const webflowDropdown = document.querySelector('[li-element="mini-cart"].w-dropdown');
+        if (webflowDropdown) {
+          console.log('🎯 Dropdown Webflow trouvé');
+          // Simuler un clic sur le toggle
+          const toggle = webflowDropdown.querySelector('.w-dropdown-toggle');
+          if (toggle) {
+            toggle.click();
+            return;
+          }
+          // Ou activer directement la classe w-open
+          webflowDropdown.classList.add('w--open');
           return;
         }
         
-        // Méthode 2 : Événement Alpine personnalisé
-        this.$dispatch('open-cart');
+        // Événements spécifiques à ton setup
+        this.$dispatch('mini-cart-open');
+        this.$dispatch('handleMiniCart');
         
-        // Méthode 3 : Clic sur l'icône du panier
-        const cartIcon = document.querySelector('[data-cart-toggle]') || 
-                         document.querySelector('[data-cart-drawer]') || 
-                         document.querySelector('.cart-icon') || 
-                         document.querySelector('.header__icon--cart') ||
-                         document.querySelector('[data-cart-open]') ||
-                         document.querySelector('.js-drawer-open-cart') ||
-                         document.querySelector('[x-data*="cart"]');
+        // Événements globaux
+        const events = ['cart:open', 'minicart:toggle', 'dropdown:open'];
+        events.forEach(eventName => {
+          window.dispatchEvent(new CustomEvent(eventName));
+        });
         
-        if (cartIcon) {
-          cartIcon.click();
-          return;
-        }
-        
-        // Méthode 4 : Événement global
-        window.dispatchEvent(new CustomEvent('cart:open'));
+        console.log('⚠️ Aucune méthode n\'a fonctionné pour ouvrir le mini-cart');
         
       }, 100);
     }
