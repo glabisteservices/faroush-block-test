@@ -51,12 +51,12 @@
     max-height: 0;
     overflow: hidden;
     transition: all 0.3s ease;
-    padding: 0 20px;
+    padding: 0 0;
   }
   
   .faq-reponse.open {
     max-height: 1000px;
-    padding: 20px;
+    padding: 20px 0;
   }
   
   .heading-style-h4 {
@@ -135,6 +135,35 @@
     color: #6e612b;
     margin: 0;
     line-height: 1.6;
+  }
+  
+  .faq-paragraph p {
+    margin: 0 0 1em 0;
+  }
+  
+  .faq-paragraph p:last-child {
+    margin-bottom: 0;
+  }
+  
+  .faq-paragraph h1,
+  .faq-paragraph h2,
+  .faq-paragraph h3,
+  .faq-paragraph h4,
+  .faq-paragraph h5,
+  .faq-paragraph h6 {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    margin: 0 0 0.5em 0;
+  }
+  
+  .faq-paragraph ul,
+  .faq-paragraph ol {
+    margin: 0 0 1em 0;
+    padding-left: 1.5em;
+  }
+  
+  .faq-paragraph li {
+    margin-bottom: 0.25em;
   }
   
   .left-div-faq {
@@ -223,9 +252,9 @@
                   </div>
                   
                   <div class="faq-reponse" aria-hidden="true">
-                    <p class="faq-paragraph">
+                    <div class="faq-paragraph">
                       {{ block.settings.text_paragraph }}
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -316,9 +345,9 @@
         },
         {
           "id": "text_paragraph",
-          "type": "textarea",
+          "type": "richtext",
           "label": "Réponse",
-          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>"
         }
       ]
     },
