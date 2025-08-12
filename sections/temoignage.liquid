@@ -47,12 +47,15 @@
   .temoignage-item {
     width: 30%;
     min-width: 300px;
-    height: 300px;
+    height: auto; /* Changé de 300px fixe à auto */
+    min-height: 250px; /* Hauteur minimum pour éviter les blocs trop petits */
     padding: 20px;
     flex-shrink: 0;
     border-radius: 9px;
     background-color: #f5f2d9;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
   }
   @media screen and (max-width: 1024px) {
     .temoignage-item {
@@ -212,12 +215,42 @@
 document.addEventListener('DOMContentLoaded', function() {
   const sliders = {};
   
+  function equalizeHeights(sectionId) {
+    const slider = document.getElementById('temoignage-slider-' + sectionId);
+    if (!slider) return;
+    
+    const items = slider.querySelectorAll('.temoignage-item');
+    if (items.length === 0) return;
+    
+    // Reset toutes les hauteurs pour mesurer la hauteur naturelle
+    items.forEach(item => {
+      item.style.height = 'auto';
+    });
+    
+    // Trouver la hauteur maximum
+    let maxHeight = 0;
+    items.forEach(item => {
+      const itemHeight = item.offsetHeight;
+      if (itemHeight > maxHeight) {
+        maxHeight = itemHeight;
+      }
+    });
+    
+    // Appliquer la hauteur maximum à tous les items
+    items.forEach(item => {
+      item.style.height = maxHeight + 'px';
+    });
+  }
+  
   function initSlider(sectionId) {
     const slider = document.getElementById('temoignage-slider-' + sectionId);
     if (!slider) return;
     
     const items = slider.querySelectorAll('.temoignage-item');
     if (items.length === 0) return;
+    
+    // Égaliser les hauteurs en premier
+    equalizeHeights(sectionId);
     
     // Calculer la largeur d'un item en fonction du viewport
     const containerWidth = window.innerWidth;
@@ -386,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
     resizeTimeout = setTimeout(function() {
       allSliders.forEach(slider => {
         const sectionId = slider.id.replace('temoignage-slider-', '');
+        equalizeHeights(sectionId); // Recalculer les hauteurs
         initSlider(sectionId);
       });
     }, 250);
