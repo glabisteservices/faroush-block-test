@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=chevron_right" />
+
 <style>
   .product-details-accordion .dropdown-toggle {
     width: 100%;
@@ -107,10 +109,23 @@
     font-size: 1.2em;
     color: #6e612b;
     margin-left: auto;
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    transform: rotate(90deg); /* Commence pointant vers le bas */
   }
   
   .dropdown-toggle[aria-expanded="true"] .dropdown-icon {
-    transform: rotate(180deg);
+    transform: rotate(270deg); /* Rotation pour pointer vers le haut quand ouvert */
   }
   
   .rich-text-content {
@@ -207,7 +222,7 @@
       <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.details_title | default: "Détails produit" }}
       </div>
-      <div class="dropdown-icon">▼</div>
+      <div class="dropdown-icon">chevron_right</div>
     </button>
     <div class="dropdown-content" data-dropdown-content="details">
       <div class="rich-text-content">
@@ -228,7 +243,7 @@
       <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.matiere_title | default: "Matière & composition" }}
       </div>
-      <div class="dropdown-icon">▼</div>
+      <div class="dropdown-icon">chevron_right</div>
     </button>
     <div class="dropdown-content" data-dropdown-content="matiere">
       <div class="rich-text-content">
@@ -246,7 +261,7 @@
       <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.livraison_title | default: "Livraison & retours" }}
       </div>
-      <div class="dropdown-icon">▼</div>
+      <div class="dropdown-icon">chevron_right</div>
     </button>
     <div class="dropdown-content" data-dropdown-content="livraison">
       {{ shop.metafields.custom.livraison_retours | metafield_tag }}
@@ -261,7 +276,7 @@
       <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.entretien_title | default: "Conseils d'entretien" }}
       </div>
-      <div class="dropdown-icon">▼</div>
+      <div class="dropdown-icon">chevron_right</div>
     </button>
     <div class="dropdown-content" data-dropdown-content="entretien">
       <div class="rich-text-content">
