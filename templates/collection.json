@@ -19,7 +19,9 @@
     },
     "collection_products": {
       "type": "collection_products",
-      "settings": {}
+      "settings": {
+        "show_sorting": false
+      }
     }
   },
   "layout": "theme",
