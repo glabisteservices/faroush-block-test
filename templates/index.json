@@ -176,6 +176,64 @@
         "text_heading": "Questions fréquentes",
         "image_image": "shopify://shop_images/12.jpg"
       }
+    },
+    "temoignage_wLnXBL": {
+      "type": "temoignage",
+      "blocks": {
+        "titre_7yhath": {
+          "type": "titre",
+          "settings": {
+            "text_heading": "Nos clients nous aiment !"
+          }
+        },
+        "temoignage_item_HNw7dV": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Lussya B.",
+            "text_paragraph": "Exactement ce qu’il faut pour nos enfants ! J’ai acheté deux paires à ma fille , elle les adore! Je recommande ces chaussures Faroush pour les parents qui cherchent une paire à la fois stylée, confortable et durable pour leur enfant."
+          }
+        },
+        "temoignage_item_PJdFmc": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Camille L.",
+            "text_paragraph": "Les baskets préférées de ma nièce !\nElle fait tout avec… elles sont hyper confortables et très jolies."
+          }
+        },
+        "temoignage_item_eiXQNL": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Sarah H.",
+            "text_paragraph": "3ème paire achetées depuis la découverte de Faroush ! Ma nièce ne tolère plus aucune autre paire de chaussures. Il y a une vraie différence de confort pour les enfants.\nLes chaussures sont hyper qualitatives et durent plus longtemps en terme de pointure grâce à la largeur au niveau des orteils. Je recommande à 100%"
+          }
+        },
+        "temoignage_item_dWJVTr": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Kelly S.",
+            "text_paragraph": "Incroyable, super mignonnes confortables et reçues en un temps record !\nLa qualité et le confort sont exceptionnels !\nComme dirait mon fils, elles courent vite !"
+          }
+        },
+        "temoignage_item_KpgArq": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Mira T.",
+            "text_paragraph": "J’ai enfin trouvé des chaussures confortables pour mes enfants et en plus elles sont stylées. Les enfants les adorent!!"
+          }
+        }
+      },
+      "block_order": [
+        "titre_7yhath",
+        "temoignage_item_HNw7dV",
+        "temoignage_item_PJdFmc",
+        "temoignage_item_eiXQNL",
+        "temoignage_item_dWJVTr",
+        "temoignage_item_KpgArq"
+      ],
+      "name": "Témoignages",
+      "settings": {
+        "review_link": ""
+      }
     }
   },
   "layout": "theme",
@@ -183,6 +241,7 @@
   "order": [
     "image_pleine_largeur_CJ6868",
     "manual_products_d_hEiEXt",
-    "faq_pAztkk"
+    "faq_pAztkk",
+    "temoignage_wLnXBL"
   ]
 }
