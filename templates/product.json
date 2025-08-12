@@ -91,13 +91,13 @@
         "main_title": "Pourquoi choisir la barefoot",
         "image_1": "shopify://shop_images/Souplesse_legerete.jpg",
         "heading_1": "Souplesse & légèreté",
-        "paragraph_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "paragraph_1": "Une semelle fine et flexible qui accompagne chaque mouvement, laissant le pied ressentir le sol. Idéal pour un développement naturel et un confort tout au long de la journée.",
         "image_2": "shopify://shop_images/lrge_toe_box.jpg",
         "heading_2": "Large toe-box",
-        "paragraph_2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "paragraph_2": "Une forme respectueuse qui laisse aux orteils toute la place pour s’écarter, s’ancrer et se muscler. Pas de compression, juste la liberté de grandir naturellement.",
         "image_3": "shopify://shop_images/Zero-drop_2.jpg",
         "heading_3": "Zéro drop",
-        "paragraph_3": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
+        "paragraph_3": "Une semelle plate, sans différence de hauteur entre talon et avant-pied, qui préserve l’alignement naturel et soutient une posture saine dès les premiers pas."
       }
     },
     "recommended_products": {
@@ -105,54 +105,6 @@
       "settings": {
         "text_heading": "Vous aimerez aussi"
       }
-    },
-    "picto_v2_ywBdCc": {
-      "type": "picto-V2",
-      "blocks": {
-        "icon_et_texte_JzXCJc": {
-          "type": "icon-et-texte",
-          "settings": {
-            "text_text": "SAV à l'écoute"
-          }
-        },
-        "icon_et_texte_n8FCfY": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/worldwide-8.png",
-            "text_text": "Livraison international"
-          }
-        },
-        "icon_et_texte_KhGH8x": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/paiement_secure-8.png",
-            "text_text": "Paiement sécurisé"
-          }
-        },
-        "icon_et_texte_nwG9jb": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/retours-8.png",
-            "text_text": "Retours & échanges"
-          }
-        },
-        "icon_et_texte_NiGdLF": {
-          "type": "icon-et-texte",
-          "settings": {
-            "image_image": "shopify://shop_images/ecologique-8.png",
-            "text_text": "Eco-responsable"
-          }
-        }
-      },
-      "block_order": [
-        "icon_et_texte_JzXCJc",
-        "icon_et_texte_n8FCfY",
-        "icon_et_texte_KhGH8x",
-        "icon_et_texte_nwG9jb",
-        "icon_et_texte_NiGdLF"
-      ],
-      "name": "picto-V2",
-      "settings": {}
     }
   },
   "layout": "theme",
@@ -161,7 +113,6 @@
     "product_hero",
     "product_details_accordion_8fNf6L",
     "3_column_DwLCVV",
-    "recommended_products",
-    "picto_v2_ywBdCc"
+    "recommended_products"
   ]
 }
