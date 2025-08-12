@@ -127,16 +127,7 @@
       <form action="{{ routes.search_url }}" method="get" class="filter-form">
         <input name="type" type="hidden" value="product">
         
-        <!-- Recherche -->
-        <div class="filter-search">
-          <label for="filter-search-input" class="filter-label">Rechercher</label>
-          <input name="q" 
-                 type="search" 
-                 id="filter-search-input" 
-                 class="filter-input" 
-                 placeholder="Rechercher des produits..."
-                 value="{{ search.terms | escape }}">
-        </div>
+
 
         <!-- Filtres -->
         <div class="filter-groups">
@@ -459,38 +450,6 @@
 }
 
 /* Formulaire de filtres */
-.filter-search {
-  margin-bottom: 2rem;
-}
-
-.filter-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  font-family: 'Karla', sans-serif;
-  color: #6e612b;
-}
-
-.filter-input {
-  width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-family: 'Karla', sans-serif;
-  color: #6e612b;
-}
-
-.filter-input:focus {
-  outline: none;
-  border-color: #6e612b;
-  box-shadow: 0 0 0 3px rgba(110, 97, 43, 0.1);
-}
-
-.filter-input::placeholder {
-  color: #6e612b;
-  opacity: 0.6;
-}
 
 /* Groupes de filtres */
 .filter-group {
@@ -508,8 +467,8 @@
 }
 
 .filter-options {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
 }
 
