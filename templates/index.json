@@ -176,57 +176,6 @@
         "text_heading": "Questions fréquentes",
         "image_image": "shopify://shop_images/12.jpg"
       }
-    },
-    "collection_product_d_B6id3N": {
-      "type": "collection-product-d",
-      "name": "Collection Products",
-      "settings": {
-        "text_heading": "Short heading here",
-        "text_button_text": "VOIR TOUT",
-        "url_button_link": "shopify://collections/basket-barefoot-enfant",
-        "collection_collection": "basket-barefoot-enfant",
-        "collection_collection_limit": 4
-      }
-    },
-    "texte_bloc_home_page_BhjYtC": {
-      "type": "texte-bloc-home-page",
-      "blocks": {
-        "sous_titre_4fdam4": {
-          "type": "sous-titre",
-          "settings": {
-            "text_heading": "Heading"
-          }
-        },
-        "grand_texte_VTxd3D": {
-          "type": "grand-texte",
-          "settings": {
-            "text_heading": "Heading"
-          }
-        },
-        "paragraphe_cmLaGk": {
-          "type": "paragraphe",
-          "settings": {
-            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
-          }
-        },
-        "bouton_bR6Lan": {
-          "type": "bouton",
-          "settings": {
-            "url_link": "",
-            "text_text": "Button Text"
-          }
-        }
-      },
-      "block_order": [
-        "sous_titre_4fdam4",
-        "grand_texte_VTxd3D",
-        "paragraphe_cmLaGk",
-        "bouton_bR6Lan"
-      ],
-      "name": "texte-bloc-home-page",
-      "settings": {
-        "text_alignment": "left"
-      }
     }
   },
   "layout": "theme",
@@ -234,8 +183,6 @@
   "order": [
     "image_pleine_largeur_CJ6868",
     "manual_products_d_hEiEXt",
-    "faq_pAztkk",
-    "collection_product_d_B6id3N",
-    "texte_bloc_home_page_BhjYtC"
+    "faq_pAztkk"
   ]
 }
