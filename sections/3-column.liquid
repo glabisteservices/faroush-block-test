@@ -87,7 +87,7 @@
     <!-- Colonne 1 -->
     <div class="column-item">
       {% if section.settings.image_1 %}
-        {{ section.settings.image_1 | image_url | image_tag: class: 'image-column', width: 'auto', height: 'auto', alt: section.settings.heading_1, loading: 'lazy' }}
+        {{ section.settings.image_1 | image_url | image_tag: class: 'image-column', alt: section.settings.heading_1, loading: 'lazy' }}
       {% else %}
         <img class="image-column" width="auto" height="auto" alt="{{ section.settings.heading_1 }}" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/6894a8b177996363958d7e3a_image00005.jpeg" loading="lazy">
       {% endif %}
@@ -105,7 +105,7 @@
     <!-- Colonne 2 -->
     <div class="column-item">
       {% if section.settings.image_2 %}
-        {{ section.settings.image_2 | image_url | image_tag: class: 'image-column', width: 'auto', height: 'auto', alt: section.settings.heading_2, loading: 'lazy' }}
+        {{ section.settings.image_2 | image_url | image_tag: class: 'image-column', alt: section.settings.heading_2, loading: 'lazy' }}
       {% else %}
         <img class="image-column" width="auto" height="auto" alt="{{ section.settings.heading_2 }}" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/6894a8b177996363958d7e3a_image00005.jpeg" loading="lazy">
       {% endif %}
@@ -123,7 +123,7 @@
     <!-- Colonne 3 -->
     <div class="column-item">
       {% if section.settings.image_3 %}
-        {{ section.settings.image_3 | image_url | image_tag: class: 'image-column', width: 'auto', height: 'auto', alt: section.settings.heading_3, loading: 'lazy' }}
+        {{ section.settings.image_3 | image_url | image_tag: class: 'image-column', alt: section.settings.heading_3, loading: 'lazy' }}
       {% else %}
         <img class="image-column" width="auto" height="auto" alt="{{ section.settings.heading_3 }}" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/6894a8b177996363958d7e3a_image00005.jpeg" loading="lazy">
       {% endif %}
