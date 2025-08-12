@@ -1,0 +1,323 @@
+<style>
+  .centre {
+    text-align: center
+  }
+  @media screen and (max-width: 767px) {
+    .centre {
+      font-size: 2rem;
+       text-align: left
+    }
+  }
+  @media screen and (max-width: 479px) {
+    .centre {
+      font-size: 1.9rem
+    }
+  }
+  .Prenom-personne {
+    margin-bottom: 20px;
+     font-family: Karla;
+     color: #6e612b;
+     font-size: 1.3rem;
+     text-transform: uppercase
+  }
+  .temoignage-navigation {
+    display: flex;
+     margin-top: 20px;
+     justify-content: space-between;
+     align-items: center;
+  }
+  .slider-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+  .temoignage-slider {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    gap: 20px;
+  }
+  .temoignage-item {
+    width: 300px;
+     height: 300px;
+     padding: 20px;
+     flex-shrink: 0;
+     border-radius: 9px;
+     background-color: #f5f2d9;
+     box-sizing: border-box;
+  }
+  @media screen and (max-width: 767px) {
+    .temoignage-item {
+      width: 250px;
+    }
+  }
+  @media screen and (max-width: 479px) {
+    .temoignage-item {
+      width: 280px;
+    }
+  }
+  .Temoignages {
+    padding: 20px;
+  }
+  .heading-style-h1 {
+    font-family: Karla;
+     color: #6e612b;
+     font-size: 2.8rem;
+     line-height: 1;
+     font-weight: 600;
+     margin-bottom: 40px;
+  }
+  @media screen and (max-width: 767px) {
+    .heading-style-h1 {
+      font-size: 2.5rem
+    }
+  }
+  .button-4 {
+    padding: 1rem 1.75rem;
+     border: 1px solid #6e612b;
+     border-radius: 0.5rem;
+     background-color: transparent;
+     transition: background-color 200ms ease;
+     font-family: Karla;
+     color: #6e612b;
+     font-size: 0.9375rem;
+     line-height: 1;
+     font-weight: 600;
+     text-align: center;
+     letter-spacing: -0.15px;
+     text-transform: uppercase;
+     text-decoration: none;
+     display: inline-block;
+     cursor: pointer;
+  }
+  .button-4:hover {
+    background-color: #6e612b;
+    color: white;
+  }
+  @media screen and (max-width: 479px) {
+    .button-4 {
+      width: 100%}
+  }
+  .Paragraph {
+    font-family: Karla;
+     color: #6e612b;
+     line-height: 1.5;
+  }
+  .arrow-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    transition: background-color 200ms ease;
+  }
+  .arrow-btn:hover {
+    background-color: rgba(110, 97, 43, 0.1);
+  }
+  .arrow-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .arrow-btn img {
+    width: 24px;
+    height: 24px;
+  }
+  .precedent img {
+    transform: rotate(180deg);
+  }
+  .arrows {
+    display: flex;
+    gap: 10px;
+  }
+</style>
+
+<div class="Temoignages">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when '@app' %}
+        {% render block %}
+      {% when 'titre' %}
+        <h1 class="heading-style-h1 centre">
+          {{ block.settings.text_heading }}
+        </h1>
+      {% when 'temoignage-item' %}
+        <!-- Les items seront traités dans le slider ci-dessous -->
+    {% endcase %}
+  {% endfor %}
+
+  {% assign testimonial_blocks = section.blocks | where: 'type', 'temoignage-item' %}
+  {% if testimonial_blocks.size > 0 %}
+    <div class="slider-container">
+      <div class="temoignage-slider" id="temoignage-slider-{{ section.id }}">
+        {% for block in testimonial_blocks %}
+          <div class="temoignage-item">
+            <div class="Prenom-personne">
+              {{ block.settings.text_text }}
+            </div>
+            <p class="Paragraph">
+              {{ block.settings.text_paragraph }}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="temoignage-navigation">
+      <div class="bouton">
+        <a href="{{ section.settings.review_link | default: '#' }}" class="button-4">
+          Laissez-nous un avis
+        </a>
+      </div>
+      <div class="arrows">
+        <button class="arrow-btn precedent" onclick="moveSlider('{{ section.id }}', -1)">
+          <img alt="Précédent" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/689b442bf6f75cb32f16747b_arrow_forward_24dp_6E612B_FILL0_wght400_GRAD0_opsz24.svg" loading="lazy">
+        </button>
+        <button class="arrow-btn suivant" onclick="moveSlider('{{ section.id }}', 1)">
+          <img alt="Suivant" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/689b442bf6f75cb32f16747b_arrow_forward_24dp_6E612B_FILL0_wght400_GRAD0_opsz24.svg" loading="lazy">
+        </button>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sliders = {};
+  
+  function initSlider(sectionId) {
+    const slider = document.getElementById('temoignage-slider-' + sectionId);
+    if (!slider) return;
+    
+    const items = slider.querySelectorAll('.temoignage-item');
+    const itemWidth = items[0].offsetWidth + 20; // width + gap
+    const containerWidth = slider.parentElement.offsetWidth;
+    const visibleItems = Math.floor(containerWidth / itemWidth);
+    const maxIndex = Math.max(0, items.length - visibleItems);
+    
+    sliders[sectionId] = {
+      slider: slider,
+      currentIndex: 0,
+      maxIndex: maxIndex,
+      itemWidth: itemWidth,
+      visibleItems: visibleItems
+    };
+    
+    updateSliderButtons(sectionId);
+  }
+  
+  function updateSliderButtons(sectionId) {
+    const sliderData = sliders[sectionId];
+    if (!sliderData) return;
+    
+    const prevBtn = document.querySelector(`[onclick*="${sectionId}"][onclick*="-1"]`);
+    const nextBtn = document.querySelector(`[onclick*="${sectionId}"][onclick*="1"]`);
+    
+    if (prevBtn) prevBtn.disabled = sliderData.currentIndex <= 0;
+    if (nextBtn) nextBtn.disabled = sliderData.currentIndex >= sliderData.maxIndex;
+  }
+  
+  window.moveSlider = function(sectionId, direction) {
+    const sliderData = sliders[sectionId];
+    if (!sliderData) return;
+    
+    const newIndex = sliderData.currentIndex + direction;
+    
+    if (newIndex >= 0 && newIndex <= sliderData.maxIndex) {
+      sliderData.currentIndex = newIndex;
+      const translateX = -newIndex * sliderData.itemWidth;
+      sliderData.slider.style.transform = `translateX(${translateX}px)`;
+      updateSliderButtons(sectionId);
+    }
+  };
+  
+  // Initialize all sliders on page
+  const allSliders = document.querySelectorAll('[id^="temoignage-slider-"]');
+  allSliders.forEach(slider => {
+    const sectionId = slider.id.replace('temoignage-slider-', '');
+    initSlider(sectionId);
+  });
+  
+  // Reinitialize on window resize
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(function() {
+      allSliders.forEach(slider => {
+        const sectionId = slider.id.replace('temoignage-slider-', '');
+        initSlider(sectionId);
+      });
+    }, 250);
+  });
+});
+</script>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Témoignages",
+  "class": "Témoignages",
+  "settings": [
+    {
+      "id": "review_link",
+      "type": "url",
+      "label": "Lien du bouton avis",
+      "info": "URL vers laquelle rediriger quand on clique sur 'Laissez-nous un avis'"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Titre",
+      "type": "titre",
+      "limit": 1,
+      "settings": [
+        {
+          "id": "text_heading",
+          "type": "text",
+          "label": "Titre",
+          "default": "Nos témoignages"
+        }
+      ]
+    },
+    {
+      "name": "Témoignage",
+      "type": "temoignage-item",
+      "settings": [
+        {
+          "id": "text_text",
+          "type": "text",
+          "label": "Prénom de la personne",
+          "default": "Marie D."
+        },
+        {
+          "id": "text_paragraph",
+          "type": "textarea",
+          "label": "Témoignage",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Témoignages",
+      "category": "Contenu",
+      "blocks": [
+        {
+          "type": "titre"
+        },
+        {
+          "type": "temoignage-item"
+        },
+        {
+          "type": "temoignage-item"
+        },
+        {
+          "type": "temoignage-item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
