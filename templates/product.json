@@ -80,11 +80,13 @@
       "name": "3-column",
       "settings": {
         "main_title": "Pourquoi choisir la barefoot",
-        "image_1": "shopify://shop_images/Zero-drop_2.jpg",
+        "image_1": "shopify://shop_images/Souplesse_legerete.jpg",
         "heading_1": "Souplesse & légèreté",
         "paragraph_1": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "image_2": "shopify://shop_images/lrge_toe_box.jpg",
         "heading_2": "Large toe-box",
         "paragraph_2": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "image_3": "shopify://shop_images/Zero-drop_2.jpg",
         "heading_3": "Zéro drop",
         "paragraph_3": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."
       }
