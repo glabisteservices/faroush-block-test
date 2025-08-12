@@ -247,6 +247,27 @@ function stickyCart() {
     
     init() {
       this.setupIntersectionObserver();
+      this.watchMiniCartState();
+    },
+    
+    watchMiniCartState() {
+      // Observer les changements sur le mini-cart
+      const miniCart = document.querySelector('[li-element="mini-cart"]');
+      if (miniCart) {
+        const observer = new MutationObserver(() => {
+          const isOpen = miniCart.classList.contains('w--open') || 
+                        miniCart.querySelector('.w-dropdown-list.w--open');
+          if (isOpen) {
+            this.isVisible = false; // Masquer le sticky cart si mini-cart ouvert
+          }
+        });
+        
+        observer.observe(miniCart, {
+          attributes: true,
+          attributeFilter: ['class'],
+          subtree: true
+        });
+      }
     },
     
     setupIntersectionObserver() {
