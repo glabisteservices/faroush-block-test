@@ -13,7 +13,7 @@
       font-size: 1.9rem
     }
   }
-  .Prenom-personne {
+  .prenom-personne {
     margin-bottom: 20px;
      font-family: Karla;
      color: #6e612b;
@@ -55,7 +55,7 @@
       width: 280px;
     }
   }
-  .Temoignages {
+  .temoignages {
     padding: 20px;
   }
   .heading-style-h1 {
@@ -97,7 +97,7 @@
     .button-4 {
       width: 100%}
   }
-  .Paragraph {
+  .paragraph {
     font-family: Karla;
      color: #6e612b;
      line-height: 1.5;
@@ -130,7 +130,7 @@
   }
 </style>
 
-<div class="Temoignages">
+<div class="temoignages">
   {% for block in section.blocks %}
     {% case block.type %}
       {% when '@app' %}
@@ -150,10 +150,10 @@
       <div class="temoignage-slider" id="temoignage-slider-{{ section.id }}">
         {% for block in testimonial_blocks %}
           <div class="temoignage-item">
-            <div class="Prenom-personne">
+            <div class="prenom-personne">
               {{ block.settings.text_text }}
             </div>
-            <p class="Paragraph">
+            <p class="paragraph">
               {{ block.settings.text_paragraph }}
             </p>
           </div>
@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function() {
 {
   "tag": "section",
   "name": "Témoignages",
-  "class": "Témoignages",
+  "class": "temoignages",
   "settings": [
     {
       "id": "review_link",
