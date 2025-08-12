@@ -115,6 +115,31 @@
   .rich-text-content p {
     margin-bottom: 10px;
   }
+  
+  /* Styles pour améliorer l'affichage du rich text */
+  .rich-text-content h1, .rich-text-content h2, .rich-text-content h3, 
+  .rich-text-content h4, .rich-text-content h5, .rich-text-content h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+  }
+  
+  .rich-text-content ul, .rich-text-content ol {
+    margin-left: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .rich-text-content li {
+    margin-bottom: 5px;
+  }
+  
+  .rich-text-content strong {
+    font-weight: bold;
+  }
+  
+  .rich-text-content em {
+    font-style: italic;
+  }
 </style>
 
 <div class="product-details-accordion-container">
@@ -129,7 +154,11 @@
     </button>
     <div class="dropdown-content" data-dropdown-content="details">
       <div class="rich-text-content">
-        {{ product.metafields.custom.details_produit.value }}
+        <!-- Solution 1: Si c'est un rich text metafield -->
+        {{ product.metafields.custom.details_produit | metafield_tag }}
+        
+        <!-- Solution 2: Alternative si la solution 1 ne fonctionne pas -->
+        <!-- {{ product.metafields.custom.details_produit.value }} -->
       </div>
     </div>
   </div>
@@ -146,7 +175,8 @@
     </button>
     <div class="dropdown-content" data-dropdown-content="matiere">
       <div class="rich-text-content">
-        {{ product.metafields.custom.texte_matiere_v2 }}
+        <!-- Même correction pour ce metafield -->
+        {{ product.metafields.custom.texte_matiere_v2 | metafield_tag }}
       </div>
     </div>
   </div>
@@ -178,7 +208,8 @@
     </button>
     <div class="dropdown-content" data-dropdown-content="entretien">
       <div class="rich-text-content">
-        {{ product.metafields.custom.conseils_d_entretien }}
+        <!-- Même correction pour ce metafield -->
+        {{ product.metafields.custom.conseils_d_entretien | metafield_tag }}
       </div>
     </div>
   </div>
