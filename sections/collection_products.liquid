@@ -132,7 +132,7 @@
         <!-- Filtres -->
         <div class="filter-groups">
           {% for filter in collection.filters %}
-            {% if filter.values.size > 1 %}
+            {% if filter.values.size > 0 %}
               <div class="filter-group">
                 <h4 class="filter-group-title">{{ filter.label }}</h4>
                 <div class="filter-options">
