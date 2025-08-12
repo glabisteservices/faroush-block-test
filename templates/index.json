@@ -12,20 +12,13 @@
     "image_pleine_largeur_CJ6868": {
       "type": "image-pleine-largeur",
       "blocks": {
-        "paragraph_3HG9ha": {
-          "type": "paragraph",
-          "settings": {
-            "paragraph_text": "tets",
-            "text_color": "brown"
-          }
-        },
         "image_desktop_KtF4e7": {
           "type": "image-desktop",
           "settings": {
             "image_image": "shopify://shop_images/Header_bleu.jpg",
-            "heading_text": "test",
-            "paragraph_text": "blablabla",
-            "button_text": "Bouton",
+            "heading_text": "C'est la rentrée !",
+            "paragraph_text": "Découvrez nos nouveaux modèles",
+            "button_text": "Acheter FW25",
             "button_link": "shopify://products/basket-barefoot-enfant-mimi-siku-ningaloo",
             "text_color": "white",
             "button_color": "white"
@@ -35,9 +28,9 @@
           "type": "image-mobile",
           "settings": {
             "image_image": "shopify://shop_images/Mobile_HP_image.jpg",
-            "heading_text": "test",
-            "paragraph_text": "blabkblabla",
-            "button_text": "bouton",
+            "heading_text": "C'est la rentrée",
+            "paragraph_text": "Découvrez nos nouveaux modèles",
+            "button_text": "Acheter FW25",
             "button_link": "shopify://collections/basket-barefoot-enfant",
             "text_color": "brown",
             "button_color": "brown"
@@ -45,7 +38,6 @@
         }
       },
       "block_order": [
-        "paragraph_3HG9ha",
         "image_desktop_KtF4e7",
         "image_mobile_MdqRqN"
       ],
