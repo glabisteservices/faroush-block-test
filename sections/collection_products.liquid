@@ -15,6 +15,7 @@
         </button>
       </div>
       
+      {% if section.settings.show_sorting %}
       <div class="collection-header-right">
         <div class="sort-wrapper">
           <label for="sort-by" class="sort-label">Trier par :</label>
@@ -27,6 +28,7 @@
           </select>
         </div>
       </div>
+      {% endif %}
     </div>
 
     <!-- Filtres actifs -->
@@ -676,7 +678,7 @@ document.addEventListener('DOMContentLoaded', function() {
   filterClose.addEventListener('click', closeSidebar);
   filterOverlay.addEventListener('click', closeSidebar);
   
-  // Gestion du tri
+  // Gestion du tri - seulement si le select existe
   if (sortSelect) {
     // Préserver les paramètres de requête existants
     const queryParams = {};
@@ -723,3 +725,18 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 </script>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_sorting",
+      "label": "Afficher l'option de tri",
+      "default": true,
+      "info": "Permet aux clients de trier les produits par prix, date, etc."
+    }
+  ]
+}
+{% endschema %}
