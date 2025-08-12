@@ -31,6 +31,7 @@
     width: 100vw;
     margin-left: calc(-50vw + 50%);
     position: relative;
+    touch-action: pan-y; /* Permet le scroll vertical mais gère le swipe horizontal */
   }
   .temoignage-slider {
     display: flex;
@@ -140,6 +141,11 @@
     display: flex;
     gap: 10px;
   }
+  @media screen and (max-width: 767px) {
+    .arrows {
+      display: none;
+    }
+  }
 </style>
 
 <div class="temoignages">
@@ -221,10 +227,105 @@ document.addEventListener('DOMContentLoaded', function() {
       slider: slider,
       currentIndex: 0,
       totalItems: totalItems,
-      itemWidth: itemWidth
+      itemWidth: itemWidth,
+      container: slider.parentElement
     };
     
+    // Ajouter la navigation tactile
+    initTouchNavigation(sectionId);
     updateSliderButtons(sectionId);
+  }
+  
+  function initTouchNavigation(sectionId) {
+    const sliderData = sliders[sectionId];
+    if (!sliderData) return;
+    
+    const container = sliderData.container;
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    let hasMoved = false;
+    
+    // Touch events
+    container.addEventListener('touchstart', function(e) {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+      hasMoved = false;
+    }, { passive: true });
+    
+    container.addEventListener('touchmove', function(e) {
+      if (!isDragging) return;
+      
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const diffX = Math.abs(currentX - startX);
+      const diffY = Math.abs(currentY - startY);
+      
+      // Si le mouvement horizontal est plus important que vertical
+      if (diffX > diffY && diffX > 10) {
+        e.preventDefault(); // Empêche le scroll de la page
+        hasMoved = true;
+      }
+    }, { passive: false });
+    
+    container.addEventListener('touchend', function(e) {
+      if (!isDragging || !hasMoved) return;
+      
+      const endX = e.changedTouches[0].clientX;
+      const diffX = startX - endX;
+      const threshold = 50; // Distance minimum pour déclencher le swipe
+      
+      if (Math.abs(diffX) > threshold) {
+        if (diffX > 0) {
+          // Swipe vers la gauche = slide suivant
+          moveSlider(sectionId, 1);
+        } else {
+          // Swipe vers la droite = slide précédent
+          moveSlider(sectionId, -1);
+        }
+      }
+      
+      isDragging = false;
+      hasMoved = false;
+    }, { passive: true });
+    
+    // Mouse events pour le desktop (optionnel)
+    let mouseStartX = 0;
+    let isMouseDragging = false;
+    
+    container.addEventListener('mousedown', function(e) {
+      mouseStartX = e.clientX;
+      isMouseDragging = true;
+      e.preventDefault();
+    });
+    
+    container.addEventListener('mousemove', function(e) {
+      if (!isMouseDragging) return;
+      e.preventDefault();
+    });
+    
+    container.addEventListener('mouseup', function(e) {
+      if (!isMouseDragging) return;
+      
+      const diffX = mouseStartX - e.clientX;
+      const threshold = 50;
+      
+      if (Math.abs(diffX) > threshold) {
+        if (diffX > 0) {
+          moveSlider(sectionId, 1);
+        } else {
+          moveSlider(sectionId, -1);
+        }
+      }
+      
+      isMouseDragging = false;
+    });
+    
+    // Empêcher la sélection de texte pendant le drag
+    container.addEventListener('selectstart', function(e) {
+      if (isMouseDragging) e.preventDefault();
+    });
   }
   
   function updateSliderButtons(sectionId) {
