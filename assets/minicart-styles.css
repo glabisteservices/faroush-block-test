@@ -16,48 +16,9 @@
   color: inherit !important;
 }
 
-/* === STRUCTURE ET SCROLL DU MINICART === */
-
-/* Container principal du minicart avec contrainte de hauteur */
-.nav_mini-cart .nav_mini-cart-holder.w-dropdown-list {
-  height: 100vh !important;
-  max-height: 100vh !important;
-  overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-  width: 350px !important; /* Largeur fixe pour desktop */
-  right: 0 !important;
-  left: auto !important;
-}
-
-/* Component principal du minicart */
-.nav_mini-cart .mini-cart_component {
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-  max-height: 100vh !important;
-  overflow: hidden !important;
-}
-
-/* Section du minicart plein (avec produits) */
-.nav_mini-cart .mini-cart_full {
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-  max-height: 100vh !important;
-  overflow: hidden !important;
-}
-
 /* === HEADER DU MINICART === */
 .nav_mini-cart .mini-cart_header {
-  flex-shrink: 0 !important; /* Ne rétrécit pas */
-  padding: 20px !important;
-  padding-bottom: 15px !important;
-  border-bottom: 1px solid #f0f0f0 !important;
-  background-color: #ffffff !important;
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 2 !important;
+  /* Header styling */
 }
 
 .nav_mini-cart .mini-cart_header .heading-style-h3 {
@@ -65,38 +26,9 @@
   font-weight: 600 !important;
 }
 
-/* === ZONE DES PRODUITS SCROLLABLE === */
-.nav_mini-cart .mini-cart_line-item {
-  flex: 1 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  max-height: calc(85vh - 220px) !important; /* Hauteur disponible après header et footer */
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* Liste des produits */
-.nav_mini-cart .mini-cart_line-item_list {
-  padding: 15px 20px !important;
-  margin: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 15px !important;
-}
-
-/* Items individuels des produits */
+/* === PRODUITS === */
 .nav_mini-cart .mini-cart_line-item_item {
-  display: flex !important;
-  gap: 15px !important;
-  padding: 15px 0 !important;
-  border-bottom: 1px solid #f5f5f5 !important;
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-}
-
-.nav_mini-cart .mini-cart_line-item_item:last-child {
-  border-bottom: none !important;
+  /* Style des items produits */
 }
 
 .nav_mini-cart .mini-cart_line-item_img {
@@ -141,14 +73,13 @@
   text-decoration: underline;
 }
 
-/* === FOOTER / TOTAL FIXE === */
+/* === FOOTER / TOTAL === */
 .nav_mini-cart .mini-cart_footer,
 .nav_mini-cart .nav_mini-cart-holder .mini-cart_footer,
 .nav_dropdown.w-dropdown .mini-cart_footer,
 .w-dropdown-list .mini-cart_footer,
 .nav_mini-cart-holder.w-dropdown-list .mini-cart_footer,
 div[class*="mini-cart_footer"] {
-  flex-shrink: 0 !important; /* Ne rétrécit pas */
   padding: 20px !important;
   padding-left: 20px !important;
   padding-right: 20px !important;
@@ -157,9 +88,16 @@ div[class*="mini-cart_footer"] {
   background-color: #ffffff !important;
   border-top: 1px solid #f0f0f0 !important;
   box-sizing: border-box !important;
-  position: sticky !important;
-  bottom: 0 !important;
-  z-index: 2 !important;
+}
+
+/* Supprimer les lignes qui traînent - GARDER SEULEMENT la ligne du footer */
+.nav_mini-cart .mini-cart_line-item,
+.nav_mini-cart .mini-cart_line-item_item,
+.nav_mini-cart .mini-cart_line-item_list li {
+  border-bottom: none !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
 }
 
 .nav_mini-cart .mini-cart_footer-total {
@@ -189,32 +127,6 @@ div[class*="mini-cart_footer"] {
   font-weight: 400 !important;
   font-size: 14px !important;
   text-decoration: line-through !important;
-}
-
-/* === STYLES DE SCROLLBAR PERSONNALISÉS === */
-.nav_mini-cart .mini-cart_line-item::-webkit-scrollbar {
-  width: 6px !important;
-}
-
-.nav_mini-cart .mini-cart_line-item::-webkit-scrollbar-track {
-  background: #f5f5f5 !important;
-  border-radius: 3px !important;
-}
-
-.nav_mini-cart .mini-cart_line-item::-webkit-scrollbar-thumb {
-  background: #d0d0d0 !important;
-  border-radius: 3px !important;
-}
-
-.nav_mini-cart .mini-cart_line-item::-webkit-scrollbar-thumb:hover {
-  background: #b0b0b0 !important;
-}
-
-/* Pour Firefox */
-.nav_mini-cart .mini-cart_line-item {
-  scrollbar-width: thin !important;
-  scrollbar-color: #d0d0d0 #f5f5f5 !important;
-  scroll-behavior: smooth !important;
 }
 
 /* Media query desktop - BRUTAL */
@@ -311,57 +223,4 @@ div[class*="mini-cart_footer"] {
 
 .nav_mini-cart .mini-cart_empty * {
   color: #6e612b !important;
-}
-
-/* === RESPONSIVE === */
-
-/* Tablet */
-@media (max-width: 991px) {
-  .nav_mini-cart .nav_mini-cart-holder.w-dropdown-list {
-    height: 100vh !important;
-    max-height: 100vh !important;
-    width: 320px !important;
-    right: 0 !important;
-    left: auto !important;
-  }
-  
-  .nav_mini-cart .mini-cart_line-item {
-    max-height: calc(100vh - 200px) !important;
-  }
-}
-
-/* Mobile */
-@media (max-width: 767px) {
-  .nav_mini-cart .nav_mini-cart-holder.w-dropdown-list {
-    height: 100vh !important;
-    max-height: 100vh !important;
-    width: 100vw !important;
-    left: 0 !important;
-    right: 0 !important;
-    transform: none !important;
-    margin-left: 0 !important;
-  }
-  
-  .nav_mini-cart .mini-cart_line-item {
-    max-height: calc(100vh - 180px) !important;
-  }
-  
-  .nav_mini-cart .mini-cart_header {
-    padding: 15px !important;
-    padding-bottom: 10px !important;
-  }
-  
-  .nav_mini-cart .mini-cart_footer {
-    padding: 15px !important;
-  }
-  
-  .nav_mini-cart .mini-cart_line-item_list {
-    padding: 10px 15px !important;
-  }
-}
-
-/* === EFFETS VISUELS === */
-/* Scroll smooth */
-.nav_mini-cart .mini-cart_line-item {
-  scroll-behavior: smooth !important;
 }
