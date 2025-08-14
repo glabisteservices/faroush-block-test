@@ -321,6 +321,26 @@
     overflow-wrap: break-word;
   }
   
+  /* Bouton Détails produit - Même style que le guide des tailles */
+  .product-details-button {
+    font-family: Karla, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #6e612b;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+    white-space: nowrap;
+    margin-top: 0.5rem;
+  }
+
+  .product-details-button:hover {
+    color: #5a4f23;
+  }
+  
   /* Variant Selection */
   .variant-selector {
     display: flex;
@@ -654,6 +674,23 @@
     }
   }
 
+  /* Scroll padding pour l'ancre - Éviter que la section soit cachée par le header */
+  html {
+    scroll-padding-top: 80px; /* Desktop */
+  }
+
+  @media screen and (max-width: 1024px) {
+    html {
+      scroll-padding-top: 60px; /* Tablet */
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    html {
+      scroll-padding-top: 50px; /* Mobile */
+    }
+  }
+
   @media screen and (max-width: 768px) {
     .product-pictos-container {
       display: grid !important;
@@ -785,6 +822,11 @@
         {% if product.description != blank %}
           <div class="product-description">{{ product.description }}</div>
         {% endif %}
+
+        <!-- Bouton Détails produit -->
+        <a href="#shopify-section-product-details-accordion" class="product-details-button">
+          Voir les détails complets
+        </a>
         
         <!-- Variant Selection -->
         {% unless product.has_only_default_variant %}
