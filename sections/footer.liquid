@@ -43,11 +43,10 @@
   {% endif %}
 
   {%- comment -%}
-    On affiche le bloc switchers si :
-    - au moins 1 langue disponible, OU
-    - au moins 1 devise disponible (toujours vrai), pour que le bouton devise soit visible même s’il n’y a qu’une seule devise.
+    Affiche les switchers si : au moins 1 langue OU au moins 1 pays (toujours vrai),
+    afin que le bouton devise soit toujours visible.
   {%- endcomment -%}
-  {% if localization.available_languages.size > 1 or localization.available_currencies.size > 0 %}
+  {% if localization.available_languages.size > 1 or localization.available_countries.size > 0 %}
     <div class="li-lang_wrapper">
 
       {%- if localization.available_languages.size > 1 -%}
@@ -79,13 +78,24 @@
         </localization-form>
       {%- endif -%}
 
-      {%- comment -%} Sélecteur devise — basé sur available_currencies (sans doublons) {%- endcomment -%}
+      {%- comment -%}
+        Sélecteur devise robuste :
+        - current_currency = localization.currency OU fallback localization.country.currency
+        - options = available_currencies SINON dédupliquées depuis available_countries
+      {%- endcomment -%}
       <localization-form class="li-currency_form-container">
         {% form 'localization', class: 'li-currency_form' %}
-          {% assign currencies_count = localization.available_currencies | size %}
-          <div data-hover="true" data-delay="500" class="li-currency_dropdown w-dropdown" {% if currencies_count == 1 %}data-disabled="true"{% endif %}>
+
+          {%- assign current_currency = localization.currency -%}
+          {%- if current_currency == nil or current_currency.iso_code == blank -%}
+            {%- assign current_currency = localization.country.currency -%}
+          {%- endif -%}
+
+          {%- assign currencies_count = localization.available_currencies | size -%}
+
+          <div data-hover="true" data-delay="500" class="li-currency_dropdown w-dropdown" {% if currencies_count <= 1 %}data-disabled="true"{% endif %}>
             <div class="li-currency_dd-toggle w-dropdown-toggle">
-              <div>{{ localization.currency.iso_code }} {{ localization.currency.symbol }}</div>
+              <div>{{ current_currency.iso_code }} {{ current_currency.symbol }}</div>
               <div class="li-currency_dd-toggle-icon w-embed">
                 <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path clip-rule="evenodd" d="M2.55806 6.29544C2.46043 6.19781 2.46043 6.03952 2.55806 5.94189L3.44195 5.058C3.53958 4.96037 3.69787 4.96037 3.7955 5.058L8 9.2625 12.2045 5.058c.0976-.0976.2559-.0976.3535 0l.8839.8839c.0977.0976.0977.2559 0 .3535L8.1768 11.5606c-.0977.0976-.256.0976-.3536 0L2.5581 6.29544Z" fill="currentColor"/>
@@ -93,10 +103,10 @@
               </div>
             </div>
 
-            {% if currencies_count > 1 %}
+            {%- if currencies_count > 1 -%}
               <nav class="li-currency_dd-list w-dropdown-list">
                 {% for currency in localization.available_currencies %}
-                  {% unless localization.currency.iso_code == currency.iso_code %}
+                  {% unless current_currency.iso_code == currency.iso_code %}
                     <div class="li-currency_dd-list-item">
                       <a href="#" data-value="{{ currency.iso_code }}" class="li-currency_dd-link w-dropdown-link">
                         {{ currency.iso_code }} {{ currency.symbol }}
@@ -105,12 +115,27 @@
                   {% endunless %}
                 {% endfor %}
               </nav>
-            {% else %}
-              <nav class="li-currency_dd-list w-dropdown-list" style="display:none;"></nav>
-            {% endif %}
+            {%- else -%}
+              {%- comment -%} Fallback : déduplique via les pays {%- endcomment -%}
+              <nav class="li-currency_dd-list w-dropdown-list">
+                {% assign seen = '' %}
+                {% for country in localization.available_countries %}
+                  {% unless seen contains country.currency.iso_code %}
+                    {% unless current_currency.iso_code == country.currency.iso_code %}
+                      <div class="li-currency_dd-list-item">
+                        <a href="#" data-value="{{ country.currency.iso_code }}" class="li-currency_dd-link w-dropdown-link">
+                          {{ country.currency.iso_code }} {{ country.currency.symbol }}
+                        </a>
+                      </div>
+                    {% endunless %}
+                    {% capture seen %}{{ seen }}|{{ country.currency.iso_code }}{% endcapture %}
+                  {% endunless %}
+                {% endfor %}
+              </nav>
+            {%- endif -%}
           </div>
 
-          <input type="hidden" name="currency_code" class="li-currency_hidden-input" value="{{ localization.currency.iso_code }}">
+          <input type="hidden" name="currency_code" class="li-currency_hidden-input" value="{{ current_currency.iso_code }}">
         {% endform %}
       </localization-form>
 
