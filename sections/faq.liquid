@@ -196,10 +196,16 @@
     width: 50%;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 0 20px 40px 20px;
+    padding: 40px 20px;
     min-height: 400px; /* Hauteur minimum pour synchroniser avec l'image */
     /* Maintenant à gauche dans l'ordre du DOM */
     order: 1;
+  }
+  
+  @media screen and (min-width: 1025px) {
+    .left-div-faq {
+      padding: 0 20px 40px 20px;
+    }
   }
   
   .left-div-faq.medium {
