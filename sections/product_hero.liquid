@@ -1180,6 +1180,8 @@ function updateShippingText(countryCode) {
       shippingText = 'Livraison internationale : nous contacter';
   }
   
+  // Marquer l'élément comme ayant été modifié dynamiquement
+  shippingElement.setAttribute('data-dynamic-updated', 'true');
   shippingElement.textContent = shippingText;
 }
 
@@ -1257,34 +1259,51 @@ document.addEventListener('DOMContentLoaded', function() {
       wrapper.style.setProperty('width', '100%', 'important');
     });
   };
+
+  // Fonction pour protéger le contenu de livraison dynamique
+  const protectDynamicShipping = () => {
+    const shippingElement = document.getElementById('dynamic-shipping-text');
+    if (shippingElement && shippingElement.getAttribute('data-dynamic-updated') === 'true') {
+      // Ne pas toucher au texte s'il a été mis à jour dynamiquement
+      return;
+    }
+  };
   
   // Exécuter immédiatement et à intervalles
   protectTitle();
   adjustPictosOnMobile();
   fixSizeGuideLayout();
+  protectDynamicShipping();
   setTimeout(protectTitle, 50);
   setTimeout(adjustPictosOnMobile, 50);
   setTimeout(fixSizeGuideLayout, 50);
+  setTimeout(protectDynamicShipping, 50);
   setTimeout(protectTitle, 100);
   setTimeout(adjustPictosOnMobile, 100);
   setTimeout(fixSizeGuideLayout, 100);
+  setTimeout(protectDynamicShipping, 100);
   setTimeout(protectTitle, 200);
   setTimeout(adjustPictosOnMobile, 200);
   setTimeout(fixSizeGuideLayout, 200);
+  setTimeout(protectDynamicShipping, 200);
   setTimeout(protectTitle, 500);
   setTimeout(adjustPictosOnMobile, 500);
   setTimeout(fixSizeGuideLayout, 500);
+  setTimeout(protectDynamicShipping, 500);
   setTimeout(protectTitle, 1000);
   setTimeout(adjustPictosOnMobile, 1000);
   setTimeout(fixSizeGuideLayout, 1000);
+  setTimeout(protectDynamicShipping, 1000);
   setTimeout(protectTitle, 2000);
   setTimeout(adjustPictosOnMobile, 2000);
   setTimeout(fixSizeGuideLayout, 2000);
+  setTimeout(protectDynamicShipping, 2000);
   
   // Observer continu
   setInterval(protectTitle, 1000);
   setInterval(adjustPictosOnMobile, 1000);
   setInterval(fixSizeGuideLayout, 1000);
+  setInterval(protectDynamicShipping, 1000);
   
   // Debug : surveiller les scroll automatiques non désirés
   if (isMobile()) {
@@ -1311,6 +1330,7 @@ document.addEventListener('DOMContentLoaded', function() {
       protectTitle(); // Reprotéger le titre
       adjustPictosOnMobile(); // Réajuster les pictos
       fixSizeGuideLayout(); // Refixer le layout du guide des tailles
+      protectDynamicShipping(); // Protéger le texte de livraison
     }, 100);
   });
 });
