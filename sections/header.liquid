@@ -777,6 +777,32 @@ document.addEventListener('alpine:init', () => {
 .no-scrollbar::-webkit-scrollbar {
     display: none !important;
 }
+
+/* Override Webflow default navigation styles */
+@media (min-width: 992px) {
+    .nav_component .w-nav-brand {
+        float: none !important;
+    }
+    
+    .nav_component .w-nav-menu {
+        float: none !important;
+        position: static !important;
+    }
+    
+    .nav_container {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    
+    .nav_menu.w-nav-menu {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex: 1 !important;
+        margin: 0 !important;
+    }
+}
 </style>
 
 {% schema %}
