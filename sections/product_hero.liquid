@@ -441,6 +441,40 @@
     object-position: center;
   }
 
+  /* Règles spécifiques pour DESKTOP uniquement */
+  @media screen and (min-width: 769px) {
+    .product-pictos-container .picto-produit .Div.Block.7,
+    .picto-produit .Div.Block.7 {
+      width: 100% !important;
+      height: 25px !important;
+      max-height: 25px !important;
+      flex: 0 0 25px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+    }
+
+    .product-pictos-container .picto-produit .Div.Block.7 .Image.3,
+    .product-pictos-container .picto-produit .Image.3,
+    .picto-produit .Div.Block.7 img,
+    .picto-produit img {
+      width: auto !important;
+      height: 25px !important;
+      max-width: 40px !important;
+      max-height: 25px !important;
+      min-width: auto !important;
+      min-height: auto !important;
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+
+    .picto-produit {
+      height: 45px !important;
+      max-height: 45px !important;
+    }
+  }
+
   .picto-produit .texte-picto {
     font-family: Karla, sans-serif;
     color: #6e612b;
