@@ -1,43 +1,54 @@
+{% comment %} Cette section n'apparaît que sur la page d'accueil {% endcomment %}
+{% if template.name == 'index' %}
 <style>
-  .Section Texte SEO {
+  .Section-Texte-SEO {
     padding-top: 20px;
-     padding-right: 20px;
-     padding-bottom: 20px;
-     padding-left: 20px
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
   }
   @media screen and (max-width: 479px) {
-    .Section Texte SEO {
+    .Section-Texte-SEO {
       padding-top: 10px;
-       padding-right: 10px;
-       padding-bottom: 10px;
-       padding-left: 10px
+      padding-right: 10px;
+      padding-bottom: 10px;
+      padding-left: 10px;
     }
   }
   .Small-SEO-Text {
     font-family: Karla;
-     color: #6e612b;
-     font-size: 0.6rem;
-     line-height: 1.3;
-     text-align: center
+    color: #6e612b;
+    font-size: 0.6rem;
+    line-height: 1.3;
+    text-align: center;
   }
 </style>
-  <div class="Small-SEO-Text"> {{ section.settings.richtext_richtext }} </div> {% schema %} {
-    "tag": "section",
-    "name": "SEO-HP",
-    "class": "Section Texte SEO",
-    "settings": [
-        {
-            "id": "richtext_richtext",
-            "type": "richtext",
-            "label": "Richtext",
-            "default": "<p>\n    \n        Faroush propose une collection compl\u00e8te de \n      <strong>\n          chaussures barefoot pour enfants\n      <\/strong>\n        , alliant confort, libert\u00e9 de mouvement et respect du d\u00e9veloppement naturel du pied. Retrouvez nos mod\u00e8les de \n      <strong>\n          baskets minimalistes souples et l\u00e9g\u00e8res\n      <\/strong>\n        , id\u00e9ales pour l\u2019\u00e9cole et les jeux, nos \n      <strong>\n          bottines barefoot chaudes et z\u00e9ro drop\n      <\/strong>\n        <\/p>"
-        }
-    ],
-    "presets": [
-        {
-            "name": "SEO-HP",
-            "category": "Liquify",
-            "blocks": []
-        }
-    ]
-} {% endschema %}
+
+<div class="Section-Texte-SEO">
+  <div class="Small-SEO-Text">
+    {{ section.settings.richtext_richtext }}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "SEO Footer - Home Only",
+  "class": "Section-Texte-SEO",
+  "settings": [
+    {
+      "id": "richtext_richtext",
+      "type": "richtext",
+      "label": "Texte SEO",
+      "default": "<p>Faroush propose une collection complète de <strong>chaussures barefoot pour enfants</strong>, alliant confort, liberté de mouvement et respect du développement naturel du pied. Retrouvez nos modèles de <strong>baskets minimalistes souples et légères</strong>, idéales pour l'école et les jeux, nos <strong>bottines barefoot chaudes et zéro drop</strong></p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SEO Footer - Home Only",
+      "category": "Footer"
+    }
+  ]
+}
+{% endschema %}
