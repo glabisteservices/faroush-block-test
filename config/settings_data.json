@@ -9,6 +9,8 @@
  */
 {
   "current": {
+    "favicon": "shopify://shop_images/favicon_faroush32_bb45b5ab-2214-4ad9-91d6-b86fb207d552.png",
+    "apple_touch_icon": "shopify://shop_images/favicon_faroush120.png",
     "sections": {
       "header-announcement": {
         "type": "header-announcement",
