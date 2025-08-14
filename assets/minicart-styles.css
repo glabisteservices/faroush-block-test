@@ -86,12 +86,14 @@
 .w-dropdown-list .mini-cart_footer,
 .nav_mini-cart-holder.w-dropdown-list .mini-cart_footer,
 div[class*="mini-cart_footer"] {
-  padding: 10px 20px 20px 20px !important; /* top réduit à 10px */
+  padding: 20px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
   background-color: #ffffff !important;
   border-top: 1px solid #f0f0f0 !important;
   box-sizing: border-box !important;
-  height: 25vh !important;
-  min-height: 25vh !important;
 }
 
 /* Supprimer les lignes qui traînent - GARDER SEULEMENT la ligne du footer */
@@ -108,14 +110,13 @@ div[class*="mini-cart_footer"] {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  margin: 0 !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 0px !important;
   border: none !important;
   border-top: none !important;
   border-bottom: none !important;
 }
 
-/* Supprimer les lignes sur les éléments dans le footer-total */
+/* Supprimer les bordures grises sur les éléments dans le footer-total */
 .nav_mini-cart .mini-cart_footer-total *,
 .nav_mini-cart .mini-cart_footer-total::before,
 .nav_mini-cart .mini-cart_footer-total::after {
@@ -146,27 +147,6 @@ div[class*="mini-cart_footer"] {
   text-decoration: line-through !important;
 }
 
-/* Supprimer l'espace des éléments cachés ou conditionnels */
-.nav_mini-cart .mini-cart_footer .hide,
-.nav_mini-cart .mini-cart_footer-message.hide,
-.nav_mini-cart .mini-cart_conditional[style*="display: none"],
-.nav_mini-cart .mini-cart_footer [style*="display: none"] {
-  display: none !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  visibility: hidden !important;
-}
-
-/* Forcer un espacement serré dans le footer */
-.nav_mini-cart .mini-cart_footer > * {
-  margin: 0 !important;
-}
-
-.nav_mini-cart .mini-cart_footer > *:not(:last-child) {
-  margin-bottom: 10px !important;
-}
-
 /* Media query desktop - BRUTAL */
 @media (min-width: 768px) {
   .nav_mini-cart .mini-cart_footer,
@@ -194,8 +174,7 @@ div[class*="mini-cart_footer"] {
   text-align: center !important;
   transition: all 0.2s ease !important;
   border: 1px solid transparent !important;
-  margin-bottom: 0px !important; /* Suppression de la marge */
-  margin-top: 10px !important; /* Petit espace en haut */
+  margin-bottom: 10px !important;
   font-size: 14px !important;
 }
 
@@ -204,7 +183,7 @@ div[class*="mini-cart_footer"] {
   background-color: #ec8451 !important;
   color: #ffffff !important;
   border: 1px solid #ec8451 !important;
-  margin-bottom: 0px !important; /* Suppression de la marge */
+  margin-bottom: 10px !important;
   text-transform: uppercase !important;
 }
 
