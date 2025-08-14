@@ -441,24 +441,33 @@
     object-position: center;
   }
 
-  /* Règles spécifiques pour DESKTOP uniquement */
+  /* Règles spécifiques pour DESKTOP uniquement - Version renforcée */
   @media screen and (min-width: 769px) {
+    .product-header_component .product-pictos-container .picto-produit .Div.Block.7,
+    .product-header_component .picto-produit .Div.Block.7,
     .product-pictos-container .picto-produit .Div.Block.7,
     .picto-produit .Div.Block.7 {
       width: 100% !important;
       height: 25px !important;
       max-height: 25px !important;
+      min-height: 25px !important;
       flex: 0 0 25px !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
       overflow: hidden !important;
+      box-sizing: border-box !important;
     }
 
+    .product-header_component .product-pictos-container .picto-produit .Div.Block.7 .Image.3,
+    .product-header_component .product-pictos-container .picto-produit .Image.3,
+    .product-header_component .picto-produit .Div.Block.7 img,
+    .product-header_component .picto-produit img,
     .product-pictos-container .picto-produit .Div.Block.7 .Image.3,
     .product-pictos-container .picto-produit .Image.3,
     .picto-produit .Div.Block.7 img,
-    .picto-produit img {
+    .picto-produit img,
+    .picto-produit .Image.3 {
       width: auto !important;
       height: 25px !important;
       max-width: 40px !important;
@@ -467,11 +476,16 @@
       min-height: auto !important;
       object-fit: contain !important;
       object-position: center !important;
+      display: block !important;
+      box-sizing: border-box !important;
     }
 
+    .product-header_component .picto-produit,
+    .product-pictos-container .picto-produit,
     .picto-produit {
       height: 45px !important;
       max-height: 45px !important;
+      min-height: 45px !important;
     }
   }
 
@@ -1385,36 +1399,44 @@ document.addEventListener('DOMContentLoaded', function() {
   // Exécuter immédiatement et à intervalles
   protectTitle();
   adjustPictosOnMobile();
+  adjustPictosOnDesktop();
   fixSizeGuideLayout();
   protectDynamicShipping();
   setTimeout(protectTitle, 50);
   setTimeout(adjustPictosOnMobile, 50);
+  setTimeout(adjustPictosOnDesktop, 50);
   setTimeout(fixSizeGuideLayout, 50);
   setTimeout(protectDynamicShipping, 50);
   setTimeout(protectTitle, 100);
   setTimeout(adjustPictosOnMobile, 100);
+  setTimeout(adjustPictosOnDesktop, 100);
   setTimeout(fixSizeGuideLayout, 100);
   setTimeout(protectDynamicShipping, 100);
   setTimeout(protectTitle, 200);
   setTimeout(adjustPictosOnMobile, 200);
+  setTimeout(adjustPictosOnDesktop, 200);
   setTimeout(fixSizeGuideLayout, 200);
   setTimeout(protectDynamicShipping, 200);
   setTimeout(protectTitle, 500);
   setTimeout(adjustPictosOnMobile, 500);
+  setTimeout(adjustPictosOnDesktop, 500);
   setTimeout(fixSizeGuideLayout, 500);
   setTimeout(protectDynamicShipping, 500);
   setTimeout(protectTitle, 1000);
   setTimeout(adjustPictosOnMobile, 1000);
+  setTimeout(adjustPictosOnDesktop, 1000);
   setTimeout(fixSizeGuideLayout, 1000);
   setTimeout(protectDynamicShipping, 1000);
   setTimeout(protectTitle, 2000);
   setTimeout(adjustPictosOnMobile, 2000);
+  setTimeout(adjustPictosOnDesktop, 2000);
   setTimeout(fixSizeGuideLayout, 2000);
   setTimeout(protectDynamicShipping, 2000);
   
   // Observer continu
   setInterval(protectTitle, 1000);
   setInterval(adjustPictosOnMobile, 1000);
+  setInterval(adjustPictosOnDesktop, 1000);
   setInterval(fixSizeGuideLayout, 1000);
   setInterval(protectDynamicShipping, 1000);
   
@@ -1441,7 +1463,8 @@ document.addEventListener('DOMContentLoaded', function() {
       updateGalleryDisplay();
       initializeSwipe();
       protectTitle(); // Reprotéger le titre
-      adjustPictosOnMobile(); // Réajuster les pictos
+      adjustPictosOnMobile(); // Réajuster les pictos mobile
+      adjustPictosOnDesktop(); // Réajuster les pictos desktop
       fixSizeGuideLayout(); // Refixer le layout du guide des tailles
       protectDynamicShipping(); // Protéger le texte de livraison
     }, 100);
