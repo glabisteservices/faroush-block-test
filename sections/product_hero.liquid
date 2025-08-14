@@ -699,12 +699,54 @@
           <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         {% endunless %}
         
-        <!-- Shipping Info -->
+        <!-- Shipping Info avec délai dynamique -->
         <div class="shipping-info">
           <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
           </svg>
-          <span class="shipping-text">Livraison 1 - 3 jours</span>
+          <span class="shipping-text" id="dynamic-shipping-text">
+            {% comment %} Logique pour déterminer le délai de livraison {% endcomment %}
+            {% assign customer_country = '' %}
+            {% if customer.default_address.country_code %}
+              {% assign customer_country = customer.default_address.country_code %}
+            {% elsif localization.country.iso_code %}
+              {% assign customer_country = localization.country.iso_code %}
+            {% else %}
+              {% assign customer_country = 'FR' %}
+            {% endif %}
+
+            {% comment %} Récupérer les zones de livraison {% endcomment %}
+            {% assign shipping_text = 'Livraison 1 - 3 jours' %}
+            {% assign shipping_found = false %}
+
+            {% comment %} Définir les délais par zone géographique {% endcomment %}
+            {% case customer_country %}
+              {% when 'FR' %}
+                {% assign shipping_text = 'Livraison 1 - 3 jours' %}
+              {% when 'BE', 'LU', 'CH', 'NL', 'DE', 'AT' %}
+                {% assign shipping_text = 'Livraison 2 - 5 jours' %}
+              {% when 'ES', 'IT', 'PT' %}
+                {% assign shipping_text = 'Livraison 3 - 7 jours' %}
+              {% when 'GB', 'IE' %}
+                {% assign shipping_text = 'Livraison 4 - 8 jours' %}
+              {% when 'PL', 'CZ', 'SK', 'HU', 'SI', 'HR' %}
+                {% assign shipping_text = 'Livraison 5 - 10 jours' %}
+              {% when 'SE', 'NO', 'DK', 'FI' %}
+                {% assign shipping_text = 'Livraison 5 - 12 jours' %}
+              {% when 'US', 'CA' %}
+                {% assign shipping_text = 'Livraison 7 - 15 jours' %}
+              {% when 'AU', 'NZ' %}
+                {% assign shipping_text = 'Livraison 10 - 20 jours' %}
+              {% when 'JP', 'KR', 'SG', 'HK' %}
+                {% assign shipping_text = 'Livraison 8 - 18 jours' %}
+              {% when 'BR', 'AR', 'MX' %}
+                {% assign shipping_text = 'Livraison 12 - 25 jours' %}
+              {% else %}
+                {% assign shipping_text = 'Livraison internationale : nous contacter' %}
+            {% endcase %}
+
+            {{ shipping_text }}
+          </span>
         </div>
         
         <!-- Add to Cart Section -->
@@ -1029,10 +1071,125 @@ function closeSizeGuide(event) {
   }
 }
 
+// Fonction pour détecter la localisation via l'API du navigateur et mettre à jour les délais
+function updateShippingBasedOnLocation() {
+  // Si la géolocalisation est supportée
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      
+      // Utiliser une API de géocodage inversé pour obtenir le pays
+      fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`)
+        .then(response => response.json())
+        .then(data => {
+          const countryCode = data.countryCode;
+          updateShippingText(countryCode);
+        })
+        .catch(error => {
+          console.log('Erreur géolocalisation:', error);
+          // Fallback sur la détection IP
+          detectCountryByIP();
+        });
+    }, function(error) {
+      // Si l'utilisateur refuse la géolocalisation, utiliser la détection IP
+      detectCountryByIP();
+    });
+  } else {
+    // Fallback sur la détection IP si géolocalisation non supportée
+    detectCountryByIP();
+  }
+}
+
+// Fonction de fallback pour détecter le pays via l'IP
+function detectCountryByIP() {
+  fetch('https://ipapi.co/json/')
+    .then(response => response.json())
+    .then(data => {
+      const countryCode = data.country_code;
+      updateShippingText(countryCode);
+    })
+    .catch(error => {
+      console.log('Erreur détection IP:', error);
+      // Garder le texte par défaut défini par Shopify
+    });
+}
+
+// Fonction pour mettre à jour le texte de livraison
+function updateShippingText(countryCode) {
+  const shippingElement = document.getElementById('dynamic-shipping-text');
+  if (!shippingElement) return;
+  
+  let shippingText = '';
+  
+  switch(countryCode) {
+    case 'FR':
+      shippingText = 'Livraison 1 - 3 jours';
+      break;
+    case 'BE':
+    case 'LU':
+    case 'CH':
+    case 'NL':
+    case 'DE':
+    case 'AT':
+      shippingText = 'Livraison 2 - 5 jours';
+      break;
+    case 'ES':
+    case 'IT':
+    case 'PT':
+      shippingText = 'Livraison 3 - 7 jours';
+      break;
+    case 'GB':
+    case 'IE':
+      shippingText = 'Livraison 4 - 8 jours';
+      break;
+    case 'PL':
+    case 'CZ':
+    case 'SK':
+    case 'HU':
+    case 'SI':
+    case 'HR':
+      shippingText = 'Livraison 5 - 10 jours';
+      break;
+    case 'SE':
+    case 'NO':
+    case 'DK':
+    case 'FI':
+      shippingText = 'Livraison 5 - 12 jours';
+      break;
+    case 'US':
+    case 'CA':
+      shippingText = 'Livraison 7 - 15 jours';
+      break;
+    case 'AU':
+    case 'NZ':
+      shippingText = 'Livraison 10 - 20 jours';
+      break;
+    case 'JP':
+    case 'KR':
+    case 'SG':
+    case 'HK':
+      shippingText = 'Livraison 8 - 18 jours';
+      break;
+    case 'BR':
+    case 'AR':
+    case 'MX':
+      shippingText = 'Livraison 12 - 25 jours';
+      break;
+    default:
+      shippingText = 'Livraison internationale : nous contacter';
+  }
+  
+  shippingElement.textContent = shippingText;
+}
+
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
   initializeSwipe();
+  
+  // Initialiser la détection de localisation pour les délais de livraison
+  setTimeout(updateShippingBasedOnLocation, 1000);
   
   // Protection renforcée pour le titre du produit - SEULEMENT dans notre section
   const protectTitle = () => {
