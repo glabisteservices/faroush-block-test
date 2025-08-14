@@ -109,6 +109,17 @@ div[class*="mini-cart_footer"] {
   margin-bottom: 0px !important;
 }
 
+/* Supprimer l'espace des éléments cachés ou conditionnels */
+.nav_mini-cart .mini-cart_footer .hide,
+.nav_mini-cart .mini-cart_footer-message.hide,
+.nav_mini-cart .mini-cart_conditional[style*="display: none"],
+.nav_mini-cart .mini-cart_footer [style*="display: none"] {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 .nav_mini-cart .mini-cart_footer-price {
   display: flex !important;
   flex-direction: column !important;
