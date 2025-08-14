@@ -12,6 +12,35 @@ document.addEventListener('alpine:init', () => {
             this.$el.addEventListener('minicart:close', () => {
                 this.enableBodyScroll();
             });
+
+            // SOLUTION TEMPORAIRE - Observer les changements sur le dropdown
+            const observeMinicart = () => {
+                const dropdown = document.querySelector('.nav_dropdown.w-dropdown');
+                if (dropdown) {
+                    const observer = new MutationObserver((mutations) => {
+                        mutations.forEach((mutation) => {
+                            if (mutation.attributeName === 'class') {
+                                const classList = mutation.target.classList;
+                                if (classList.contains('w--open')) {
+                                    console.log('Mini cart ouvert - désactivation scroll');
+                                    this.disableBodyScroll();
+                                } else {
+                                    console.log('Mini cart fermé - réactivation scroll');
+                                    this.enableBodyScroll();
+                                }
+                            }
+                        });
+                    });
+                    
+                    observer.observe(dropdown, {
+                        attributes: true,
+                        attributeFilter: ['class']
+                    });
+                }
+            };
+
+            // Lancer l'observateur après un délai pour s'assurer que le DOM est prêt
+            setTimeout(observeMinicart, 100);
         },
         cart: {
             note: null,
