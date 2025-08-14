@@ -2,9 +2,22 @@
   .Bouton-Seul {
     display: flex;
     padding: 0;
+    margin: 0;
+  }
+  
+  .Bouton-Seul.align-left {
     justify-content: flex-start;
     align-items: center;
-    margin: 0;
+  }
+  
+  .Bouton-Seul.align-center {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .Bouton-Seul.align-right {
+    justify-content: flex-end;
+    align-items: center;
   }
   
   .Button-2 {
@@ -89,7 +102,7 @@
   }
 </style>
 
-<div class="Bouton-Seul">
+<div class="Bouton-Seul align-{{ section.settings.button_alignment }}">
   <a class="Button-2 style-{{ section.settings.button_style }}" href="{{ section.settings.url_link }}">
     {{ section.settings.text_text }}
   </a>
@@ -111,6 +124,30 @@
       "id": "url_link",
       "type": "url",
       "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Position du bouton"
+    },
+    {
+      "id": "button_alignment",
+      "type": "select",
+      "label": "📍 Alignement",
+      "options": [
+        {
+          "value": "left",
+          "label": "⬅️ À gauche"
+        },
+        {
+          "value": "center",
+          "label": "⬆️ Au centre"
+        },
+        {
+          "value": "right",
+          "label": "➡️ À droite"
+        }
+      ],
+      "default": "left"
     },
     {
       "type": "header",
