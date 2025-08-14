@@ -783,15 +783,14 @@ function isMobile() {
   return window.innerWidth <= 768;
 }
 
-// Navigation des images
+// Navigation des images - MODIFICATION : Boucle infinie sur desktop
 function nextImage() {
   if (isMobile()) {
     // Loop infinie sur mobile
     currentImageIndex = (currentImageIndex + 1) % totalImages;
   } else {
-    if (currentImageIndex < totalImages - 1) {
-      currentImageIndex++;
-    }
+    // NOUVELLE LOGIQUE DESKTOP : Loop infinie aussi
+    currentImageIndex = (currentImageIndex + 1) % totalImages;
   }
   updateGalleryDisplay();
 }
@@ -801,9 +800,8 @@ function previousImage() {
     // Loop infinie sur mobile
     currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
   } else {
-    if (currentImageIndex > 0) {
-      currentImageIndex--;
-    }
+    // NOUVELLE LOGIQUE DESKTOP : Loop infinie aussi
+    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
   }
   updateGalleryDisplay();
 }
@@ -851,14 +849,8 @@ function updateGalleryDisplay() {
     });
   }
   
-  // Mettre à jour les boutons (seulement sur desktop)
-  if (!isMobile()) {
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    
-    if (prevBtn) prevBtn.disabled = currentImageIndex === 0;
-    if (nextBtn) nextBtn.disabled = currentImageIndex === totalImages - 1;
-  }
+  // SUPPRESSION : Plus de désactivation des boutons sur desktop
+  // Les boutons restent toujours actifs grâce à la boucle infinie
 }
 
 // Gestion du swipe sur mobile
