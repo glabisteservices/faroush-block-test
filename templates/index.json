@@ -283,7 +283,7 @@
       "settings": {
         "text_text": "Button Text",
         "url_link": "",
-        "button_alignment": "right",
+        "button_alignment": "left",
         "button_style": "filled",
         "background_color": "#a6d4f2",
         "text_color": "#6e612b",
