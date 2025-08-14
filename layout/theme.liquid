@@ -151,12 +151,12 @@ Learn more: https://www.liquify.pro/docu/getting-started#template-structure
   {% render 'search_javascript' %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Script scroll disable chargé');
+    console.log('Script scroll disable chargé - VERSION 2');
     
     let scrollPosition = 0;
     
     function disableScroll() {
-        console.log('DÉSACTIVATION DU SCROLL');
+        console.log('🔒 DÉSACTIVATION DU SCROLL');
         scrollPosition = window.scrollY;
         document.body.style.overflow = 'hidden';
         document.body.style.position = 'fixed';
@@ -164,50 +164,76 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.width = '100%';
         document.body.style.left = '0';
         document.body.classList.add('mini-cart-open');
-        document.documentElement.classList.add('mini-cart-open');
     }
     
     function enableScroll() {
-        console.log('RÉACTIVATION DU SCROLL');
+        console.log('🔓 RÉACTIVATION DU SCROLL');
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
         document.body.style.left = '';
         document.body.classList.remove('mini-cart-open');
-        document.documentElement.classList.remove('mini-cart-open');
         window.scrollTo(0, scrollPosition);
     }
     
-    // Observer le mini cart
-    const miniCartDropdown = document.querySelector('.nav_mini-cart .nav_dropdown.w-dropdown');
-    console.log('Mini cart trouvé:', miniCartDropdown);
-    
-    if (miniCartDropdown) {
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                if (mutation.attributeName === 'class') {
-                    const isOpen = mutation.target.classList.contains('w--open');
-                    console.log('ÉTAT MINI CART:', isOpen ? 'OUVERT' : 'FERMÉ');
-                    
-                    if (isOpen) {
-                        disableScroll();
-                    } else {
-                        enableScroll();
-                    }
-                }
-            });
-        });
-        
-        observer.observe(miniCartDropdown, {
-            attributes: true,
-            attributeFilter: ['class']
-        });
-        
-        console.log('Observer mis en place');
-    } else {
-        console.error('Mini cart dropdown non trouvé');
+    // Méthode 1: Observer l'élément container du mini cart
+    function checkCartVisibility() {
+        const cartContainer = document.querySelector('.nav_mini-cart-holder.w-dropdown-list');
+        if (cartContainer) {
+            const isVisible = window.getComputedStyle(cartContainer).display !== 'none';
+            console.log('👀 Mini cart visible?', isVisible);
+            return isVisible;
+        }
+        return false;
     }
+    
+    // Méthode 2: Vérifier toutes les 100ms l'état du cart
+    let lastState = false;
+    setInterval(function() {
+        const currentState = checkCartVisibility();
+        
+        if (currentState !== lastState) {
+            console.log('🔄 CHANGEMENT DÉTECTÉ:', currentState ? 'OUVERT' : 'FERMÉ');
+            
+            if (currentState) {
+                disableScroll();
+            } else {
+                enableScroll();
+            }
+            
+            lastState = currentState;
+        }
+    }, 100);
+    
+    // Méthode 3: Écouter les clics sur l'icône du panier
+    const cartIcon = document.querySelector('.nav_mini-cart .w-dropdown-toggle');
+    if (cartIcon) {
+        cartIcon.addEventListener('click', function() {
+            console.log('🖱️ CLICK sur icône panier');
+            setTimeout(function() {
+                if (checkCartVisibility()) {
+                    disableScroll();
+                }
+            }, 50);
+        });
+    }
+    
+    // Méthode 4: Écouter les clics sur les boutons de fermeture
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.nav_dropdown-close-button') || 
+            e.target.closest('.nav_mini-cart-close') ||
+            e.target.closest('[data-dropdowntoggle]')) {
+            console.log('🖱️ CLICK sur bouton fermeture');
+            setTimeout(function() {
+                if (!checkCartVisibility()) {
+                    enableScroll();
+                }
+            }, 50);
+        }
+    });
+    
+    console.log('✅ Toutes les méthodes de détection mises en place');
 });
 </script>
 </body>
