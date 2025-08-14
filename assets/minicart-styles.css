@@ -111,10 +111,20 @@ div[class*="mini-cart_footer"] {
   margin-bottom: 0px !important;
 }
 
-/* Supprimer l'espace des éléments cachés ou conditionnels */
+/* Supprimer complètement mini-cart_footer-message */
+.nav_mini-cart .mini-cart_footer-message {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  left: -9999px !important;
+}
+
+/* Supprimer l'espace des autres éléments cachés */
 .nav_mini-cart .mini-cart_footer .hide,
-.nav_mini-cart .mini-cart_footer-message.hide,
-.nav_mini-cart .mini-cart_footer-message,
 .nav_mini-cart .mini-cart_conditional[style*="display: none"],
 .nav_mini-cart .mini-cart_footer [style*="display: none"] {
   display: none !important;
