@@ -115,3 +115,265 @@
     color: #ffffff;
   }
 </style>
+
+<div li-content-for-blocks="">
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when '@app' %}
+      {% render block %}
+    {% when 'image-desktop' %}
+      <div class="image-desktop-container" li-block="image-desktop">
+        {% if block.settings.image_image %}
+          {{ block.settings.image_image | image_url: width: 1200 | image_tag: class: 'image-full-width-desktop', alt: 'inherit', loading: 'lazy' }}
+        {% else %}
+          <img class="image-full-width-desktop" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946aa1adf18a56010a9059_Header%20image.jpg" loading="lazy">
+        {% endif %}
+        {% if block.settings.heading_text != blank or block.settings.paragraph_text != blank or block.settings.button_text != blank %}
+          {% assign text_color_class = 'text-color-brown' %}
+          {% assign button_color_class = 'text-color-brown' %}
+          {% if block.settings.text_color == 'white' %}
+            {% assign text_color_class = 'text-color-white' %}
+          {% endif %}
+          {% if block.settings.button_color == 'white' %}
+            {% assign button_color_class = 'text-color-white' %}
+          {% endif %}
+          <div class="paragraph-desktop">
+            {% if block.settings.heading_text != blank %}
+              <h1 class="heading-text {{ text_color_class }}">
+                {{ block.settings.heading_text }}
+              </h1>
+            {% endif %}
+            {% if block.settings.paragraph_text != blank %}
+              <p class="paragraph-text {{ text_color_class }}">
+                {{ block.settings.paragraph_text }}
+              </p>
+            {% endif %}
+            {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+              <a href="{{ block.settings.button_link }}" class="button-style {{ button_color_class }}" style="border-color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %}; color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %};">
+                {{ block.settings.button_text }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% when 'image-mobile' %}
+      <div class="choix-image-mobile" li-block="image-mobile">
+        {% if block.settings.image_image %}
+          {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-full-width-mobile', alt: 'inherit', loading: 'lazy' }}
+        {% else %}
+          <img class="image-full-width-mobile" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68947d5d1b9d583b83bf82ad_Mobile_HP_image.jpg" loading="lazy">
+        {% endif %}
+        {% if block.settings.heading_text != blank or block.settings.paragraph_text != blank or block.settings.button_text != blank %}
+          {% assign text_color_class = 'text-color-brown' %}
+          {% assign button_color_class = 'text-color-brown' %}
+          {% if block.settings.text_color == 'white' %}
+            {% assign text_color_class = 'text-color-white' %}
+          {% endif %}
+          {% if block.settings.button_color == 'white' %}
+            {% assign button_color_class = 'text-color-white' %}
+          {% endif %}
+          <div class="paragraph-mobile">
+            {% if block.settings.heading_text != blank %}
+              <h1 class="heading-text {{ text_color_class }}">
+                {{ block.settings.heading_text }}
+              </h1>
+            {% endif %}
+            {% if block.settings.paragraph_text != blank %}
+              <p class="paragraph-text {{ text_color_class }}">
+                {{ block.settings.paragraph_text }}
+              </p>
+            {% endif %}
+            {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+              <a href="{{ block.settings.button_link }}" class="button-style {{ button_color_class }}" style="border-color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %}; color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %};">
+                {{ block.settings.button_text }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    {% when 'paragraph' %}
+      <!-- Le texte est maintenant intégré directement dans les blocs image-desktop et image-mobile -->
+  {% endcase %}
+{% endfor %}
+</div>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "image-pleine-largeur",
+  "class": "image-full-width",
+  "blocks": [
+    {
+      "name": "image-desktop",
+      "type": "image-desktop",
+      "settings": [
+        {
+          "id": "image_image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "heading_text",
+          "type": "text",
+          "label": "Titre H1"
+        },
+        {
+          "id": "paragraph_text",
+          "type": "textarea",
+          "label": "Texte sur l'image"
+        },
+        {
+          "id": "button_text",
+          "type": "text",
+          "label": "Texte du bouton"
+        },
+        {
+          "id": "button_link",
+          "type": "url",
+          "label": "Lien du bouton"
+        },
+        {
+          "id": "text_color",
+          "type": "select",
+          "label": "Couleur du texte",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "white",
+              "label": "Blanc (#ffffff)"
+            }
+          ],
+          "default": "brown"
+        },
+        {
+          "id": "button_color",
+          "type": "select",
+          "label": "Couleur du bouton",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "white",
+              "label": "Blanc (#ffffff)"
+            }
+          ],
+          "default": "brown"
+        }
+      ]
+    },
+    {
+      "name": "image-mobile",
+      "type": "image-mobile",
+      "settings": [
+        {
+          "id": "image_image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "heading_text",
+          "type": "text",
+          "label": "Titre H1"
+        },
+        {
+          "id": "paragraph_text",
+          "type": "textarea",
+          "label": "Texte sur l'image"
+        },
+        {
+          "id": "button_text",
+          "type": "text",
+          "label": "Texte du bouton"
+        },
+        {
+          "id": "button_link",
+          "type": "url",
+          "label": "Lien du bouton"
+        },
+        {
+          "id": "text_color",
+          "type": "select",
+          "label": "Couleur du texte",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "white",
+              "label": "Blanc (#ffffff)"
+            }
+          ],
+          "default": "brown"
+        },
+        {
+          "id": "button_color",
+          "type": "select",
+          "label": "Couleur du bouton",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "white",
+              "label": "Blanc (#ffffff)"
+            }
+          ],
+          "default": "brown"
+        }
+      ]
+    },
+    {
+      "name": "paragraph",
+      "type": "paragraph",
+      "settings": [
+        {
+          "id": "paragraph_text",
+          "type": "textarea",
+          "label": "Texte du paragraphe",
+          "default": "Votre texte ici..."
+        },
+        {
+          "id": "text_color",
+          "type": "select",
+          "label": "Couleur du texte",
+          "options": [
+            {
+              "value": "brown",
+              "label": "Marron (#6e612b)"
+            },
+            {
+              "value": "white",
+              "label": "Blanc (#ffffff)"
+            }
+          ],
+          "default": "brown"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "image-pleine-largeur",
+      "category": "Liquify",
+      "blocks": [
+        {
+          "type": "image-desktop"
+        },
+        {
+          "type": "image-mobile"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
