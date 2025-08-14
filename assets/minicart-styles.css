@@ -73,6 +73,12 @@
   text-decoration: underline;
 }
 
+/* === SCROLL ZONE PRODUITS UNIQUEMENT === */
+.nav_mini-cart .mini-cart_line-item {
+  max-height: 400px !important;
+  overflow-y: auto !important;
+}
+
 /* === FOOTER / TOTAL === */
 .nav_mini-cart .mini-cart_footer,
 .nav_mini-cart .nav_mini-cart-holder .mini-cart_footer,
