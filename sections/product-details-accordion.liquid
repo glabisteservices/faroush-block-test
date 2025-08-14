@@ -273,7 +273,7 @@
   <!-- Conseils d'entretien -->
   {% if product.metafields.custom.conseils_d_entretien != blank %}
   <div class="dropdown">
-    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="livraison">
+    <button class="dropdown-toggle" aria-expanded="false" data-dropdown="entretien">
       <div class="heading-style-h4 texte-weight-bold">
         {{ section.settings.entretien_title | default: "Conseils d'entretien" }}
       </div>
@@ -320,51 +320,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-
-  // Gestion du scroll avec offset depuis les ancres
-  function handleAnchorScroll() {
-    const sectionId = 'shopify-section-template--25237221245314__product_details_accordion_8fNf6L';
-    const hash = window.location.hash;
-    
-    if (hash === '#' + sectionId) {
-      const targetElement = document.getElementById(sectionId);
-      if (targetElement) {
-        // Attendre que la page soit complètement chargée
-        setTimeout(() => {
-          // Déterminer l'offset selon la taille d'écran
-          let offset = 80; // Desktop par défaut
-          
-          if (window.innerWidth <= 768) {
-            offset = 50; // Mobile
-          } else if (window.innerWidth <= 1024) {
-            offset = 60; // Tablet
-          }
-          
-          // Calculer la position finale
-          const targetPosition = targetElement.offsetTop - offset;
-          
-          // Scroller vers la position correcte sans animation pour éviter les conflits
-          window.scrollTo(0, targetPosition);
-          
-          // Forcer le repositionnement après un délai pour contrer les autres scripts
-          setTimeout(() => {
-            window.scrollTo(0, targetPosition);
-          }, 200);
-          
-          setTimeout(() => {
-            window.scrollTo(0, targetPosition);
-          }, 500);
-          
-        }, 200); // Délai plus long pour laisser tout se charger
-      }
-    }
-  }
-
-  // Écouter les changements d'ancre
-  window.addEventListener('hashchange', handleAnchorScroll);
-  
-  // Vérifier au chargement de la page
-  handleAnchorScroll();
 });
 </script>
 
