@@ -169,7 +169,8 @@ div[class*="mini-cart_footer"] {
   text-align: center !important;
   transition: all 0.2s ease !important;
   border: 1px solid transparent !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important; /* Suppression de la marge */
+  margin-top: 10px !important; /* Petit espace en haut */
   font-size: 14px !important;
 }
 
@@ -178,7 +179,7 @@ div[class*="mini-cart_footer"] {
   background-color: #ec8451 !important;
   color: #ffffff !important;
   border: 1px solid #ec8451 !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important; /* Suppression de la marge */
   text-transform: uppercase !important;
 }
 
