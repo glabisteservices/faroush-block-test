@@ -3,6 +3,15 @@ document.addEventListener('alpine:init', () => {
     Alpine.data('handleMinicart', () => ({
         init() {
             console.log('handleMinicart init')
+            
+            // Écouter les événements d'ouverture/fermeture du mini cart
+            this.$el.addEventListener('minicart:open', () => {
+                this.disableBodyScroll();
+            });
+            
+            this.$el.addEventListener('minicart:close', () => {
+                this.enableBodyScroll();
+            });
         },
         cart: {
             note: null,
@@ -23,6 +32,8 @@ document.addEventListener('alpine:init', () => {
             items_subtotal_price: 0
         },
         _abortController : null,
+        _scrollPosition: 0, // Pour sauvegarder la position de scroll
+        
         initAbortController() {
             if(this._abortController) {
                 this._abortController.abort('abort previous request');
@@ -35,8 +46,55 @@ document.addEventListener('alpine:init', () => {
         resetAbortController() {
             this._abortController = null;
         },
+
+        /**
+         * Désactive le scroll de la page
+         */
+        disableBodyScroll() {
+            // Sauvegarder la position actuelle
+            this._scrollPosition = window.scrollY;
+            
+            // Appliquer les styles pour désactiver le scroll
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${this._scrollPosition}px`;
+            document.body.style.width = '100%';
+            document.body.style.left = '0';
+            
+            // Ajouter une classe pour le CSS si nécessaire
+            document.body.classList.add('mini-cart-open');
+        },
+
+        /**
+         * Réactive le scroll de la page
+         */
+        enableBodyScroll() {
+            // Retirer les styles
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.left = '';
+            
+            // Retirer la classe
+            document.body.classList.remove('mini-cart-open');
+            
+            // Restaurer la position de scroll
+            window.scrollTo(0, this._scrollPosition);
+        },
+
         toggleMiniCart() {
             console.log('(minicart.js) toggleMiniCart called');
+
+            // Vérifier si le mini cart va s'ouvrir ou se fermer
+            // Tu devras adapter cette logique selon ton LiquifyHelper
+            const isCurrentlyOpen = document.body.classList.contains('mini-cart-open');
+            
+            if (!isCurrentlyOpen) {
+                this.disableBodyScroll();
+            } else {
+                this.enableBodyScroll();
+            }
 
             LiquifyHelper.handleTriggerClick();
 
