@@ -79,6 +79,38 @@
   overflow-y: auto !important;
 }
 
+/* === SCROLLBAR MINIMALISTE ET VISIBLE === */
+.nav_mini-cart .mini-cart_line-item.no-scrollbar::-webkit-scrollbar {
+  width: 8px !important;
+  background: transparent !important;
+}
+
+.nav_mini-cart .mini-cart_line-item.no-scrollbar::-webkit-scrollbar-track {
+  background: #f8f8f8 !important;
+  border-radius: 4px !important;
+  margin: 10px 0 !important;
+}
+
+.nav_mini-cart .mini-cart_line-item.no-scrollbar::-webkit-scrollbar-thumb {
+  background: #d0d0d0 !important;
+  border-radius: 4px !important;
+  border: 1px solid #f8f8f8 !important;
+}
+
+.nav_mini-cart .mini-cart_line-item.no-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0 !important;
+}
+
+.nav_mini-cart .mini-cart_line-item.no-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #999999 !important;
+}
+
+/* Pour Firefox */
+.nav_mini-cart .mini-cart_line-item.no-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: #d0d0d0 #f8f8f8 !important;
+}
+
 /* === FOOTER / TOTAL === */
 .nav_mini-cart .mini-cart_footer,
 .nav_mini-cart .nav_mini-cart-holder .mini-cart_footer,
