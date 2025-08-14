@@ -1,0 +1,193 @@
+<style>
+  .Bouton-Seul {
+    display: flex;
+    padding-top: 0px;
+    padding-right: 20px;
+    padding-bottom: 0px;
+    padding-left: 20px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .Button-2 {
+    padding-right: 30px;
+    padding-left: 30px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    font-family: Karla;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-block;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Style bouton plein */
+  .Button-2.style-filled {
+    background-color: {{ section.settings.background_color }};
+    color: {{ section.settings.text_color }};
+    border: 1px solid {{ section.settings.background_color }};
+  }
+  
+  /* Style bouton outline */
+  .Button-2.style-outline {
+    background-color: transparent;
+    color: {{ section.settings.text_color }};
+    border: 1px solid {{ section.settings.border_color }};
+  }
+  
+  /* Effet hover */
+  .Button-2.style-filled:hover {
+    opacity: 0.8;
+  }
+  
+  .Button-2.style-outline:hover {
+    background-color: {{ section.settings.border_color }};
+    color: {{ section.settings.background_color }};
+  }
+  
+  @media screen and (max-width: 767px) {
+    .Button-2 {
+      font-size: 0.8rem;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+  }
+</style>
+
+<div class="Bouton-Seul">
+  <a class="Button-2 style-{{ section.settings.button_style }}" href="{{ section.settings.url_link }}">
+    {{ section.settings.text_text }}
+  </a>
+</div>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Bouton Seul",
+  "class": "Bouton-Seul",
+  "settings": [
+    {
+      "id": "text_text",
+      "type": "text",
+      "label": "Texte du bouton",
+      "default": "Button Text"
+    },
+    {
+      "id": "url_link",
+      "type": "url",
+      "label": "Lien"
+    },
+    {
+      "type": "header",
+      "content": "Style du bouton"
+    },
+    {
+      "id": "button_style",
+      "type": "select",
+      "label": "Type de bouton",
+      "options": [
+        {
+          "value": "filled",
+          "label": "Bouton plein"
+        },
+        {
+          "value": "outline",
+          "label": "Bouton contour"
+        }
+      ],
+      "default": "filled"
+    },
+    {
+      "id": "background_color",
+      "type": "select",
+      "label": "🎨 Couleur de fond",
+      "options": [
+        {
+          "value": "#ec8451",
+          "label": "🧡 Orange (#ec8451)"
+        },
+        {
+          "value": "#f5f2d9",
+          "label": "🤍 Crème (#f5f2d9)"
+        },
+        {
+          "value": "#6e612b",
+          "label": "🤎 Brun (#6e612b)"
+        },
+        {
+          "value": "#a6d4f2",
+          "label": "💙 Bleu clair (#a6d4f2)"
+        }
+      ],
+      "default": "#a6d4f2"
+    },
+    {
+      "id": "text_color",
+      "type": "select",
+      "label": "✍️ Couleur du texte",
+      "options": [
+        {
+          "value": "#ec8451",
+          "label": "🧡 Orange (#ec8451)"
+        },
+        {
+          "value": "#f5f2d9",
+          "label": "🤍 Crème (#f5f2d9)"
+        },
+        {
+          "value": "#6e612b",
+          "label": "🤎 Brun (#6e612b)"
+        },
+        {
+          "value": "#a6d4f2",
+          "label": "💙 Bleu clair (#a6d4f2)"
+        },
+        {
+          "value": "#9e8c73",
+          "label": "🤎 Beige (#9e8c73)"
+        }
+      ],
+      "default": "#6e612b"
+    },
+    {
+      "id": "border_color",
+      "type": "select",
+      "label": "🖼️ Couleur du contour",
+      "options": [
+        {
+          "value": "#ec8451",
+          "label": "🧡 Orange (#ec8451)"
+        },
+        {
+          "value": "#f5f2d9",
+          "label": "🤍 Crème (#f5f2d9)"
+        },
+        {
+          "value": "#6e612b",
+          "label": "🤎 Brun (#6e612b)"
+        },
+        {
+          "value": "#a6d4f2",
+          "label": "💙 Bleu clair (#a6d4f2)"
+        },
+        {
+          "value": "#9e8c73",
+          "label": "🤎 Beige (#9e8c73)"
+        }
+      ],
+      "default": "#6e612b"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bouton Seul",
+      "category": "Liquify"
+    }
+  ]
+}
+{% endschema %}
