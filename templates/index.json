@@ -277,11 +277,16 @@
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
     },
-    "text_seo_Br7hBY": {
-      "type": "text_seo",
-      "name": "SEO-HP",
+    "bouton_seul_3A7rpf": {
+      "type": "bouton-seul",
+      "name": "Bouton Seul",
       "settings": {
-        "richtext_richtext": "<p>Faroush propose une collection complète de <strong>chaussures barefoot pour enfants</strong>, alliant confort, liberté de mouvement et respect du développement naturel du pied. Retrouvez nos modèles de <strong>baskets minimalistes souples et légères</strong>, idéales pour l’école et les jeux, nos <strong>bottines barefoot chaudes et zéro drop</strong> pour affronter l’hiver, ainsi que nos <strong>ballerines enfant Mary Jane</strong> élégantes et confortables. Chaque paire est conçue en <strong>cuir vegan</strong> et <strong>textile respirant</strong> pour préserver la santé des pieds, avec une <strong>semelle intérieure lavable en machine</strong> et <strong>antibactérienne</strong> pour une hygiène parfaite.</p><p>Nos chaussures barefoot accompagnent les enfants à chaque étape : <strong>premiers pas</strong>, aventures au grand air, journées à l’école ou occasions spéciales. Offrez-leur la sensation du pied nu tout en assurant protection et maintien. Découvrez aussi nos conseils pour bien choisir vos <strong>chaussures minimalistes enfant</strong>, comprendre les avantages du <strong>barefoot</strong> et favoriser la <strong>motricité libre</strong>.</p><p>Engagée dans une démarche éco-responsable, Faroush sélectionne des matériaux durables et conçoit des chaussures pensées pour durer. Explorez notre boutique en ligne pour trouver la paire parfaite et laissez vos enfants grandir librement, pas après pas.</p>"
+        "text_text": "Button Text",
+        "url_link": "",
+        "button_style": "outline",
+        "background_color": "#a6d4f2",
+        "text_color": "#ec8451",
+        "border_color": "#ec8451"
       }
     }
   },
@@ -293,6 +298,6 @@
     "manual_products_d_hEiEXt",
     "faq_pAztkk",
     "temoignage_wLnXBL",
-    "text_seo_Br7hBY"
+    "bouton_seul_3A7rpf"
   ]
 }
