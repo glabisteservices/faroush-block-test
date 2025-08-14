@@ -56,13 +56,7 @@
         "product_e6WVkX": {
           "type": "product",
           "settings": {
-            "product": "baskets-barefoot-enfant-mimi-siku-captain"
-          }
-        },
-        "product_GdFLQf": {
-          "type": "product",
-          "settings": {
-            "product": "ballerine-barefoot-enfant-ella-midnight"
+            "product": "baskets-barefoot-enfant-mimi-siku-mist"
           }
         },
         "product_3FBAtp": {
@@ -70,13 +64,19 @@
           "settings": {
             "product": "basket-barefoot-enfant-mimi-siku-ninja"
           }
+        },
+        "product_GdFLQf": {
+          "type": "product",
+          "settings": {
+            "product": "ballerine-barefoot-enfant-ella-cupcake"
+          }
         }
       },
       "block_order": [
         "product_q8GiQd",
         "product_e6WVkX",
-        "product_GdFLQf",
-        "product_3FBAtp"
+        "product_3FBAtp",
+        "product_GdFLQf"
       ],
       "name": "Manual Products",
       "settings": {
