@@ -286,7 +286,8 @@
         "button_style": "filled",
         "background_color": "#a6d4f2",
         "text_color": "#6e612b",
-        "border_color": "#6e612b"
+        "border_color": "#6e612b",
+        "hover_text_color": "#ec8451"
       }
     }
   },
