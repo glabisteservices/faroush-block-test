@@ -90,8 +90,8 @@ div[class*="mini-cart_footer"] {
   background-color: #ffffff !important;
   border-top: 1px solid #f0f0f0 !important;
   box-sizing: border-box !important;
-  height: auto !important;
-  min-height: auto !important;
+  height: 25vh !important;
+  min-height: 25vh !important;
 }
 
 /* Supprimer les lignes qui traînent - GARDER SEULEMENT la ligne du footer */
@@ -108,7 +108,8 @@ div[class*="mini-cart_footer"] {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  margin-bottom: 0px !important;
+  margin: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 /* Supprimer l'espace des éléments cachés ou conditionnels */
