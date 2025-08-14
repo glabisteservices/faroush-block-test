@@ -3,7 +3,6 @@
     {% for link in linklists[section.settings.menu].links %}
       <div class="footer_link-column">
         <div class="titre-footer">{{ link.title }}</div>
-        
         {% if link.links.size > 0 %}
           <div class="footer_link-list">
             {% for child_link in link.links %}
@@ -43,16 +42,22 @@
     </div>
   {% endif %}
 
-  {% if localization.available_languages.size > 1 or localization.available_countries.size > 1 %}
+  {%- comment -%}
+    On affiche le bloc switchers si :
+    - au moins 1 langue disponible, OU
+    - au moins 1 devise disponible (toujours vrai), pour que le bouton devise soit visible même s’il n’y a qu’une seule devise.
+  {%- endcomment -%}
+  {% if localization.available_languages.size > 1 or localization.available_currencies.size > 0 %}
     <div class="li-lang_wrapper">
-      {% if localization.available_languages.size > 1 %}
+
+      {%- if localization.available_languages.size > 1 -%}
         <localization-form class="li-lang_form-container">
           {% form 'localization', class: 'li-lang_form' %}
             <div data-hover="true" data-delay="500" class="li-lang_dropdown w-dropdown">
               <div lang="{{ localization.language.iso_code }}" class="li-lang_dd-toggle w-dropdown-toggle">
                 <div>{{ localization.language.endonym_name | capitalize }}</div>
                 <div class="li-lang_dd-toggle-icon w-embed">
-                  <svg width="100%" height="100%" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path clip-rule="evenodd" d="M2.55806 6.29544C2.46043 6.19781 2.46043 6.03952 2.55806 5.94189L3.44195 5.058C3.53958 4.96037 3.69787 4.96037 3.7955 5.058L8.00001 9.26251L12.2045 5.058C12.3021 4.96037 12.4604 4.96037 12.5581 5.058L13.4419 5.94189C13.5396 6.03952 13.5396 6.19781 13.4419 6.29544L8.17678 11.5606C8.07915 11.6582 7.92086 11.6582 7.82323 11.5606L2.55806 6.29544Z" fill="currentColor"></path>
                   </svg>
                 </div>
@@ -72,25 +77,23 @@
             <input type="hidden" name="language_code" class="li-lang_hidden-input" value="{{ localization.language.iso_code }}">
           {% endform %}
         </localization-form>
-      {% endif %}
+      {%- endif -%}
 
-      {%- comment -%}
-        Sélecteur devise — basé sur available_currencies (pas sur les pays)
-        - Affiche la devise courante avec localization.currency
-        - Liste dédupliquée des devises disponibles sur le marché courant
-      {%- endcomment -%}
-      {% if localization.available_currencies.size > 0 %}
-        <localization-form class="li-currency_form-container">
-          {% form 'localization', class: 'li-currency_form' %}
-            <div data-hover="true" data-delay="500" class="li-currency_dropdown w-dropdown">
-              <div class="li-currency_dd-toggle w-dropdown-toggle">
-                <div>{{ localization.currency.iso_code }} {{ localization.currency.symbol }}</div>
-                <div class="li-currency_dd-toggle-icon w-embed">
-                  <svg width="100%" height="100%" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path clip-rule="evenodd" d="M2.55806 6.29544C2.46043 6.19781 2.46043 6.03952 2.55806 5.94189L3.44195 5.058C3.53958 4.96037 3.69787 4.96037 3.7955 5.058L8.00001 9.26251L12.2045 5.058C12.3021 4.96037 12.4604 4.96037 12.5581 5.058L13.4419 5.94189C13.5396 6.03952 13.5396 6.19781 13.4419 6.29544L8.17678 11.5606C8.07915 11.6582 7.92086 11.6582 7.82323 11.5606L2.55806 6.29544Z" fill="currentColor"></path>
-                  </svg>
-                </div>
+      {%- comment -%} Sélecteur devise — basé sur available_currencies (sans doublons) {%- endcomment -%}
+      <localization-form class="li-currency_form-container">
+        {% form 'localization', class: 'li-currency_form' %}
+          {% assign currencies_count = localization.available_currencies | size %}
+          <div data-hover="true" data-delay="500" class="li-currency_dropdown w-dropdown" {% if currencies_count == 1 %}data-disabled="true"{% endif %}>
+            <div class="li-currency_dd-toggle w-dropdown-toggle">
+              <div>{{ localization.currency.iso_code }} {{ localization.currency.symbol }}</div>
+              <div class="li-currency_dd-toggle-icon w-embed">
+                <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path clip-rule="evenodd" d="M2.55806 6.29544C2.46043 6.19781 2.46043 6.03952 2.55806 5.94189L3.44195 5.058C3.53958 4.96037 3.69787 4.96037 3.7955 5.058L8 9.2625 12.2045 5.058c.0976-.0976.2559-.0976.3535 0l.8839.8839c.0977.0976.0977.2559 0 .3535L8.1768 11.5606c-.0977.0976-.256.0976-.3536 0L2.5581 6.29544Z" fill="currentColor"/>
+                </svg>
               </div>
+            </div>
+
+            {% if currencies_count > 1 %}
               <nav class="li-currency_dd-list w-dropdown-list">
                 {% for currency in localization.available_currencies %}
                   {% unless localization.currency.iso_code == currency.iso_code %}
@@ -102,18 +105,21 @@
                   {% endunless %}
                 {% endfor %}
               </nav>
-            </div>
-            <input type="hidden" name="currency_code" class="li-currency_hidden-input" value="{{ localization.currency.iso_code }}">
-          {% endform %}
-        </localization-form>
-      {% endif %}
-      
+            {% else %}
+              <nav class="li-currency_dd-list w-dropdown-list" style="display:none;"></nav>
+            {% endif %}
+          </div>
+
+          <input type="hidden" name="currency_code" class="li-currency_hidden-input" value="{{ localization.currency.iso_code }}">
+        {% endform %}
+      </localization-form>
+
       <div class="li-lang_script w-embed w-script">
         <script>
           class LocalizationForm extends HTMLElement {
             constructor() {
               super();
-              this.input = this.querySelector('input[name="language_code"], input[name="country_code"], input[name="currency_code"]');
+              this.input = this.querySelector('input[name="language_code"], input[name="currency_code"]');
               this.querySelectorAll('a').forEach(item =>
                 item.addEventListener('click', this.onItemClick.bind(this))
               );
@@ -138,188 +144,81 @@
   "name": "footer",
   "class": "section_footer",
   "settings": [
-    {
-      "id": "image_logo",
-      "type": "image_picker",
-      "label": "Logo"
-    },
-    {
-      "id": "text_payment_method",
-      "type": "text",
-      "label": "Payment Method",
-      "default": "Payment Method"
-    },
-    {
-      "type": "header",
-      "content": "Navigation"
-    },
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "Footer Menu",
-      "default": "footer"
-    }
+    { "id": "image_logo", "type": "image_picker", "label": "Logo" },
+    { "id": "text_payment_method", "type": "text", "label": "Payment Method", "default": "Payment Method" },
+    { "type": "header", "content": "Navigation" },
+    { "type": "link_list", "id": "menu", "label": "Footer Menu", "default": "footer" }
   ],
-  "presets": [
-    {
-      "name": "footer",
-      "category": "Liquify",
-      "blocks": []
-    }
-  ],
-  "enabled_on": {
-    "groups": ["*"]
-  }
+  "presets": [{ "name": "footer", "category": "Liquify", "blocks": [] }],
+  "enabled_on": { "groups": ["*"] }
 }
 {% endschema %}
 
 <style>
-.section_footer {
-  padding: 20px;
-  font-family: 'Karla', sans-serif;
-  color: #f5f2d9;
-}
-
-.footer_main-wrapper {
-  margin-bottom: 50px;
-}
-
-.footer_link-grid {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
+.section_footer { padding: 20px; font-family: 'Karla', sans-serif; color: #f5f2d9; }
+.footer_main-wrapper { margin-bottom: 50px; }
+.footer_link-grid { display: flex; justify-content: space-between; width: 100%; }
 
 /* Titres principaux (parents) */
-.titre-footer {
-  font-family: 'Karla', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #f5f2d9;
-}
+.titre-footer { font-family: 'Karla', sans-serif; font-weight: bold; text-transform: uppercase; color: #f5f2d9; }
 
 /* Liens enfants */
-.footer_link {
-  font-family: 'Karla', sans-serif;
-  font-weight: 500;
-  color: #f5f2d9;
-  text-decoration: none;
-}
+.footer_link { font-family: 'Karla', sans-serif; font-weight: 500; color: #f5f2d9; text-decoration: none; }
 
-/* Footer sub-footer styles */
-.footer_sub-footer,
-.footer_sub-footer * {
-  font-family: 'Karla', sans-serif;
-  color: #f5f2d9;
-}
+/* Footer sub-footer */
+.footer_sub-footer, .footer_sub-footer * { font-family: 'Karla', sans-serif; color: #f5f2d9; }
+.text-size-regular.footer { font-family: 'Karla', sans-serif; color: #f5f2d9; }
 
-.text-size-regular.footer {
-  font-family: 'Karla', sans-serif;
-  color: #f5f2d9;
-}
-
-/* Desktop uniquement : espacement des switchers */
+/* Desktop : espacement des switchers */
 @media (min-width: 768px) {
-  .footer_sub-footer {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
+  .footer_sub-footer { display: flex; align-items: center; gap: 20px; }
 }
 
-/* Language and Currency switchers - FOOTER UNIQUEMENT */
-.li-lang_wrapper {
-  display: flex !important;
-  gap: 15px !important;
-  align-items: center !important;
+/* Switchers - FOOTER UNIQUEMENT */
+.li-lang_wrapper { display: flex !important; gap: 15px !important; align-items: center !important; }
+.li-lang_form-container, .li-currency_form-container { position: relative !important; }
+.li-lang_dropdown, .li-currency_dropdown { font-family: 'Karla', sans-serif !important; color: #f5f2d9 !important; }
+
+/* Boutons outline */
+.footer_sub-footer .li-lang_dd-toggle, .footer_sub-footer .li-currency_dd-toggle {
+  font-family: 'Karla', sans-serif !important; color: #f5f2d9 !important;
+  display: flex !important; align-items: center !important; gap: 8px !important;
+  cursor: pointer !important; border: 1px solid #f5f2d9 !important;
+  border-radius: 10px !important; padding: 8px 12px !important;
+  background: transparent !important; box-sizing: border-box !important;
 }
 
-.li-lang_form-container,
-.li-currency_form-container {
-  position: relative !important;
-}
-
-.li-lang_dropdown,
-.li-currency_dropdown {
-  font-family: 'Karla', sans-serif !important;
-  color: #f5f2d9 !important;
-}
-
-/* BOUTONS AVEC OUTLINE - FOOTER UNIQUEMENT */
-.footer_sub-footer .li-lang_dd-toggle,
-.footer_sub-footer .li-currency_dd-toggle {
-  font-family: 'Karla', sans-serif !important;
-  color: #f5f2d9 !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  cursor: pointer !important;
-  border: 1px solid #f5f2d9 !important;
-  border-radius: 10px !important;
-  padding: 8px 12px !important;
-  background: transparent !important;
-  box-sizing: border-box !important;
-}
-
-.li-lang_dd-toggle-icon,
-.li-currency_dd-toggle-icon {
-  width: 12px !important;
-  height: 12px !important;
-  flex-shrink: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+.li-lang_dd-toggle-icon, .li-currency_dd-toggle-icon {
+  width: 12px !important; height: 12px !important; flex-shrink: 0 !important;
+  display: flex !important; align-items: center !important; justify-content: center !important;
   transition: transform 0.2s ease !important;
 }
 
-.w-dropdown.w--open .li-currency_dd-toggle-icon {
-  transform: rotate(180deg) !important;
+.w-dropdown.w--open .li-currency_dd-toggle-icon { transform: rotate(180deg) !important; }
+
+/* Dropdown clair */
+.footer_sub-footer .li-lang_dd-list, .footer_sub-footer .li-currency_dd-list {
+  font-family: 'Karla', sans-serif !important; position: absolute !important;
+  bottom: 100% !important; left: 0 !important; margin-bottom: 5px !important;
+  background: #f5f2d9 !important; border-radius: 10px !important; min-width: 120px !important;
+  z-index: 100 !important; border: 1px solid #f5f2d9 !important; box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
 }
 
-/* DROPDOWN AVEC FOND CLAIR - FOOTER UNIQUEMENT */
-.footer_sub-footer .li-lang_dd-list,
-.footer_sub-footer .li-currency_dd-list {
-  font-family: 'Karla', sans-serif !important;
-  position: absolute !important;
-  bottom: 100% !important;
-  left: 0 !important;
-  margin-bottom: 5px !important;
-  background: #f5f2d9 !important;
-  border-radius: 10px !important;
-  min-width: 120px !important;
-  z-index: 100 !important;
-  border: 1px solid #f5f2d9 !important;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+/* Liens dropdown foncés */
+.footer_sub-footer .li-lang_dd-link, .footer_sub-footer .li-currency_dd-link {
+  font-family: 'Karla', sans-serif !important; color: #6e612b !important;
+  text-decoration: none !important; padding: 8px 12px !important; display: block !important;
+}
+.footer_sub-footer .li-lang_dd-link:hover, .footer_sub-footer .li-currency_dd-link:hover {
+  background: rgba(110,97,43,0.1) !important; color: #6e612b !important;
 }
 
-/* TEXTE DROPDOWN EN COULEUR FONCEE - FOOTER UNIQUEMENT */
-.footer_sub-footer .li-lang_dd-link,
-.footer_sub-footer .li-currency_dd-link {
-  font-family: 'Karla', sans-serif !important;
-  color: #6e612b !important;
-  text-decoration: none !important;
-  padding: 8px 12px !important;
-  display: block !important;
-}
-
-.footer_sub-footer .li-lang_dd-link:hover,
-.footer_sub-footer .li-currency_dd-link:hover {
-  background: rgba(110, 97, 43, 0.1) !important;
-  color: #6e612b !important;
-}
+/* Apparence "muette" quand une seule devise */
+.li-currency_dropdown[data-disabled="true"] .li-currency_dd-toggle { cursor: default !important; }
 
 @media (max-width: 767px) {
-  .section_footer {
-    padding: 20px 10px;
-  }
-  
-  .footer_main-wrapper {
-    margin-bottom: 20px;
-  }
-  
-  .footer_link-grid {
-    flex-direction: column;
-    gap: 20px;
-  }
+  .section_footer { padding: 20px 10px; }
+  .footer_main-wrapper { margin-bottom: 20px; }
+  .footer_link-grid { flex-direction: column; gap: 20px; }
 }
 </style>
