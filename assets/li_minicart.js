@@ -4,43 +4,49 @@ document.addEventListener('alpine:init', () => {
         init() {
             console.log('handleMinicart init')
             
-            // Écouter les événements d'ouverture/fermeture du mini cart
-            this.$el.addEventListener('minicart:open', () => {
-                this.disableBodyScroll();
-            });
+            // Détecter l'élément dropdown du mini cart
+            const miniCartDropdown = this.$el.closest('.nav_dropdown.w-dropdown');
             
-            this.$el.addEventListener('minicart:close', () => {
-                this.enableBodyScroll();
-            });
-
-            // SOLUTION TEMPORAIRE - Observer les changements sur le dropdown
-            const observeMinicart = () => {
-                const dropdown = document.querySelector('.nav_dropdown.w-dropdown');
-                if (dropdown) {
-                    const observer = new MutationObserver((mutations) => {
-                        mutations.forEach((mutation) => {
-                            if (mutation.attributeName === 'class') {
-                                const classList = mutation.target.classList;
-                                if (classList.contains('w--open')) {
-                                    console.log('Mini cart ouvert - désactivation scroll');
-                                    this.disableBodyScroll();
-                                } else {
-                                    console.log('Mini cart fermé - réactivation scroll');
-                                    this.enableBodyScroll();
-                                }
+            if (miniCartDropdown) {
+                console.log('Mini cart dropdown trouvé, mise en place de l\'observateur');
+                
+                // Observer les changements de classe sur le dropdown
+                const observer = new MutationObserver((mutations) => {
+                    mutations.forEach((mutation) => {
+                        if (mutation.attributeName === 'class') {
+                            const target = mutation.target;
+                            if (target.classList.contains('w--open')) {
+                                console.log('Mini cart ouvert - désactivation du scroll');
+                                this.disableBodyScroll();
+                            } else {
+                                console.log('Mini cart fermé - réactivation du scroll');
+                                this.enableBodyScroll();
                             }
-                        });
+                        }
                     });
-                    
-                    observer.observe(dropdown, {
-                        attributes: true,
-                        attributeFilter: ['class']
+                });
+                
+                observer.observe(miniCartDropdown, {
+                    attributes: true,
+                    attributeFilter: ['class']
+                });
+                
+                // Détecter aussi les clics sur les boutons de fermeture
+                const closeButtons = miniCartDropdown.querySelectorAll('[data-dropdowntoggle], .nav_dropdown-close-button, .nav_mini-cart-close');
+                closeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        // Délai pour permettre à Webflow de retirer la classe w--open
+                        setTimeout(() => {
+                            if (!miniCartDropdown.classList.contains('w--open')) {
+                                console.log('Mini cart fermé via bouton - réactivation du scroll');
+                                this.enableBodyScroll();
+                            }
+                        }, 50);
                     });
-                }
-            };
-
-            // Lancer l'observateur après un délai pour s'assurer que le DOM est prêt
-            setTimeout(observeMinicart, 100);
+                });
+            } else {
+                console.warn('Dropdown du mini cart non trouvé');
+            }
         },
         cart: {
             note: null,
@@ -117,15 +123,8 @@ document.addEventListener('alpine:init', () => {
         toggleMiniCart() {
             console.log('(minicart.js) toggleMiniCart called');
 
-            // Vérifier si le mini cart va s'ouvrir ou se fermer
-            // Tu devras adapter cette logique selon ton LiquifyHelper
-            const isCurrentlyOpen = document.body.classList.contains('mini-cart-open');
-            
-            if (!isCurrentlyOpen) {
-                this.disableBodyScroll();
-            } else {
-                this.enableBodyScroll();
-            }
+            // L'état sera détecté automatiquement par le MutationObserver
+            // Pas besoin de gérer le scroll ici
 
             LiquifyHelper.handleTriggerClick();
 
