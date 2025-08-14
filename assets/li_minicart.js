@@ -63,6 +63,7 @@ document.addEventListener('alpine:init', () => {
             
             // Ajouter une classe pour le CSS si nécessaire
             document.body.classList.add('mini-cart-open');
+            document.documentElement.classList.add('mini-cart-open');
         },
 
         /**
@@ -78,6 +79,7 @@ document.addEventListener('alpine:init', () => {
             
             // Retirer la classe
             document.body.classList.remove('mini-cart-open');
+            document.documentElement.classList.remove('mini-cart-open');
             
             // Restaurer la position de scroll
             window.scrollTo(0, this._scrollPosition);
