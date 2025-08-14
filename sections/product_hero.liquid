@@ -676,18 +676,42 @@
 
   /* Scroll padding pour l'ancre - Éviter que la section soit cachée par le header */
   html {
-    scroll-padding-top: 80px; /* Desktop */
+    scroll-padding-top: 80px !important; /* Desktop */
+  }
+  
+  body {
+    scroll-padding-top: 80px !important; /* Desktop */
+  }
+  
+  * {
+    scroll-padding-top: 80px !important; /* Desktop - Force sur tous les éléments */
   }
 
   @media screen and (max-width: 1024px) {
     html {
-      scroll-padding-top: 60px; /* Tablet */
+      scroll-padding-top: 60px !important; /* Tablet */
+    }
+    
+    body {
+      scroll-padding-top: 60px !important; /* Tablet */
+    }
+    
+    * {
+      scroll-padding-top: 60px !important; /* Tablet - Force sur tous les éléments */
     }
   }
 
   @media screen and (max-width: 768px) {
     html {
-      scroll-padding-top: 50px; /* Mobile */
+      scroll-padding-top: 50px !important; /* Mobile */
+    }
+    
+    body {
+      scroll-padding-top: 50px !important; /* Mobile */
+    }
+    
+    * {
+      scroll-padding-top: 50px !important; /* Mobile - Force sur tous les éléments */
     }
   }
 
@@ -824,7 +848,7 @@
         {% endif %}
 
         <!-- Bouton Détails produit -->
-        <a href="#shopify-section-template--25237221245314__product_details_accordion_8fNf6L" class="product-details-button" onclick="scrollToSection(event)">
+        <a href="#shopify-section-template--25237221245314__product_details_accordion_8fNf6L" class="product-details-button">
           Voir les détails complets
         </a>
         
@@ -1202,34 +1226,6 @@ function updateStockStatus(variant) {
       addToCartBtn.disabled = true;
       addToCartBtn.textContent = 'Rupture de stock';
     }
-  }
-}
-
-// Fonction pour scroller vers la section avec offset
-function scrollToSection(event) {
-  event.preventDefault();
-  
-  const targetId = 'shopify-section-template--25237221245314__product_details_accordion_8fNf6L';
-  const targetElement = document.getElementById(targetId);
-  
-  if (targetElement) {
-    // Déterminer l'offset selon la taille d'écran
-    let offset = 80; // Desktop par défaut
-    
-    if (window.innerWidth <= 768) {
-      offset = 50; // Mobile
-    } else if (window.innerWidth <= 1024) {
-      offset = 60; // Tablet
-    }
-    
-    // Calculer la position finale
-    const targetPosition = targetElement.offsetTop - offset;
-    
-    // Scroller avec animation smooth
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
-    });
   }
 }
 
