@@ -90,8 +90,8 @@ div[class*="mini-cart_footer"] {
   background-color: #ffffff !important;
   border-top: 1px solid #f0f0f0 !important;
   box-sizing: border-box !important;
-  height: 15vh !important;
-  min-height: 15vh !important;
+  height: 25vh !important;
+  min-height: 25vh !important;
 }
 
 /* Supprimer les lignes qui traînent - GARDER SEULEMENT la ligne du footer */
