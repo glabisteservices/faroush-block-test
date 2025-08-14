@@ -110,6 +110,18 @@ div[class*="mini-cart_footer"] {
   align-items: center !important;
   margin: 0 !important;
   margin-bottom: 0 !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* Supprimer les lignes sur les éléments dans le footer-total */
+.nav_mini-cart .mini-cart_footer-total *,
+.nav_mini-cart .mini-cart_footer-total::before,
+.nav_mini-cart .mini-cart_footer-total::after {
+  border: none !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
 
 /* Supprimer l'espace des éléments cachés ou conditionnels */
