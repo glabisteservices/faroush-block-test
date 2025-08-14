@@ -409,6 +409,29 @@
     max-width: 70%;
   }
 
+  /* DESKTOP uniquement : Forcer le flexbox au lieu de la grille */
+  @media screen and (min-width: 769px) {
+    .product-pictos-container {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 1rem !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+    }
+  }
+
+  /* MOBILE et TABLET : Garder la grille */
+  @media screen and (max-width: 768px) {
+    .product-pictos-container {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+      gap: 1rem !important;
+      justify-items: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+
   .picto-produit {
     display: flex;
     flex-direction: column;
@@ -586,12 +609,12 @@
 
   @media screen and (max-width: 768px) {
     .product-pictos-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-      gap: 1rem;
-      justify-items: center;
-      width: 100%;
-      max-width: 100%;
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+      gap: 1rem !important;
+      justify-items: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
     }
     
     .picto-produit {
