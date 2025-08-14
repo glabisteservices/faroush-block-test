@@ -329,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (hash === '#' + sectionId) {
       const targetElement = document.getElementById(sectionId);
       if (targetElement) {
-        // Délai pour laisser le navigateur traiter l'ancre
+        // Attendre que la page soit complètement chargée
         setTimeout(() => {
           // Déterminer l'offset selon la taille d'écran
           let offset = 80; // Desktop par défaut
@@ -343,12 +343,19 @@ document.addEventListener('DOMContentLoaded', function() {
           // Calculer la position finale
           const targetPosition = targetElement.offsetTop - offset;
           
-          // Scroller vers la position correcte
-          window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-          });
-        }, 100); // Petit délai pour laisser le DOM se stabiliser
+          // Scroller vers la position correcte sans animation pour éviter les conflits
+          window.scrollTo(0, targetPosition);
+          
+          // Forcer le repositionnement après un délai pour contrer les autres scripts
+          setTimeout(() => {
+            window.scrollTo(0, targetPosition);
+          }, 200);
+          
+          setTimeout(() => {
+            window.scrollTo(0, targetPosition);
+          }, 500);
+          
+        }, 200); // Délai plus long pour laisser tout se charger
       }
     }
   }
