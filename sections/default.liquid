@@ -1,26 +1,64 @@
+<style>
+  .default_wrapper .text-rich-text {
+    font-family: 'Karla', Arial, sans-serif;
+    color: #6e612b;
+  }
+  
+  /* S'assurer que tous les éléments du rich text héritent des styles */
+  .default_wrapper .text-rich-text * {
+    font-family: inherit;
+    color: inherit;
+  }
+  
+  /* Préserver les styles de tailles du thème pour les titres */
+  .default_wrapper .text-rich-text h1,
+  .default_wrapper .text-rich-text h2,
+  .default_wrapper .text-rich-text h3,
+  .default_wrapper .text-rich-text h4,
+  .default_wrapper .text-rich-text h5,
+  .default_wrapper .text-rich-text h6 {
+    font-family: 'Karla', Arial, sans-serif;
+    color: #6e612b;
+  }
+  
+  /* S'assurer que les liens restent lisibles */
+  .default_wrapper .text-rich-text a {
+    color: #6e612b;
+    text-decoration: underline;
+  }
+  
+  .default_wrapper .text-rich-text a:hover {
+    opacity: 0.8;
+  }
+</style>
+
 <div class="padding-global padding-section-medium">
-          <div class="container-large">
-            <div class="default_wrapper">
-              <div class="padding-bottom padding-medium">
-                <h1 li-object="page.title" class="heading-style-h1">{{ page.title }}</h1>
-              </div>
-              <div li-object="page.content" class="text-rich-text w-richtext">{{ page.content }}</div>
-            </div>
-          </div>
-        </div> {% schema %} {
-    "tag": "section",
-    "name": "Default",
-    "class": "section_default",
-    "presets": [
-        {
-            "name": "Default",
-            "category": "Liquify",
-            "blocks": []
-        }
-    ],
-    "enabled_on": {
-        "templates": [
-            "page"
-        ]
+  <div class="container-large">
+    <div class="default_wrapper">
+      <div class="padding-bottom padding-medium">
+        <h1 li-object="page.title" class="heading-style-h1">{{ page.title }}</h1>
+      </div>
+      <div li-object="page.content" class="text-rich-text w-richtext">{{ page.content }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Default",
+  "class": "section_default",
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Liquify",
+      "blocks": []
     }
-} {% endschema %}
+  ],
+  "enabled_on": {
+    "templates": [
+      "page"
+    ]
+  }
+}
+{% endschema %}
