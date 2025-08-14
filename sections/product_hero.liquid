@@ -418,6 +418,53 @@
       align-items: flex-start !important;
       justify-content: flex-start !important;
     }
+
+    /* Conteneur de l'image : hauteur fixe 40px */
+    .product-header_component .product-pictos-container .picto-produit .Div.Block.7,
+    .product-header_component .picto-produit .Div.Block.7,
+    .product-pictos-container .picto-produit .Div.Block.7,
+    .picto-produit .Div.Block.7 {
+      width: 100% !important;
+      height: 40px !important;
+      max-height: 40px !important;
+      min-height: 40px !important;
+      flex: 0 0 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Image : 100% du conteneur avec max-height 100% */
+    .product-header_component .product-pictos-container .picto-produit .Div.Block.7 .Image.3,
+    .product-header_component .product-pictos-container .picto-produit .Image.3,
+    .product-header_component .picto-produit .Div.Block.7 img,
+    .product-header_component .picto-produit img,
+    .product-pictos-container .picto-produit .Div.Block.7 .Image.3,
+    .product-pictos-container .picto-produit .Image.3,
+    .picto-produit .Div.Block.7 img,
+    .picto-produit img,
+    .picto-produit .Image.3 {
+      width: auto !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      min-width: auto !important;
+      min-height: auto !important;
+      object-fit: contain !important;
+      object-position: center !important;
+      display: block !important;
+      box-sizing: border-box !important;
+    }
+
+    .product-header_component .picto-produit,
+    .product-pictos-container .picto-produit,
+    .picto-produit {
+      height: 65px !important;
+      max-height: 65px !important;
+      min-height: 65px !important;
+    }
   }
 
   /* MOBILE et TABLET : Garder la grille */
