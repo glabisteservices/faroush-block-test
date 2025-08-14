@@ -75,7 +75,7 @@
 
 /* === SCROLL ZONE PRODUITS UNIQUEMENT === */
 .nav_mini-cart .mini-cart_line-item {
-  max-height: 400px !important;
+  max-height: 60vh !important;
   overflow-y: auto !important;
 }
 
