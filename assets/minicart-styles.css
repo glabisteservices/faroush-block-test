@@ -1,5 +1,26 @@
 /* MINICART STYLES - Couleurs, typographie et design */
 
+/* === DÉSACTIVATION DU SCROLL DE LA PAGE QUAND LE MINI CART EST OUVERT === */
+body.mini-cart-open {
+  overflow: hidden !important;
+  position: fixed !important;
+  width: 100% !important;
+  left: 0 !important;
+  height: 100vh !important;
+}
+
+/* Forcer l'overflow hidden sur html aussi pour certains navigateurs */
+html.mini-cart-open {
+  overflow: hidden !important;
+}
+
+/* S'assurer que le mini cart reste scrollable même quand le body est fixé */
+body.mini-cart-open .nav_mini-cart,
+body.mini-cart-open .nav_mini-cart *,
+body.mini-cart-open .mini-cart_component {
+  position: relative !important;
+}
+
 /* === TOUS LES TEXTES EN #6e612b SAUF L'ICÔNE HEADER === */
 .nav_mini-cart .nav_mini-cart-holder *,
 .nav_mini-cart .mini-cart_component *,
@@ -273,4 +294,18 @@ div[class*="mini-cart_footer"] {
 
 .nav_mini-cart .mini-cart_empty * {
   color: #6e612b !important;
+}
+
+/* === AMÉLIORATION MOBILE - PRÉVENIR LE BOUNCE SCROLL === */
+@media (max-width: 767px) {
+  body.mini-cart-open {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: none !important;
+    touch-action: none !important;
+  }
+  
+  html.mini-cart-open {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: none !important;
+  }
 }
