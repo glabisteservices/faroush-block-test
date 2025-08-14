@@ -4,22 +4,31 @@ document.addEventListener('alpine:init', () => {
         init() {
             console.log('handleMinicart init')
             
-            // Détecter l'élément dropdown du mini cart
-            const miniCartDropdown = this.$el.closest('.nav_dropdown.w-dropdown');
+            // Attendre que le DOM soit complètement chargé
+            setTimeout(() => {
+                this.setupScrollDisable();
+            }, 500);
+        },
+
+        setupScrollDisable() {
+            // Trouver le dropdown du mini cart dans le header
+            const miniCartDropdown = document.querySelector('.nav_mini-cart .nav_dropdown.w-dropdown');
+            const miniCartToggle = document.querySelector('.nav_mini-cart .w-dropdown-toggle');
+            
+            console.log('Mini cart dropdown:', miniCartDropdown);
+            console.log('Mini cart toggle:', miniCartToggle);
             
             if (miniCartDropdown) {
-                console.log('Mini cart dropdown trouvé, mise en place de l\'observateur');
-                
-                // Observer les changements de classe sur le dropdown
+                // Observer les changements de classe
                 const observer = new MutationObserver((mutations) => {
                     mutations.forEach((mutation) => {
                         if (mutation.attributeName === 'class') {
-                            const target = mutation.target;
-                            if (target.classList.contains('w--open')) {
-                                console.log('Mini cart ouvert - désactivation du scroll');
+                            const isOpen = mutation.target.classList.contains('w--open');
+                            console.log('Mini cart état changé:', isOpen ? 'OUVERT' : 'FERMÉ');
+                            
+                            if (isOpen) {
                                 this.disableBodyScroll();
                             } else {
-                                console.log('Mini cart fermé - réactivation du scroll');
                                 this.enableBodyScroll();
                             }
                         }
@@ -31,22 +40,35 @@ document.addEventListener('alpine:init', () => {
                     attributeFilter: ['class']
                 });
                 
-                // Détecter aussi les clics sur les boutons de fermeture
-                const closeButtons = miniCartDropdown.querySelectorAll('[data-dropdowntoggle], .nav_dropdown-close-button, .nav_mini-cart-close');
-                closeButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        // Délai pour permettre à Webflow de retirer la classe w--open
-                        setTimeout(() => {
-                            if (!miniCartDropdown.classList.contains('w--open')) {
-                                console.log('Mini cart fermé via bouton - réactivation du scroll');
-                                this.enableBodyScroll();
-                            }
-                        }, 50);
-                    });
-                });
-            } else {
-                console.warn('Dropdown du mini cart non trouvé');
+                console.log('Observer mis en place sur:', miniCartDropdown);
             }
+
+            // Aussi ajouter des listeners sur le toggle pour forcer la détection
+            if (miniCartToggle) {
+                miniCartToggle.addEventListener('click', () => {
+                    setTimeout(() => {
+                        const isOpen = miniCartDropdown?.classList.contains('w--open');
+                        console.log('Click détecté - État après click:', isOpen ? 'OUVERT' : 'FERMÉ');
+                        
+                        if (isOpen) {
+                            this.disableBodyScroll();
+                        } else {
+                            this.enableBodyScroll();
+                        }
+                    }, 100);
+                });
+            }
+
+            // Ajouter des listeners sur tous les boutons de fermeture
+            const closeButtons = document.querySelectorAll('.nav_dropdown-close-button, .nav_mini-cart-close, [data-dropdowntoggle]');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    setTimeout(() => {
+                        console.log('Bouton fermeture cliqué - réactivation du scroll');
+                        this.enableBodyScroll();
+                    }, 100);
+                });
+            });
         },
         cart: {
             note: null,
