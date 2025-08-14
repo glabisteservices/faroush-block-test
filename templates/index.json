@@ -44,6 +44,48 @@
       "name": "image-pleine-largeur",
       "settings": {}
     },
+    "bloc_de_texte_daAqkh": {
+      "type": "bloc_de_texte",
+      "blocks": {
+        "sous_titre_c66JVk": {
+          "type": "sous-titre",
+          "settings": {
+            "text_heading": "Test"
+          }
+        },
+        "grand_texte_w7KXTV": {
+          "type": "grand-texte",
+          "settings": {
+            "text_heading": "Nos engagements"
+          }
+        },
+        "paragraphe_aMzzjn": {
+          "type": "paragraphe",
+          "settings": {
+            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+          }
+        },
+        "bouton_xmArAe": {
+          "type": "bouton",
+          "settings": {
+            "text_text": "Button Text",
+            "url_link": "",
+            "button_type": "filled",
+            "bg_color": "#6e612b",
+            "text_color": "#f5f2d9",
+            "outline_color": "#bdbf85"
+          }
+        }
+      },
+      "block_order": [
+        "sous_titre_c66JVk",
+        "grand_texte_w7KXTV",
+        "paragraphe_aMzzjn",
+        "bouton_xmArAe"
+      ],
+      "name": "bloc-de-texte",
+      "settings": {}
+    },
     "manual_products_d_hEiEXt": {
       "type": "manual_products_d",
       "blocks": {
@@ -234,57 +276,15 @@
       "settings": {
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
-    },
-    "bloc_de_texte_daAqkh": {
-      "type": "bloc_de_texte",
-      "blocks": {
-        "sous_titre_c66JVk": {
-          "type": "sous-titre",
-          "settings": {
-            "text_heading": "Test"
-          }
-        },
-        "grand_texte_w7KXTV": {
-          "type": "grand-texte",
-          "settings": {
-            "text_heading": "Nos engagements"
-          }
-        },
-        "paragraphe_aMzzjn": {
-          "type": "paragraphe",
-          "settings": {
-            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
-          }
-        },
-        "bouton_xmArAe": {
-          "type": "bouton",
-          "settings": {
-            "text_text": "Button Text",
-            "url_link": "",
-            "button_type": "filled",
-            "bg_color": "#6e612b",
-            "text_color": "#f5f2d9",
-            "outline_color": "#bdbf85"
-          }
-        }
-      },
-      "block_order": [
-        "sous_titre_c66JVk",
-        "grand_texte_w7KXTV",
-        "paragraphe_aMzzjn",
-        "bouton_xmArAe"
-      ],
-      "name": "bloc-de-texte",
-      "settings": {}
     }
   },
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
     "image_pleine_largeur_CJ6868",
+    "bloc_de_texte_daAqkh",
     "manual_products_d_hEiEXt",
     "faq_pAztkk",
-    "temoignage_wLnXBL",
-    "bloc_de_texte_daAqkh"
+    "temoignage_wLnXBL"
   ]
 }
