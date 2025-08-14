@@ -260,7 +260,11 @@
           "type": "bouton",
           "settings": {
             "text_text": "Button Text",
-            "url_link": ""
+            "url_link": "",
+            "button_type": "filled",
+            "bg_color": "#6e612b",
+            "text_color": "#f5f2d9",
+            "outline_color": "#bdbf85"
           }
         }
       },

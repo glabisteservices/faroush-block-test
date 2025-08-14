@@ -14,7 +14,7 @@
     "header": {
       "type": "header",
       "settings": {
-        "image_logo": "shopify://shop_images/Faroush_light_yellow.svg",
+        "image_logo": "shopify://shop_images/light-yellow_petit.png",
         "text_search": "Search",
         "collection_search_bestseller": "",
         "collection_search_bestseller_limit": 6,
