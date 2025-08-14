@@ -21,6 +21,28 @@
     color: #6e612b;
   }
   
+  /* Ajuster spécifiquement la taille des H2 pour une meilleure hiérarchie */
+  .default_wrapper .text-rich-text h2 {
+    font-size: 1.5rem; /* Mobile: 24px */
+    line-height: 1.3;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Responsive pour tablettes */
+  @media (min-width: 768px) {
+    .default_wrapper .text-rich-text h2 {
+      font-size: 1.75rem; /* Tablette: 28px */
+    }
+  }
+  
+  /* Responsive pour desktop */
+  @media (min-width: 1024px) {
+    .default_wrapper .text-rich-text h2 {
+      font-size: 2rem; /* Desktop: 32px */
+    }
+  }
+  
   /* S'assurer que les liens restent lisibles */
   .default_wrapper .text-rich-text a {
     color: #6e612b;
