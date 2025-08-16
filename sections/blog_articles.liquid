@@ -1,3 +1,24 @@
+<style>
+/* Section padding responsive */
+.section_blog-list {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Mobile padding */
+@media (max-width: 767px) {
+  .section_blog-list {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+/* Border radius pour les images */
+.blog_img {
+  border-radius: 10px;
+}
+</style>
+
 <div class="blog_cms-wrapper w-dyn-list">
           {% if blog.articles != blank %}    <div li-if="blog.articles != blank" role="list" class="blog_list w-dyn-items">
     
@@ -5,7 +26,7 @@
                                     
               
                             <a li-object:href="article.url" href="{{ article.url }}" class="blog_item-grid w-inline-block">
-                <div id="w-node-c45bff24-6242-fee4-5061-f2f14b06a7be-4b06a7bd" class="blog_tags-wrapper"><img src="{{ article.image | image_url: width: 450 }}" loading="lazy" id="w-node-c45bff24-6242-fee4-5061-f2f14b06a7bf-4b06a7bd" li-object:src="article.image | image_url: width: 450" alt="{{ article.image.alt }}" li-object:alt="article.image.alt" class="blog_img">
+                <div id="w-node-c45bff24-6242-fee4-5061-f2f14b06a7be-4b06a7bd" class="blog_tags-wrapper"><img src="{{ article.image | image_url: width: 450 }}" loading="lazy" id="w-node-c45bff24-6242-fee4-5061-f2f14b06a7bf-4b06a7bd" li-object:src="article.image | image_url: width: 450" alt="{{ article.image.alt }}" li-object:alt="article.image.alt" class="blog_img" style="border-radius: 10px;">
                   <div class="blog_tag-row">
                     {% for tag in article.tags %}    <div li-for="tag in article.tags" class="blog_tag">
                                     
