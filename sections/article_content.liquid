@@ -1,23 +1,38 @@
 <div class="padding-global padding-section-medium">
-          <div class="container-large">
-            <div class="article_wrapper">
-              <div li-object="article.content" class="text-rich-text w-richtext">{{ article.content }}</div>
-            </div>
-          </div>
-        </div> {% schema %} {
-    "tag": "section",
-    "name": "Article Content",
-    "class": "section_article",
-    "presets": [
-        {
-            "name": "Article Content",
-            "category": "Liquify",
-            "blocks": []
-        }
-    ],
-    "enabled_on": {
-        "templates": [
-            "article"
-        ]
+  <div class="container-large">
+    <div class="article_wrapper">
+      {% if article.image %}
+        <div class="div-article-image">
+          <img class="image-6" 
+               src="{{ article.image | image_url: width: 600 }}" 
+               alt="{{ article.image.alt | escape }}" 
+               sizes="(max-width: 600px) 100vw, 600px"
+               loading="lazy" 
+               srcset="{{ article.image | image_url: width: 500 }} 500w, {{ article.image | image_url: width: 600 }} 600w">
+        </div>
+      {% endif %}
+      <h1>{{ article.title }}</h1>
+      <div class="text-rich-text w-richtext">{{ article.content }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Article Content",
+  "class": "section_article",
+  "presets": [
+    {
+      "name": "Article Content",
+      "category": "Liquify",
+      "blocks": []
     }
-} {% endschema %}
+  ],
+  "enabled_on": {
+    "templates": [
+      "article"
+    ]
+  }
+}
+{% endschema %}
