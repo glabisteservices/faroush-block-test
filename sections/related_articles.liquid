@@ -17,7 +17,8 @@
                        loading="lazy" 
                        id="w-node-c45bff24-6242-fee4-5061-f2f14b06a7bf-4b06a7bd" 
                        alt="{{ article_item.image.alt | default: article_item.title }}" 
-                       class="blog_img">
+                       class="blog_img"
+                       style="border-radius: 10px;">
                   <div class="blog_tag-row">
                     {% for tag in article_item.tags limit: 3 %}
                       <div class="blog_tag">
