@@ -604,22 +604,33 @@ document.addEventListener('alpine:init', () => {
         position: relative !important;
     }
 
-    /* --- MODIF OPTION 1 (Grid) : centrage réel du menu --- */
-    .nav_container{
+    /* ✅ CSS GRID POUR CENTRAGE PARFAIT DESKTOP */
+    .nav_container {
         display: grid !important;
-        grid-template-columns: auto 1fr auto; /* logo | menu | icônes */
+        grid-template-columns: auto 1fr auto !important; /* logo | espace flexible | icônes */
         align-items: center !important;
-        gap: 1rem;
-        position: relative; /* pour les dropdowns absolus */
+        gap: 1rem !important;
+        position: relative !important; /* pour les dropdowns absolus */
+        width: 100% !important;
     }
-    .nav_menu{
-        justify-self: center !important;
+    
+    .nav_menu {
+        justify-self: center !important; /* Centre parfaitement le menu */
         margin: 0 !important;
-        width: max-content;
-        min-width: 0;
+        width: max-content !important;
+        min-width: 0 !important;
     }
-    .nav_logo-link{ justify-self: start !important; }
-    .nav_shop-icons{ justify-self: end !important; display: flex; align-items: center; gap: .75rem; }
+    
+    .nav_logo-link { 
+        justify-self: start !important; 
+    }
+    
+    .nav_shop-icons { 
+        justify-self: end !important; 
+        display: flex !important; 
+        align-items: center !important; 
+        gap: .75rem !important; 
+    }
 }
 
 /* Mobile styles */
