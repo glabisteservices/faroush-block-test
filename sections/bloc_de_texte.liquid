@@ -1,64 +1,165 @@
-<div li-content-for-blocks="" class="bloc-de-texte-wrapper">
-  {% for block in section.blocks %}
-    {% case block.type %}
+<style>
+  /* STYLES SCOPED - N'AFFECTENT QUE CETTE SECTION */
+  .bloc-de-texte-section {
+    margin: 0;
+    padding: 0;
+  }
 
-      {% when '@app' %}
-        {% render block %}
+  .bloc-de-texte-section .bloc-de-texte-wrapper {
+    margin: 0;
+    padding: 20px;
+  }
 
-      {% when 'sous-titre' %}
-        <div li-block="Sous-titre" class="bloc-titre-h2">
-          <h2 class="heading-style-h2 centre">
-            {{ block.settings.text_heading }}
-          </h2>
-        </div>
+  /* Styles mobile - suppression complète des espaces en bas + 10px à gauche */
+  @media (max-width: 768px) {
+    .bloc-de-texte-section {
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    
+    .bloc-de-texte-section .bloc-de-texte-wrapper {
+      padding: 0 0 0 10px !important;
+      margin: 0 !important;
+    }
+  }
 
-      {% when 'grand-texte' %}
-        <div li-block="Grand-texte" class="bloc-gros-texte">
-          <h1 class="heading-style-h1 centre">
-            {{ block.settings.text_heading }}
-          </h1>
-        </div>
+  /* Reset des marges des blocs - SCOPED À CETTE SECTION */
+  .bloc-de-texte-section .bloc-titre-h2,
+  .bloc-de-texte-section .bloc-gros-texte,
+  .bloc-de-texte-section .bloc-paragraph,
+  .bloc-de-texte-section .bloc-bouton-hp {
+    margin: 0 0 15px 0;
+  }
 
-      {% when 'paragraphe' %}
-        <div li-block="Paragraphe" class="bloc-paragraph">
-          <p class="paragraph centre">
-            {{ block.settings.text_paragraph }}
-          </p>
-        </div>
+  .bloc-de-texte-section .bloc-titre-h2:last-child,
+  .bloc-de-texte-section .bloc-gros-texte:last-child,
+  .bloc-de-texte-section .bloc-paragraph:last-child,
+  .bloc-de-texte-section .bloc-bouton-hp:last-child {
+    margin-bottom: 0;
+  }
 
-      {% when 'bouton' %}
-        {% comment %}
-          Construction du style du bouton en fonction des réglages
-        {% endcomment %}
-        {% assign bg_color       = block.settings.bg_color       | default: '#ec8451' %}
-        {% assign text_color     = block.settings.text_color     | default: '#f5f2d9' %}
-        {% assign outline_color  = block.settings.outline_color  | default: '#ec8451' %}
-        {% assign button_type    = block.settings.button_type    | default: 'filled' %}
+  /* Styles des titres - SCOPED À CETTE SECTION */
+  .bloc-de-texte-section .heading-style-h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    text-align: center;
+  }
 
-        {% if button_type == 'filled' %}
-          {% assign button_style = 'background-color:' | append: bg_color | append: ';color:' | append: text_color | append: ';border:none;' %}
-        {% else %}
-          {% assign button_style = 'background-color:transparent;color:' | append: text_color | append: ';border:1px solid ' | append: outline_color | append: ';' %}
-        {% endif %}
+  .bloc-de-texte-section .heading-style-h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0;
+    text-align: center;
+  }
 
-        <div li-block="Bouton" class="bloc-bouton-hp">
-          <a
-            href="{{ block.settings.url_link }}"
-            class="button-2 w-button"
-            style="{{ button_style }}"
-          >
-            {{ block.settings.text_text }}
-          </a>
-        </div>
+  /* Style paragraphe - SCOPED À CETTE SECTION */
+  .bloc-de-texte-section .paragraph {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+  }
 
-    {% endcase %}
-  {% endfor %}
-</div>
+  /* Styles bouton - SCOPED À CETTE SECTION */
+  .bloc-de-texte-section .button-2 {
+    display: inline-block;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .bloc-de-texte-section .bloc-bouton-hp {
+    text-align: center;
+  }
+
+  /* Responsive typography - SCOPED À CETTE SECTION */
+  @media (max-width: 768px) {
+    .bloc-de-texte-section .heading-style-h1 {
+      font-size: 2rem;
+    }
+    
+    .bloc-de-texte-section .heading-style-h2 {
+      font-size: 1.5rem;
+    }
+    
+    .bloc-de-texte-section .paragraph {
+      font-size: 0.9rem;
+    }
+    
+    .bloc-de-texte-section .button-2 {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<section class="bloc-de-texte-section">
+  <div class="bloc-de-texte-wrapper">
+    {% for block in section.blocks %}
+      {% case block.type %}
+
+        {% when '@app' %}
+          {% render block %}
+
+        {% when 'sous-titre' %}
+          <div class="bloc-titre-h2" {{ block.shopify_attributes }}>
+            <h2 class="heading-style-h2">
+              {{ block.settings.text_heading }}
+            </h2>
+          </div>
+
+        {% when 'grand-texte' %}
+          <div class="bloc-gros-texte" {{ block.shopify_attributes }}>
+            <h1 class="heading-style-h1">
+              {{ block.settings.text_heading }}
+            </h1>
+          </div>
+
+        {% when 'paragraphe' %}
+          <div class="bloc-paragraph" {{ block.shopify_attributes }}>
+            <p class="paragraph">
+              {{ block.settings.text_paragraph }}
+            </p>
+          </div>
+
+        {% when 'bouton' %}
+          {% assign bg_color       = block.settings.bg_color       | default: '#ec8451' %}
+          {% assign text_color     = block.settings.text_color     | default: '#f5f2d9' %}
+          {% assign outline_color  = block.settings.outline_color  | default: '#ec8451' %}
+          {% assign button_type    = block.settings.button_type    | default: 'filled' %}
+
+          {% if button_type == 'filled' %}
+            {% assign button_style = 'background-color:' | append: bg_color | append: ';color:' | append: text_color | append: ';border:none;' %}
+          {% else %}
+            {% assign button_style = 'background-color:transparent;color:' | append: text_color | append: ';border:1px solid ' | append: outline_color | append: ';' %}
+          {% endif %}
+
+          <div class="bloc-bouton-hp" {{ block.shopify_attributes }}>
+            <a
+              href="{{ block.settings.url_link }}"
+              class="button-2"
+              style="{{ button_style }}"
+            >
+              {{ block.settings.text_text }}
+            </a>
+          </div>
+
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
 
 {% schema %}
 {
   "tag": "section",
-  "name": "bloc-de-texte",
+  "name": "Bloc de texte",
   "class": "bloc-text-hp",
   "blocks": [
     {
@@ -68,20 +169,20 @@
         {
           "id": "text_heading",
           "type": "text",
-          "label": "Heading",
-          "default": "Heading"
+          "label": "Titre",
+          "default": "Sous-titre"
         }
       ]
     },
     {
-      "name": "Grand-texte",
+      "name": "Grand texte",
       "type": "grand-texte",
       "settings": [
         {
           "id": "text_heading",
           "type": "text",
-          "label": "Heading",
-          "default": "Heading"
+          "label": "Titre principal",
+          "default": "Titre principal"
         }
       ]
     },
@@ -91,9 +192,9 @@
       "settings": [
         {
           "id": "text_paragraph",
-          "type": "text",
-          "label": "Paragraph",
-          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+          "type": "textarea",
+          "label": "Texte",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique."
         }
       ]
     },
@@ -104,13 +205,13 @@
         {
           "id": "text_text",
           "type": "text",
-          "label": "Text",
-          "default": "Button Text"
+          "label": "Texte du bouton",
+          "default": "Cliquez ici"
         },
         {
           "id": "url_link",
           "type": "url",
-          "label": "Link"
+          "label": "Lien"
         },
         {
           "id": "button_type",
@@ -119,7 +220,7 @@
           "default": "filled",
           "options": [
             { "value": "filled", "label": "Fond plein" },
-            { "value": "outline", "label": "Contour 1 px" }
+            { "value": "outline", "label": "Contour" }
           ]
         },
         {
@@ -128,11 +229,11 @@
           "label": "Couleur de fond",
           "default": "#ec8451",
           "options": [
-            { "value": "#ec8451", "label": "#ec8451" },
-            { "value": "#f5f2d9", "label": "#f5f2d9" },
-            { "value": "#6e612b", "label": "#6e612b" },
-            { "value": "#bdbf85", "label": "#bdbf85" },
-            { "value": "#a6d4f2", "label": "#a6d4f2" }
+            { "value": "#ec8451", "label": "Orange" },
+            { "value": "#f5f2d9", "label": "Crème" },
+            { "value": "#6e612b", "label": "Vert olive" },
+            { "value": "#bdbf85", "label": "Vert clair" },
+            { "value": "#a6d4f2", "label": "Bleu clair" }
           ]
         },
         {
@@ -141,24 +242,24 @@
           "label": "Couleur du texte",
           "default": "#f5f2d9",
           "options": [
-            { "value": "#ec8451", "label": "#ec8451" },
-            { "value": "#f5f2d9", "label": "#f5f2d9" },
-            { "value": "#6e612b", "label": "#6e612b" },
-            { "value": "#bdbf85", "label": "#bdbf85" },
-            { "value": "#a6d4f2", "label": "#a6d4f2" }
+            { "value": "#ec8451", "label": "Orange" },
+            { "value": "#f5f2d9", "label": "Crème" },
+            { "value": "#6e612b", "label": "Vert olive" },
+            { "value": "#bdbf85", "label": "Vert clair" },
+            { "value": "#a6d4f2", "label": "Bleu clair" }
           ]
         },
         {
           "id": "outline_color",
           "type": "select",
-          "label": "Couleur du contour (outline)",
+          "label": "Couleur du contour",
           "default": "#ec8451",
           "options": [
-            { "value": "#ec8451", "label": "#ec8451" },
-            { "value": "#f5f2d9", "label": "#f5f2d9" },
-            { "value": "#6e612b", "label": "#6e612b" },
-            { "value": "#bdbf85", "label": "#bdbf85" },
-            { "value": "#a6d4f2", "label": "#a6d4f2" }
+            { "value": "#ec8451", "label": "Orange" },
+            { "value": "#f5f2d9", "label": "Crème" },
+            { "value": "#6e612b", "label": "Vert olive" },
+            { "value": "#bdbf85", "label": "Vert clair" },
+            { "value": "#a6d4f2", "label": "Bleu clair" }
           ]
         }
       ]
@@ -169,8 +270,8 @@
   ],
   "presets": [
     {
-      "name": "bloc-de-texte",
-      "category": "Liquify",
+      "name": "Bloc de texte",
+      "category": "Contenu",
       "blocks": [
         { "type": "sous-titre" },
         { "type": "grand-texte" },
