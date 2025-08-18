@@ -604,22 +604,39 @@ document.addEventListener('alpine:init', () => {
         position: relative !important;
     }
 
-    /* --- MODIF OPTION 1 (Grid) : centrage réel du menu --- */
+    /* === CENTRAGE DU MENU UNIQUEMENT SUR DESKTOP === */
     .nav_container{
         display: grid !important;
         grid-template-columns: auto 1fr auto; /* logo | menu | icônes */
         align-items: center !important;
-        gap: 1rem;
-        position: relative; /* pour les dropdowns absolus */
     }
+
     .nav_menu{
-        justify-self: center !important;
+        justify-self: center !important;  /* centre uniquement le bloc menu */
+        display: flex !important;
+        align-items: center !important;
+        gap: 2rem;
         margin: 0 !important;
         width: max-content;
-        min-width: 0;
+        height: 100%;
     }
-    .nav_logo-link{ justify-self: start !important; }
-    .nav_shop-icons{ justify-self: end !important; display: flex; align-items: center; gap: .75rem; }
+
+    .nav_menu-dropdown,
+    .nav_dropdown-toggle,
+    .nav_dropdown-toggle a{
+        display: flex !important;
+        align-items: center !important;
+        line-height: 1 !important;
+    }
+
+    .dropdown-icon,
+    .dropdown-icon svg{
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .nav_menu-dropdown{ position: relative !important; }
+    .nav_dropdown-list{ top: 100% !important; }
 }
 
 /* Mobile styles */
@@ -710,7 +727,6 @@ document.addEventListener('alpine:init', () => {
         align-items: flex-start !important;
     }
     
-    /* Forces d'affichage pour mobile - Webflow compatibility */
     .w-dropdown.w--open .nav_dropdown-list,
     .nav_menu-dropdown.w--open .nav_dropdown-list,
     .w-dropdown-toggle.w--open + .nav_dropdown-list {
@@ -722,13 +738,11 @@ document.addEventListener('alpine:init', () => {
         overflow: visible !important;
     }
     
-    /* Force l'affichage même sans classes Webflow */
     .nav_menu-dropdown:target .nav_dropdown-list,
     .nav_menu-dropdown[aria-expanded="true"] .nav_dropdown-list {
         display: flex !important;
     }
     
-    /* Fallback pour tous les dropdowns mobiles */
     .nav_menu.w--open .nav_dropdown-list {
         display: flex !important;
     }
@@ -757,6 +771,7 @@ document.addEventListener('alpine:init', () => {
     display: none !important;
 }
 </style>
+
 
 {% schema %}
 {
