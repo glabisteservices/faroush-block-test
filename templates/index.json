@@ -139,7 +139,7 @@
           "type": "image-mobile",
           "settings": {
             "image_image": "shopify://shop_images/Mobile_V4.jpg",
-            "heading_text": "",
+            "heading_text": "Découvrir le monde",
             "paragraph_text": "",
             "button_text": "Voir nos baskets",
             "button_link": "shopify://collections/basket-barefoot-enfant",
