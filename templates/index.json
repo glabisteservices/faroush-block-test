@@ -126,13 +126,13 @@
         "image_desktop_BWVYbz": {
           "type": "image-desktop",
           "settings": {
-            "image_image": "shopify://shop_images/HP_2_Septembre.jpg",
-            "heading_text": "",
+            "image_image": "shopify://shop_images/HP_5_desktop.jpg",
+            "heading_text": "Explorez le monde",
             "paragraph_text": "",
             "button_text": "Voir nos baskets",
             "button_link": "shopify://collections/basket-barefoot-enfant",
-            "text_color": "white",
-            "button_color": "white"
+            "text_color": "brown",
+            "button_color": "brown"
           }
         },
         "image_mobile_ki3Bmc": {
