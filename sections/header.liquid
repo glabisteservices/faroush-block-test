@@ -756,6 +756,33 @@ document.addEventListener('alpine:init', () => {
 .no-scrollbar::-webkit-scrollbar {
     display: none !important;
 }
+/* Ajoutez cette règle dans votre section <style> existante, juste avant la fermeture </style> */
+
+/* Desktop uniquement - réduction de l'espacement en haut du header de 20px à 10px */
+@media (min-width: 992px) {
+    .nav_component {
+        padding-top: 10px !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Si l'espacement vient du container parent */
+    #shopify-section-sections--252372055716__header {
+        padding-top: 10px !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Si l'espacement vient de la section header */
+    .shopify-section .section_navbar,
+    .section_navbar {
+        padding-top: 10px !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Alternative si les règles ci-dessus ne fonctionnent pas */
+    .nav_component {
+        transform: translateY(-10px) !important;
+    }
+}
 </style>
 
 {% schema %}
