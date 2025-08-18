@@ -6,11 +6,13 @@
   }
 
   .bloc-de-texte-section .bloc-de-texte-wrapper {
-    margin: 0;
+    margin: 0 auto;
     padding: 20px;
+    max-width: 100%;
+    text-align: center;
   }
 
-  /* Styles mobile - suppression complète des espaces en bas + 10px à gauche */
+  /* Styles mobile - suppression complète des espaces en bas + 10px à gauche/droite */
   @media (max-width: 768px) {
     .bloc-de-texte-section {
       margin-bottom: 0 !important;
@@ -18,8 +20,9 @@
     }
     
     .bloc-de-texte-section .bloc-de-texte-wrapper {
-      padding: 0 0 0 10px !important;
+      padding: 0 10px 0 10px !important;
       margin: 0 !important;
+      text-align: center;
     }
   }
 
@@ -77,6 +80,8 @@
 
   .bloc-de-texte-section .bloc-bouton-hp {
     text-align: center;
+    width: 100%;
+    display: block;
   }
 
   /* Responsive typography - SCOPED À CETTE SECTION */
