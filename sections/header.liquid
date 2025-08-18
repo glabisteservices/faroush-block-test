@@ -498,6 +498,38 @@ document.addEventListener('alpine:init', () => {
 </script>
 
 <style>
+<style>
+/* ✅ CSS FINAL POUR CENTRAGE - AJOUTEZ CECI EN PREMIER */
+@media (min-width: 992px) {
+    .nav_container {
+        display: grid !important;
+        grid-template-columns: auto 1fr auto !important;
+        align-items: center !important;
+        gap: 1rem !important;
+        position: relative !important;
+    }
+    
+    .nav_menu {
+        justify-self: center !important;
+        margin: 0 !important;
+        width: max-content !important;
+    }
+    
+    .nav_logo-link {
+        justify-self: start !important;
+    }
+    
+    .nav_shop-icons {
+        justify-self: end !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+    }
+}
+
+/* Reset pour éviter les conflits */
+.nav_dropdown-list {
+    /* ... votre CSS existant continue ici ... */
 /* Reset pour éviter les conflits */
 .nav_dropdown-list {
     display: none;
