@@ -498,6 +498,82 @@ document.addEventListener('alpine:init', () => {
 </script>
 
 <style>
+/* 🔍 CSS DE DIAGNOSTIC - Ajoutez ceci temporairement pour voir ce qui se passe */
+
+/* Force avec !important maximum et spécificité élevée */
+@media (min-width: 992px) {
+    .nav_component .nav_container,
+    .section_navbar .nav_container,
+    div.nav_container {
+        display: grid !important;
+        grid-template-columns: auto 1fr auto !important;
+        align-items: center !important;
+        gap: 1rem !important;
+        position: relative !important;
+        width: 100% !important;
+        background: rgba(255, 0, 0, 0.1) !important; /* Rouge pour voir si ça s'applique */
+        border: 2px solid red !important; /* Bordure rouge pour diagnostic */
+    }
+    
+    .nav_component .nav_container .nav_menu,
+    .section_navbar .nav_container .nav_menu,
+    div.nav_container nav.nav_menu {
+        justify-self: center !important;
+        margin: 0 !important;
+        width: max-content !important;
+        min-width: 0 !important;
+        background: rgba(0, 255, 0, 0.3) !important; /* Vert pour voir le menu */
+        border: 1px solid green !important;
+    }
+    
+    .nav_component .nav_container .nav_logo-link,
+    .section_navbar .nav_container .nav_logo-link,
+    div.nav_container a.nav_logo-link {
+        justify-self: start !important;
+        background: rgba(0, 0, 255, 0.3) !important; /* Bleu pour voir le logo */
+        border: 1px solid blue !important;
+    }
+    
+    .nav_component .nav_container .nav_shop-icons,
+    .section_navbar .nav_container .nav_shop-icons,
+    div.nav_container div.nav_shop-icons {
+        justify-self: end !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+        background: rgba(255, 255, 0, 0.3) !important; /* Jaune pour voir les icônes */
+        border: 1px solid yellow !important;
+    }
+}
+
+/* Si le diagnostic ne marche pas, essayons cette approche alternative */
+@media (min-width: 992px) {
+    /* Reset complet des styles Webflow/Flexbox */
+    .nav_container[class*="w-"] {
+        display: grid !important;
+        grid-template-columns: auto 1fr auto !important;
+        justify-content: unset !important;
+        align-content: unset !important;
+        flex-direction: unset !important;
+        flex-wrap: unset !important;
+    }
+}
+
+/* 🚨 SOLUTION D'URGENCE - Si rien ne marche, utilisez ceci : */
+@media (min-width: 992px) {
+    .nav_container {
+        position: relative !important;
+    }
+    
+    .nav_menu {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        margin: 0 !important;
+        z-index: 10 !important;
+    }
+}
 /* Reset pour éviter les conflits */
 .nav_dropdown-list {
     display: none;
