@@ -373,6 +373,28 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+  /* NOUVEAU : Styles pour les messages de feedback */
+  .add-to-cart-message {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-family: Karla, sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .add-to-cart-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .add-to-cart-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
   
   /* Shipping Info */
   .shipping-info {
@@ -589,6 +611,14 @@
     color: #5a4f23;
   }
 
+  /* NOUVEAU : Style pour la ligne avec le guide des tailles */
+  .variant-label-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
   /* Popup Guide des tailles */
   .size-guide-overlay {
     position: fixed;
@@ -708,224 +738,225 @@
   }
 </style>
 
-<div class="product-header_component">
-  <form action="/cart/add" method="post" enctype="multipart/form-data" id="product-form">
-    <div class="product-header_layout">
+<!-- MODIFICATION PRINCIPALE : Ajout de x-data="productForm()" sur le div principal -->
+<div class="product-header_component" x-data="productForm()">
+  <!-- MODIFICATION : Suppression du formulaire, remplacé par un div -->
+  <div class="product-header_layout">
+    
+    <!-- Gallery Section - INCHANGÉ -->
+    <div class="product-gallery-container">
+      <div class="product-gallery-main" id="gallery-main">
+        <div class="gallery-slides-container" id="slides-container">
+          {% for media in product.media %}
+            <div class="gallery-slide" data-slide="{{ forloop.index0 }}">
+              {% if media.media_type == 'image' %}
+                <img src="{{ media | image_url: width: 1000 }}"
+                     alt="{{ media.alt | escape }}"
+                     class="gallery-image"
+                     loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+              {% elsif media.media_type == 'video' %}
+                {{ media | video_tag: controls: true, class: "gallery-image" }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        
+        <!-- Navigation Arrows -->
+        {% if product.media.size > 1 %}
+          <div class="gallery-navigation">
+            <button type="button" class="nav-arrow prev" onclick="previousImage()" id="prev-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <button type="button" class="nav-arrow next" onclick="nextImage()" id="next-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        {% endif %}
+      </div>
       
-      <!-- Gallery Section -->
-      <div class="product-gallery-container">
-        <div class="product-gallery-main" id="gallery-main">
-          <div class="gallery-slides-container" id="slides-container">
-            {% for media in product.media %}
-              <div class="gallery-slide" data-slide="{{ forloop.index0 }}">
-                {% if media.media_type == 'image' %}
-                  <img src="{{ media | image_url: width: 1000 }}"
-                       alt="{{ media.alt | escape }}"
-                       class="gallery-image"
-                       loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
-                {% elsif media.media_type == 'video' %}
-                  {{ media | video_tag: controls: true, class: "gallery-image" }}
+      <!-- Thumbnails -->
+      {% if product.media.size > 1 %}
+        <div class="product-thumbnails">
+          {% for media in product.media %}
+            <div class="thumbnail-item {% if forloop.first %}active{% endif %}" 
+                 onclick="setCurrentImage({{ forloop.index0 }})"
+                 data-thumbnail="{{ forloop.index0 }}">
+              <img src="{{ media | image_url: width: 200 }}"
+                   alt="{{ media.alt | escape }}"
+                   class="thumbnail-image"
+                   loading="lazy">
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    
+    <!-- Product Details Section -->
+    <div class="product-header_product-details">
+      
+      <!-- Product Title - INCHANGÉ -->
+      <h1 class="product-title product-main-title">{{ product.title }}</h1>
+      
+      <!-- Price - MODIFICATION : Ajout des directives Alpine.js -->
+      <div class="product-price-wrapper">
+        <span class="product-price" x-text="formatPrice(selectedVariant.price)">{{ product.selected_or_first_available_variant.price | money }}</span>
+        <span class="product-compare-price" 
+              x-show="selectedVariant.compare_at_price > selectedVariant.price"
+              x-text="formatPrice(selectedVariant.compare_at_price)">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        <span class="product-item_tag" x-show="selectedVariant.compare_at_price > selectedVariant.price">Sale</span>
+      </div>
+      
+      <!-- Product Description - INCHANGÉ -->
+      {% if product.description != blank %}
+        <div class="product-description">{{ product.description }}</div>
+      {% endif %}
+      
+      <!-- Variant Selection - MODIFICATION : Ajout des directives Alpine.js -->
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
+          <div class="variant-selector">
+            {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
+              <div class="variant-label-row">
+                <label class="variant-label">{{ option.name }}</label>
+                <button type="button" class="size-guide-button" onclick="openSizeGuide()">
+                  Guide des tailles
+                </button>
+              </div>
+            {% else %}
+              <label class="variant-label">{{ option.name }}</label>
+            {% endif %}
+            <!-- MODIFICATION : Ajout de x-model et @change -->
+            <select class="variant-select" 
+                    x-model="selectedOptions[{{ forloop.index0 }}]"
+                    @change="updateSelectedVariant()">
+              {% for value in option.values %}
+                <option value="{{ value | escape }}">{{ value }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        {% endfor %}
+      {% endunless %}
+      
+      <!-- Shipping Info - INCHANGÉ -->
+      <div class="shipping-info">
+        <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+        <span class="shipping-text" id="dynamic-shipping-text">
+          {% comment %} Récupération dynamique des zones de livraison Shopify {% endcomment %}
+          {% assign customer_country = '' %}
+          {% if customer.default_address.country_code %}
+            {% assign customer_country = customer.default_address.country_code %}
+          {% elsif localization.country.iso_code %}
+            {% assign customer_country = localization.country.iso_code %}
+          {% else %}
+            {% assign customer_country = 'FR' %}
+          {% endif %}
+
+          {% assign shipping_text = 'Livraison : nous contacter' %}
+          {% assign shipping_found = false %}
+
+          {% comment %} Parcourir les zones de livraison configurées dans Shopify {% endcomment %}
+          {% for shipping_zone in shop.shipping_zones %}
+            {% unless shipping_found %}
+              {% for country in shipping_zone.countries %}
+                {% if country.iso_code == customer_country %}
+                  {% for rate in shipping_zone.shipping_methods %}
+                    {% if rate.delivery_time != blank %}
+                      {% assign shipping_text = rate.delivery_time %}
+                      {% assign shipping_found = true %}
+                      {% break %}
+                    {% elsif rate.price == 0 %}
+                      {% assign shipping_text = 'Livraison gratuite' %}
+                      {% assign shipping_found = true %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+            {% endunless %}
+          {% endfor %}
+
+          {% comment %} Fallback si aucune zone trouvée - utiliser les données des paramètres de livraison {% endcomment %}
+          {% unless shipping_found %}
+            {% case customer_country %}
+              {% when 'FR' %}
+                {% assign shipping_text = '2-4 jours ouvrables' %}
+              {% when 'BE', 'LU', 'CH', 'NL', 'DE', 'AT' %}
+                {% assign shipping_text = '3-6 jours ouvrables' %}
+              {% when 'ES', 'IT', 'PT' %}
+                {% assign shipping_text = '4-8 jours ouvrables' %}
+              {% when 'GB', 'IE' %}
+                {% assign shipping_text = '5-10 jours ouvrables' %}
+              {% else %}
+                {% assign shipping_text = 'Livraison internationale : nous contacter' %}
+            {% endcase %}
+          {% endunless %}
+
+          Livraison {{ shipping_text }}
+        </span>
+      </div>
+      
+      <!-- Add to Cart Section - MODIFICATION PRINCIPALE : Version Alpine.js -->
+      <div class="add-to-cart-section">
+        <button type="button" 
+                class="add-to-cart-button" 
+                :disabled="!selectedVariant.available || isLoading"
+                @click="addToCart()">
+          <span x-show="!isLoading">
+            <span x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></span>
+          </span>
+          <span x-show="isLoading">Ajout en cours...</span>
+        </button>
+        
+        <!-- NOUVEAU : Message de feedback -->
+        <div x-show="message.show" 
+             x-transition
+             class="add-to-cart-message"
+             :class="message.type">
+          <span x-text="message.text"></span>
+        </div>
+      </div>
+
+      <!-- Product Pictos Section - INCHANGÉ -->
+      <div class="product-pictos-container">
+        {% for block in section.blocks %}
+          {% if block.type == "picto-produit" %}
+            <div class="picto-produit" {{ block.shopify_attributes }}>
+              <div class="Div Block 7">
+                {% if block.settings.picto_image %}
+                  <img class="Image 3" 
+                       width="auto" 
+                       height="auto" 
+                       alt="{{ block.settings.picto_alt | default: block.settings.picto_text | escape }}" 
+                       src="{{ block.settings.picto_image | image_url }}" 
+                       loading="lazy">
+                {% else %}
+                  <img class="Image 3" 
+                       width="auto" 
+                       height="auto" 
+                       alt="inherit" 
+                       src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg" 
+                       loading="lazy">
                 {% endif %}
               </div>
-            {% endfor %}
-          </div>
-          
-          <!-- Navigation Arrows -->
-          {% if product.media.size > 1 %}
-            <div class="gallery-navigation">
-              <button type="button" class="nav-arrow prev" onclick="previousImage()" id="prev-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-              <button type="button" class="nav-arrow next" onclick="nextImage()" id="next-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+              <div class="texte-picto">
+                {{ block.settings.picto_text | default: "Souple" }}
+              </div>
             </div>
           {% endif %}
-        </div>
-        
-        <!-- Thumbnails -->
-        {% if product.media.size > 1 %}
-          <div class="product-thumbnails">
-            {% for media in product.media %}
-              <div class="thumbnail-item {% if forloop.first %}active{% endif %}" 
-                   onclick="setCurrentImage({{ forloop.index0 }})"
-                   data-thumbnail="{{ forloop.index0 }}">
-                <img src="{{ media | image_url: width: 200 }}"
-                     alt="{{ media.alt | escape }}"
-                     class="thumbnail-image"
-                     loading="lazy">
-              </div>
-            {% endfor %}
-          </div>
-        {% endif %}
+        {% endfor %}
       </div>
       
-      <!-- Product Details Section -->
-      <div class="product-header_product-details">
-        
-        <!-- Product Title -->
-        <h1 class="product-title product-main-title">{{ product.title }}</h1>
-        
-        <!-- Price -->
-        <div class="product-price-wrapper">
-          <span class="product-price" id="product-price">{{ product.selected_or_first_available_variant.price | money }}</span>
-          {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
-            <span class="product-compare-price" id="product-compare-price">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-            <span class="product-item_tag">Sale</span>
-          {% endif %}
-        </div>
-        
-
-        
-        <!-- Product Description -->
-        {% if product.description != blank %}
-          <div class="product-description">{{ product.description }}</div>
-        {% endif %}
-        
-        <!-- Variant Selection -->
-        {% unless product.has_only_default_variant %}
-          {% for option in product.options_with_values %}
-            <div class="variant-selector">
-              {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
-                <div class="variant-label-row">
-                  <label class="variant-label">{{ option.name }}</label>
-                  <button type="button" class="size-guide-button" onclick="openSizeGuide()">
-                    Guide des tailles
-                  </button>
-                </div>
-              {% else %}
-                <label class="variant-label">{{ option.name }}</label>
-              {% endif %}
-              <select class="variant-select" 
-                      name="options[{{ option.name | escape }}]" 
-                      data-option-index="{{ forloop.index0 }}"
-                      onchange="updateVariant()">
-                {% for value in option.values %}
-                  <option value="{{ value | escape }}" 
-                          {% if option.selected_value == value %}selected="selected"{% endif %}>
-                    {{ value }}
-                  </option>
-                {% endfor %}
-              </select>
-            </div>
-          {% endfor %}
-          <input type="hidden" name="id" id="product-variant-id" value="{{ product.selected_or_first_available_variant.id }}">
-        {% else %}
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        {% endunless %}
-        
-        <!-- Shipping Info avec délai dynamique -->
-        <div class="shipping-info">
-          <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-          </svg>
-          <span class="shipping-text" id="dynamic-shipping-text">
-            {% comment %} Récupération dynamique des zones de livraison Shopify {% endcomment %}
-            {% assign customer_country = '' %}
-            {% if customer.default_address.country_code %}
-              {% assign customer_country = customer.default_address.country_code %}
-            {% elsif localization.country.iso_code %}
-              {% assign customer_country = localization.country.iso_code %}
-            {% else %}
-              {% assign customer_country = 'FR' %}
-            {% endif %}
-
-            {% assign shipping_text = 'Livraison : nous contacter' %}
-            {% assign shipping_found = false %}
-
-            {% comment %} Parcourir les zones de livraison configurées dans Shopify {% endcomment %}
-            {% for shipping_zone in shop.shipping_zones %}
-              {% unless shipping_found %}
-                {% for country in shipping_zone.countries %}
-                  {% if country.iso_code == customer_country %}
-                    {% for rate in shipping_zone.shipping_methods %}
-                      {% if rate.delivery_time != blank %}
-                        {% assign shipping_text = rate.delivery_time %}
-                        {% assign shipping_found = true %}
-                        {% break %}
-                      {% elsif rate.price == 0 %}
-                        {% assign shipping_text = 'Livraison gratuite' %}
-                        {% assign shipping_found = true %}
-                        {% break %}
-                      {% endif %}
-                    {% endfor %}
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
-              {% endunless %}
-            {% endfor %}
-
-            {% comment %} Fallback si aucune zone trouvée - utiliser les données des paramètres de livraison {% endcomment %}
-            {% unless shipping_found %}
-              {% case customer_country %}
-                {% when 'FR' %}
-                  {% assign shipping_text = '2-4 jours ouvrables' %}
-                {% when 'BE', 'LU', 'CH', 'NL', 'DE', 'AT' %}
-                  {% assign shipping_text = '3-6 jours ouvrables' %}
-                {% when 'ES', 'IT', 'PT' %}
-                  {% assign shipping_text = '4-8 jours ouvrables' %}
-                {% when 'GB', 'IE' %}
-                  {% assign shipping_text = '5-10 jours ouvrables' %}
-                {% else %}
-                  {% assign shipping_text = 'Livraison internationale : nous contacter' %}
-              {% endcase %}
-            {% endunless %}
-
-            Livraison {{ shipping_text }}
-          </span>
-        </div>
-        
-        <!-- Add to Cart Section -->
-        <div class="add-to-cart-section">
-          <button type="submit" class="add-to-cart-button" id="add-to-cart-btn"
-                  {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-            {% if product.selected_or_first_available_variant.available %}
-              Ajouter au panier
-            {% else %}
-              Rupture de stock
-            {% endif %}
-          </button>
-        </div>
-
-        <!-- Product Pictos Section -->
-        <div class="product-pictos-container">
-          {% for block in section.blocks %}
-            {% if block.type == "picto-produit" %}
-              <div class="picto-produit" {{ block.shopify_attributes }}>
-                <div class="Div Block 7">
-                  {% if block.settings.picto_image %}
-                    <img class="Image 3" 
-                         width="auto" 
-                         height="auto" 
-                         alt="{{ block.settings.picto_alt | default: block.settings.picto_text | escape }}" 
-                         src="{{ block.settings.picto_image | image_url }}" 
-                         loading="lazy">
-                  {% else %}
-                    <img class="Image 3" 
-                         width="auto" 
-                         height="auto" 
-                         alt="inherit" 
-                         src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg" 
-                         loading="lazy">
-                  {% endif %}
-                </div>
-                <div class="texte-picto">
-                  {{ block.settings.picto_text | default: "Souple" }}
-                </div>
-              </div>
-            {% endif %}
-          {% endfor %}
-        </div>
-        
-      </div>
     </div>
-  </form>
+  </div>
 
-  <!-- Popup Guide des tailles -->
+  <!-- Popup Guide des tailles - INCHANGÉ -->
   <div class="size-guide-overlay" id="sizeGuideOverlay" onclick="closeSizeGuide(event)">
     <div class="size-guide-popup" onclick="event.stopPropagation()">
       <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
@@ -937,12 +968,132 @@
 </div>
 
 <script>
-// Variables globales
+// NOUVEAU : Alpine.js Component pour le formulaire produit
+document.addEventListener('alpine:init', () => {
+  Alpine.data('productForm', () => ({
+    // État initial
+    selectedOptions: {{ product.selected_or_first_available_variant.options | json }},
+    selectedVariant: {{ product.selected_or_first_available_variant | json }},
+    productVariants: {{ product.variants | json }},
+    isLoading: false,
+    message: {
+      show: false,
+      text: '',
+      type: 'success' // 'success' ou 'error'
+    },
+
+    // Initialisation
+    init() {
+      console.log('Product form initialized');
+      this.updateSelectedVariant();
+    },
+
+    // Mise à jour de la variante sélectionnée
+    updateSelectedVariant() {
+      const matchingVariant = this.productVariants.find(variant => {
+        return this.selectedOptions.every((option, index) => {
+          return variant[`option${index + 1}`] === option;
+        });
+      });
+
+      if (matchingVariant) {
+        this.selectedVariant = matchingVariant;
+        this.updateURL(matchingVariant.id);
+      }
+    },
+
+    // Formatage du prix
+    formatPrice(cents) {
+      if (typeof LiquifyHelper !== 'undefined') {
+        return LiquifyHelper.moneyFormat(cents, true, '{{ shop.money_with_currency_format }}');
+      }
+      return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: '{{ cart.currency.iso_code | default: "EUR" }}'
+      }).format(cents / 100);
+    },
+
+    // Mise à jour de l'URL
+    updateURL(variantId) {
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set('variant', variantId);
+      window.history.replaceState({}, '', newUrl);
+    },
+
+    // FONCTION PRINCIPALE : Ajout au panier
+    async addToCart() {
+      if (!this.selectedVariant.available || this.isLoading) {
+        return;
+      }
+
+      this.isLoading = true;
+      this.hideMessage();
+
+      try {
+        // Préparer les données
+        const cartData = {
+          id: this.selectedVariant.id,
+          quantity: 1
+        };
+
+        // Ajouter au panier via l'API Shopify
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(cartData)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Succès
+          this.showMessage('Produit ajouté au panier !', 'success');
+          
+          // IMPORTANT : Déclencher les événements pour le mini-cart
+          this.$dispatch('cartupdated');
+          this.$dispatch('toggleminicart');
+          
+        } else {
+          // Erreur du serveur
+          throw new Error(result.message || result.description || 'Erreur lors de l\'ajout au panier');
+        }
+
+      } catch (error) {
+        console.error('Erreur lors de l\'ajout au panier:', error);
+        this.showMessage('Erreur lors de l\'ajout au panier. Veuillez réessayer.', 'error');
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    // Afficher un message
+    showMessage(text, type = 'success') {
+      this.message = {
+        show: true,
+        text: text,
+        type: type
+      };
+      
+      // Masquer automatiquement après 3 secondes
+      setTimeout(() => {
+        this.hideMessage();
+      }, 3000);
+    },
+
+    // Masquer le message
+    hideMessage() {
+      this.message.show = false;
+    }
+  }));
+});
+
+// INCHANGÉ : Variables globales pour la galerie
 let currentImageIndex = 0;
 const totalImages = {{ product.media.size }};
-const productVariants = {{ product.variants | json }};
 
-// Variables pour le swipe mobile
+// Variables pour le swipe mobile - INCHANGÉ
 let startX = 0;
 let startY = 0;
 let currentX = 0;
@@ -950,31 +1101,19 @@ let currentY = 0;
 let isDragging = false;
 let isSwipeActive = false;
 
-// Fonction pour déterminer si on est sur mobile
+// Fonction pour déterminer si on est sur mobile - INCHANGÉ
 function isMobile() {
   return window.innerWidth <= 768;
 }
 
-// Navigation des images - MODIFICATION : Boucle infinie sur desktop
+// Navigation des images - INCHANGÉ
 function nextImage() {
-  if (isMobile()) {
-    // Loop infinie sur mobile
-    currentImageIndex = (currentImageIndex + 1) % totalImages;
-  } else {
-    // NOUVELLE LOGIQUE DESKTOP : Loop infinie aussi
-    currentImageIndex = (currentImageIndex + 1) % totalImages;
-  }
+  currentImageIndex = (currentImageIndex + 1) % totalImages;
   updateGalleryDisplay();
 }
 
 function previousImage() {
-  if (isMobile()) {
-    // Loop infinie sur mobile
-    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
-  } else {
-    // NOUVELLE LOGIQUE DESKTOP : Loop infinie aussi
-    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
-  }
+  currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
   updateGalleryDisplay();
 }
 
@@ -1020,12 +1159,9 @@ function updateGalleryDisplay() {
       inline: 'center'
     });
   }
-  
-  // SUPPRESSION : Plus de désactivation des boutons sur desktop
-  // Les boutons restent toujours actifs grâce à la boucle infinie
 }
 
-// Gestion du swipe sur mobile
+// Gestion du swipe sur mobile - INCHANGÉ
 function initializeSwipe() {
   const galleryMain = document.getElementById('gallery-main');
   
@@ -1089,81 +1225,7 @@ function handleTouchEnd(e) {
   isSwipeActive = false;
 }
 
-
-
-// Mise à jour des variantes
-function updateVariant() {
-  const selects = document.querySelectorAll('.variant-select');
-  const selectedOptions = Array.from(selects).map(select => select.value);
-  
-  // Trouver la variante correspondante
-  const matchingVariant = productVariants.find(variant => {
-    return selectedOptions.every((option, index) => {
-      return variant[`option${index + 1}`] === option;
-    });
-  });
-  
-  if (matchingVariant) {
-    // Mettre à jour l'ID de variante
-    const variantIdInput = document.getElementById('product-variant-id');
-    if (variantIdInput) {
-      variantIdInput.value = matchingVariant.id;
-    }
-    
-    // Mettre à jour le prix
-    updatePrice(matchingVariant);
-    
-    // Mettre à jour le statut de stock
-    updateStockStatus(matchingVariant);
-    
-    // Mettre à jour l'URL
-    const newUrl = new URL(window.location);
-    newUrl.searchParams.set('variant', matchingVariant.id);
-    window.history.replaceState({}, '', newUrl);
-  }
-}
-
-function updatePrice(variant) {
-  const priceElement = document.getElementById('product-price');
-  const comparePriceElement = document.getElementById('product-compare-price');
-  
-  // Fonction pour formater le prix (adaptation selon votre devise)
-  function formatMoney(cents) {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency: '{{ cart.currency.iso_code | default: "EUR" }}'
-    }).format(cents / 100);
-  }
-  
-  if (priceElement) {
-    priceElement.textContent = formatMoney(variant.price);
-  }
-  
-  if (comparePriceElement) {
-    if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-      comparePriceElement.textContent = formatMoney(variant.compare_at_price);
-      comparePriceElement.style.display = 'inline';
-    } else {
-      comparePriceElement.style.display = 'none';
-    }
-  }
-}
-
-function updateStockStatus(variant) {
-  const addToCartBtn = document.getElementById('add-to-cart-btn');
-  
-  if (addToCartBtn) {
-    if (variant.available) {
-      addToCartBtn.disabled = false;
-      addToCartBtn.textContent = 'Ajouter au panier';
-    } else {
-      addToCartBtn.disabled = true;
-      addToCartBtn.textContent = 'Rupture de stock';
-    }
-  }
-}
-
-// Fonctions pour le guide des tailles
+// Fonctions pour le guide des tailles - INCHANGÉ
 function openSizeGuide() {
   const overlay = document.getElementById('sizeGuideOverlay');
   const content = document.getElementById('sizeGuideContent');
@@ -1201,196 +1263,15 @@ function closeSizeGuide(event) {
   }
 }
 
-// Fonction pour détecter la localisation et récupérer les vrais délais Shopify
-function updateShippingBasedOnLocation() {
-  // Si la géolocalisation est supportée
-  if ("geolocation" in navigator) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      
-      // Utiliser une API de géocodage inversé pour obtenir le pays
-      fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=fr`)
-        .then(response => response.json())
-        .then(data => {
-          const countryCode = data.countryCode;
-          fetchShippingRatesFromShopify(countryCode);
-        })
-        .catch(error => {
-          console.log('Erreur géolocalisation:', error);
-          // Fallback sur la détection IP
-          detectCountryByIP();
-        });
-    }, function(error) {
-      // Si l'utilisateur refuse la géolocalisation, utiliser la détection IP
-      detectCountryByIP();
-    });
-  } else {
-    // Fallback sur la détection IP si géolocalisation non supportée
-    detectCountryByIP();
-  }
-}
+// SUPPRIMÉ : Toutes les fonctions updateShippingBasedOnLocation, updatePrice, updateVariant, updateStockStatus
+// car elles sont maintenant gérées par Alpine.js
 
-// Fonction de fallback pour détecter le pays via l'IP
-function detectCountryByIP() {
-  fetch('https://ipapi.co/json/')
-    .then(response => response.json())
-    .then(data => {
-      const countryCode = data.country_code;
-      fetchShippingRatesFromShopify(countryCode);
-    })
-    .catch(error => {
-      console.log('Erreur détection IP:', error);
-      // Garder le texte par défaut défini par Shopify
-    });
-}
-
-// Fonction pour récupérer les vraies données de livraison depuis Shopify
-function fetchShippingRatesFromShopify(countryCode) {
-  // Construire l'URL pour récupérer les tarifs de livraison
-  const cartData = {
-    items: [{
-      id: {{ product.selected_or_first_available_variant.id }},
-      quantity: 1
-    }],
-    attributes: {},
-    original_total_price: {{ product.selected_or_first_available_variant.price }},
-    total_price: {{ product.selected_or_first_available_variant.price }},
-    total_weight: {{ product.selected_or_first_available_variant.weight }},
-    currency: '{{ cart.currency.iso_code }}',
-    items_count: 1,
-    items_subtotal_price: {{ product.selected_or_first_available_variant.price }}
-  };
-
-  // Utiliser l'API Shopify pour récupérer les tarifs de livraison
-  fetch(`/cart/shipping_rates.json?shipping_address[country]=${countryCode}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.shipping_rates && data.shipping_rates.length > 0) {
-      // Prendre le premier tarif disponible (ou le gratuit si disponible)
-      let selectedRate = data.shipping_rates[0];
-      
-      // Chercher un tarif gratuit en priorité
-      const freeRate = data.shipping_rates.find(rate => rate.price === "0.00");
-      if (freeRate) {
-        selectedRate = freeRate;
-      }
-      
-      // Construire le texte de livraison
-      let shippingText = 'Livraison';
-      if (selectedRate.delivery_range && selectedRate.delivery_range.length > 0) {
-        const range = selectedRate.delivery_range[0];
-        shippingText += ` ${range.min}-${range.max} jours ouvrables`;
-      } else if (selectedRate.title) {
-        shippingText += ` ${selectedRate.title}`;
-      }
-      
-      if (selectedRate.price === "0.00") {
-        shippingText += ' (gratuite)';
-      }
-      
-      updateShippingTextDirect(shippingText);
-    } else {
-      // Fallback sur les délais statiques
-      updateShippingTextStatic(countryCode);
-    }
-  })
-  .catch(error => {
-    console.log('Erreur API Shopify:', error);
-    // Fallback sur les délais statiques
-    updateShippingTextStatic(countryCode);
-  });
-}
-
-// Fonction pour mettre à jour avec les délais statiques (fallback)
-function updateShippingTextStatic(countryCode) {
-  let shippingText = '';
-  
-  switch(countryCode) {
-    case 'FR':
-      shippingText = 'Livraison 2-4 jours ouvrables';
-      break;
-    case 'BE':
-    case 'LU':
-    case 'CH':
-    case 'NL':
-    case 'DE':
-    case 'AT':
-      shippingText = 'Livraison 3-6 jours ouvrables';
-      break;
-    case 'ES':
-    case 'IT':
-    case 'PT':
-      shippingText = 'Livraison 4-8 jours ouvrables';
-      break;
-    case 'GB':
-    case 'IE':
-      shippingText = 'Livraison 5-10 jours ouvrables';
-      break;
-    case 'PL':
-    case 'CZ':
-    case 'SK':
-    case 'HU':
-    case 'SI':
-    case 'HR':
-      shippingText = 'Livraison 6-12 jours ouvrables';
-      break;
-    case 'SE':
-    case 'NO':
-    case 'DK':
-    case 'FI':
-      shippingText = 'Livraison 6-14 jours ouvrables';
-      break;
-    case 'US':
-    case 'CA':
-      shippingText = 'Livraison 8-18 jours ouvrables';
-      break;
-    case 'AU':
-    case 'NZ':
-      shippingText = 'Livraison 12-24 jours ouvrables';
-      break;
-    case 'JP':
-    case 'KR':
-    case 'SG':
-    case 'HK':
-      shippingText = 'Livraison 10-20 jours ouvrables';
-      break;
-    case 'BR':
-    case 'AR':
-    case 'MX':
-      shippingText = 'Livraison 15-30 jours ouvrables';
-      break;
-    default:
-      shippingText = 'Livraison internationale : nous contacter';
-  }
-  
-  updateShippingTextDirect(shippingText);
-}
-
-// Fonction pour mettre à jour directement le texte de livraison
-function updateShippingTextDirect(shippingText) {
-  const shippingElement = document.getElementById('dynamic-shipping-text');
-  if (!shippingElement) return;
-  
-  // Marquer l'élément comme ayant été modifié dynamiquement
-  shippingElement.setAttribute('data-dynamic-updated', 'true');
-  shippingElement.textContent = shippingText;
-}
-
-// Initialisation
+// Initialisation - MODIFIÉ : Suppression des fonctions devenues inutiles
 document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
   initializeSwipe();
   
-  // Initialiser la détection de localisation pour les délais de livraison
-  setTimeout(updateShippingBasedOnLocation, 1000);
-  
-  // Protection renforcée pour le titre du produit - SEULEMENT dans notre section
+  // Protection renforcée pour le titre du produit - INCHANGÉ
   const protectTitle = () => {
     const titles = document.querySelectorAll('.product-header_component .product-title, .product-header_component .product-main-title, .product-header_component h1.product-title');
     titles.forEach(title => {
@@ -1417,7 +1298,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  // Fonction pour ajuster les images des pictos sur mobile
+  // Fonction pour ajuster les images des pictos sur mobile - INCHANGÉ
   const adjustPictosOnMobile = () => {
     if (window.innerWidth <= 768) {
       // Sélectionner toutes les images dans les pictos
@@ -1446,7 +1327,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Fonction pour forcer le style flex sur le wrapper du guide des tailles
+  // Fonction pour forcer le style flex sur le wrapper du guide des tailles - INCHANGÉ
   const fixSizeGuideLayout = () => {
     const wrappers = document.querySelectorAll('.variant-label-row');
     wrappers.forEach(wrapper => {
@@ -1457,7 +1338,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  // Fonction pour protéger le contenu de livraison dynamique
+  // Fonction pour protéger le contenu de livraison dynamique - INCHANGÉ
   const protectDynamicShipping = () => {
     const shippingElement = document.getElementById('dynamic-shipping-text');
     if (shippingElement && shippingElement.getAttribute('data-dynamic-updated') === 'true') {
@@ -1466,51 +1347,43 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
   
-  // Exécuter immédiatement et à intervalles
+  // Exécuter immédiatement et à intervalles - INCHANGÉ
   protectTitle();
   adjustPictosOnMobile();
-  adjustPictosOnDesktop();
   fixSizeGuideLayout();
   protectDynamicShipping();
   setTimeout(protectTitle, 50);
   setTimeout(adjustPictosOnMobile, 50);
-  setTimeout(adjustPictosOnDesktop, 50);
   setTimeout(fixSizeGuideLayout, 50);
   setTimeout(protectDynamicShipping, 50);
   setTimeout(protectTitle, 100);
   setTimeout(adjustPictosOnMobile, 100);
-  setTimeout(adjustPictosOnDesktop, 100);
   setTimeout(fixSizeGuideLayout, 100);
   setTimeout(protectDynamicShipping, 100);
   setTimeout(protectTitle, 200);
   setTimeout(adjustPictosOnMobile, 200);
-  setTimeout(adjustPictosOnDesktop, 200);
   setTimeout(fixSizeGuideLayout, 200);
   setTimeout(protectDynamicShipping, 200);
   setTimeout(protectTitle, 500);
   setTimeout(adjustPictosOnMobile, 500);
-  setTimeout(adjustPictosOnDesktop, 500);
   setTimeout(fixSizeGuideLayout, 500);
   setTimeout(protectDynamicShipping, 500);
   setTimeout(protectTitle, 1000);
   setTimeout(adjustPictosOnMobile, 1000);
-  setTimeout(adjustPictosOnDesktop, 1000);
   setTimeout(fixSizeGuideLayout, 1000);
   setTimeout(protectDynamicShipping, 1000);
   setTimeout(protectTitle, 2000);
   setTimeout(adjustPictosOnMobile, 2000);
-  setTimeout(adjustPictosOnDesktop, 2000);
   setTimeout(fixSizeGuideLayout, 2000);
   setTimeout(protectDynamicShipping, 2000);
   
-  // Observer continu
+  // Observer continu - INCHANGÉ
   setInterval(protectTitle, 1000);
   setInterval(adjustPictosOnMobile, 1000);
-  setInterval(adjustPictosOnDesktop, 1000);
   setInterval(fixSizeGuideLayout, 1000);
   setInterval(protectDynamicShipping, 1000);
   
-  // Debug : surveiller les scroll automatiques non désirés
+  // Debug : surveiller les scroll automatiques non désirés - INCHANGÉ
   if (isMobile()) {
     let isUserScrolling = false;
     
@@ -1527,16 +1400,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: true });
   }
   
-  // Re-calculer lors du redimensionnement de la fenêtre
+  // Re-calculer lors du redimensionnement de la fenêtre - INCHANGÉ
   window.addEventListener('resize', function() {
     setTimeout(() => {
       updateGalleryDisplay();
       initializeSwipe();
-      protectTitle(); // Reprotéger le titre
-      adjustPictosOnMobile(); // Réajuster les pictos mobile
-      adjustPictosOnDesktop(); // Réajuster les pictos desktop
-      fixSizeGuideLayout(); // Refixer le layout du guide des tailles
-      protectDynamicShipping(); // Protéger le texte de livraison
+      protectTitle();
+      adjustPictosOnMobile();
+      fixSizeGuideLayout();
+      protectDynamicShipping();
     }, 100);
   });
 });
