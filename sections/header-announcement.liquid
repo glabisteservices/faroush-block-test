@@ -89,6 +89,9 @@
   .announcement-wrapper .quick-stack {
     width: 100%;
     padding: 0 20px;
+    height: 32px;
+    display: flex;
+    align-items: center;
   }
   
   /* Force l'affichage du texte central */
@@ -98,17 +101,46 @@
     line-height: 1.2;
   }
   
-  /* Contrôle de la taille des icônes sociales */
+  /* Alignement parfait des icônes sociales */
+  .announcement-wrapper .lien-social-media-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+  }
+
+  .announcement-wrapper .social-media-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 32px;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
   .announcement-wrapper .social-media-header img {
     height: 18px !important;
     width: auto !important;
     object-fit: contain !important;
+    vertical-align: middle !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   /* Assurer que les cellules restent alignées */
   .announcement-wrapper .w-layout-cell {
     display: flex;
     align-items: center;
+    height: 32px;
+  }
+  
+  /* Cellule des icônes avec espacement */
+  .announcement-wrapper .cell {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px;
+    height: 32px;
   }
   
   /* Pousser le sélecteur de langue à droite */
