@@ -89,9 +89,6 @@
   .announcement-wrapper .quick-stack {
     width: 100%;
     padding: 0 20px;
-    height: 32px;
-    display: flex;
-    align-items: center;
   }
   
   /* Force l'affichage du texte central */
@@ -143,12 +140,18 @@
     height: 32px;
   }
   
+  /* Cellule du texte central */
+  .announcement-wrapper .cell-2 {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 32px;
+  }
+  
   /* Pousser le sélecteur de langue à droite */
   .announcement-wrapper .cell-3 {
     margin-left: auto;
   }
-  
-  /* MOBILE : Cacher les icônes et langues sur mobile */
   @media screen and (max-width: 767px) {
     .announcement-wrapper {
       margin-top: 0;
