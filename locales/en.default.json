@@ -168,11 +168,17 @@
         },
         "order_edit_banner_items_added": {
           "many": "%{count} added"
+        },
+        "card_fields_unavailable_html": {
+          "many": "Credit and debit card payments are not available at this time.<br> <a href=\"%{current_url}\">Refresh this page</a> or try another payment method."
         }
       },
       "shipping_errors": {
         "shipping_method_not_available_updated": {
           "many": "One or more of the items you added cannot be shipped to your location. Please remove them to checkout, or contact the store."
+        },
+        "shipping_method_not_available_generic": {
+          "many": "Some items in your cart cannot be shipped to the address you entered. Please verify that your address has been entered correctly and try again or select a different address."
         }
       },
       "processing": {
