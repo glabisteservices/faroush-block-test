@@ -15,7 +15,7 @@
         "image_desktop_KtF4e7": {
           "type": "image-desktop",
           "settings": {
-            "image_image": "shopify://shop_images/Header_bleu.jpg",
+            "image_image": "shopify://shop_images/HP_Septembre.jpg",
             "heading_text": "C'est la rentrée !",
             "paragraph_text": "Découvrez nos nouveaux modèles",
             "button_text": "Acheter FW25",
@@ -47,29 +47,23 @@
     "bloc_de_texte_daAqkh": {
       "type": "bloc_de_texte",
       "blocks": {
-        "sous_titre_c66JVk": {
-          "type": "sous-titre",
-          "settings": {
-            "text_heading": "Test"
-          }
-        },
         "grand_texte_w7KXTV": {
           "type": "grand-texte",
           "settings": {
-            "text_heading": "Nos engagements"
+            "text_heading": "Protéger sans déformer"
           }
         },
         "paragraphe_aMzzjn": {
           "type": "paragraphe",
           "settings": {
-            "text_paragraph": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere."
+            "text_paragraph": "Faroush est bien plus qu’une simple marque de chaussures. C’est un engagement fort : accompagner la croissance saine et naturelle des enfants grâce à des chaussures barefoot de haute qualité. Chaque modèle est conçu avec soin pour respecter la biomécanique naturelle des pieds en développement, tout en offrant le meilleur du design parisien, des matériaux durables et des finitions raffinées."
           }
         },
         "bouton_xmArAe": {
           "type": "bouton",
           "settings": {
-            "text_text": "Button Text",
-            "url_link": "",
+            "text_text": "Découvrir nos modèles",
+            "url_link": "shopify://collections/all",
             "button_type": "filled",
             "bg_color": "#6e612b",
             "text_color": "#f5f2d9",
@@ -78,7 +72,6 @@
         }
       },
       "block_order": [
-        "sous_titre_c66JVk",
         "grand_texte_w7KXTV",
         "paragraphe_aMzzjn",
         "bouton_xmArAe"
@@ -126,6 +119,41 @@
         "text_button_text": "Voir les nouveautés",
         "url_button_link": "shopify://collections/nouveautes-de-la-rentree"
       }
+    },
+    "image_pleine_largeur_CwNnri": {
+      "type": "image-pleine-largeur",
+      "blocks": {
+        "image_desktop_BWVYbz": {
+          "type": "image-desktop",
+          "settings": {
+            "image_image": "shopify://shop_images/HP_2_Septembre.jpg",
+            "heading_text": "",
+            "paragraph_text": "",
+            "button_text": "Voir nos baskets",
+            "button_link": "shopify://collections/basket-barefoot-enfant",
+            "text_color": "white",
+            "button_color": "white"
+          }
+        },
+        "image_mobile_ki3Bmc": {
+          "type": "image-mobile",
+          "settings": {
+            "image_image": "shopify://shop_images/Mobile_V4.jpg",
+            "heading_text": "",
+            "paragraph_text": "",
+            "button_text": "Voir nos baskets",
+            "button_link": "shopify://collections/basket-barefoot-enfant",
+            "text_color": "brown",
+            "button_color": "brown"
+          }
+        }
+      },
+      "block_order": [
+        "image_desktop_BWVYbz",
+        "image_mobile_ki3Bmc"
+      ],
+      "name": "image-pleine-largeur",
+      "settings": {}
     },
     "faq_pAztkk": {
       "type": "faq",
@@ -276,20 +304,6 @@
       "settings": {
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
-    },
-    "bouton_seul_c3tTXh": {
-      "type": "bouton-seul",
-      "name": "Bouton Seul",
-      "settings": {
-        "text_text": "Button Text",
-        "url_link": "",
-        "button_alignment": "left",
-        "button_style": "filled",
-        "background_color": "#a6d4f2",
-        "text_color": "#6e612b",
-        "border_color": "#6e612b",
-        "hover_text_color": "#f5f2d9"
-      }
     }
   },
   "layout": "theme",
@@ -298,8 +312,8 @@
     "image_pleine_largeur_CJ6868",
     "bloc_de_texte_daAqkh",
     "manual_products_d_hEiEXt",
+    "image_pleine_largeur_CwNnri",
     "faq_pAztkk",
-    "temoignage_wLnXBL",
-    "bouton_seul_c3tTXh"
+    "temoignage_wLnXBL"
   ]
 }
