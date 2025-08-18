@@ -12,7 +12,7 @@
     "contact": {
       "type": "contact",
       "settings": {
-        "text_heading": "Contact us",
+        "text_heading": "Contactez-nous",
         "text_paragraph": "Contactez-nous par email info@faroush.fr ou par téléphone au",
         "text_first_name": "Prénom",
         "text_last_name": "Nom",
