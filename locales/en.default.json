@@ -15,6 +15,11 @@
           "cluster_title": {
             "many": "Cluster of {{number}} markers"
           }
+        },
+        "errors": {
+          "payment": {
+            "market_manager_blocks_wallet_payments": "The payment method is not supported by the market manager."
+          }
         }
       },
       "customer_account": {
