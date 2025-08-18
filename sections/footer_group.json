@@ -23,21 +23,21 @@
         "icon_et_texte_GCGzTw": {
           "type": "icon-et-texte",
           "settings": {
-            "image_image": "shopify://shop_images/worldwide-8.png",
+            "image_image": "shopify://shop_images/Worldwide_V2_4x_b9242fef-85d5-4ecf-bd46-3d36bad24cfe.png",
             "text_text": "Livraison mondiale"
           }
         },
         "icon_et_texte_gNFqBG": {
           "type": "icon-et-texte",
           "settings": {
-            "image_image": "shopify://shop_images/paiement_secure-8.png",
+            "image_image": "shopify://shop_images/Paiement_V2_4x_8a25e8f2-73ce-472d-9bee-d947bc33f996.png",
             "text_text": "Paiement sécurisé"
           }
         },
         "icon_et_texte_fCqVq9": {
           "type": "icon-et-texte",
           "settings": {
-            "image_image": "shopify://shop_images/retours-8.png",
+            "image_image": "shopify://shop_images/Echange_V2_4x_f071e5a9-3459-4846-8f28-72bcd74448ea.png",
             "text_text": "Retours & échanges"
           }
         },
@@ -47,6 +47,13 @@
             "image_image": "shopify://shop_images/ecologique-8.png",
             "text_text": "Eco-reponsable"
           }
+        },
+        "icon_et_texte_J3birw": {
+          "type": "icon-et-texte",
+          "settings": {
+            "image_image": "shopify://shop_images/Cruelty-free_4x_9d2208fa-ad36-4a88-b774-b6894e4cca8e.png",
+            "text_text": "Vegan friendly"
+          }
         }
       },
       "block_order": [
@@ -54,17 +61,11 @@
         "icon_et_texte_GCGzTw",
         "icon_et_texte_gNFqBG",
         "icon_et_texte_fCqVq9",
-        "icon_et_texte_bfMEFd"
+        "icon_et_texte_bfMEFd",
+        "icon_et_texte_J3birw"
       ],
       "name": "picto-V2",
       "settings": {}
-    },
-    "text_seo_LrA87M": {
-      "type": "text_seo",
-      "name": "SEO Footer - Home Only",
-      "settings": {
-        "richtext_richtext": "<p>Faroush propose une collection complète de <strong>chaussures barefoot pour enfants</strong>, alliant confort, liberté de mouvement et respect du développement naturel du pied. Retrouvez nos modèles de <strong>baskets minimalistes souples et légères</strong>, idéales pour l’école et les jeux, nos <strong>bottines barefoot chaudes et zéro drop</strong> pour affronter l’hiver, ainsi que nos <strong>ballerines enfant Mary Jane</strong> élégantes et confortables. Chaque paire est conçue en <strong>cuir vegan</strong> et <strong>textile respirant</strong> pour préserver la santé des pieds, avec une <strong>semelle intérieure lavable en machine</strong> et <strong>antibactérienne</strong> pour une hygiène parfaite.</p><p>Nos chaussures barefoot accompagnent les enfants à chaque étape : <strong>premiers pas</strong>, aventures au grand air, journées à l’école ou occasions spéciales. Offrez-leur la sensation du pied nu tout en assurant protection et maintien. Découvrez aussi nos conseils pour bien choisir vos <strong>chaussures minimalistes enfant</strong>, comprendre les avantages du <strong>barefoot</strong> et favoriser la <strong>motricité libre</strong>.</p><p>Engagée dans une démarche éco-responsable, Faroush sélectionne des matériaux durables et conçoit des chaussures pensées pour durer. Explorez notre boutique en ligne pour trouver la paire parfaite et laissez vos enfants grandir librement, pas après pas.</p>"
-      }
     },
     "newsletter_Km3ayd": {
       "type": "newsletter",
@@ -80,6 +81,13 @@
         "success_message": "Merci ! Votre inscription a été confirmée !"
       }
     },
+    "text_seo_LrA87M": {
+      "type": "text_seo",
+      "name": "SEO Footer - Home Only",
+      "settings": {
+        "richtext_richtext": "<p>Faroush propose une collection complète de <strong>chaussures barefoot pour enfants</strong>, alliant confort, liberté de mouvement et respect du développement naturel du pied. Retrouvez nos modèles de <strong>baskets minimalistes souples et légères</strong>, idéales pour l’école et les jeux, nos <strong>bottines barefoot chaudes et zéro drop</strong> pour affronter l’hiver, ainsi que nos <strong>ballerines enfant Mary Jane</strong> élégantes et confortables. Chaque paire est conçue en <strong>cuir vegan</strong> et <strong>textile respirant</strong> pour préserver la santé des pieds, avec une <strong>semelle intérieure lavable en machine</strong> et <strong>antibactérienne</strong> pour une hygiène parfaite.</p><p>Nos chaussures barefoot accompagnent les enfants à chaque étape : <strong>premiers pas</strong>, aventures au grand air, journées à l’école ou occasions spéciales. Offrez-leur la sensation du pied nu tout en assurant protection et maintien. Découvrez aussi nos conseils pour bien choisir vos <strong>chaussures minimalistes enfant</strong>, comprendre les avantages du <strong>barefoot</strong> et favoriser la <strong>motricité libre</strong>.</p><p>Engagée dans une démarche éco-responsable, Faroush sélectionne des matériaux durables et conçoit des chaussures pensées pour durer. Explorez notre boutique en ligne pour trouver la paire parfaite et laissez vos enfants grandir librement, pas après pas.</p>"
+      }
+    },
     "footer": {
       "type": "footer",
       "settings": {
@@ -90,8 +98,8 @@
   },
   "order": [
     "picto_v2_G9TDwa",
-    "text_seo_LrA87M",
     "newsletter_Km3ayd",
+    "text_seo_LrA87M",
     "footer"
   ]
 }
