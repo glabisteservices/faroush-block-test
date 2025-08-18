@@ -1,12 +1,26 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections": {
-        "text_cta": {
-            "type": "text_cta"
-        }
-    },
-    "layout": "theme",
-    "wrapper": "main.main-wrapper",
-    "order": [
-        "text_cta"
-    ]
+  "sections": {
+    "text_cta": {
+      "type": "text_cta",
+      "settings": {
+        "text_heading": "Merci pour votre message !",
+        "text_paragraph": "Un membre de notre équipe va revenir vers vous sous 48h ouvrées",
+        "text_button_text": "Retour à l'accueil"
+      }
+    }
+  },
+  "layout": "theme",
+  "wrapper": "main.main-wrapper",
+  "order": [
+    "text_cta"
+  ]
 }

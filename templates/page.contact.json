@@ -1,12 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections": {
-        "contact": {
-            "type": "contact"
-        }
-    },
-    "layout": "theme",
-    "wrapper": "main.main-wrapper",
-    "order": [
-        "contact"
-    ]
+  "sections": {
+    "contact": {
+      "type": "contact",
+      "settings": {
+        "text_heading": "Contact us",
+        "text_paragraph": "Contactez-nous par email info@faroush.fr ou par téléphone au",
+        "text_first_name": "Prénom",
+        "text_last_name": "Nom",
+        "text_email": "Email",
+        "text_message": "Message",
+        "richtext_i_accept_the_terms": "<p>J'accepte les conditions d'utilisation et la politique de confidentialité</p>"
+      }
+    }
+  },
+  "layout": "theme",
+  "wrapper": "main.main-wrapper",
+  "order": [
+    "contact"
+  ]
 }
