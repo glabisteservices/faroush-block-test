@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product_hero_preorder": {
@@ -62,9 +71,7 @@
       ],
       "settings": {
         "show_shipping_info": true,
-        "shipping_text": "Expédition prévue en Mars 2025",
-        "preorder_badge": "Précommande",
-        "preorder_message": "Disponible en précommande - Livraison estimée Mars 2025"
+        "shipping_text": "{{ product.metafields.custom.date_de_pre_order.value }}"
       }
     },
     "product_details_accordion_8fNf6L": {
