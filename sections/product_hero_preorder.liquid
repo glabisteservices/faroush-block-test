@@ -841,75 +841,28 @@
         {% endfor %}
       {% endunless %}
       
-      <!-- Shipping Info - INCHANGÉ -->
+      <!-- Shipping Info - MODIFICATION : Livraison statique -->
       <div class="shipping-info">
         <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
         </svg>
-        <span class="shipping-text" id="dynamic-shipping-text">
-          {% comment %} Récupération dynamique des zones de livraison Shopify {% endcomment %}
-          {% assign customer_country = '' %}
-          {% if customer.default_address.country_code %}
-            {% assign customer_country = customer.default_address.country_code %}
-          {% elsif localization.country.iso_code %}
-            {% assign customer_country = localization.country.iso_code %}
+        <span class="shipping-text">
+          {% if section.settings.shipping_text != blank %}
+            {{ section.settings.shipping_text }}
           {% else %}
-            {% assign customer_country = 'FR' %}
+            Expédition prévue en Mars 2025
           {% endif %}
-
-          {% assign shipping_text = 'Livraison : nous contacter' %}
-          {% assign shipping_found = false %}
-
-          {% comment %} Parcourir les zones de livraison configurées dans Shopify {% endcomment %}
-          {% for shipping_zone in shop.shipping_zones %}
-            {% unless shipping_found %}
-              {% for country in shipping_zone.countries %}
-                {% if country.iso_code == customer_country %}
-                  {% for rate in shipping_zone.shipping_methods %}
-                    {% if rate.delivery_time != blank %}
-                      {% assign shipping_text = rate.delivery_time %}
-                      {% assign shipping_found = true %}
-                      {% break %}
-                    {% elsif rate.price == 0 %}
-                      {% assign shipping_text = 'Livraison gratuite' %}
-                      {% assign shipping_found = true %}
-                      {% break %}
-                    {% endif %}
-                  {% endfor %}
-                  {% break %}
-                {% endif %}
-              {% endfor %}
-            {% endunless %}
-          {% endfor %}
-
-          {% comment %} Fallback si aucune zone trouvée - utiliser les données des paramètres de livraison {% endcomment %}
-          {% unless shipping_found %}
-            {% case customer_country %}
-              {% when 'FR' %}
-                {% assign shipping_text = '2-4 jours ouvrables' %}
-              {% when 'BE', 'LU', 'CH', 'NL', 'DE', 'AT' %}
-                {% assign shipping_text = '3-6 jours ouvrables' %}
-              {% when 'ES', 'IT', 'PT' %}
-                {% assign shipping_text = '4-8 jours ouvrables' %}
-              {% when 'GB', 'IE' %}
-                {% assign shipping_text = '5-10 jours ouvrables' %}
-              {% else %}
-                {% assign shipping_text = 'Livraison internationale : nous contacter' %}
-            {% endcase %}
-          {% endunless %}
-
-          Livraison {{ shipping_text }}
         </span>
       </div>
       
-      <!-- Add to Cart Section - MODIFICATION PRINCIPALE : Version Alpine.js -->
+      <!-- Add to Cart Section - MODIFICATION PRINCIPALE : Version Alpine.js avec PRÉ-COMMANDER -->
       <div class="add-to-cart-section">
         <button type="button" 
                 class="add-to-cart-button" 
                 :disabled="!selectedVariant.available || isLoading"
                 @click="addToCart()">
           <span x-show="!isLoading">
-            <span x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></span>
+            <span x-text="selectedVariant.available ? 'PRÉ-COMMANDER' : 'Rupture de stock'"></span>
           </span>
           <span x-show="isLoading">Ajout en cours...</span>
         </button>
@@ -1263,9 +1216,6 @@ function closeSizeGuide(event) {
   }
 }
 
-// SUPPRIMÉ : Toutes les fonctions updateShippingBasedOnLocation, updatePrice, updateVariant, updateStockStatus
-// car elles sont maintenant gérées par Alpine.js
-
 // Initialisation - MODIFIÉ : Suppression des fonctions devenues inutiles
 document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
@@ -1337,51 +1287,34 @@ document.addEventListener('DOMContentLoaded', function() {
       wrapper.style.setProperty('width', '100%', 'important');
     });
   };
-
-  // Fonction pour protéger le contenu de livraison dynamique - INCHANGÉ
-  const protectDynamicShipping = () => {
-    const shippingElement = document.getElementById('dynamic-shipping-text');
-    if (shippingElement && shippingElement.getAttribute('data-dynamic-updated') === 'true') {
-      // Ne pas toucher au texte s'il a été mis à jour dynamiquement
-      return;
-    }
-  };
   
   // Exécuter immédiatement et à intervalles - INCHANGÉ
   protectTitle();
   adjustPictosOnMobile();
   fixSizeGuideLayout();
-  protectDynamicShipping();
   setTimeout(protectTitle, 50);
   setTimeout(adjustPictosOnMobile, 50);
   setTimeout(fixSizeGuideLayout, 50);
-  setTimeout(protectDynamicShipping, 50);
   setTimeout(protectTitle, 100);
   setTimeout(adjustPictosOnMobile, 100);
   setTimeout(fixSizeGuideLayout, 100);
-  setTimeout(protectDynamicShipping, 100);
   setTimeout(protectTitle, 200);
   setTimeout(adjustPictosOnMobile, 200);
   setTimeout(fixSizeGuideLayout, 200);
-  setTimeout(protectDynamicShipping, 200);
   setTimeout(protectTitle, 500);
   setTimeout(adjustPictosOnMobile, 500);
   setTimeout(fixSizeGuideLayout, 500);
-  setTimeout(protectDynamicShipping, 500);
   setTimeout(protectTitle, 1000);
   setTimeout(adjustPictosOnMobile, 1000);
   setTimeout(fixSizeGuideLayout, 1000);
-  setTimeout(protectDynamicShipping, 1000);
   setTimeout(protectTitle, 2000);
   setTimeout(adjustPictosOnMobile, 2000);
   setTimeout(fixSizeGuideLayout, 2000);
-  setTimeout(protectDynamicShipping, 2000);
   
   // Observer continu - INCHANGÉ
   setInterval(protectTitle, 1000);
   setInterval(adjustPictosOnMobile, 1000);
   setInterval(fixSizeGuideLayout, 1000);
-  setInterval(protectDynamicShipping, 1000);
   
   // Debug : surveiller les scroll automatiques non désirés - INCHANGÉ
   if (isMobile()) {
@@ -1408,7 +1341,6 @@ document.addEventListener('DOMContentLoaded', function() {
       protectTitle();
       adjustPictosOnMobile();
       fixSizeGuideLayout();
-      protectDynamicShipping();
     }, 100);
   });
 });
@@ -1416,7 +1348,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 {% schema %}
 {
-  "name": "Product Hero",
+  "name": "Product Hero Preorder",
   "tag": "section",
   "class": "Section-produit-fiche",
   "settings": [
@@ -1430,7 +1362,7 @@ document.addEventListener('DOMContentLoaded', function() {
       "type": "text",
       "id": "shipping_text",
       "label": "Texte de livraison",
-      "default": "Livraison 1 - 3 jours"
+      "default": "Expédition prévue en Mars 2025"
     }
   ],
   "blocks": [
@@ -1460,7 +1392,7 @@ document.addEventListener('DOMContentLoaded', function() {
   ],
   "presets": [
     {
-      "name": "Product Hero",
+      "name": "Product Hero Preorder",
       "category": "Liquify"
     }
   ],
