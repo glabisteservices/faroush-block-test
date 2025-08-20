@@ -52,12 +52,12 @@
         "disabled": false,
         "settings": {
           "button_color": "#6e612b",
-          "secondary_color": "#FFFFFF",
+          "secondary_color": "#ffffff",
           "ternary_color": "#bdbf85",
           "button_icon": "chat_bubble",
           "button_text": "chat_with_us",
           "button_horizontal_position": "bottom_right",
-          "button_vertical_position": "lowest",
+          "button_vertical_position": "higher",
           "greeting_message": "Bonjour, nous serions ravis de vous aider si vous avez la moindre question. Notre équipe se tient à votre disposition"
         }
       }
