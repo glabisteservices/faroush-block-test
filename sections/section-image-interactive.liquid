@@ -146,68 +146,77 @@
 </style>
 
 <div class="bloc-image-technique">
-{% for block in section.blocks %}
-  {% case block.type %}
-    {% when '@app' %}
-      {% render block %}
-    {% when 'image-desktop' %}
-      <div class="image-desktop">
-        <div class="image-desktop-file">
-          {% for button_block in block.blocks %}
-            {% case button_block.type %}
-              {% when 'button-point' %}
-                {% if button_block.settings.titre != blank %}
-                  <div class="button-interactif" 
-                       data-button-id="desktop-{{ block.id }}-{{ button_block.id }}"
-                       style="left: {{ button_block.settings.position_x }}%; top: {{ button_block.settings.position_y }}%;">
-                  </div>
-                  <div class="texte-legende" 
-                       data-content-id="desktop-{{ block.id }}-{{ button_block.id }}"
-                       data-button-x="{{ button_block.settings.position_x }}"
-                       data-button-y="{{ button_block.settings.position_y }}">
-                    <h3 class="heading-style-h3">{{ button_block.settings.titre }}</h3>
-                    <p class="paragraph">{{ button_block.settings.description }}</p>
-                  </div>
-                {% endif %}
-            {% endcase %}
-          {% endfor %}
-          
-          {% if block.settings.image_desktop %}
-            {{ block.settings.image_desktop | image_url: width: 1000 | image_tag: class: 'image-10', alt: 'Image interactive desktop', loading: 'lazy' }}
+  {% assign desktop_image_block = null %}
+  {% assign mobile_image_block = null %}
+  
+  {% comment %} Trouver les blocs d'images {% endcomment %}
+  {% for block in section.blocks %}
+    {% if block.type == 'image-desktop' %}
+      {% assign desktop_image_block = block %}
+    {% elsif block.type == 'image-mobile' %}
+      {% assign mobile_image_block = block %}
+    {% endif %}
+  {% endfor %}
+  
+  {% comment %} Affichage Desktop {% endcomment %}
+  {% if desktop_image_block %}
+    <div class="image-desktop">
+      <div class="image-desktop-file">
+        {% comment %} Boutons Desktop {% endcomment %}
+        {% for block in section.blocks %}
+          {% if block.type == 'button-desktop' and block.settings.titre != blank %}
+            <div class="button-interactif" 
+                 data-button-id="desktop-{{ block.id }}"
+                 style="left: {{ block.settings.position_x }}%; top: {{ block.settings.position_y }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="desktop-{{ block.id }}"
+                 data-button-x="{{ block.settings.position_x }}"
+                 data-button-y="{{ block.settings.position_y }}">
+              <h3 class="heading-style-h3">{{ block.settings.titre }}</h3>
+              <p class="paragraph">{{ block.settings.description }}</p>
+            </div>
           {% endif %}
-        </div>
+        {% endfor %}
+        
+        {% comment %} Image Desktop {% endcomment %}
+        {% if desktop_image_block.settings.image_desktop %}
+          {{ desktop_image_block.settings.image_desktop | image_url: width: 1000 | image_tag: class: 'image-10', alt: 'Image interactive desktop', loading: 'lazy' }}
+        {% endif %}
       </div>
-    {% when 'image-mobile' %}
-      <div class="image-mobile">
-        <div class="image-desktop-file">
-          {% for button_block in block.blocks %}
-            {% case button_block.type %}
-              {% when 'button-point' %}
-                {% if button_block.settings.titre != blank %}
-                  <div class="button-interactif" 
-                       data-button-id="mobile-{{ block.id }}-{{ button_block.id }}"
-                       style="left: {{ button_block.settings.position_x }}%; top: {{ button_block.settings.position_y }}%;">
-                  </div>
-                  <div class="texte-legende" 
-                       data-content-id="mobile-{{ block.id }}-{{ button_block.id }}"
-                       data-button-x="{{ button_block.settings.position_x }}"
-                       data-button-y="{{ button_block.settings.position_y }}">
-                    <h3 class="heading-style-h3">{{ button_block.settings.titre }}</h3>
-                    <p class="paragraph">{{ button_block.settings.description }}</p>
-                  </div>
-                {% endif %}
-            {% endcase %}
-          {% endfor %}
-          
-          {% if block.settings.image_mobile %}
-            {{ block.settings.image_mobile | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image interactive mobile', loading: 'lazy' }}
-          {% elsif block.settings.image_desktop %}
-            {{ block.settings.image_desktop | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
+    </div>
+  {% endif %}
+  
+  {% comment %} Affichage Mobile {% endcomment %}
+  {% if mobile_image_block %}
+    <div class="image-mobile">
+      <div class="image-desktop-file">
+        {% comment %} Boutons Mobile {% endcomment %}
+        {% for block in section.blocks %}
+          {% if block.type == 'button-mobile' and block.settings.titre != blank %}
+            <div class="button-interactif" 
+                 data-button-id="mobile-{{ block.id }}"
+                 style="left: {{ block.settings.position_x }}%; top: {{ block.settings.position_y }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="mobile-{{ block.id }}"
+                 data-button-x="{{ block.settings.position_x }}"
+                 data-button-y="{{ block.settings.position_y }}">
+              <h3 class="heading-style-h3">{{ block.settings.titre }}</h3>
+              <p class="paragraph">{{ block.settings.description }}</p>
+            </div>
           {% endif %}
-        </div>
+        {% endfor %}
+        
+        {% comment %} Image Mobile {% endcomment %}
+        {% if mobile_image_block.settings.image_mobile %}
+          {{ mobile_image_block.settings.image_mobile | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image mobile interactive', loading: 'lazy' }}
+        {% elsif mobile_image_block.settings.image_desktop %}
+          {{ mobile_image_block.settings.image_desktop | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
+        {% endif %}
       </div>
-  {% endcase %}
-{% endfor %}
+    </div>
+  {% endif %}
 </div>
 
 <script>
@@ -317,57 +326,19 @@ document.addEventListener('DOMContentLoaded', function() {
     {
       "name": "Image Desktop",
       "type": "image-desktop",
+      "limit": 1,
       "settings": [
         {
           "id": "image_desktop",
           "type": "image_picker",
           "label": "Image Desktop"
         }
-      ],
-      "blocks": [
-        {
-          "name": "Bouton Point",
-          "type": "button-point",
-          "settings": [
-            {
-              "id": "position_x",
-              "type": "range",
-              "min": 0,
-              "max": 100,
-              "step": 1,
-              "unit": "%",
-              "label": "Position X",
-              "default": 50
-            },
-            {
-              "id": "position_y",
-              "type": "range",
-              "min": 0,
-              "max": 100,
-              "step": 1,
-              "unit": "%",
-              "label": "Position Y",
-              "default": 30
-            },
-            {
-              "id": "titre",
-              "type": "text",
-              "label": "Titre",
-              "default": "Caractéristique"
-            },
-            {
-              "id": "description",
-              "type": "textarea",
-              "label": "Description",
-              "default": "Description de cette caractéristique"
-            }
-          ]
-        }
       ]
     },
     {
       "name": "Image Mobile",
       "type": "image-mobile",
+      "limit": 1,
       "settings": [
         {
           "id": "image_mobile",
@@ -379,45 +350,81 @@ document.addEventListener('DOMContentLoaded', function() {
           "type": "image_picker",
           "label": "Image de fallback"
         }
-      ],
-      "blocks": [
+      ]
+    },
+    {
+      "name": "Bouton Desktop",
+      "type": "button-desktop",
+      "settings": [
         {
-          "name": "Bouton Point",
-          "type": "button-point",
-          "settings": [
-            {
-              "id": "position_x",
-              "type": "range",
-              "min": 0,
-              "max": 100,
-              "step": 1,
-              "unit": "%",
-              "label": "Position X",
-              "default": 50
-            },
-            {
-              "id": "position_y",
-              "type": "range",
-              "min": 0,
-              "max": 100,
-              "step": 1,
-              "unit": "%",
-              "label": "Position Y",
-              "default": 30
-            },
-            {
-              "id": "titre",
-              "type": "text",
-              "label": "Titre",
-              "default": "Caractéristique"
-            },
-            {
-              "id": "description",
-              "type": "textarea",
-              "label": "Description",
-              "default": "Description de cette caractéristique"
-            }
-          ]
+          "id": "position_x",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position X",
+          "default": 50
+        },
+        {
+          "id": "position_y",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position Y",
+          "default": 30
+        },
+        {
+          "id": "titre",
+          "type": "text",
+          "label": "Titre",
+          "default": "Caractéristique"
+        },
+        {
+          "id": "description",
+          "type": "textarea",
+          "label": "Description",
+          "default": "Description de cette caractéristique"
+        }
+      ]
+    },
+    {
+      "name": "Bouton Mobile",
+      "type": "button-mobile",
+      "settings": [
+        {
+          "id": "position_x",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position X",
+          "default": 50
+        },
+        {
+          "id": "position_y",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position Y",
+          "default": 30
+        },
+        {
+          "id": "titre",
+          "type": "text",
+          "label": "Titre",
+          "default": "Caractéristique"
+        },
+        {
+          "id": "description",
+          "type": "textarea",
+          "label": "Description",
+          "default": "Description de cette caractéristique"
         }
       ]
     },
@@ -431,20 +438,13 @@ document.addEventListener('DOMContentLoaded', function() {
       "category": "Liquify",
       "blocks": [
         {
-          "type": "image-desktop",
-          "blocks": [
-            {
-              "type": "button-point"
-            }
-          ]
+          "type": "image-desktop"
         },
         {
-          "type": "image-mobile",
-          "blocks": [
-            {
-              "type": "button-point"
-            }
-          ]
+          "type": "image-mobile"
+        },
+        {
+          "type": "button-desktop"
         }
       ]
     }
