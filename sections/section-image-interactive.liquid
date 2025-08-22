@@ -1,4 +1,39 @@
-<style>
+{% when 'image-tech-desktop' %}
+        <div class="image-desktop" li-block="image-tech-desktop">
+          <div class="image-desktop-file">
+            {% comment %} Bouton 1 {% endcomment %}
+            {% if block.settings.button_1_heading != blank %}
+              <div class="button-interactif" 
+                   data-button-id="desktop-{{ block.id }}-1"
+                   style="left: {{ block.settings.button_1_position_x }}%; top: {{ block.settings.button_1_position_y }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="desktop-{{ block.id }}-1"
+                   data-button-x="{{ block.settings.button_1_position_x }}"
+                   data-button-y="{{ block.settings.button_1_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_1_heading }}</h3>
+                <p class="paragraph">{{ block.settings.button_1_paragraph }}</p>
+              </div>
+            {% endif %}
+            
+            {% comment %} Bouton 2 {% endcomment %}
+            {% if block.settings.button_2_heading != blank %}
+              <div class="button-interactif" 
+                   data-button-id="desktop-{{ block.id }}-2"
+                   style="left: {{ block.settings.button_2_position_x }}%; top: {{ block.settings.button_2_position_y }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="desktop-{{ block.id }}-2"
+                   data-button-x="{{ block.settings.button_2_position_x }}"
+                   data-button-y="{{ block.settings.button_2_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_2_heading }}</h3>
+                <p class="paragraph">{{ block.settings.button_2_paragraph }}</p>
+              </div>
+            {% endif %}
+            
+            {% comment %} Bouton<style>
   .bloc-image-technique {
     position: relative;
   }
@@ -28,8 +63,19 @@
   
   .button-interactif::after {
     content: '+';
-    font-size: 16px;
+    font-size: 18px;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  .button-interactif.active::after {
+    content: '−';
+    font-size: 20px;
   }
   
   .image-desktop-file {
@@ -61,37 +107,7 @@
   }
   
   .texte-legende::before {
-    content: '';
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    background-color: #f5f2d9;
-    transform: rotate(45deg);
-    z-index: -1;
-  }
-  
-  .texte-legende.position-top::before {
-    bottom: -6px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-  }
-  
-  .texte-legende.position-bottom::before {
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%) rotate(45deg);
-  }
-  
-  .texte-legende.position-left::before {
-    right: -6px;
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
-  }
-  
-  .texte-legende.position-right::before {
-    left: -6px;
-    top: 50%;
-    transform: translateY(-50%) rotate(45deg);
+    display: none;
   }
   
   .heading-style-h3 {
@@ -177,25 +193,56 @@
       {% when 'image-tech-desktop' %}
         <div class="image-desktop" li-block="image-tech-desktop">
           <div class="image-desktop-file">
-            {% assign button_x = block.settings.button_position_x | default: 50 %}
-            {% assign button_y = block.settings.button_position_y | default: 20 %}
+            {% comment %} Bouton 1 {% endcomment %}
+            {% if block.settings.button_1_heading != blank %}
+              <div class="button-interactif" 
+                   data-button-id="desktop-{{ block.id }}-1"
+                   style="left: {{ block.settings.button_1_position_x }}%; top: {{ block.settings.button_1_position_y }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="desktop-{{ block.id }}-1"
+                   data-button-x="{{ block.settings.button_1_position_x }}"
+                   data-button-y="{{ block.settings.button_1_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_1_heading }}</h3>
+                <p class="paragraph">{{ block.settings.button_1_paragraph }}</p>
+              </div>
+            {% endif %}
             
-            <div class="button-interactif" 
-                 data-button-id="desktop-{{ forloop.index }}"
-                 style="left: {{ button_x }}%; top: {{ button_y }}%;">
-              {{ block.settings.text_button_text }}
-            </div>
+            {% comment %} Bouton 2 {% endcomment %}
+            {% if block.settings.button_2_heading != blank %}
+              <div class="button-interactif" 
+                   data-button-id="desktop-{{ block.id }}-2"
+                   style="left: {{ block.settings.button_2_position_x }}%; top: {{ block.settings.button_2_position_y }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="desktop-{{ block.id }}-2"
+                   data-button-x="{{ block.settings.button_2_position_x }}"
+                   data-button-y="{{ block.settings.button_2_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_2_heading }}</h3>
+                <p class="paragraph">{{ block.settings.button_2_paragraph }}</p>
+              </div>
+            {% endif %}
             
-            <div class="texte-legende" 
-                 data-content-id="desktop-{{ forloop.index }}"
-                 data-button-x="{{ button_x }}"
-                 data-button-y="{{ button_y }}">
-              <h3 class="heading-style-h3">{{ block.settings.text_heading }}</h3>
-              <p class="paragraph">{{ block.settings.text_paragraph }}</p>
-            </div>
+            {% comment %} Bouton 3 {% endcomment %}
+            {% if block.settings.button_3_heading != blank %}
+              <div class="button-interactif" 
+                   data-button-id="desktop-{{ block.id }}-3"
+                   style="left: {{ block.settings.button_3_position_x }}%; top: {{ block.settings.button_3_position_y }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="desktop-{{ block.id }}-3"
+                   data-button-x="{{ block.settings.button_3_position_x }}"
+                   data-button-y="{{ block.settings.button_3_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_3_heading }}</h3>
+                <p class="paragraph">{{ block.settings.button_3_paragraph }}</p>
+              </div>
+            {% endif %}
             
             {% if block.settings.image_image %}
-              {{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-10', alt: block.settings.text_heading, loading: 'lazy' }}
+              {{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
             {% else %}
               <img class="image-10" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68a811af8be8413d6106be3b_Desktop%20chaussure%20tech.jpg" alt="Image par défaut" loading="lazy">
             {% endif %}
@@ -205,27 +252,58 @@
       {% when 'image-tech-mobile' %}
         <div class="image-mobile" li-block="image-tech-mobile">
           <div class="image-desktop-file">
-            {% assign button_x_mobile = block.settings.button_position_x_mobile | default: 50 %}
-            {% assign button_y_mobile = block.settings.button_position_y_mobile | default: 20 %}
+            {% comment %} Bouton 1 Mobile {% endcomment %}
+            {% if block.settings.button_1_heading_mobile != blank %}
+              <div class="button-interactif" 
+                   data-button-id="mobile-{{ block.id }}-1"
+                   style="left: {{ block.settings.button_1_position_x_mobile }}%; top: {{ block.settings.button_1_position_y_mobile }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="mobile-{{ block.id }}-1"
+                   data-button-x="{{ block.settings.button_1_position_x_mobile }}"
+                   data-button-y="{{ block.settings.button_1_position_y_mobile }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_1_heading_mobile }}</h3>
+                <p class="paragraph">{{ block.settings.button_1_paragraph_mobile }}</p>
+              </div>
+            {% endif %}
             
-            <div class="button-interactif" 
-                 data-button-id="mobile-{{ forloop.index }}"
-                 style="left: {{ button_x_mobile }}%; top: {{ button_y_mobile }}%;">
-              {{ block.settings.text_button_text }}
-            </div>
+            {% comment %} Bouton 2 Mobile {% endcomment %}
+            {% if block.settings.button_2_heading_mobile != blank %}
+              <div class="button-interactif" 
+                   data-button-id="mobile-{{ block.id }}-2"
+                   style="left: {{ block.settings.button_2_position_x_mobile }}%; top: {{ block.settings.button_2_position_y_mobile }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="mobile-{{ block.id }}-2"
+                   data-button-x="{{ block.settings.button_2_position_x_mobile }}"
+                   data-button-y="{{ block.settings.button_2_position_y_mobile }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_2_heading_mobile }}</h3>
+                <p class="paragraph">{{ block.settings.button_2_paragraph_mobile }}</p>
+              </div>
+            {% endif %}
             
-            <div class="texte-legende" 
-                 data-content-id="mobile-{{ forloop.index }}"
-                 data-button-x="{{ button_x_mobile }}"
-                 data-button-y="{{ button_y_mobile }}">
-              <h3 class="heading-style-h3">{{ block.settings.text_heading }}</h3>
-              <p class="paragraph">{{ block.settings.text_paragraph }}</p>
-            </div>
+            {% comment %} Bouton 3 Mobile {% endcomment %}
+            {% if block.settings.button_3_heading_mobile != blank %}
+              <div class="button-interactif" 
+                   data-button-id="mobile-{{ block.id }}-3"
+                   style="left: {{ block.settings.button_3_position_x_mobile }}%; top: {{ block.settings.button_3_position_y_mobile }}%;">
+              </div>
+              
+              <div class="texte-legende" 
+                   data-content-id="mobile-{{ block.id }}-3"
+                   data-button-x="{{ block.settings.button_3_position_x_mobile }}"
+                   data-button-y="{{ block.settings.button_3_position_y_mobile }}">
+                <h3 class="heading-style-h3">{{ block.settings.button_3_heading_mobile }}</h3>
+                <p class="paragraph">{{ block.settings.button_3_paragraph_mobile }}</p>
+              </div>
+            {% endif %}
             
             {% if block.settings.image_image_mobile %}
-              {{ block.settings.image_image_mobile | image_url: width: 800 | image_tag: class: 'image-10', alt: block.settings.text_heading, loading: 'lazy' }}
+              {{ block.settings.image_image_mobile | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image mobile interactive', loading: 'lazy' }}
             {% elsif block.settings.image_image %}
-              {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-10', alt: block.settings.text_heading, loading: 'lazy' }}
+              {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
             {% else %}
               <img class="image-10" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68a811ad6d4fcb8dbe6527be_Chaussure%20mobile_tech.jpg" alt="Image mobile par défaut" loading="lazy">
             {% endif %}
@@ -253,6 +331,12 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.texte-legende.active').forEach(box => {
           if (box !== contentBox) {
             box.classList.remove('active');
+            // Trouver le bouton correspondant et lui retirer la classe active
+            const otherButtonId = box.getAttribute('data-content-id');
+            const otherButton = document.querySelector(`[data-button-id="${otherButtonId}"]`);
+            if (otherButton) {
+              otherButton.classList.remove('active');
+            }
           }
         });
         
@@ -261,8 +345,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isActive) {
           positionContentBox(button, contentBox, buttonX, buttonY);
           contentBox.classList.add('active');
+          button.classList.add('active');
         } else {
           contentBox.classList.remove('active');
+          button.classList.remove('active');
         }
       });
     }
@@ -272,6 +358,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!e.target.closest('.button-interactif') && !e.target.closest('.texte-legende')) {
       document.querySelectorAll('.texte-legende.active').forEach(box => {
         box.classList.remove('active');
+      });
+      document.querySelectorAll('.button-interactif.active').forEach(button => {
+        button.classList.remove('active');
       });
     }
   });
@@ -334,46 +423,101 @@ document.addEventListener('DOMContentLoaded', function() {
       "type": "image-tech-desktop",
       "settings": [
         {
-          "id": "text_button_text",
-          "type": "text",
-          "label": "Texte du bouton"
-        },
-        {
-          "id": "button_position_x",
-          "type": "range",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Position X du bouton",
-          "default": 50
-        },
-        {
-          "id": "button_position_y",
-          "type": "range",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Position Y du bouton",
-          "default": 20
-        },
-        {
-          "id": "text_heading",
-          "type": "text",
-          "label": "Titre",
-          "default": "Titre du produit"
-        },
-        {
-          "id": "text_paragraph",
-          "type": "textarea",
-          "label": "Description",
-          "default": "Description du produit ou de la caractéristique"
-        },
-        {
           "id": "image_image",
           "type": "image_picker",
           "label": "Image Desktop"
+        },
+        {
+          "id": "button_1_position_x",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 1 - Position X",
+          "default": 30
+        },
+        {
+          "id": "button_1_position_y",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 1 - Position Y",
+          "default": 20
+        },
+        {
+          "id": "button_1_heading",
+          "type": "text",
+          "label": "Bouton 1 - Titre",
+          "default": "Caractéristique 1"
+        },
+        {
+          "id": "button_1_paragraph",
+          "type": "textarea",
+          "label": "Bouton 1 - Description",
+          "default": "Description de cette caractéristique"
+        },
+        {
+          "id": "button_2_position_x",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 2 - Position X",
+          "default": 70
+        },
+        {
+          "id": "button_2_position_y",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 2 - Position Y",
+          "default": 40
+        },
+        {
+          "id": "button_2_heading",
+          "type": "text",
+          "label": "Bouton 2 - Titre"
+        },
+        {
+          "id": "button_2_paragraph",
+          "type": "textarea",
+          "label": "Bouton 2 - Description"
+        },
+        {
+          "id": "button_3_position_x",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 3 - Position X",
+          "default": 50
+        },
+        {
+          "id": "button_3_position_y",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 3 - Position Y",
+          "default": 60
+        },
+        {
+          "id": "button_3_heading",
+          "type": "text",
+          "label": "Bouton 3 - Titre"
+        },
+        {
+          "id": "button_3_paragraph",
+          "type": "textarea",
+          "label": "Bouton 3 - Description"
         }
       ]
     },
@@ -381,43 +525,6 @@ document.addEventListener('DOMContentLoaded', function() {
       "name": "Image Mobile",
       "type": "image-tech-mobile",
       "settings": [
-        {
-          "id": "text_button_text",
-          "type": "text",
-          "label": "Texte du bouton"
-        },
-        {
-          "id": "button_position_x_mobile",
-          "type": "range",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Position X du bouton Mobile",
-          "default": 50
-        },
-        {
-          "id": "button_position_y_mobile",
-          "type": "range",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Position Y du bouton Mobile",
-          "default": 20
-        },
-        {
-          "id": "text_heading",
-          "type": "text",
-          "label": "Titre",
-          "default": "Titre du produit"
-        },
-        {
-          "id": "text_paragraph",
-          "type": "textarea",
-          "label": "Description",
-          "default": "Description du produit ou de la caractéristique"
-        },
         {
           "id": "image_image_mobile",
           "type": "image_picker",
@@ -427,6 +534,98 @@ document.addEventListener('DOMContentLoaded', function() {
           "id": "image_image",
           "type": "image_picker",
           "label": "Image de fallback"
+        },
+        {
+          "id": "button_1_position_x_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 1 Mobile - Position X",
+          "default": 30
+        },
+        {
+          "id": "button_1_position_y_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 1 Mobile - Position Y",
+          "default": 20
+        },
+        {
+          "id": "button_1_heading_mobile",
+          "type": "text",
+          "label": "Bouton 1 Mobile - Titre",
+          "default": "Caractéristique 1"
+        },
+        {
+          "id": "button_1_paragraph_mobile",
+          "type": "textarea",
+          "label": "Bouton 1 Mobile - Description",
+          "default": "Description de cette caractéristique"
+        },
+        {
+          "id": "button_2_position_x_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 2 Mobile - Position X",
+          "default": 70
+        },
+        {
+          "id": "button_2_position_y_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 2 Mobile - Position Y",
+          "default": 40
+        },
+        {
+          "id": "button_2_heading_mobile",
+          "type": "text",
+          "label": "Bouton 2 Mobile - Titre"
+        },
+        {
+          "id": "button_2_paragraph_mobile",
+          "type": "textarea",
+          "label": "Bouton 2 Mobile - Description"
+        },
+        {
+          "id": "button_3_position_x_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 3 Mobile - Position X",
+          "default": 50
+        },
+        {
+          "id": "button_3_position_y_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Bouton 3 Mobile - Position Y",
+          "default": 60
+        },
+        {
+          "id": "button_3_heading_mobile",
+          "type": "text",
+          "label": "Bouton 3 Mobile - Titre"
+        },
+        {
+          "id": "button_3_paragraph_mobile",
+          "type": "textarea",
+          "label": "Bouton 3 Mobile - Description"
         }
       ]
     },
