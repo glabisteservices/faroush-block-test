@@ -304,38 +304,6 @@
       "settings": {
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
-    },
-    "section_image_interactive_LzpyMT": {
-      "type": "section-image-interactive",
-      "blocks": {
-        "image_tech_desktop_qWiUKE": {
-          "type": "image-tech-desktop",
-          "settings": {
-            "text_button_text": "",
-            "button_position_x": 68,
-            "button_position_y": 20,
-            "text_heading": "Zero drop",
-            "text_paragraph": "Pas d'inclinaison talon/orteils, pour un alignement naturel du corps",
-            "image_image": "shopify://shop_images/Desktop_chaussure_tech.jpg"
-          }
-        },
-        "image_tech_mobile_AFhmUK": {
-          "type": "image-tech-mobile",
-          "settings": {
-            "text_button_text": "",
-            "button_position_x_mobile": 50,
-            "button_position_y_mobile": 20,
-            "text_heading": "Titre du produit",
-            "text_paragraph": "Description du produit ou de la caractéristique"
-          }
-        }
-      },
-      "block_order": [
-        "image_tech_desktop_qWiUKE",
-        "image_tech_mobile_AFhmUK"
-      ],
-      "name": "Image Interactive",
-      "settings": {}
     }
   },
   "layout": "theme",
@@ -346,7 +314,6 @@
     "manual_products_d_hEiEXt",
     "image_pleine_largeur_CwNnri",
     "faq_pAztkk",
-    "temoignage_wLnXBL",
-    "section_image_interactive_LzpyMT"
+    "temoignage_wLnXBL"
   ]
 }
