@@ -304,6 +304,41 @@
       "settings": {
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
+    },
+    "image_pleine_largeur_rYBBFJ": {
+      "type": "image-pleine-largeur",
+      "blocks": {
+        "image_desktop_kBMP6R": {
+          "type": "image-desktop",
+          "settings": {
+            "image_image": "shopify://shop_images/Desktop_chaussure_tech.jpg",
+            "heading_text": "",
+            "paragraph_text": "",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "brown",
+            "button_color": "brown"
+          }
+        },
+        "image_mobile_yFKTtY": {
+          "type": "image-mobile",
+          "settings": {
+            "image_image": "shopify://shop_images/Chaussure_mobile_tech.jpg",
+            "heading_text": "",
+            "paragraph_text": "",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "brown",
+            "button_color": "brown"
+          }
+        }
+      },
+      "block_order": [
+        "image_desktop_kBMP6R",
+        "image_mobile_yFKTtY"
+      ],
+      "name": "image-pleine-largeur",
+      "settings": {}
     }
   },
   "layout": "theme",
@@ -314,6 +349,7 @@
     "manual_products_d_hEiEXt",
     "image_pleine_largeur_CwNnri",
     "faq_pAztkk",
-    "temoignage_wLnXBL"
+    "temoignage_wLnXBL",
+    "image_pleine_largeur_rYBBFJ"
   ]
 }
