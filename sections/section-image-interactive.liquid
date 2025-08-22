@@ -178,16 +178,19 @@
       {% when 'image-tech-desktop' %}
         <div class="image-desktop" li-block="image-tech-desktop">
           <div class="Image-desktop-file">
+            {% assign button_x = block.settings.button_position_x | default: 50 %}
+            {% assign button_y = block.settings.button_position_y | default: 20 %}
+            
             <div class="button-interactif" 
                  data-button-id="desktop-{{ forloop.index }}"
-                 style="left: {{ block.settings.button_position_x | default: 50 }}%; top: {{ block.settings.button_position_y | default: 20 }}%;">
+                 style="left: {{ button_x }}%; top: {{ button_y }}%;">
               {{ block.settings.text_button_text }}
             </div>
             
             <div class="texte-legende" 
                  data-content-id="desktop-{{ forloop.index }}"
-                 data-button-x="{{ block.settings.button_position_x | default: 50 }}"
-                 data-button-y="{{ block.settings.button_position_y | default: 20 }}">
+                 data-button-x="{{ button_x }}"
+                 data-button-y="{{ button_y }}">
               <h3 class="heading-style-h3">{{ block.settings.text_heading }}</h3>
               <p class="paragraph">{{ block.settings.text_paragraph }}</p>
             </div>
@@ -203,16 +206,19 @@
       {% when 'image-tech-mobile' %}
         <div class="image-mobile" li-block="image-tech-mobile">
           <div class="Image-desktop-file">
+            {% assign button_x_mobile = block.settings.button_position_x_mobile | default: 50 %}
+            {% assign button_y_mobile = block.settings.button_position_y_mobile | default: 20 %}
+            
             <div class="button-interactif" 
                  data-button-id="mobile-{{ forloop.index }}"
-                 style="left: {{ block.settings.button_position_x_mobile | default: 50 }}%; top: {{ block.settings.button_position_y_mobile | default: 20 }}%;">
+                 style="left: {{ button_x_mobile }}%; top: {{ button_y_mobile }}%;">
               {{ block.settings.text_button_text }}
             </div>
             
             <div class="texte-legende" 
                  data-content-id="mobile-{{ forloop.index }}"
-                 data-button-x="{{ block.settings.button_position_x_mobile | default: 50 }}"
-                 data-button-y="{{ block.settings.button_position_y_mobile | default: 20 }}">
+                 data-button-x="{{ button_x_mobile }}"
+                 data-button-y="{{ button_y_mobile }}">
               <h3 class="heading-style-h3">{{ block.settings.text_heading }}</h3>
               <p class="paragraph">{{ block.settings.text_paragraph }}</p>
             </div>
