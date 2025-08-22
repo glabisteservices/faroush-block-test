@@ -194,50 +194,50 @@
         <div class="image-desktop" li-block="image-tech-desktop">
           <div class="image-desktop-file">
             {% comment %} Bouton 1 {% endcomment %}
-            {% if block.settings.button_1_heading != blank %}
+            {% if block.settings.bouton_1_titre != blank %}
               <div class="button-interactif" 
                    data-button-id="desktop-{{ block.id }}-1"
-                   style="left: {{ block.settings.button_1_position_x }}%; top: {{ block.settings.button_1_position_y }}%;">
+                   style="left: {{ block.settings.bouton_1_position_x }}%; top: {{ block.settings.bouton_1_position_y }}%;">
               </div>
               
               <div class="texte-legende" 
                    data-content-id="desktop-{{ block.id }}-1"
-                   data-button-x="{{ block.settings.button_1_position_x }}"
-                   data-button-y="{{ block.settings.button_1_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_1_heading }}</h3>
-                <p class="paragraph">{{ block.settings.button_1_paragraph }}</p>
+                   data-button-x="{{ block.settings.bouton_1_position_x }}"
+                   data-button-y="{{ block.settings.bouton_1_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.bouton_1_titre }}</h3>
+                <p class="paragraph">{{ block.settings.bouton_1_description }}</p>
               </div>
             {% endif %}
             
             {% comment %} Bouton 2 {% endcomment %}
-            {% if block.settings.button_2_heading != blank %}
+            {% if block.settings.bouton_2_titre != blank %}
               <div class="button-interactif" 
                    data-button-id="desktop-{{ block.id }}-2"
-                   style="left: {{ block.settings.button_2_position_x }}%; top: {{ block.settings.button_2_position_y }}%;">
+                   style="left: {{ block.settings.bouton_2_position_x }}%; top: {{ block.settings.bouton_2_position_y }}%;">
               </div>
               
               <div class="texte-legende" 
                    data-content-id="desktop-{{ block.id }}-2"
-                   data-button-x="{{ block.settings.button_2_position_x }}"
-                   data-button-y="{{ block.settings.button_2_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_2_heading }}</h3>
-                <p class="paragraph">{{ block.settings.button_2_paragraph }}</p>
+                   data-button-x="{{ block.settings.bouton_2_position_x }}"
+                   data-button-y="{{ block.settings.bouton_2_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.bouton_2_titre }}</h3>
+                <p class="paragraph">{{ block.settings.bouton_2_description }}</p>
               </div>
             {% endif %}
             
             {% comment %} Bouton 3 {% endcomment %}
-            {% if block.settings.button_3_heading != blank %}
+            {% if block.settings.bouton_3_titre != blank %}
               <div class="button-interactif" 
                    data-button-id="desktop-{{ block.id }}-3"
-                   style="left: {{ block.settings.button_3_position_x }}%; top: {{ block.settings.button_3_position_y }}%;">
+                   style="left: {{ block.settings.bouton_3_position_x }}%; top: {{ block.settings.bouton_3_position_y }}%;">
               </div>
               
               <div class="texte-legende" 
                    data-content-id="desktop-{{ block.id }}-3"
-                   data-button-x="{{ block.settings.button_3_position_x }}"
-                   data-button-y="{{ block.settings.button_3_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_3_heading }}</h3>
-                <p class="paragraph">{{ block.settings.button_3_paragraph }}</p>
+                   data-button-x="{{ block.settings.bouton_3_position_x }}"
+                   data-button-y="{{ block.settings.bouton_3_position_y }}">
+                <h3 class="heading-style-h3">{{ block.settings.bouton_3_titre }}</h3>
+                <p class="paragraph">{{ block.settings.bouton_3_description }}</p>
               </div>
             {% endif %}
             
@@ -428,36 +428,41 @@ document.addEventListener('DOMContentLoaded', function() {
           "label": "Image Desktop"
         },
         {
-          "id": "button_1_position_x",
-          "type": "range",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "Bouton 1 - Position X",
-          "default": 30
+          "id": "texte_du_bouton",
+          "type": "text",
+          "label": "Texte du bouton"
         },
         {
-          "id": "button_1_position_y",
+          "id": "position_x_du_bouton",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 1 - Position Y",
+          "label": "Position X du bouton",
+          "default": 50
+        },
+        {
+          "id": "position_y_du_bouton",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position Y du bouton",
           "default": 20
         },
         {
-          "id": "button_1_heading",
+          "id": "titre",
           "type": "text",
-          "label": "Bouton 1 - Titre",
-          "default": "Caractéristique 1"
+          "label": "Titre",
+          "default": "Titre du produit"
         },
         {
-          "id": "button_1_paragraph",
+          "id": "description",
           "type": "textarea",
-          "label": "Bouton 1 - Description",
-          "default": "Description de cette caractéristique"
+          "label": "Description",
+          "default": "Description du produit ou de la caractéristique"
         },
         {
           "id": "button_2_position_x",
