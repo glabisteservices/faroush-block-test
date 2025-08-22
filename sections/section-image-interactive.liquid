@@ -1,0 +1,460 @@
+<style>
+  .bloc-image-technique {
+    position: relative;
+  }
+  
+  .button-interactif {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #f5f2d9;
+    opacity: 0.8;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: #6e612b;
+  }
+  
+  .button-interactif:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  
+  .button-interactif::after {
+    content: '+';
+    font-size: 16px;
+    line-height: 1;
+  }
+  
+  .Image-desktop-file {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .texte-legende {
+    position: absolute;
+    width: 250px;
+    max-width: 300px;
+    min-width: 200px;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #f5f2d9;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .texte-legende.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  .texte-legende::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #f5f2d9;
+    transform: rotate(45deg);
+    z-index: -1;
+  }
+  
+  /* Positionnement intelligent des flèches */
+  .texte-legende.position-top::before {
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  
+  .texte-legende.position-bottom::before {
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+  }
+  
+  .texte-legende.position-left::before {
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  
+  .texte-legende.position-right::before {
+    left: -6px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  
+  .heading-style-h3 {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 1.2rem;
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+  }
+  
+  .paragraph {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+  
+  .image-10 {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    display: block;
+  }
+  
+  .image-desktop {
+    display: block;
+    padding: 0 20px;
+  }
+  
+  .image-mobile {
+    display: none;
+    padding: 0 10px;
+  }
+  
+  @media screen and (max-width: 767px) {
+    .image-desktop {
+      display: none;
+    }
+    
+    .image-mobile {
+      display: block;
+    }
+    
+    .button-interactif {
+      width: 25px;
+      height: 25px;
+    }
+    
+    .texte-legende {
+      width: 200px;
+      max-width: 250px;
+      min-width: 180px;
+      padding: 12px;
+    }
+    
+    .heading-style-h3 {
+      font-size: 1rem;
+    }
+    
+    .paragraph {
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media screen and (max-width: 479px) {
+    .texte-legende {
+      width: 180px;
+      max-width: 200px;
+      min-width: 160px;
+      padding: 10px;
+    }
+  }
+</style>
+
+<div class="bloc-image-technique" li-content-for-blocks="">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when '@app' %}
+        {% render block %}
+        
+      {% when 'image-tech-desktop' %}
+        <div class="image-desktop" li-block="image-tech-desktop">
+          <div class="Image-desktop-file">
+            <div class="button-interactif" 
+                 data-button-id="desktop-{{ forloop.index }}"
+                 style="left: {{ block.settings.button_position_x | default: 50 }}%; top: {{ block.settings.button_position_y | default: 20 }}%;">
+              {{ block.settings.text_button_text }}
+            </div>
+            
+            <div class="texte-legende" 
+                 data-content-id="desktop-{{ forloop.index }}"
+                 data-button-x="{{ block.settings.button_position_x | default: 50 }}"
+                 data-button-y="{{ block.settings.button_position_y | default: 20 }}">
+              <h3 class="heading-style-h3">{{ block.settings.text_heading }}</h3>
+              <p class="paragraph">{{ block.settings.text_paragraph }}</p>
+            </div>
+            
+            {% if block.settings.image_image %}
+              {{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-10', alt: block.settings.text_heading, loading: 'lazy' }}
+            {% else %}
+              <img class="image-10" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68a811af8be8413d6106be3b_Desktop%20chaussure%20tech.jpg" alt="Image par défaut" loading="lazy">
+            {% endif %}
+          </div>
+        </div>
+        
+      {% when 'image-tech-mobile' %}
+        <div class="image-mobile" li-block="image-tech-mobile">
+          <div class="Image-desktop-file">
+            <div class="button-interactif" 
+                 data-button-id="mobile-{{ forloop.index }}"
+                 style="left: {{ block.settings.button_position_x_mobile | default: 50 }}%; top: {{ block.settings.button_position_y_mobile | default: 20 }}%;">
+              {{ block.settings.text_button_text }}
+            </div>
+            
+            <div class="texte-legende" 
+                 data-content-id="mobile-{{ forloop.index }}"
+                 data-button-x="{{ block.settings.button_position_x_mobile | default: 50 }}"
+                 data-button-y="{{ block.settings.button_position_y_mobile | default: 20 }}">
+              <h3 class="heading-style-h3">{{ block.settings.text_heading }}</h3>
+              <p class="paragraph">{{ block.settings.text_paragraph }}</p>
+            </div>
+            
+            {% if block.settings.image_image_mobile %}
+              {{ block.settings.image_image_mobile | image_url: width: 800 | image_tag: class: 'image-10', alt: block.settings.text_heading, loading: 'lazy' }}
+            {% elsif block.settings.image_image %}
+              {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-10', alt: block.settings.text_heading, loading: 'lazy' }}
+            {% else %}
+              <img class="image-10" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68a811ad6d4fcb8dbe6527be_Chaussure%20mobile_tech.jpg" alt="Image mobile par défaut" loading="lazy">
+            {% endif %}
+          </div>
+        </div>
+    {% endcase %}
+  {% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const buttons = document.querySelectorAll('.button-interactif');
+  
+  buttons.forEach(button => {
+    const buttonId = button.getAttribute('data-button-id');
+    const contentBox = document.querySelector(`[data-content-id="${buttonId}"]`);
+    
+    if (contentBox) {
+      const buttonX = parseFloat(contentBox.getAttribute('data-button-x'));
+      const buttonY = parseFloat(contentBox.getAttribute('data-button-y'));
+      
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        // Fermer les autres blocs ouverts
+        document.querySelectorAll('.texte-legende.active').forEach(box => {
+          if (box !== contentBox) {
+            box.classList.remove('active');
+          }
+        });
+        
+        // Toggle le bloc actuel
+        const isActive = contentBox.classList.contains('active');
+        
+        if (!isActive) {
+          positionContentBox(button, contentBox, buttonX, buttonY);
+          contentBox.classList.add('active');
+        } else {
+          contentBox.classList.remove('active');
+        }
+      });
+    }
+  });
+  
+  // Fermer les blocs en cliquant ailleurs
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.button-interactif') && !e.target.closest('.texte-legende')) {
+      document.querySelectorAll('.texte-legende.active').forEach(box => {
+        box.classList.remove('active');
+      });
+    }
+  });
+  
+  function positionContentBox(button, contentBox, buttonX, buttonY) {
+    const container = button.closest('.Image-desktop-file');
+    const containerRect = container.getBoundingClientRect();
+    const buttonRect = button.getBoundingClientRect();
+    const boxWidth = 250; // Largeur approximative du bloc
+    const boxHeight = 120; // Hauteur approximative du bloc
+    const margin = 15;
+    
+    let positionClass = '';
+    let left, top;
+    
+    // Calcul de la position optimale
+    const spaceRight = containerRect.right - buttonRect.right;
+    const spaceLeft = buttonRect.left - containerRect.left;
+    const spaceTop = buttonRect.top - containerRect.top;
+    const spaceBottom = containerRect.bottom - buttonRect.bottom;
+    
+    // Supprimer les anciennes classes de position
+    contentBox.classList.remove('position-top', 'position-bottom', 'position-left', 'position-right');
+    
+    // Logique de positionnement intelligent
+    if (spaceBottom >= boxHeight + margin) {
+      // Placer en bas
+      positionClass = 'position-top';
+      top = buttonY + 8; // 8% en dessous du bouton
+      left = Math.max(5, Math.min(95 - (boxWidth/containerRect.width * 100), buttonX - 12.5));
+    } else if (spaceTop >= boxHeight + margin) {
+      // Placer en haut
+      positionClass = 'position-bottom';
+      top = Math.max(5, buttonY - 25); // 25% au-dessus du bouton
+      left = Math.max(5, Math.min(95 - (boxWidth/containerRect.width * 100), buttonX - 12.5));
+    } else if (spaceRight >= boxWidth + margin) {
+      // Placer à droite
+      positionClass = 'position-left';
+      left = Math.min(95 - (boxWidth/containerRect.width * 100), buttonX + 8);
+      top = Math.max(5, Math.min(90, buttonY - 10));
+    } else if (spaceLeft >= boxWidth + margin) {
+      // Placer à gauche
+      positionClass = 'position-right';
+      left = Math.max(5, buttonX - (boxWidth/containerRect.width * 100) - 8);
+      top = Math.max(5, Math.min(90, buttonY - 10));
+    } else {
+      // Positionnement de fallback
+      positionClass = 'position-top';
+      top = Math.max(5, Math.min(70, buttonY + 8));
+      left = Math.max(5, Math.min(70, buttonX - 12.5));
+    }
+    
+    contentBox.classList.add(positionClass);
+    contentBox.style.left = left + '%';
+    contentBox.style.top = top + '%';
+  }
+});
+</script>
+
+{% schema %}
+{
+  "tag": "section",
+  "name": "Image Interactive",
+  "class": "Image-technique",
+  "blocks": [
+    {
+      "name": "Image Desktop",
+      "type": "image-tech-desktop",
+      "settings": [
+        {
+          "id": "text_button_text",
+          "type": "text",
+          "label": "Texte du bouton",
+          "default": ""
+        },
+        {
+          "id": "button_position_x",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position X du bouton",
+          "default": 50
+        },
+        {
+          "id": "button_position_y",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position Y du bouton",
+          "default": 20
+        },
+        {
+          "id": "text_heading",
+          "type": "text",
+          "label": "Titre",
+          "default": "Titre du produit"
+        },
+        {
+          "id": "text_paragraph",
+          "type": "textarea",
+          "label": "Description",
+          "default": "Description du produit ou de la caractéristique"
+        },
+        {
+          "id": "image_image",
+          "type": "image_picker",
+          "label": "Image Desktop"
+        }
+      ]
+    },
+    {
+      "name": "Image Mobile",
+      "type": "image-tech-mobile",
+      "settings": [
+        {
+          "id": "text_button_text",
+          "type": "text",
+          "label": "Texte du bouton",
+          "default": ""
+        },
+        {
+          "id": "button_position_x_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position X du bouton (Mobile)",
+          "default": 50
+        },
+        {
+          "id": "button_position_y_mobile",
+          "type": "range",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Position Y du bouton (Mobile)",
+          "default": 20
+        },
+        {
+          "id": "text_heading",
+          "type": "text",
+          "label": "Titre",
+          "default": "Titre du produit"
+        },
+        {
+          "id": "text_paragraph",
+          "type": "textarea",
+          "label": "Description",
+          "default": "Description du produit ou de la caractéristique"
+        },
+        {
+          "id": "image_image_mobile",
+          "type": "image_picker",
+          "label": "Image Mobile (optionnelle)"
+        },
+        {
+          "id": "image_image",
+          "type": "image_picker",
+          "label": "Image de fallback"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Interactive",
+      "category": "Liquify",
+      "blocks": [
+        {
+          "type": "image-tech-desktop"
+        },
+        {
+          "type": "image-tech-mobile"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
