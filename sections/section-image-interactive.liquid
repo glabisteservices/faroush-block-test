@@ -32,7 +32,7 @@
     line-height: 1;
   }
   
-  .Image-desktop-file {
+  .image-desktop-file {
     position: relative;
     display: inline-block;
     width: 100%;
@@ -70,7 +70,6 @@
     z-index: -1;
   }
   
-  /* Positionnement intelligent des flèches */
   .texte-legende.position-top::before {
     bottom: -6px;
     left: 50%;
@@ -177,7 +176,7 @@
         
       {% when 'image-tech-desktop' %}
         <div class="image-desktop" li-block="image-tech-desktop">
-          <div class="Image-desktop-file">
+          <div class="image-desktop-file">
             {% assign button_x = block.settings.button_position_x | default: 50 %}
             {% assign button_y = block.settings.button_position_y | default: 20 %}
             
@@ -205,7 +204,7 @@
         
       {% when 'image-tech-mobile' %}
         <div class="image-mobile" li-block="image-tech-mobile">
-          <div class="Image-desktop-file">
+          <div class="image-desktop-file">
             {% assign button_x_mobile = block.settings.button_position_x_mobile | default: 50 %}
             {% assign button_y_mobile = block.settings.button_position_y_mobile | default: 20 %}
             
@@ -251,14 +250,12 @@ document.addEventListener('DOMContentLoaded', function() {
       button.addEventListener('click', function(e) {
         e.preventDefault();
         
-        // Fermer les autres blocs ouverts
         document.querySelectorAll('.texte-legende.active').forEach(box => {
           if (box !== contentBox) {
             box.classList.remove('active');
           }
         });
         
-        // Toggle le bloc actuel
         const isActive = contentBox.classList.contains('active');
         
         if (!isActive) {
@@ -271,7 +268,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
   
-  // Fermer les blocs en cliquant ailleurs
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.button-interactif') && !e.target.closest('.texte-legende')) {
       document.querySelectorAll('.texte-legende.active').forEach(box => {
@@ -281,48 +277,40 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   function positionContentBox(button, contentBox, buttonX, buttonY) {
-    const container = button.closest('.Image-desktop-file');
+    const container = button.closest('.image-desktop-file');
     const containerRect = container.getBoundingClientRect();
     const buttonRect = button.getBoundingClientRect();
-    const boxWidth = 250; // Largeur approximative du bloc
-    const boxHeight = 120; // Hauteur approximative du bloc
+    const boxWidth = 250;
+    const boxHeight = 120;
     const margin = 15;
     
     let positionClass = '';
     let left, top;
     
-    // Calcul de la position optimale
     const spaceRight = containerRect.right - buttonRect.right;
     const spaceLeft = buttonRect.left - containerRect.left;
     const spaceTop = buttonRect.top - containerRect.top;
     const spaceBottom = containerRect.bottom - buttonRect.bottom;
     
-    // Supprimer les anciennes classes de position
     contentBox.classList.remove('position-top', 'position-bottom', 'position-left', 'position-right');
     
-    // Logique de positionnement intelligent
     if (spaceBottom >= boxHeight + margin) {
-      // Placer en bas
       positionClass = 'position-top';
-      top = buttonY + 8; // 8% en dessous du bouton
+      top = buttonY + 8;
       left = Math.max(5, Math.min(95 - (boxWidth/containerRect.width * 100), buttonX - 12.5));
     } else if (spaceTop >= boxHeight + margin) {
-      // Placer en haut
       positionClass = 'position-bottom';
-      top = Math.max(5, buttonY - 25); // 25% au-dessus du bouton
+      top = Math.max(5, buttonY - 25);
       left = Math.max(5, Math.min(95 - (boxWidth/containerRect.width * 100), buttonX - 12.5));
     } else if (spaceRight >= boxWidth + margin) {
-      // Placer à droite
       positionClass = 'position-left';
       left = Math.min(95 - (boxWidth/containerRect.width * 100), buttonX + 8);
       top = Math.max(5, Math.min(90, buttonY - 10));
     } else if (spaceLeft >= boxWidth + margin) {
-      // Placer à gauche
       positionClass = 'position-right';
       left = Math.max(5, buttonX - (boxWidth/containerRect.width * 100) - 8);
       top = Math.max(5, Math.min(90, buttonY - 10));
     } else {
-      // Positionnement de fallback
       positionClass = 'position-top';
       top = Math.max(5, Math.min(70, buttonY + 8));
       left = Math.max(5, Math.min(70, buttonX - 12.5));
@@ -405,7 +393,7 @@ document.addEventListener('DOMContentLoaded', function() {
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Position X du bouton (Mobile)",
+          "label": "Position X du bouton Mobile",
           "default": 50
         },
         {
@@ -415,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function() {
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Position Y du bouton (Mobile)",
+          "label": "Position Y du bouton Mobile",
           "default": 20
         },
         {
