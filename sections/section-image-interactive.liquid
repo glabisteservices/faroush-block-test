@@ -1,39 +1,4 @@
-{% when 'image-tech-desktop' %}
-        <div class="image-desktop" li-block="image-tech-desktop">
-          <div class="image-desktop-file">
-            {% comment %} Bouton 1 {% endcomment %}
-            {% if block.settings.button_1_heading != blank %}
-              <div class="button-interactif" 
-                   data-button-id="desktop-{{ block.id }}-1"
-                   style="left: {{ block.settings.button_1_position_x }}%; top: {{ block.settings.button_1_position_y }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="desktop-{{ block.id }}-1"
-                   data-button-x="{{ block.settings.button_1_position_x }}"
-                   data-button-y="{{ block.settings.button_1_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_1_heading }}</h3>
-                <p class="paragraph">{{ block.settings.button_1_paragraph }}</p>
-              </div>
-            {% endif %}
-            
-            {% comment %} Bouton 2 {% endcomment %}
-            {% if block.settings.button_2_heading != blank %}
-              <div class="button-interactif" 
-                   data-button-id="desktop-{{ block.id }}-2"
-                   style="left: {{ block.settings.button_2_position_x }}%; top: {{ block.settings.button_2_position_y }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="desktop-{{ block.id }}-2"
-                   data-button-x="{{ block.settings.button_2_position_x }}"
-                   data-button-y="{{ block.settings.button_2_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_2_heading }}</h3>
-                <p class="paragraph">{{ block.settings.button_2_paragraph }}</p>
-              </div>
-            {% endif %}
-            
-            {% comment %} Bouton<style>
+<style>
   .bloc-image-technique {
     position: relative;
   }
@@ -184,133 +149,115 @@
   }
 </style>
 
-<div class="bloc-image-technique" li-content-for-blocks="">
-  {% for block in section.blocks %}
-    {% case block.type %}
-      {% when '@app' %}
-        {% render block %}
-        
-      {% when 'image-tech-desktop' %}
-        <div class="image-desktop" li-block="image-tech-desktop">
-          <div class="image-desktop-file">
-            {% comment %} Bouton 1 {% endcomment %}
-            {% if block.settings.bouton_1_titre != blank %}
-              <div class="button-interactif" 
-                   data-button-id="desktop-{{ block.id }}-1"
-                   style="left: {{ block.settings.bouton_1_position_x }}%; top: {{ block.settings.bouton_1_position_y }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="desktop-{{ block.id }}-1"
-                   data-button-x="{{ block.settings.bouton_1_position_x }}"
-                   data-button-y="{{ block.settings.bouton_1_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.bouton_1_titre }}</h3>
-                <p class="paragraph">{{ block.settings.bouton_1_description }}</p>
-              </div>
-            {% endif %}
-            
-            {% comment %} Bouton 2 {% endcomment %}
-            {% if block.settings.bouton_2_titre != blank %}
-              <div class="button-interactif" 
-                   data-button-id="desktop-{{ block.id }}-2"
-                   style="left: {{ block.settings.bouton_2_position_x }}%; top: {{ block.settings.bouton_2_position_y }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="desktop-{{ block.id }}-2"
-                   data-button-x="{{ block.settings.bouton_2_position_x }}"
-                   data-button-y="{{ block.settings.bouton_2_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.bouton_2_titre }}</h3>
-                <p class="paragraph">{{ block.settings.bouton_2_description }}</p>
-              </div>
-            {% endif %}
-            
-            {% comment %} Bouton 3 {% endcomment %}
-            {% if block.settings.bouton_3_titre != blank %}
-              <div class="button-interactif" 
-                   data-button-id="desktop-{{ block.id }}-3"
-                   style="left: {{ block.settings.bouton_3_position_x }}%; top: {{ block.settings.bouton_3_position_y }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="desktop-{{ block.id }}-3"
-                   data-button-x="{{ block.settings.bouton_3_position_x }}"
-                   data-button-y="{{ block.settings.bouton_3_position_y }}">
-                <h3 class="heading-style-h3">{{ block.settings.bouton_3_titre }}</h3>
-                <p class="paragraph">{{ block.settings.bouton_3_description }}</p>
-              </div>
-            {% endif %}
-            
-            {% if block.settings.image_image %}
-              {{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
-            {% else %}
-              <img class="image-10" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68a811af8be8413d6106be3b_Desktop%20chaussure%20tech.jpg" alt="Image par défaut" loading="lazy">
-            {% endif %}
-          </div>
+<div class="bloc-image-technique">
+{% for block in section.blocks %}
+  {% case block.type %}
+    {% when '@app' %}
+      {% render block %}
+    {% when 'image-tech-desktop' %}
+      <div class="image-desktop">
+        <div class="image-desktop-file">
+          {% if block.settings.bouton_1_titre != blank %}
+            <div class="button-interactif" 
+                 data-button-id="desktop-{{ block.id }}-1"
+                 style="left: {{ block.settings.bouton_1_position_x }}%; top: {{ block.settings.bouton_1_position_y }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="desktop-{{ block.id }}-1"
+                 data-button-x="{{ block.settings.bouton_1_position_x }}"
+                 data-button-y="{{ block.settings.bouton_1_position_y }}">
+              <h3 class="heading-style-h3">{{ block.settings.bouton_1_titre }}</h3>
+              <p class="paragraph">{{ block.settings.bouton_1_description }}</p>
+            </div>
+          {% endif %}
+          
+          {% if block.settings.bouton_2_titre != blank %}
+            <div class="button-interactif" 
+                 data-button-id="desktop-{{ block.id }}-2"
+                 style="left: {{ block.settings.bouton_2_position_x }}%; top: {{ block.settings.bouton_2_position_y }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="desktop-{{ block.id }}-2"
+                 data-button-x="{{ block.settings.bouton_2_position_x }}"
+                 data-button-y="{{ block.settings.bouton_2_position_y }}">
+              <h3 class="heading-style-h3">{{ block.settings.bouton_2_titre }}</h3>
+              <p class="paragraph">{{ block.settings.bouton_2_description }}</p>
+            </div>
+          {% endif %}
+          
+          {% if block.settings.bouton_3_titre != blank %}
+            <div class="button-interactif" 
+                 data-button-id="desktop-{{ block.id }}-3"
+                 style="left: {{ block.settings.bouton_3_position_x }}%; top: {{ block.settings.bouton_3_position_y }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="desktop-{{ block.id }}-3"
+                 data-button-x="{{ block.settings.bouton_3_position_x }}"
+                 data-button-y="{{ block.settings.bouton_3_position_y }}">
+              <h3 class="heading-style-h3">{{ block.settings.bouton_3_titre }}</h3>
+              <p class="paragraph">{{ block.settings.bouton_3_description }}</p>
+            </div>
+          {% endif %}
+          
+          {% if block.settings.image_image %}
+            {{ block.settings.image_image | image_url: width: 1000 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
+          {% endif %}
         </div>
-        
-      {% when 'image-tech-mobile' %}
-        <div class="image-mobile" li-block="image-tech-mobile">
-          <div class="image-desktop-file">
-            {% comment %} Bouton 1 Mobile {% endcomment %}
-            {% if block.settings.button_1_heading_mobile != blank %}
-              <div class="button-interactif" 
-                   data-button-id="mobile-{{ block.id }}-1"
-                   style="left: {{ block.settings.button_1_position_x_mobile }}%; top: {{ block.settings.button_1_position_y_mobile }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="mobile-{{ block.id }}-1"
-                   data-button-x="{{ block.settings.button_1_position_x_mobile }}"
-                   data-button-y="{{ block.settings.button_1_position_y_mobile }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_1_heading_mobile }}</h3>
-                <p class="paragraph">{{ block.settings.button_1_paragraph_mobile }}</p>
-              </div>
-            {% endif %}
-            
-            {% comment %} Bouton 2 Mobile {% endcomment %}
-            {% if block.settings.button_2_heading_mobile != blank %}
-              <div class="button-interactif" 
-                   data-button-id="mobile-{{ block.id }}-2"
-                   style="left: {{ block.settings.button_2_position_x_mobile }}%; top: {{ block.settings.button_2_position_y_mobile }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="mobile-{{ block.id }}-2"
-                   data-button-x="{{ block.settings.button_2_position_x_mobile }}"
-                   data-button-y="{{ block.settings.button_2_position_y_mobile }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_2_heading_mobile }}</h3>
-                <p class="paragraph">{{ block.settings.button_2_paragraph_mobile }}</p>
-              </div>
-            {% endif %}
-            
-            {% comment %} Bouton 3 Mobile {% endcomment %}
-            {% if block.settings.button_3_heading_mobile != blank %}
-              <div class="button-interactif" 
-                   data-button-id="mobile-{{ block.id }}-3"
-                   style="left: {{ block.settings.button_3_position_x_mobile }}%; top: {{ block.settings.button_3_position_y_mobile }}%;">
-              </div>
-              
-              <div class="texte-legende" 
-                   data-content-id="mobile-{{ block.id }}-3"
-                   data-button-x="{{ block.settings.button_3_position_x_mobile }}"
-                   data-button-y="{{ block.settings.button_3_position_y_mobile }}">
-                <h3 class="heading-style-h3">{{ block.settings.button_3_heading_mobile }}</h3>
-                <p class="paragraph">{{ block.settings.button_3_paragraph_mobile }}</p>
-              </div>
-            {% endif %}
-            
-            {% if block.settings.image_image_mobile %}
-              {{ block.settings.image_image_mobile | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image mobile interactive', loading: 'lazy' }}
-            {% elsif block.settings.image_image %}
-              {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
-            {% else %}
-              <img class="image-10" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68a811ad6d4fcb8dbe6527be_Chaussure%20mobile_tech.jpg" alt="Image mobile par défaut" loading="lazy">
-            {% endif %}
-          </div>
+      </div>
+    {% when 'image-tech-mobile' %}
+      <div class="image-mobile">
+        <div class="image-desktop-file">
+          {% if block.settings.bouton_1_titre_mobile != blank %}
+            <div class="button-interactif" 
+                 data-button-id="mobile-{{ block.id }}-1"
+                 style="left: {{ block.settings.bouton_1_position_x_mobile }}%; top: {{ block.settings.bouton_1_position_y_mobile }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="mobile-{{ block.id }}-1"
+                 data-button-x="{{ block.settings.bouton_1_position_x_mobile }}"
+                 data-button-y="{{ block.settings.bouton_1_position_y_mobile }}">
+              <h3 class="heading-style-h3">{{ block.settings.bouton_1_titre_mobile }}</h3>
+              <p class="paragraph">{{ block.settings.bouton_1_description_mobile }}</p>
+            </div>
+          {% endif %}
+          
+          {% if block.settings.bouton_2_titre_mobile != blank %}
+            <div class="button-interactif" 
+                 data-button-id="mobile-{{ block.id }}-2"
+                 style="left: {{ block.settings.bouton_2_position_x_mobile }}%; top: {{ block.settings.bouton_2_position_y_mobile }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="mobile-{{ block.id }}-2"
+                 data-button-x="{{ block.settings.bouton_2_position_x_mobile }}"
+                 data-button-y="{{ block.settings.bouton_2_position_y_mobile }}">
+              <h3 class="heading-style-h3">{{ block.settings.bouton_2_titre_mobile }}</h3>
+              <p class="paragraph">{{ block.settings.bouton_2_description_mobile }}</p>
+            </div>
+          {% endif %}
+          
+          {% if block.settings.bouton_3_titre_mobile != blank %}
+            <div class="button-interactif" 
+                 data-button-id="mobile-{{ block.id }}-3"
+                 style="left: {{ block.settings.bouton_3_position_x_mobile }}%; top: {{ block.settings.bouton_3_position_y_mobile }}%;">
+            </div>
+            <div class="texte-legende" 
+                 data-content-id="mobile-{{ block.id }}-3"
+                 data-button-x="{{ block.settings.bouton_3_position_x_mobile }}"
+                 data-button-y="{{ block.settings.bouton_3_position_y_mobile }}">
+              <h3 class="heading-style-h3">{{ block.settings.bouton_3_titre_mobile }}</h3>
+              <p class="paragraph">{{ block.settings.bouton_3_description_mobile }}</p>
+            </div>
+          {% endif %}
+          
+          {% if block.settings.image_image_mobile %}
+            {{ block.settings.image_image_mobile | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image mobile interactive', loading: 'lazy' }}
+          {% elsif block.settings.image_image %}
+            {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-10', alt: 'Image interactive', loading: 'lazy' }}
+          {% endif %}
         </div>
-    {% endcase %}
-  {% endfor %}
+      </div>
+  {% endcase %}
+{% endfor %}
 </div>
 
 <script>
@@ -331,7 +278,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.texte-legende.active').forEach(box => {
           if (box !== contentBox) {
             box.classList.remove('active');
-            // Trouver le bouton correspondant et lui retirer la classe active
             const otherButtonId = box.getAttribute('data-content-id');
             const otherButton = document.querySelector(`[data-button-id="${otherButtonId}"]`);
             if (otherButton) {
@@ -428,22 +374,21 @@ document.addEventListener('DOMContentLoaded', function() {
           "label": "Image Desktop"
         },
         {
-          "id": "texte_du_bouton",
-          "type": "text",
-          "label": "Texte du bouton"
+          "type": "header",
+          "content": "Bouton 1"
         },
         {
-          "id": "position_x_du_bouton",
+          "id": "bouton_1_position_x",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
           "label": "Position X du bouton",
-          "default": 50
+          "default": 30
         },
         {
-          "id": "position_y_du_bouton",
+          "id": "bouton_1_position_y",
           "type": "range",
           "min": 0,
           "max": 100,
@@ -453,76 +398,84 @@ document.addEventListener('DOMContentLoaded', function() {
           "default": 20
         },
         {
-          "id": "titre",
+          "id": "bouton_1_titre",
           "type": "text",
           "label": "Titre",
-          "default": "Titre du produit"
+          "default": "Caractéristique 1"
         },
         {
-          "id": "description",
+          "id": "bouton_1_description",
           "type": "textarea",
           "label": "Description",
-          "default": "Description du produit ou de la caractéristique"
+          "default": "Description de cette caractéristique"
         },
         {
-          "id": "button_2_position_x",
+          "type": "header",
+          "content": "Bouton 2"
+        },
+        {
+          "id": "bouton_2_position_x",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 2 - Position X",
+          "label": "Position X du bouton",
           "default": 70
         },
         {
-          "id": "button_2_position_y",
+          "id": "bouton_2_position_y",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 2 - Position Y",
+          "label": "Position Y du bouton",
           "default": 40
         },
         {
-          "id": "button_2_heading",
+          "id": "bouton_2_titre",
           "type": "text",
-          "label": "Bouton 2 - Titre"
+          "label": "Titre"
         },
         {
-          "id": "button_2_paragraph",
+          "id": "bouton_2_description",
           "type": "textarea",
-          "label": "Bouton 2 - Description"
+          "label": "Description"
         },
         {
-          "id": "button_3_position_x",
+          "type": "header",
+          "content": "Bouton 3"
+        },
+        {
+          "id": "bouton_3_position_x",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 3 - Position X",
+          "label": "Position X du bouton",
           "default": 50
         },
         {
-          "id": "button_3_position_y",
+          "id": "bouton_3_position_y",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 3 - Position Y",
+          "label": "Position Y du bouton",
           "default": 60
         },
         {
-          "id": "button_3_heading",
+          "id": "bouton_3_titre",
           "type": "text",
-          "label": "Bouton 3 - Titre"
+          "label": "Titre"
         },
         {
-          "id": "button_3_paragraph",
+          "id": "bouton_3_description",
           "type": "textarea",
-          "label": "Bouton 3 - Description"
+          "label": "Description"
         }
       ]
     },
@@ -541,96 +494,108 @@ document.addEventListener('DOMContentLoaded', function() {
           "label": "Image de fallback"
         },
         {
-          "id": "button_1_position_x_mobile",
+          "type": "header",
+          "content": "Bouton 1 Mobile"
+        },
+        {
+          "id": "bouton_1_position_x_mobile",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 1 Mobile - Position X",
+          "label": "Position X du bouton",
           "default": 30
         },
         {
-          "id": "button_1_position_y_mobile",
+          "id": "bouton_1_position_y_mobile",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 1 Mobile - Position Y",
+          "label": "Position Y du bouton",
           "default": 20
         },
         {
-          "id": "button_1_heading_mobile",
+          "id": "bouton_1_titre_mobile",
           "type": "text",
-          "label": "Bouton 1 Mobile - Titre",
+          "label": "Titre",
           "default": "Caractéristique 1"
         },
         {
-          "id": "button_1_paragraph_mobile",
+          "id": "bouton_1_description_mobile",
           "type": "textarea",
-          "label": "Bouton 1 Mobile - Description",
+          "label": "Description",
           "default": "Description de cette caractéristique"
         },
         {
-          "id": "button_2_position_x_mobile",
+          "type": "header",
+          "content": "Bouton 2 Mobile"
+        },
+        {
+          "id": "bouton_2_position_x_mobile",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 2 Mobile - Position X",
+          "label": "Position X du bouton",
           "default": 70
         },
         {
-          "id": "button_2_position_y_mobile",
+          "id": "bouton_2_position_y_mobile",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 2 Mobile - Position Y",
+          "label": "Position Y du bouton",
           "default": 40
         },
         {
-          "id": "button_2_heading_mobile",
+          "id": "bouton_2_titre_mobile",
           "type": "text",
-          "label": "Bouton 2 Mobile - Titre"
+          "label": "Titre"
         },
         {
-          "id": "button_2_paragraph_mobile",
+          "id": "bouton_2_description_mobile",
           "type": "textarea",
-          "label": "Bouton 2 Mobile - Description"
+          "label": "Description"
         },
         {
-          "id": "button_3_position_x_mobile",
+          "type": "header",
+          "content": "Bouton 3 Mobile"
+        },
+        {
+          "id": "bouton_3_position_x_mobile",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 3 Mobile - Position X",
+          "label": "Position X du bouton",
           "default": 50
         },
         {
-          "id": "button_3_position_y_mobile",
+          "id": "bouton_3_position_y_mobile",
           "type": "range",
           "min": 0,
           "max": 100,
           "step": 1,
           "unit": "%",
-          "label": "Bouton 3 Mobile - Position Y",
+          "label": "Position Y du bouton",
           "default": 60
         },
         {
-          "id": "button_3_heading_mobile",
+          "id": "bouton_3_titre_mobile",
           "type": "text",
-          "label": "Bouton 3 Mobile - Titre"
+          "label": "Titre"
         },
         {
-          "id": "button_3_paragraph_mobile",
+          "id": "bouton_3_description_mobile",
           "type": "textarea",
-          "label": "Bouton 3 Mobile - Description"
+          "label": "Description"
         }
       ]
     },
