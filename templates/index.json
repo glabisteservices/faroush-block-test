@@ -120,6 +120,20 @@
         "url_button_link": "shopify://collections/nouveautes-de-la-rentree"
       }
     },
+    "bouton_seul_aCKjVb": {
+      "type": "bouton-seul",
+      "name": "Bouton Seul",
+      "settings": {
+        "text_text": "Voir la collection",
+        "url_link": "shopify://collections/all",
+        "button_alignment": "center",
+        "button_style": "filled",
+        "background_color": "#ec8451",
+        "text_color": "#f5f2d9",
+        "border_color": "#6e612b",
+        "hover_text_color": "#ec8451"
+      }
+    },
     "image_pleine_largeur_CwNnri": {
       "type": "image-pleine-largeur",
       "blocks": {
@@ -339,6 +353,11 @@
       "settings": {
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
+    },
+    "bloc_de_texte_haBbdV": {
+      "type": "bloc_de_texte",
+      "name": "Bloc de texte",
+      "settings": {}
     }
   },
   "layout": "theme",
@@ -347,6 +366,8 @@
     "image_pleine_largeur_CJ6868",
     "bloc_de_texte_daAqkh",
     "manual_products_d_hEiEXt",
+    "bouton_seul_aCKjVb",
+    "bloc_de_texte_haBbdV",
     "image_pleine_largeur_CwNnri",
     "faq_pAztkk",
     "image_pleine_largeur_rYBBFJ",
