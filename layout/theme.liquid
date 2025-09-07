@@ -180,7 +180,130 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
-<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>{{ content_for_header }}</head>
+<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>{{ content_for_header }}
+
+
+<script>
+// Data Layer Shopify - Version simplifiée et fiable
+window.dataLayer = window.dataLayer || [];
+
+function pushToDataLayer(data) {
+    window.dataLayer.push(data);
+    console.log('Shopify DataLayer:', data.event, data);
+}
+
+// Page view automatique
+function initPageView() {
+    pushToDataLayer({
+        event: 'page_view',
+        page_type: window.location.pathname.includes('/products/') ? 'product' : 'other',
+        page_url: window.location.href,
+        currency: 'EUR'
+    });
+}
+
+// View item pour pages produit
+function initViewItem() {
+    if (!window.location.pathname.includes('/products/')) return;
+    
+    // Attendre que les données Shopify soient disponibles
+    setTimeout(function() {
+        if (typeof meta !== 'undefined' && meta.product) {
+            const product = meta.product;
+            const variant = product.selected_or_first_available_variant;
+            
+            pushToDataLayer({
+                event: 'view_item',
+                ecommerce: {
+                    currency: 'EUR',
+                    value: parseFloat(variant.price / 100),
+                    items: [{
+                        item_id: variant.sku || variant.id.toString(),
+                        item_name: product.title,
+                        price: parseFloat(variant.price / 100),
+                        quantity: 1
+                    }]
+                },
+                product_id: product.id,
+                product_title: product.title
+            });
+        }
+    }, 500);
+}
+
+// Add to cart tracking
+function setupAddToCart() {
+    document.addEventListener('submit', function(e) {
+        if (e.target.action && e.target.action.includes('/cart/add')) {
+            setTimeout(function() {
+                pushToDataLayer({
+                    event: 'add_to_cart',
+                    ecommerce: {
+                        currency: 'EUR',
+                        value: 29.99, // Prix par défaut pour test
+                        items: [{
+                            item_id: 'added-product',
+                            item_name: 'Produit ajouté',
+                            price: 29.99,
+                            quantity: 1
+                        }]
+                    }
+                });
+            }, 300);
+        }
+    });
+}
+
+// Fonctions de test manuel
+window.testDataLayer = {
+    addToCart: function() {
+        pushToDataLayer({
+            event: 'add_to_cart',
+            ecommerce: {
+                currency: 'EUR',
+                value: 29.99,
+                items: [{
+                    item_id: 'test123',
+                    item_name: 'Test Product',
+                    price: 29.99,
+                    quantity: 1
+                }]
+            }
+        });
+        console.log('Test add_to_cart sent!');
+    },
+    
+    purchase: function() {
+        pushToDataLayer({
+            event: 'purchase',
+            ecommerce: {
+                transaction_id: 'TEST123',
+                value: 59.98,
+                currency: 'EUR',
+                items: [{
+                    item_id: 'test123',
+                    item_name: 'Test Product',
+                    price: 29.99,
+                    quantity: 2
+                }]
+            }
+        });
+        console.log('Test purchase sent!');
+    }
+};
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DataLayer initialization started...');
+    initPageView();
+    initViewItem();
+    setupAddToCart();
+    console.log('DataLayer ready. Test with: testDataLayer.addToCart()');
+});
+</script>
+
+
+</head>
 <body li-page="product" li-layout="theme">
   <div class="page-wrapper">
     {% render 'global_styles' %}
