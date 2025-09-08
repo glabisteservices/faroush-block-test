@@ -15,13 +15,13 @@
         "image_desktop_KtF4e7": {
           "type": "image-desktop",
           "settings": {
-            "image_image": "shopify://shop_images/C_est_la_rentree.site.2.png",
+            "image_image": "shopify://shop_images/qkhbvef.png",
             "heading_text": "C'est la rentrée !",
             "paragraph_text": "Découvrez nos nouveaux modèles",
             "button_text": "Acheter FW25",
             "button_link": "shopify://collections/nouveautes-de-la-rentree",
-            "text_color": "brown",
-            "button_color": "brown"
+            "text_color": "white",
+            "button_color": "white"
           }
         },
         "image_mobile_MdqRqN": {
