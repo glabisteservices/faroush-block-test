@@ -15,13 +15,13 @@
         "image_desktop_KtF4e7": {
           "type": "image-desktop",
           "settings": {
-            "image_image": "shopify://shop_images/HP_Septembre.jpg",
+            "image_image": "shopify://shop_images/C_est_la_rentree.site.2.png",
             "heading_text": "C'est la rentrée !",
             "paragraph_text": "Découvrez nos nouveaux modèles",
             "button_text": "Acheter FW25",
             "button_link": "shopify://collections/nouveautes-de-la-rentree",
-            "text_color": "white",
-            "button_color": "white"
+            "text_color": "brown",
+            "button_color": "brown"
           }
         },
         "image_mobile_MdqRqN": {
@@ -133,6 +133,11 @@
         "border_color": "#6e612b",
         "hover_text_color": "#ec8451"
       }
+    },
+    "bloc_de_texte_haBbdV": {
+      "type": "bloc_de_texte",
+      "name": "Bloc de texte",
+      "settings": {}
     },
     "image_pleine_largeur_CwNnri": {
       "type": "image-pleine-largeur",
@@ -353,11 +358,6 @@
       "settings": {
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
-    },
-    "bloc_de_texte_haBbdV": {
-      "type": "bloc_de_texte",
-      "name": "Bloc de texte",
-      "settings": {}
     }
   },
   "layout": "theme",
