@@ -60,6 +60,11 @@
           "button_vertical_position": "higher",
           "greeting_message": "Bonjour, nous serions ravis de vous aider si vous avez la moindre question. Notre équipe se tient à votre disposition"
         }
+      },
+      "2153490007123654574": {
+        "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
+        "disabled": false,
+        "settings": {}
       }
     }
   }
