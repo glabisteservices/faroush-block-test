@@ -1,7 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "product_hero"
+      "type": "product_hero_back_in_stock"
     }
   },
   "order": ["main"]
