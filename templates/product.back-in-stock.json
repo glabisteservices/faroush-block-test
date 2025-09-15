@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "product_hero_back_in_stock": {
@@ -61,10 +70,9 @@
         "picto_produit_nQTAK4"
       ],
       "settings": {
-        "show_shipping_info": false,
         "show_back_in_stock_form": true,
-        "back_in_stock_title": "Soyez notifié(e) du retour en stock",
-        "back_in_stock_message": "Laissez votre email et nous vous préviendrons dès que ce produit sera à nouveau disponible."
+        "back_in_stock_title": "Soyez notifié(e) lorsqu'il sera disponible",
+        "back_in_stock_message": "Laissez votre email et nous vous préviendrons dès que ce produit disponible."
       }
     },
     "product_details_accordion_8fNf6L": {
