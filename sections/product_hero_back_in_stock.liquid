@@ -1106,34 +1106,68 @@ document.addEventListener('alpine:init', () => {
 
       try {
         // Préparer les données pour Klaviyo
-        const formData = {
-          email: this.email,
-          product_id: {{ product.id }},
-          variant_id: this.selectedVariant.id,
-          product_name: {{ product.title | json }},
-          product_url: '{{ shop.secure_url }}{{ product.url }}',
-          product_image: '{{ product.featured_image | image_url: width: 600 }}',
-          product_price: this.selectedVariant.price,
-          variant_title: this.selectedVariant.title
+        const profileData = {
+          data: {
+            type: "profile",
+            attributes: {
+              email: this.email,
+              properties: {
+                product_id: {{ product.id }},
+                variant_id: this.selectedVariant.id,
+                product_name: {{ product.title | json }},
+                product_url: '{{ shop.secure_url }}{{ product.url }}',
+                product_image: '{{ product.featured_image | image_url: width: 600 }}',
+                product_price: this.selectedVariant.price,
+                variant_title: this.selectedVariant.title,
+                back_in_stock_request: true,
+                requested_at: new Date().toISOString()
+              }
+            }
+          }
         };
 
-        // Appel à l'endpoint (à créer)
-        const response = await fetch('/apps/klaviyo/back-in-stock', {
+        // Appel direct à l'API Klaviyo
+        const response = await fetch('https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Klaviyo-API-Key Xi2Mbf',
+            'revision': '2024-10-15'
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify({
+            data: {
+              type: "profile-subscription-bulk-create-job",
+              attributes: {
+                profiles: {
+                  data: [profileData.data]
+                },
+                subscriptions: {
+                  data: [{
+                    type: "profile-subscription-bulk-create-job-subscription",
+                    attributes: {
+                      list_id: "WzLznD"
+                    },
+                    relationships: {
+                      profile: {
+                        data: profileData.data
+                      }
+                    }
+                  }]
+                }
+              }
+            }
+          })
         });
 
-        if (response.ok) {
-          // Succès
+        if (response.ok || response.status === 202) {
+          // Succès (202 = Accepted pour les jobs async)
           this.showMessage('✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible.', 'success');
           this.email = ''; // Vider le champ email
         } else {
           // Erreur du serveur
           const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || 'Erreur lors de l\'inscription');
+          console.error('Erreur Klaviyo:', errorData);
+          throw new Error('Erreur lors de l\'inscription');
         }
 
       } catch (error) {
