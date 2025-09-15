@@ -421,24 +421,25 @@
     font-size: 0.9rem;
   }
 
-  /* Pictos Styles */
+  /* Pictos Styles - MODIFIÉ pour aligner sur une ligne */
   .product-pictos-container {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    width: 70%;
-    max-width: 70%;
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 100%;
   }
 
   /* DESKTOP uniquement : Forcer le flexbox au lieu de la grille */
   @media screen and (min-width: 769px) {
     .product-pictos-container {
       display: flex !important;
-      flex-wrap: wrap !important;
-      gap: 1rem !important;
+      flex-wrap: nowrap !important;
+      gap: 0.8rem !important;
       align-items: flex-start !important;
       justify-content: flex-start !important;
+      overflow: visible !important;
     }
 
     /* Conteneur de l'image : hauteur fixe 40px */
@@ -483,9 +484,12 @@
     .product-header_component .picto-produit,
     .product-pictos-container .picto-produit,
     .picto-produit {
-      height: 65px !important;
-      max-height: 65px !important;
-      min-height: 65px !important;
+      height: 45px !important;
+      max-height: 45px !important;
+      min-height: 45px !important;
+      flex: 0 0 auto !important;
+      min-width: 70px !important;
+      max-width: 90px !important;
     }
   }
 
