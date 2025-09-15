@@ -1105,22 +1105,73 @@ document.addEventListener('alpine:init', () => {
       this.hideMessage();
 
       try {
-        // Option 1 : Essayer l'API JavaScript Klaviyo si disponible
-        if (typeof _learnq !== 'undefined') {
-          _learnq.push(['identify', {
-            '$email': this.email,
-            'product_id': {{ product.id }},
-            'variant_id': this.selectedVariant.id,
-            'product_name': {{ product.title | json }},
-            'product_url': '{{ shop.secure_url }}{{ product.url }}',
-            'product_image': '{{ product.featured_image | image_url: width: 600 }}',
-            'product_price': this.selectedVariant.price,
-            'variant_title': this.selectedVariant.title,
-            'back_in_stock_request': true,
-            'requested_at': new Date().toISOString()
-          }]);
+        // Configuration de la Private API Key Klaviyo
+        const KLAVIYO_PRIVATE_KEY = 'VOTRE_PRIVATE_API_KEY'; // À remplacer par votre vraie clé
 
+        // Étape 1 : Créer ou mettre à jour le profil
+        const profileResponse = await fetch('https://a.klaviyo.com/api/profiles/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Klaviyo-API-Key ' + KLAVIYO_PRIVATE_KEY,
+            'revision': '2024-10-15'
+          },
+          body: JSON.stringify({
+            data: {
+              type: "profile",
+              attributes: {
+                email: this.email,
+                properties: {
+                  product_id: {{ product.id }},
+                  variant_id: this.selectedVariant.id,
+                  product_name: {{ product.title | json }},
+                  product_url: '{{ shop.secure_url }}{{ product.url }}',
+                  product_image: '{{ product.featured_image | image_url: width: 600 }}',
+                  product_price: this.selectedVariant.price,
+                  variant_title: this.selectedVariant.title,
+                  back_in_stock_request: true,
+                  requested_at: new Date().toISOString()
+                }
+              }
+            }
+          })
+        });
+
+        if (!profileResponse.ok) {
+          const errorData = await profileResponse.json().catch(() => ({}));
+          console.error('Erreur création profil:', errorData);
+          throw new Error('Erreur lors de la création du profil');
+        }
+
+        const profileData = await profileResponse.json();
+        const profileId = profileData.data.id;
+
+        // Étape 2 : Ajouter le profil à la liste WzLznD
+        const listResponse = await fetch('https://a.klaviyo.com/api/lists/WzLznD/relationships/profiles/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Klaviyo-API-Key ' + KLAVIYO_PRIVATE_KEY,
+            'revision': '2024-10-15'
+          },
+          body: JSON.stringify({
+            data: [{
+              type: "profile",
+              id: profileId
+            }]
+          })
+        });
+
+        if (!listResponse.ok) {
+          const errorData = await listResponse.json().catch(() => ({}));
+          console.error('Erreur ajout à la liste:', errorData);
+          throw new Error('Erreur lors de l\'ajout à la liste');
+        }
+
+        // Étape 3 : Enregistrer l'événement (optionnel via JavaScript API)
+        if (typeof _learnq !== 'undefined') {
           _learnq.push(['track', 'Back in Stock Request', {
+            '$email': this.email,
             'product_id': {{ product.id }},
             'variant_id': this.selectedVariant.id,
             'product_name': {{ product.title | json }},
@@ -1129,70 +1180,21 @@ document.addEventListener('alpine:init', () => {
             'product_price': this.selectedVariant.price,
             'variant_title': this.selectedVariant.title
           }]);
-
-          this.showMessage('✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible.', 'success');
-          this.email = '';
-          return;
         }
 
-        // Option 2 : Utiliser l'API REST Klaviyo avec un proxy
-        const response = await fetch('/apps/proxy/klaviyo-back-in-stock', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: this.email,
-            product_id: {{ product.id }},
-            variant_id: this.selectedVariant.id,
-            product_name: {{ product.title | json }},
-            product_url: '{{ shop.secure_url }}{{ product.url }}',
-            product_image: '{{ product.featured_image | image_url: width: 600 }}',
-            product_price: this.selectedVariant.price,
-            variant_title: this.selectedVariant.title,
-            list_id: 'WzLznD'
-          })
+        console.log('Succès Klaviyo:', {
+          email: this.email,
+          profile_id: profileId,
+          list_id: 'WzLznD',
+          product_id: {{ product.id }}
         });
 
-        if (response.ok) {
-          this.showMessage('✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible.', 'success');
-          this.email = '';
-        } else {
-          throw new Error('Erreur serveur');
-        }
+        this.showMessage('✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible.', 'success');
+        this.email = '';
 
       } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
-        
-        // Option 3 : Fallback - Envoyer vers un webhook ou Zapier
-        try {
-          const fallbackResponse = await fetch('https://hooks.zapier.com/hooks/catch/YOUR_WEBHOOK_ID/', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: this.email,
-              product_id: {{ product.id }},
-              variant_id: this.selectedVariant.id,
-              product_name: {{ product.title | json }},
-              product_url: '{{ shop.secure_url }}{{ product.url }}',
-              product_image: '{{ product.featured_image | image_url: width: 600 }}',
-              product_price: this.selectedVariant.price,
-              variant_title: this.selectedVariant.title,
-              source: 'back_in_stock_form'
-            })
-          });
-
-          if (fallbackResponse.ok) {
-            this.showMessage('✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible.', 'success');
-            this.email = '';
-          } else {
-            throw new Error('Tous les systèmes sont indisponibles');
-          }
-        } catch (fallbackError) {
-          this.showMessage('Une erreur est survenue. Veuillez réessayer plus tard.', 'error');
-        }
+        this.showMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
       } finally {
         this.isLoading = false;
       }
