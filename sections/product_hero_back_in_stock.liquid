@@ -416,7 +416,7 @@
   }
 
   .notify-btn {
-    background: #e67e22;
+    background: #6e612b;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -440,12 +440,23 @@
   }
 
   .notify-btn:hover {
-    background: #d35400;
+    background: #5a4f23;
   }
 
-  .notify-btn:disabled {
-    background: #9ca3af;
+  .notify-btn:disabled:not(:hover) {
+    background: #6e612b;
+    opacity: 0.7;
     cursor: not-allowed;
+  }
+
+  /* Animation quand l'email est saisi */
+  .email-input:not(:placeholder-shown) + .notify-btn:not(:disabled) {
+    background: #ec8451;
+    transition: background-color 0.3s ease;
+  }
+
+  .email-input:not(:placeholder-shown) + .notify-btn:not(:disabled):hover {
+    background: #d46b3a;
   }
 
   .form-message {
