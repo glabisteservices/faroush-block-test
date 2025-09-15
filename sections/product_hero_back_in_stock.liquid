@@ -350,7 +350,7 @@
 
   /* NOUVEAU : Styles pour le formulaire Back in Stock */
   .back-in-stock-form {
-    background: #f8f9fa;
+    background: #f5f2d9;
     border: 1px solid #e9ecef;
     border-radius: 12px;
     padding: 24px;
@@ -370,7 +370,7 @@
   }
 
   .notification-form h3 {
-    color: #1f2937;
+    color: #6e612b;
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 8px;
@@ -378,7 +378,7 @@
   }
 
   .notification-form p {
-    color: #6b7280;
+    color: #6e612b;
     font-size: 14px;
     margin-bottom: 20px;
     font-family: Karla, sans-serif;
@@ -411,8 +411,8 @@
 
   .email-input:focus {
     outline: none;
-    border-color: #e67e22;
-    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+    border-color: #ec8451;
+    box-shadow: 0 0 0 3px rgba(236, 132, 81, 0.1);
   }
 
   .notify-btn {
@@ -543,25 +543,28 @@
     border: 1px solid #f5c6cb;
   }
 
-  /* Pictos Styles */
+  /* Pictos Styles - MODIFIÉ pour aligner sur une ligne */
   .product-pictos-container {
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.8rem;
     width: 100%;
     max-width: 100%;
   }
 
+  /* DESKTOP uniquement : Forcer le flexbox au lieu de la grille */
   @media screen and (min-width: 769px) {
     .product-pictos-container {
       display: flex !important;
-      flex-wrap: wrap !important;
-      gap: 1rem !important;
+      flex-wrap: nowrap !important;
+      gap: 0.8rem !important;
       align-items: flex-start !important;
       justify-content: flex-start !important;
+      overflow: visible !important;
     }
 
+    /* Conteneur de l'image : hauteur fixe 40px */
     .product-header_component .product-pictos-container .picto-produit div[class*="Div Block"],
     .product-header_component .picto-produit div[class*="Div Block"],
     .product-pictos-container .picto-produit div[class*="Div Block"],
@@ -578,6 +581,7 @@
       box-sizing: border-box !important;
     }
 
+    /* Image : 100% du conteneur avec max-height 100% */
     .product-header_component .product-pictos-container .picto-produit div[class*="Div Block"] img[class*="Image"],
     .product-header_component .product-pictos-container .picto-produit img[class*="Image"],
     .product-header_component .picto-produit div[class*="Div Block"] img,
@@ -602,12 +606,16 @@
     .product-header_component .picto-produit,
     .product-pictos-container .picto-produit,
     .picto-produit {
-      height: 65px !important;
-      max-height: 65px !important;
-      min-height: 65px !important;
+      height: 45px !important;
+      max-height: 45px !important;
+      min-height: 45px !important;
+      flex: 0 0 auto !important;
+      min-width: 70px !important;
+      max-width: 90px !important;
     }
   }
 
+  /* MOBILE et TABLET : Garder la grille */
   @media screen and (max-width: 768px) {
     .product-pictos-container {
       display: grid !important;
@@ -651,6 +659,7 @@
     object-position: center;
   }
 
+  /* Règles spécifiques pour DESKTOP uniquement - Version renforcée */
   @media screen and (min-width: 769px) {
     .product-header_component .product-pictos-container .picto-produit .Div.Block.7,
     .product-header_component .picto-produit .Div.Block.7,
@@ -857,49 +866,14 @@
 <div class="product-header_component" x-data="backInStockForm()">
   <div class="product-header_layout">
     
-    <!-- Gallery Section - INCHANGÉ -->
+    <!-- Gallery Section -->
     <div class="product-gallery-container">
       <div class="product-gallery-main" id="gallery-main">
         <div class="gallery-slides-container" id="slides-container">
           {% for media in product.media %}
             <div class="gallery-slide" data-slide="{{ forloop.index0 }}">
               {% if media.media_type == 'image' %}
-                <img src="{{ media | image_url: width: 1000 }}"
-                     alt="{{ media.alt | escape }}"
-                     class="gallery-image"
-                     loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
-              {% elsif media.media_type == 'video' %}
-                {{ media | video_tag: controls: true, class: "gallery-image" }}
-              {% endif %}
-            </div>
-          {% endfor %}
-        </div>
-        
-        <!-- Navigation Arrows -->
-        {% if product.media.size > 1 %}
-          <div class="gallery-navigation">
-            <button type="button" class="nav-arrow prev" onclick="previousImage()" id="prev-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            <button type="button" class="nav-arrow next" onclick="nextImage()" id="next-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        {% endif %}
-      </div>
-      
-      <!-- Thumbnails -->
-      {% if product.media.size > 1 %}
-        <div class="product-thumbnails">
-          {% for media in product.media %}
-            <div class="thumbnail-item {% if forloop.first %}active{% endif %}" 
-                 onclick="setCurrentImage({{ forloop.index0 }})"
-                 data-thumbnail="{{ forloop.index0 }}">
-              <img src="{{ media | image_url: width: 200 }}"
+                <img src="{{ media | image_url: width: 200 }}"
                    alt="{{ media.alt | escape }}"
                    class="thumbnail-image"
                    loading="lazy">
@@ -954,14 +928,14 @@
         {% endfor %}
       {% endunless %}
       
-      <!-- NOUVEAU : Formulaire Back in Stock (remplace shipping-info) -->
+      <!-- NOUVEAU : Formulaire Back in Stock -->
       <div class="back-in-stock-form">
         <div class="stock-status-message">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <circle cx="10" cy="10" r="9" stroke="#f59e0b" stroke-width="2"/>
             <path d="m9 9 2 2 4-4" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Produit temporairement indisponible
+          {{ section.settings.unavailable_status_text | default: "Bientôt disponible" }}
         </div>
         
         <div class="notification-form">
@@ -973,13 +947,13 @@
               <input 
                 type="email" 
                 x-model="email"
-                placeholder="Votre adresse email"
+                placeholder="{{ section.settings.email_placeholder | default: 'Votre adresse email' }}"
                 required
                 class="email-input"
                 :disabled="isLoading"
               >
               <button type="submit" class="notify-btn" :disabled="isLoading || !email">
-                <span x-show="!isLoading" class="btn-text">Me notifier</span>
+                <span x-show="!isLoading" class="btn-text">{{ section.settings.notify_button_text | default: "Me notifier" }}</span>
                 <span x-show="isLoading" class="btn-loading">
                   <svg class="spinner" width="20" height="20" viewBox="0 0 50 50">
                     <circle cx="25" cy="25" r="20" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-dashoffset="31.416" stroke-dasharray="31.416" class="path"></circle>
@@ -1054,7 +1028,7 @@ document.addEventListener('alpine:init', () => {
     message: {
       show: false,
       text: '',
-      type: 'success' // 'success' ou 'error'
+      type: 'success'
     },
 
     // Initialisation
@@ -1095,7 +1069,7 @@ document.addEventListener('alpine:init', () => {
       window.history.replaceState({}, '', newUrl);
     },
 
-    // FONCTION PRINCIPALE : Soumission du formulaire Back in Stock
+    // FONCTION PRINCIPALE : Soumission du formulaire Back in Stock avec Klaviyo
     async submitForm() {
       if (!this.email || this.isLoading) {
         return;
@@ -1104,41 +1078,44 @@ document.addEventListener('alpine:init', () => {
       this.isLoading = true;
       this.hideMessage();
 
-      try {
-        // Préparer les données pour Klaviyo
-        const formData = {
-          email: this.email,
-          product_id: {{ product.id }},
-          variant_id: this.selectedVariant.id,
-          product_name: {{ product.title | json }},
-          product_url: '{{ shop.secure_url }}{{ product.url }}',
-          product_image: '{{ product.featured_image | image_url: width: 600 }}',
-          product_price: this.selectedVariant.price,
-          variant_title: this.selectedVariant.title
-        };
+      // Préparer les messages de retour traduits
+      const messages = {
+        success: {{ section.settings.success_message | default: "✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible." | json }},
+        error: {{ section.settings.error_message | default: "Une erreur est survenue. Veuillez réessayer." | json }},
+        loading: {{ section.settings.loading_message | default: "Inscription en cours..." | json }}
+      };
 
-        // Appel à l'endpoint (à créer)
-        const response = await fetch('/apps/klaviyo/back-in-stock', {
+      try {
+        // Utilisation de l'API Klaviyo formulaire avec votre Public Key
+        const formData = new FormData();
+        formData.append('g', 'WzLznD'); // List ID de votre liste Back in Stock
+        formData.append('email', this.email);
+        formData.append('$fields', 'email');
+        
+        // Ajouter toutes les propriétés personnalisées du produit
+        formData.append('back_in_stock_product_id', {{ product.id }});
+        formData.append('back_in_stock_variant_id', this.selectedVariant.id);
+        formData.append('back_in_stock_product_name', {{ product.title | json }});
+        formData.append('back_in_stock_product_url', '{{ shop.secure_url }}{{ product.url }}');
+        formData.append('back_in_stock_product_image', '{{ product.featured_image | image_url: width: 600 }}');
+        formData.append('back_in_stock_product_price', this.formatPrice(this.selectedVariant.price));
+        formData.append('back_in_stock_variant_title', this.selectedVariant.title || {{ product.title | json }});
+        formData.append('back_in_stock_signup_date', new Date().toISOString());
+
+        // Envoyer via l'API formulaire Klaviyo
+        const response = await fetch('https://manage.kmail-lists.com/subscriptions/subscribe', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formData)
+          body: formData,
+          mode: 'no-cors'
         });
 
-        if (response.ok) {
-          // Succès
-          this.showMessage('✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible.', 'success');
-          this.email = ''; // Vider le champ email
-        } else {
-          // Erreur du serveur
-          const errorData = await response.json().catch(() => ({}));
-          throw new Error(errorData.message || 'Erreur lors de l\'inscription');
-        }
+        // Avec no-cors, on ne peut pas vérifier la réponse, donc on assume le succès
+        this.showMessage(messages.success, 'success');
+        this.email = ''; // Vider le champ email
 
       } catch (error) {
         console.error('Erreur lors de l\'inscription:', error);
-        this.showMessage('Une erreur est survenue. Veuillez réessayer.', 'error');
+        this.showMessage(messages.error, 'error');
       } finally {
         this.isLoading = false;
       }
@@ -1165,11 +1142,11 @@ document.addEventListener('alpine:init', () => {
   }));
 });
 
-// Variables globales pour la galerie (inchangé)
+// Variables globales pour la galerie
 let currentImageIndex = 0;
 const totalImages = {{ product.media.size }};
 
-// Variables pour le swipe mobile (inchangé)
+// Variables pour le swipe mobile
 let startX = 0;
 let startY = 0;
 let currentX = 0;
@@ -1177,12 +1154,12 @@ let currentY = 0;
 let isDragging = false;
 let isSwipeActive = false;
 
-// Fonction pour déterminer si on est sur mobile (inchangé)
+// Fonction pour déterminer si on est sur mobile
 function isMobile() {
   return window.innerWidth <= 768;
 }
 
-// Navigation des images (inchangé)
+// Navigation des images
 function nextImage() {
   currentImageIndex = (currentImageIndex + 1) % totalImages;
   updateGalleryDisplay();
@@ -1232,7 +1209,7 @@ function updateGalleryDisplay() {
   }
 }
 
-// Gestion du swipe sur mobile (inchangé)
+// Gestion du swipe sur mobile
 function initializeSwipe() {
   const galleryMain = document.getElementById('gallery-main');
   
@@ -1290,7 +1267,7 @@ function handleTouchEnd(e) {
   isSwipeActive = false;
 }
 
-// Fonctions pour le guide des tailles (inchangé)
+// Fonctions pour le guide des tailles
 function openSizeGuide() {
   const overlay = document.getElementById('sizeGuideOverlay');
   const content = document.getElementById('sizeGuideContent');
@@ -1330,7 +1307,6 @@ document.addEventListener('DOMContentLoaded', function() {
   updateGalleryDisplay();
   initializeSwipe();
   
-  // Protection renforcée pour le titre du produit (inchangé)
   const protectTitle = () => {
     const titles = document.querySelectorAll('.product-header_component .product-title, .product-header_component .product-main-title, .product-header_component h1.product-title');
     titles.forEach(title => {
@@ -1357,7 +1333,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  // Fonction pour ajuster les images des pictos sur mobile (inchangé)
   const adjustPictosOnMobile = () => {
     if (window.innerWidth <= 768) {
       const pictoImages = document.querySelectorAll('.product-pictos-container img, .picto-produit img');
@@ -1384,7 +1359,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Fonction pour forcer le style flex sur le wrapper du guide des tailles (inchangé)
   const fixSizeGuideLayout = () => {
     const wrappers = document.querySelectorAll('.variant-label-row');
     wrappers.forEach(wrapper => {
@@ -1395,7 +1369,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
   
-  // Exécuter immédiatement et à intervalles (inchangé)
   protectTitle();
   adjustPictosOnMobile();
   fixSizeGuideLayout();
@@ -1418,12 +1391,10 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(adjustPictosOnMobile, 2000);
   setTimeout(fixSizeGuideLayout, 2000);
   
-  // Observer continu (inchangé)
   setInterval(protectTitle, 1000);
   setInterval(adjustPictosOnMobile, 1000);
   setInterval(fixSizeGuideLayout, 1000);
   
-  // Debug mobile (inchangé)
   if (isMobile()) {
     let isUserScrolling = false;
     
@@ -1439,7 +1410,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { passive: true });
   }
   
-  // Re-calculer lors du redimensionnement de la fenêtre (inchangé)
   window.addEventListener('resize', function() {
     setTimeout(() => {
       updateGalleryDisplay();
@@ -1459,10 +1429,20 @@ document.addEventListener('DOMContentLoaded', function() {
   "class": "Section-produit-fiche",
   "settings": [
     {
+      "type": "header",
+      "content": "Formulaire Back in Stock"
+    },
+    {
       "type": "checkbox",
       "id": "show_back_in_stock_form",
       "label": "Afficher le formulaire Back in Stock",
       "default": true
+    },
+    {
+      "type": "text",
+      "id": "unavailable_status_text",
+      "label": "Texte statut indisponible",
+      "default": "Bientôt disponible"
     },
     {
       "type": "text",
@@ -1475,6 +1455,40 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "back_in_stock_message",
       "label": "Message du formulaire",
       "default": "Laissez votre email et nous vous préviendrons dès que ce produit sera à nouveau disponible."
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Placeholder champ email",
+      "default": "Votre adresse email"
+    },
+    {
+      "type": "text",
+      "id": "notify_button_text",
+      "label": "Texte du bouton",
+      "default": "Me notifier"
+    },
+    {
+      "type": "header",
+      "content": "Messages de retour"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Message de succès",
+      "default": "✓ Parfait ! Vous serez notifié(e) dès que ce produit sera disponible."
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Message d'erreur",
+      "default": "Une erreur est survenue. Veuillez réessayer."
+    },
+    {
+      "type": "text",
+      "id": "loading_message",
+      "label": "Message de chargement",
+      "default": "Inscription en cours..."
     }
   ],
   "blocks": [
@@ -1504,7 +1518,7 @@ document.addEventListener('DOMContentLoaded', function() {
   ],
   "presets": [
     {
-      "name": "Product Hero Back in Stock",
+      "name": "Hero Back in Stock",
       "category": "Liquify"
     }
   ],
@@ -1512,4 +1526,39 @@ document.addEventListener('DOMContentLoaded', function() {
     "templates": ["product"]
   }
 }
-{% endschema %}
+{% endschema %}1000 }}"
+                     alt="{{ media.alt | escape }}"
+                     class="gallery-image"
+                     loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+              {% elsif media.media_type == 'video' %}
+                {{ media | video_tag: controls: true, class: "gallery-image" }}
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        
+        <!-- Navigation Arrows -->
+        {% if product.media.size > 1 %}
+          <div class="gallery-navigation">
+            <button type="button" class="nav-arrow prev" onclick="previousImage()" id="prev-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <button type="button" class="nav-arrow next" onclick="nextImage()" id="next-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- Thumbnails -->
+      {% if product.media.size > 1 %}
+        <div class="product-thumbnails">
+          {% for media in product.media %}
+            <div class="thumbnail-item {% if forloop.first %}active{% endif %}" 
+                 onclick="setCurrentImage({{ forloop.index0 }})"
+                 data-thumbnail="{{ forloop.index0 }}">
+              <img src="{{ media | image_url: width:
