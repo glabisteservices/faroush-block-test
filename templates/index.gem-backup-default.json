@@ -1,0 +1,376 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_pleine_largeur_CJ6868": {
+      "type": "image-pleine-largeur",
+      "blocks": {
+        "image_desktop_KtF4e7": {
+          "type": "image-desktop",
+          "settings": {
+            "image_image": "shopify:\/\/shop_images\/qkhbvef.png",
+            "heading_text": "C'est la rentrée !",
+            "paragraph_text": "Découvrez nos nouveaux modèles",
+            "button_text": "Acheter FW25",
+            "button_link": "shopify:\/\/collections\/nouveautes-de-la-rentree",
+            "text_color": "white",
+            "button_color": "white"
+          }
+        },
+        "image_mobile_MdqRqN": {
+          "type": "image-mobile",
+          "settings": {
+            "image_image": "shopify:\/\/shop_images\/kjqbdc.png",
+            "heading_text": "C'est la rentrée",
+            "paragraph_text": "Découvrez nos nouveaux modèles",
+            "button_text": "Acheter FW25",
+            "button_link": "shopify:\/\/collections\/nouveautes-de-la-rentree",
+            "text_color": "white",
+            "button_color": "white"
+          }
+        }
+      },
+      "block_order": [
+        "image_desktop_KtF4e7",
+        "image_mobile_MdqRqN"
+      ],
+      "name": "image-pleine-largeur",
+      "settings": {}
+    },
+    "bloc_de_texte_daAqkh": {
+      "type": "bloc_de_texte",
+      "blocks": {
+        "grand_texte_w7KXTV": {
+          "type": "grand-texte",
+          "settings": {
+            "text_heading": "Protéger sans déformer"
+          }
+        },
+        "paragraphe_aMzzjn": {
+          "type": "paragraphe",
+          "settings": {
+            "text_paragraph": "Faroush est bien plus qu’une simple marque de chaussures. C’est un engagement fort : accompagner la croissance saine et naturelle des enfants grâce à des chaussures barefoot de haute qualité. Chaque modèle est conçu avec soin pour respecter la biomécanique naturelle des pieds en développement, tout en offrant le meilleur du design parisien, des matériaux durables et des finitions raffinées."
+          }
+        },
+        "bouton_xmArAe": {
+          "type": "bouton",
+          "settings": {
+            "text_text": "Découvrir nos modèles",
+            "url_link": "shopify:\/\/collections\/all",
+            "button_type": "filled",
+            "bg_color": "#6e612b",
+            "text_color": "#f5f2d9",
+            "outline_color": "#bdbf85"
+          }
+        }
+      },
+      "block_order": [
+        "grand_texte_w7KXTV",
+        "paragraphe_aMzzjn",
+        "bouton_xmArAe"
+      ],
+      "name": "bloc-de-texte",
+      "settings": {}
+    },
+    "manual_products_d_hEiEXt": {
+      "type": "manual_products_d",
+      "blocks": {
+        "product_q8GiQd": {
+          "type": "product",
+          "settings": {
+            "product": "ballerine-barefoot-enfant-ella-black-swan"
+          }
+        },
+        "product_e6WVkX": {
+          "type": "product",
+          "settings": {
+            "product": "basket-barefoot-enfant-mimi-siku-energy"
+          }
+        },
+        "product_3FBAtp": {
+          "type": "product",
+          "settings": {
+            "product": "basket-barefoot-enfant-mimi-siku-ninja"
+          }
+        },
+        "product_GdFLQf": {
+          "type": "product",
+          "settings": {
+            "product": "basket-barefoot-enfant-mimi-siku-safari"
+          }
+        }
+      },
+      "block_order": [
+        "product_q8GiQd",
+        "product_e6WVkX",
+        "product_3FBAtp",
+        "product_GdFLQf"
+      ],
+      "name": "Manual Products",
+      "settings": {
+        "text_heading": "Une rentrée avec style",
+        "text_button_text": "Voir les nouveautés",
+        "url_button_link": "shopify:\/\/collections\/nouveautes-de-la-rentree"
+      }
+    },
+    "bouton_seul_aCKjVb": {
+      "type": "bouton-seul",
+      "name": "Bouton Seul",
+      "settings": {
+        "text_text": "Voir la collection",
+        "url_link": "shopify:\/\/collections\/all",
+        "button_alignment": "center",
+        "button_style": "filled",
+        "background_color": "#ec8451",
+        "text_color": "#f5f2d9",
+        "border_color": "#6e612b",
+        "hover_text_color": "#ec8451"
+      }
+    },
+    "bloc_de_texte_haBbdV": {
+      "type": "bloc_de_texte",
+      "name": "Bloc de texte",
+      "settings": {}
+    },
+    "image_pleine_largeur_CwNnri": {
+      "type": "image-pleine-largeur",
+      "blocks": {
+        "image_desktop_BWVYbz": {
+          "type": "image-desktop",
+          "settings": {
+            "image_image": "shopify:\/\/shop_images\/HP_5_desktop.jpg",
+            "heading_text": "Explorez le monde",
+            "paragraph_text": "",
+            "button_text": "Voir nos baskets",
+            "button_link": "shopify:\/\/collections\/basket-barefoot-enfant",
+            "text_color": "brown",
+            "button_color": "brown"
+          }
+        },
+        "image_mobile_ki3Bmc": {
+          "type": "image-mobile",
+          "settings": {
+            "image_image": "shopify:\/\/shop_images\/Mobile_V4.jpg",
+            "heading_text": "Découvrir le monde",
+            "paragraph_text": "",
+            "button_text": "Voir nos baskets",
+            "button_link": "shopify:\/\/collections\/basket-barefoot-enfant",
+            "text_color": "brown",
+            "button_color": "brown"
+          }
+        }
+      },
+      "block_order": [
+        "image_desktop_BWVYbz",
+        "image_mobile_ki3Bmc"
+      ],
+      "name": "image-pleine-largeur",
+      "settings": {}
+    },
+    "faq_pAztkk": {
+      "type": "faq",
+      "blocks": {
+        "faq_question_Jdkjdi": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Qu'est-ce qu'une chaussure \"barefoot\" ou \"minimaliste\" ?",
+            "text_paragraph": "<p>Une chaussure barefoot (ou minimaliste) est une chaussure conçue pour reproduire au maximum la sensation de marcher pieds nus, tout en protégeant le pied des agressions du sol (cailloux, échardes, température). Chez Faroush, nos baskets respectent 4 critères essentiels pour mériter cette appellation :<\/p><ul><li><strong>Une semelle fine :<\/strong> Pour permettre à l'enfant de bien ressentir le sol, ce qui est crucial pour développer sa proprioception (la perception de son corps dans l'espace).<\/li><li><strong>Une chaussure souple et légère :<\/strong> Elle doit pouvoir se tordre et se plier facilement pour ne jamais entraver le mouvement naturel du pied.<\/li><li><strong>Une large \"toe box\" :<\/strong> L'espace à l'avant de la chaussure est volontairement large pour que les orteils puissent s'étaler librement, comme ils le feraient pieds nus.<\/li><li><strong>Un \"drop\" de zéro :<\/strong> La semelle est complètement plate du talon aux orteils. Il n'y a pas de talon surélevé, ce qui favorise une posture naturelle et un développement musculaire équilibré.<\/li><\/ul>"
+          }
+        },
+        "faq_question_gnbgLC": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Pourquoi les chaussures barefoot sont-elles meilleures pour le développement de mon enfant ?",
+            "text_paragraph": "<p>Chez Faroush, nous savons qu’un bon chaussage de vos enfants dès leur plus jeune âge est essentiel pour leur santé et leur développement. Contrairement aux chaussures traditionnelles rigides avec des semelles épaisses et des talons, nos baskets minimalistes :<\/p><ul><li><strong>Ne contraignent pas le pied :<\/strong> Elles laissent le pied grandir et se muscler sans entrave.<\/li><li><strong>Favorisent une marche naturelle :<\/strong> L'enfant développe un schéma de marche sain, en posant le milieu du pied plutôt que le talon en premier.<\/li><li><strong>Renforcent les muscles et les ligaments :<\/strong> Marcher avec des chaussures barefoot sollicite tous les petits muscles du pied, ce qui crée une base solide et stable pour tout le corps.<\/li><li><strong>Améliorent l'équilibre :<\/strong> Le contact direct avec le sol via la semelle fine envoie des milliers d'informations au cerveau, améliorant l'équilibre et la coordination.<\/li><\/ul>"
+          }
+        },
+        "faq_question_6q4Tq4": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Qu'est-ce que le \"zéro drop\" et pourquoi est-ce important ?",
+            "text_paragraph": "<p>Le \"drop\" est la différence de hauteur entre le talon et l'avant du pied dans une chaussure. Un drop de zéro (ou \"0 drop\") signifie que la semelle est entièrement plate. C'est un critère fondamental car une semelle plate respecte l'alignement naturel du corps (chevilles, genoux, hanches, dos) et évite de sur-développer certains muscles au détriment d'autres, prévenant ainsi des déséquilibres posturaux sur le long terme.<\/p>"
+          }
+        },
+        "faq_question_YYzVQV": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "À partir de quel âge mon enfant peut-il porter des chaussures Faroush ?",
+            "text_paragraph": "<p>Nos chaussures sont idéales dès les premiers pas ! Pour un bébé qui apprend à marcher, le pied nu est le meilleur allié en intérieur. Dès qu'il marche avec assurance et a besoin de protection pour l'extérieur (parc, rue, crèche), nos baskets sont la solution parfaite pour continuer à soutenir le développement naturel de ses pieds. Elles conviennent ensuite à tous les âges de l'enfance.<\/p>"
+          }
+        },
+        "faq_question_U3EHxA": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "La semelle fine protège-t-elle suffisamment le pied de mon enfant ?",
+            "text_paragraph": "<p>C'est une excellente question et une préoccupation légitime. Oui, absolument. La finesse de la semelle n'enlève rien à sa résistance. Nos semelles sont conçues en caoutchouc durable qui protège efficacement des objets pointus, du verre ou des surfaces rugueuses. Le but est de trouver le parfait équilibre : une protection maximale tout en garantissant un ressenti optimal du sol.<\/p>"
+          }
+        },
+        "faq_question_4rUD7T": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Mon enfant a toujours porté des chaussures \"classiques\". Comment faire la transition ?",
+            "text_paragraph": "<p>La transition est généralement très rapide et intuitive pour les enfants, bien plus que pour les adultes ! Leurs pieds ne sont pas encore \"déformés\" par des années de port de chaussures rigides. Vous pouvez introduire les baskets Faroush progressivement : d'abord pour quelques heures, puis pour des journées complètes. L'enfant s'adaptera naturellement et redécouvrira le plaisir de bouger librement.<\/p>"
+          }
+        },
+        "faq_question_XBtQfB": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Comment choisir la bonne taille pour être sûr de ne pas me tromper ?",
+            "text_paragraph": "<p>Bien choisir la taille est crucial. Une chaussure trop petite est aussi néfaste qu'une chaussure trop rigide. Voici notre conseil :<\/p><ol><li>Posez le pied de votre enfant bien à plat sur une feuille de papier.<\/li><li>Tracez le contour de son pied en gardant le crayon bien droit.<\/li><li>Mesurez la distance entre le bout de l'orteil le plus long et le talon.<\/li><li>Consultez notre guide des tailles (disponible sur chaque page produit) et ajoutez entre 0,8 cm et 1,2 cm à la mesure obtenue. Cette marge de croissance est essentielle pour le confort et pour ne pas changer de chaussures tous les mois !<\/li><\/ol>"
+          }
+        },
+        "faq_question_VXHhkF": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Les baskets Faroush sont-elles assez solides pour la cour de récréation ?",
+            "text_paragraph": "<p>Oui ! Nous savons que les enfants sont pleins d'énergie. Nos baskets minimalistes sont pensées pour leur quotidien : elles sont légères et souples pour ne pas gêner leurs jeux, mais aussi robustes grâce à des matériaux de qualité et des coutures renforcées pour résister à toutes leurs aventures.<\/p>"
+          }
+        },
+        "faq_question_AqaeLD": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Doit-on porter des chaussettes avec les chaussures Faroush ?",
+            "text_paragraph": "<p>C'est une question de préférence ! Le port de chaussettes est souvent plus hygiénique et peut éviter les frottements. Nous recommandons des chaussettes fines et, si possible, des modèles avec des orteils séparés ou une forme anatomique pour ne pas annuler l'effet bénéfique de la \"toe box\" large.<\/p>"
+          }
+        },
+        "faq_question_MHJtK7": {
+          "type": "faq-question",
+          "settings": {
+            "text_text": "Comment nettoyer les baskets de mon enfant ?",
+            "text_paragraph": "<p>Pour préserver la souplesse et la qualité des matériaux, nous recommandons un nettoyage à la main avec une brosse douce, de l'eau tiède et un savon doux. Évitez la machine à laver et le sèche-linge, qui pourraient endommager la chaussure. Laissez-les sécher à l'air libre, à l'abri d'une source de chaleur directe (radiateur, soleil).<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_question_Jdkjdi",
+        "faq_question_gnbgLC",
+        "faq_question_6q4Tq4",
+        "faq_question_YYzVQV",
+        "faq_question_U3EHxA",
+        "faq_question_4rUD7T",
+        "faq_question_XBtQfB",
+        "faq_question_VXHhkF",
+        "faq_question_AqaeLD",
+        "faq_question_MHJtK7"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "text_heading": "",
+        "image_image": "shopify:\/\/shop_images\/12.jpg"
+      }
+    },
+    "image_pleine_largeur_rYBBFJ": {
+      "type": "image-pleine-largeur",
+      "blocks": {
+        "image_desktop_kBMP6R": {
+          "type": "image-desktop",
+          "settings": {
+            "image_image": "shopify:\/\/shop_images\/Desktop_chaussure_tech.jpg",
+            "heading_text": "",
+            "paragraph_text": "",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "brown",
+            "button_color": "brown"
+          }
+        },
+        "image_mobile_yFKTtY": {
+          "type": "image-mobile",
+          "settings": {
+            "image_image": "shopify:\/\/shop_images\/Chaussure_mobile_tech.jpg",
+            "heading_text": "",
+            "paragraph_text": "",
+            "button_text": "",
+            "button_link": "",
+            "text_color": "brown",
+            "button_color": "brown"
+          }
+        }
+      },
+      "block_order": [
+        "image_desktop_kBMP6R",
+        "image_mobile_yFKTtY"
+      ],
+      "name": "image-pleine-largeur",
+      "settings": {}
+    },
+    "temoignage_wLnXBL": {
+      "type": "temoignage",
+      "blocks": {
+        "titre_7yhath": {
+          "type": "titre",
+          "settings": {
+            "text_heading": "Nos clients nous aiment !"
+          }
+        },
+        "temoignage_item_HNw7dV": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Lussya B.",
+            "text_paragraph": "Exactement ce qu’il faut pour nos enfants ! J’ai acheté deux paires à ma fille , elle les adore! Je recommande ces chaussures Faroush pour les parents qui cherchent une paire à la fois stylée, confortable et durable pour leur enfant."
+          }
+        },
+        "temoignage_item_PJdFmc": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Camille L.",
+            "text_paragraph": "Les baskets préférées de ma nièce !\nElle fait tout avec… elles sont hyper confortables et très jolies."
+          }
+        },
+        "temoignage_item_eiXQNL": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Sarah H.",
+            "text_paragraph": "3ème paire achetées depuis la découverte de Faroush ! Ma nièce ne tolère plus aucune autre paire de chaussures. Il y a une vraie différence de confort pour les enfants.\nLes chaussures sont hyper qualitatives et durent plus longtemps en terme de pointure grâce à la largeur au niveau des orteils. Je recommande à 100%"
+          }
+        },
+        "temoignage_item_dWJVTr": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Kelly S.",
+            "text_paragraph": "Incroyable, super mignonnes confortables et reçues en un temps record !\nLa qualité et le confort sont exceptionnels !\nComme dirait mon fils, elles courent vite !"
+          }
+        },
+        "temoignage_item_KpgArq": {
+          "type": "temoignage-item",
+          "settings": {
+            "text_text": "Mira T.",
+            "text_paragraph": "J’ai enfin trouvé des chaussures confortables pour mes enfants et en plus elles sont stylées. Les enfants les adorent!!"
+          }
+        }
+      },
+      "block_order": [
+        "titre_7yhath",
+        "temoignage_item_HNw7dV",
+        "temoignage_item_PJdFmc",
+        "temoignage_item_eiXQNL",
+        "temoignage_item_dWJVTr",
+        "temoignage_item_KpgArq"
+      ],
+      "name": "Témoignages",
+      "settings": {
+        "review_link": "https:\/\/www.google.com\/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
+      }
+    }
+  },
+  "layout": "theme",
+  "wrapper": "main.main-wrapper",
+  "order": [
+    "image_pleine_largeur_CJ6868",
+    "bloc_de_texte_daAqkh",
+    "manual_products_d_hEiEXt",
+    "bouton_seul_aCKjVb",
+    "bloc_de_texte_haBbdV",
+    "image_pleine_largeur_CwNnri",
+    "faq_pAztkk",
+    "image_pleine_largeur_rYBBFJ",
+    "temoignage_wLnXBL"
+  ]
+}

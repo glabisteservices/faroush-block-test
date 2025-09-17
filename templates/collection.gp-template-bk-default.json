@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "collection_hero": {
+      "type": "collection_hero",
+      "settings": {
+        "text_color": "#6e612b",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "collection_products": {
+      "type": "collection_products",
+      "settings": {
+        "show_sorting": false
+      }
+    }
+  },
+  "layout": "theme",
+  "wrapper": "main.main-wrapper",
+  "order": [
+    "collection_hero",
+    "collection_products"
+  ]
+}

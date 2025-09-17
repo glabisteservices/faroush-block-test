@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme",
+  "order": [
+    "product_hero",
+    "product_details_accordion_8fNf6L",
+    "3_column_DwLCVV",
+    "recommended_products"
+  ],
+  "sections": {
+    "3_column_DwLCVV": {
+      "name": "3-column",
+      "settings": {
+        "heading_1": "Souplesse & légèreté",
+        "heading_2": "Large toe-box",
+        "heading_3": "Zéro drop",
+        "image_1": "shopify://shop_images/Souplesse_legerete.jpg",
+        "image_2": "shopify://shop_images/lrge_toe_box.jpg",
+        "image_3": "shopify://shop_images/Zero-drop_2.jpg",
+        "main_title": "Pourquoi choisir la barefoot",
+        "paragraph_1": "Une semelle fine et flexible qui accompagne chaque mouvement, laissant le pied ressentir le sol. Idéal pour un développement naturel et un confort tout au long de la journée.",
+        "paragraph_2": "Une forme respectueuse qui laisse aux orteils toute la place pour s’écarter, s’ancrer et se muscler. Pas de compression, juste la liberté de grandir naturellement.",
+        "paragraph_3": "Une semelle plate, sans différence de hauteur entre talon et avant-pied, qui préserve l’alignement naturel et soutient une posture saine dès les premiers pas."
+      },
+      "type": "3-column"
+    },
+    "product_details_accordion_8fNf6L": {
+      "name": "Détails produit accordéon",
+      "settings": {
+        "details_title": "Détails produit",
+        "entretien_title": "Conseils d'entretien",
+        "livraison_title": "Livraison & retours",
+        "matiere_title": "Matière & composition"
+      },
+      "type": "product-details-accordion"
+    },
+    "product_hero": {
+      "block_order": [
+        "picto_produit_3TWQpQ",
+        "picto_produit_naYXQV",
+        "picto_produit_PwdCRQ",
+        "picto_produit_iQrtMd",
+        "picto_produit_9zDRFn",
+        "picto_produit_nQTAK4"
+      ],
+      "blocks": {
+        "picto_produit_3TWQpQ": {
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Flexible_soft.png",
+            "picto_text": "Souple"
+          },
+          "type": "picto-produit"
+        },
+        "picto_produit_9zDRFn": {
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Light.png",
+            "picto_text": "Légère"
+          },
+          "type": "picto-produit"
+        },
+        "picto_produit_PwdCRQ": {
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Sustainable.png",
+            "picto_text": "Eco-conçue"
+          },
+          "type": "picto-produit"
+        },
+        "picto_produit_iQrtMd": {
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Large_toe_box.png",
+            "picto_text": "Toe-Box large"
+          },
+          "type": "picto-produit"
+        },
+        "picto_produit_nQTAK4": {
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Anti_bacteria.png",
+            "picto_text": "Anti-bactérienne"
+          },
+          "type": "picto-produit"
+        },
+        "picto_produit_naYXQV": {
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Breathable.png",
+            "picto_text": "Respirante"
+          },
+          "type": "picto-produit"
+        }
+      },
+      "settings": {
+        "shipping_text": "Livraison 1 - 3 jours",
+        "show_shipping_info": true
+      },
+      "type": "product_hero"
+    },
+    "recommended_products": {
+      "settings": {
+        "text_heading": "Vous aimerez aussi"
+      },
+      "type": "recommended_products"
+    }
+  },
+  "wrapper": "main.main-wrapper"
+}

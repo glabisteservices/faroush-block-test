@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "product_hero": {
+      "type": "product_hero",
+      "blocks": {
+        "picto_produit_3TWQpQ": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_image": "shopify:\/\/shop_images\/Flexible_soft.png",
+            "picto_text": "Souple",
+            "picto_alt": ""
+          }
+        },
+        "picto_produit_naYXQV": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_image": "shopify:\/\/shop_images\/Breathable.png",
+            "picto_text": "Respirante",
+            "picto_alt": ""
+          }
+        },
+        "picto_produit_PwdCRQ": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_image": "shopify:\/\/shop_images\/Sustainable.png",
+            "picto_text": "Eco-conçue",
+            "picto_alt": ""
+          }
+        },
+        "picto_produit_iQrtMd": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_image": "shopify:\/\/shop_images\/Large_toe_box.png",
+            "picto_text": "Toe-Box large",
+            "picto_alt": ""
+          }
+        },
+        "picto_produit_9zDRFn": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_image": "shopify:\/\/shop_images\/Light.png",
+            "picto_text": "Légère",
+            "picto_alt": ""
+          }
+        },
+        "picto_produit_nQTAK4": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_image": "shopify:\/\/shop_images\/Anti_bacteria.png",
+            "picto_text": "Anti-bactérienne",
+            "picto_alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "picto_produit_3TWQpQ",
+        "picto_produit_naYXQV",
+        "picto_produit_PwdCRQ",
+        "picto_produit_iQrtMd",
+        "picto_produit_9zDRFn",
+        "picto_produit_nQTAK4"
+      ],
+      "settings": {
+        "show_shipping_info": true,
+        "shipping_text": "Livraison 1 - 3 jours"
+      }
+    },
+    "product_details_accordion_8fNf6L": {
+      "type": "product-details-accordion",
+      "name": "Détails produit accordéon",
+      "settings": {
+        "details_title": "Détails produit",
+        "matiere_title": "Matière & composition",
+        "livraison_title": "Livraison & retours",
+        "entretien_title": "Conseils d'entretien"
+      }
+    },
+    "3_column_DwLCVV": {
+      "type": "3-column",
+      "name": "3-column",
+      "settings": {
+        "main_title": "Pourquoi choisir la barefoot",
+        "image_1": "shopify:\/\/shop_images\/Souplesse_legerete.jpg",
+        "heading_1": "Souplesse & légèreté",
+        "paragraph_1": "Une semelle fine et flexible qui accompagne chaque mouvement, laissant le pied ressentir le sol. Idéal pour un développement naturel et un confort tout au long de la journée.",
+        "image_2": "shopify:\/\/shop_images\/lrge_toe_box.jpg",
+        "heading_2": "Large toe-box",
+        "paragraph_2": "Une forme respectueuse qui laisse aux orteils toute la place pour s’écarter, s’ancrer et se muscler. Pas de compression, juste la liberté de grandir naturellement.",
+        "image_3": "shopify:\/\/shop_images\/Zero-drop_2.jpg",
+        "heading_3": "Zéro drop",
+        "paragraph_3": "Une semelle plate, sans différence de hauteur entre talon et avant-pied, qui préserve l’alignement naturel et soutient une posture saine dès les premiers pas."
+      }
+    },
+    "recommended_products": {
+      "type": "recommended_products",
+      "settings": {
+        "text_heading": "Vous aimerez aussi"
+      }
+    }
+  },
+  "layout": "theme",
+  "wrapper": "main.main-wrapper",
+  "order": [
+    "product_hero",
+    "product_details_accordion_8fNf6L",
+    "3_column_DwLCVV",
+    "recommended_products"
+  ]
+}
