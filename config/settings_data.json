@@ -66,13 +66,8 @@
         "disabled": false,
         "settings": {}
       },
-      "14223843426704937053": {
-        "type": "shopify://apps/visually-a-b-testing-cro/blocks/themetest/d08aba15-0b89-475b-9f75-9c4c0ca8c3c4",
-        "disabled": false,
-        "settings": {}
-      },
-      "17940372039816912135": {
-        "type": "shopify://apps/visually-a-b-testing-cro/blocks/visually/d08aba15-0b89-475b-9f75-9c4c0ca8c3c4",
+      "11175655759228028154": {
+        "type": "shopify://apps/essential-a-b-testing/blocks/ab-testing/0154ac6b-7b9c-4958-8219-ed5b06e6d463",
         "disabled": false,
         "settings": {}
       }
