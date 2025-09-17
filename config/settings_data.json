@@ -65,6 +65,16 @@
         "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
         "disabled": false,
         "settings": {}
+      },
+      "14223843426704937053": {
+        "type": "shopify://apps/visually-a-b-testing-cro/blocks/themetest/d08aba15-0b89-475b-9f75-9c4c0ca8c3c4",
+        "disabled": false,
+        "settings": {}
+      },
+      "17940372039816912135": {
+        "type": "shopify://apps/visually-a-b-testing-cro/blocks/visually/d08aba15-0b89-475b-9f75-9c4c0ca8c3c4",
+        "disabled": false,
+        "settings": {}
       }
     }
   }
