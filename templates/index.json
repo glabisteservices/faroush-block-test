@@ -44,41 +44,6 @@
       "name": "image-pleine-largeur",
       "settings": {}
     },
-    "bloc_de_texte_daAqkh": {
-      "type": "bloc_de_texte",
-      "blocks": {
-        "grand_texte_w7KXTV": {
-          "type": "grand-texte",
-          "settings": {
-            "text_heading": "Protéger sans déformer"
-          }
-        },
-        "paragraphe_aMzzjn": {
-          "type": "paragraphe",
-          "settings": {
-            "text_paragraph": "Faroush est bien plus qu’une simple marque de chaussures. C’est un engagement fort : accompagner la croissance saine et naturelle des enfants grâce à des chaussures barefoot de haute qualité. Chaque modèle est conçu avec soin pour respecter la biomécanique naturelle des pieds en développement, tout en offrant le meilleur du design parisien, des matériaux durables et des finitions raffinées."
-          }
-        },
-        "bouton_xmArAe": {
-          "type": "bouton",
-          "settings": {
-            "text_text": "Découvrir nos modèles",
-            "url_link": "shopify://collections/all",
-            "button_type": "filled",
-            "bg_color": "#6e612b",
-            "text_color": "#f5f2d9",
-            "outline_color": "#bdbf85"
-          }
-        }
-      },
-      "block_order": [
-        "grand_texte_w7KXTV",
-        "paragraphe_aMzzjn",
-        "bouton_xmArAe"
-      ],
-      "name": "bloc-de-texte",
-      "settings": {}
-    },
     "manual_products_d_hEiEXt": {
       "type": "manual_products_d",
       "blocks": {
@@ -119,6 +84,41 @@
         "text_button_text": "Voir les nouveautés",
         "url_button_link": "shopify://collections/nouveautes-de-la-rentree"
       }
+    },
+    "bloc_de_texte_daAqkh": {
+      "type": "bloc_de_texte",
+      "blocks": {
+        "grand_texte_w7KXTV": {
+          "type": "grand-texte",
+          "settings": {
+            "text_heading": "Protéger sans déformer"
+          }
+        },
+        "paragraphe_aMzzjn": {
+          "type": "paragraphe",
+          "settings": {
+            "text_paragraph": "Faroush est bien plus qu’une simple marque de chaussures. C’est un engagement fort : accompagner la croissance saine et naturelle des enfants grâce à des chaussures barefoot de haute qualité. Chaque modèle est conçu avec soin pour respecter la biomécanique naturelle des pieds en développement, tout en offrant le meilleur du design parisien, des matériaux durables et des finitions raffinées."
+          }
+        },
+        "bouton_xmArAe": {
+          "type": "bouton",
+          "settings": {
+            "text_text": "Découvrir nos modèles",
+            "url_link": "shopify://collections/all",
+            "button_type": "filled",
+            "bg_color": "#6e612b",
+            "text_color": "#f5f2d9",
+            "outline_color": "#bdbf85"
+          }
+        }
+      },
+      "block_order": [
+        "grand_texte_w7KXTV",
+        "paragraphe_aMzzjn",
+        "bouton_xmArAe"
+      ],
+      "name": "bloc-de-texte",
+      "settings": {}
     },
     "bouton_seul_aCKjVb": {
       "type": "bouton-seul",
@@ -364,9 +364,9 @@
   "wrapper": "main.main-wrapper",
   "order": [
     "image_pleine_largeur_CJ6868",
-    "bloc_de_texte_daAqkh",
     "manual_products_d_hEiEXt",
     "bouton_seul_aCKjVb",
+    "bloc_de_texte_daAqkh",
     "bloc_de_texte_haBbdV",
     "image_pleine_largeur_CwNnri",
     "faq_pAztkk",
