@@ -155,7 +155,7 @@
               </p>
             {% endif %}
             {% if block.settings.button_text != blank and block.settings.button_link != blank %}
-              <a href="{{ block.settings.button_link }}" class="button-style {{ button_color_class }}" style="border-color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %}; color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %};">
+              <a href="{{ block.settings.button_link }}" class="button-style {{ button_color_class }} hero-cta" style="border-color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %}; color: {% if block.settings.button_color == 'white' %}#ffffff{% else %}#6e612b{% endif %};">
                 {{ block.settings.button_text }}
               </a>
             {% endif %}
