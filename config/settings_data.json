@@ -47,9 +47,14 @@
         "disabled": false,
         "settings": {}
       },
+      "2153490007123654574": {
+        "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
+        "disabled": false,
+        "settings": {}
+      },
       "15683396631634586217": {
         "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
-        "disabled": false,
+        "disabled": true,
         "settings": {
           "button_color": "#6e612b",
           "secondary_color": "#ffffff",
@@ -60,16 +65,6 @@
           "button_vertical_position": "higher",
           "greeting_message": "Bonjour, nous serions ravis de vous aider si vous avez la moindre question. Notre équipe se tient à votre disposition"
         }
-      },
-      "2153490007123654574": {
-        "type": "shopify://apps/consentmo-gdpr/blocks/gdpr_cookie_consent/4fbe573f-a377-4fea-9801-3ee0858cae41",
-        "disabled": false,
-        "settings": {}
-      },
-      "11175655759228028154": {
-        "type": "shopify://apps/essential-a-b-testing/blocks/ab-testing/0154ac6b-7b9c-4958-8219-ed5b06e6d463",
-        "disabled": false,
-        "settings": {}
       }
     }
   }
