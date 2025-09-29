@@ -16,8 +16,8 @@
           "type": "image-desktop",
           "settings": {
             "image_image": "shopify://shop_images/qkhbvef.png",
-            "heading_text": "C'est la rentrée !",
-            "paragraph_text": "Découvrez nos nouveaux modèles",
+            "heading_text": "Chaussures Barefoot Enfant",
+            "paragraph_text": "Souples, zéro drop et respectueuses du pied",
             "button_text": "Acheter FW25",
             "button_link": "shopify://collections/nouveautes-de-la-rentree",
             "text_color": "white",
@@ -28,8 +28,8 @@
           "type": "image-mobile",
           "settings": {
             "image_image": "shopify://shop_images/kjqbdc.png",
-            "heading_text": "C'est la rentrée",
-            "paragraph_text": "Découvrez nos nouveaux modèles",
+            "heading_text": "Chaussures Barefoot Enfant",
+            "paragraph_text": "Souples, zéro drop et respectueuses du pied",
             "button_text": "Acheter FW25",
             "button_link": "shopify://collections/nouveautes-de-la-rentree",
             "text_color": "white",
@@ -78,11 +78,26 @@
         "product_3FBAtp",
         "product_GdFLQf"
       ],
+      "custom_css": [],
       "name": "Manual Products",
       "settings": {
         "text_heading": "Une rentrée avec style",
         "text_button_text": "Voir les nouveautés",
         "url_button_link": "shopify://collections/nouveautes-de-la-rentree"
+      }
+    },
+    "bouton_seul_aCKjVb": {
+      "type": "bouton-seul",
+      "name": "Bouton Seul",
+      "settings": {
+        "text_text": "Voir la collection",
+        "url_link": "shopify://collections/all",
+        "button_alignment": "center",
+        "button_style": "filled",
+        "background_color": "#ec8451",
+        "text_color": "#f5f2d9",
+        "border_color": "#6e612b",
+        "hover_text_color": "#ec8451"
       }
     },
     "bloc_de_texte_daAqkh": {
@@ -119,20 +134,6 @@
       ],
       "name": "bloc-de-texte",
       "settings": {}
-    },
-    "bouton_seul_aCKjVb": {
-      "type": "bouton-seul",
-      "name": "Bouton Seul",
-      "settings": {
-        "text_text": "Voir la collection",
-        "url_link": "shopify://collections/all",
-        "button_alignment": "center",
-        "button_style": "filled",
-        "background_color": "#ec8451",
-        "text_color": "#f5f2d9",
-        "border_color": "#6e612b",
-        "hover_text_color": "#ec8451"
-      }
     },
     "bloc_de_texte_haBbdV": {
       "type": "bloc_de_texte",
