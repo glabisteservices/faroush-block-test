@@ -189,12 +189,17 @@
     if (announcementLink) {
       announcementLink.addEventListener('click', function(e) {
         e.preventDefault();
-        const newsletterSection = document.getElementById('newsletter-footer');
+        const newsletterSection = document.querySelector('.newsletter-section');
         if (newsletterSection) {
-          newsletterSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'center'
+          // Calculer la position avec un offset de 100px
+          const elementPosition = newsletterSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - 100;
+          
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
           });
+          
           // Focus sur le champ email après le scroll
           setTimeout(function() {
             const emailInput = newsletterSection.querySelector('input[type="email"]');
