@@ -135,11 +135,6 @@
       "name": "bloc-de-texte",
       "settings": {}
     },
-    "bloc_de_texte_haBbdV": {
-      "type": "bloc_de_texte",
-      "name": "Bloc de texte",
-      "settings": {}
-    },
     "image_pleine_largeur_CwNnri": {
       "type": "image-pleine-largeur",
       "blocks": {
@@ -368,7 +363,6 @@
     "manual_products_d_hEiEXt",
     "bouton_seul_aCKjVb",
     "bloc_de_texte_daAqkh",
-    "bloc_de_texte_haBbdV",
     "image_pleine_largeur_CwNnri",
     "faq_pAztkk",
     "image_pleine_largeur_rYBBFJ",
