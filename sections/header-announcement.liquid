@@ -20,7 +20,7 @@
     </div>
     
     <div id="w-node-_83d473b7-e557-566f-74be-ecc1a2818a32-a2818a2b" class="w-layout-cell cell-2">
-      <a href="{{ section.settings.url_link }}" class="w-inline-block">
+      <a href="#newsletter-signup" class="announcement-link w-inline-block">
         <div class="text-block">{{ section.settings.text_text }}</div>
       </a>
     </div>
@@ -91,11 +91,22 @@
     padding: 0 20px;
   }
   
+  /* Lien d'annonce avec effet hover */
+  .announcement-wrapper .announcement-link {
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .announcement-wrapper .announcement-link:hover {
+    opacity: 0.8;
+  }
+  
   /* Force l'affichage du texte central */
   .announcement-wrapper .text-block {
     color: #f5f2d9 !important;
     font-size: 14px;
     line-height: 1.2;
+    cursor: pointer;
   }
   
   /* Alignement parfait des icônes sociales */
@@ -152,6 +163,7 @@
   .announcement-wrapper .cell-3 {
     margin-left: auto;
   }
+  
   @media screen and (max-width: 767px) {
     .announcement-wrapper {
       margin-top: 0;
@@ -169,6 +181,32 @@
     }
   }
 </style>
+
+<!-- Script pour le scroll smooth vers la newsletter -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const announcementLink = document.querySelector('.announcement-link');
+    if (announcementLink) {
+      announcementLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        const newsletterSection = document.getElementById('newsletter-footer');
+        if (newsletterSection) {
+          newsletterSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'center'
+          });
+          // Focus sur le champ email après le scroll
+          setTimeout(function() {
+            const emailInput = newsletterSection.querySelector('input[type="email"]');
+            if (emailInput) {
+              emailInput.focus();
+            }
+          }, 800);
+        }
+      });
+    }
+  });
+</script>
 
 {% schema %}
 {
