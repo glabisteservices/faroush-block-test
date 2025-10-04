@@ -189,25 +189,30 @@
     if (announcementLink) {
       announcementLink.addEventListener('click', function(e) {
         e.preventDefault();
-        const newsletterSection = document.querySelector('.newsletter-section');
-        if (newsletterSection) {
-          // Calculer la position avec un offset de 100px
-          const elementPosition = newsletterSection.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - 100;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-          
-          // Focus sur le champ email après le scroll
-          setTimeout(function() {
-            const emailInput = newsletterSection.querySelector('input[type="email"]');
-            if (emailInput) {
-              emailInput.focus();
-            }
-          }, 800);
-        }
+        
+        // Attendre que tout soit chargé
+        setTimeout(function() {
+          const newsletterSection = document.querySelector('.newsletter-section');
+          if (newsletterSection) {
+            // Calculer la position absolue de l'élément
+            const rect = newsletterSection.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const targetPosition = rect.top + scrollTop - 180;
+            
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+            
+            // Focus sur le champ email après le scroll
+            setTimeout(function() {
+              const emailInput = newsletterSection.querySelector('input[type="email"]');
+              if (emailInput) {
+                emailInput.focus();
+              }
+            }, 1000);
+          }
+        }, 100);
       });
     }
   });
