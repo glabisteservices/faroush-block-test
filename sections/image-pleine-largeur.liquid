@@ -16,6 +16,10 @@
     height: auto;
     display: block;
   }
+  .image-link {
+    display: block;
+    cursor: pointer;
+  }
   @media screen and (max-width: 479px) {
     .image-full-width-desktop {
       border-radius: 9px;
@@ -92,6 +96,10 @@
     max-width: 80%;
     z-index: 2;
     text-align: center;
+    pointer-events: none;
+  }
+  .paragraph-desktop .button-style {
+    pointer-events: auto;
   }
   .paragraph-mobile {
     position: absolute;
@@ -102,6 +110,10 @@
     z-index: 2;
     text-align: center;
     width: 85%;
+    pointer-events: none;
+  }
+  .paragraph-mobile .button-style {
+    pointer-events: auto;
   }
   @media screen and (max-width: 767px) {
     .paragraph-text {
@@ -129,10 +141,20 @@
       {% render block %}
     {% when 'image-desktop' %}
       <div class="image-desktop-container" li-block="image-desktop">
-        {% if block.settings.image_image %}
-          {{ block.settings.image_image | image_url: width: 1200 | image_tag: class: 'image-full-width-desktop', alt: 'inherit', loading: 'lazy' }}
+        {% if block.settings.button_link != blank %}
+          <a href="{{ block.settings.button_link }}" class="image-link">
+            {% if block.settings.image_image %}
+              {{ block.settings.image_image | image_url: width: 1200 | image_tag: class: 'image-full-width-desktop', alt: 'inherit', loading: 'lazy' }}
+            {% else %}
+              <img class="image-full-width-desktop" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946aa1adf18a56010a9059_Header%20image.jpg" loading="lazy">
+            {% endif %}
+          </a>
         {% else %}
-          <img class="image-full-width-desktop" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946aa1adf18a56010a9059_Header%20image.jpg" loading="lazy">
+          {% if block.settings.image_image %}
+            {{ block.settings.image_image | image_url: width: 1200 | image_tag: class: 'image-full-width-desktop', alt: 'inherit', loading: 'lazy' }}
+          {% else %}
+            <img class="image-full-width-desktop" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946aa1adf18a56010a9059_Header%20image.jpg" loading="lazy">
+          {% endif %}
         {% endif %}
         {% if block.settings.heading_text != blank or block.settings.paragraph_text != blank or block.settings.button_text != blank %}
           {% assign text_color_class = 'text-color-brown' %}
@@ -164,10 +186,20 @@
       </div>
     {% when 'image-mobile' %}
       <div class="choix-image-mobile" li-block="image-mobile">
-        {% if block.settings.image_image %}
-          {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-full-width-mobile', alt: 'inherit', loading: 'lazy' }}
+        {% if block.settings.button_link != blank %}
+          <a href="{{ block.settings.button_link }}" class="image-link">
+            {% if block.settings.image_image %}
+              {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-full-width-mobile', alt: 'inherit', loading: 'lazy' }}
+            {% else %}
+              <img class="image-full-width-mobile" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68947d5d1b9d583b83bf82ad_Mobile_HP_image.jpg" loading="lazy">
+            {% endif %}
+          </a>
         {% else %}
-          <img class="image-full-width-mobile" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68947d5d1b9d583b83bf82ad_Mobile_HP_image.jpg" loading="lazy">
+          {% if block.settings.image_image %}
+            {{ block.settings.image_image | image_url: width: 800 | image_tag: class: 'image-full-width-mobile', alt: 'inherit', loading: 'lazy' }}
+          {% else %}
+            <img class="image-full-width-mobile" alt="inherit" src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68947d5d1b9d583b83bf82ad_Mobile_HP_image.jpg" loading="lazy">
+          {% endif %}
         {% endif %}
         {% if block.settings.heading_text != blank or block.settings.paragraph_text != blank or block.settings.button_text != blank %}
           {% assign text_color_class = 'text-color-brown' %}
