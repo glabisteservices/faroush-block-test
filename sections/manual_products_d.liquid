@@ -57,6 +57,14 @@
       margin-right: 0rem;
     }
   }
+  
+  /* Classe pour masquer le titre sur mobile et tablette */
+  @media screen and (max-width: 991px) {
+    .product_heading.hide-mobile-tablet {
+      display: none;
+    }
+  }
+  
   .button {
     padding-top: 0.65rem;
     padding-right: 1.5rem;
@@ -318,7 +326,7 @@
   <div>
     <div class="product_component">
       <div class="product_heading-wrapper">
-        <div class="product_heading">
+        <div class="product_heading {% if section.settings.hide_title_mobile %}hide-mobile-tablet{% endif %}">
           <div class="max-width-large">
             <h2 class="heading-style-h1">
               {{ section.settings.text_heading }}
@@ -374,6 +382,13 @@
       "type": "text",
       "label": "Titre de la section",
       "default": "Produits sélectionnés"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_title_mobile",
+      "label": "Masquer le titre sur mobile et tablette",
+      "default": false,
+      "info": "Le titre restera visible sur desktop (écrans larges)"
     },
     {
       "id": "text_button_text",
