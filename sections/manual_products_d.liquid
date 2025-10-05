@@ -35,6 +35,12 @@
       grid-template-columns: 1fr;
     }
   }
+  @media screen and (max-width: 991px) {
+    .product_heading-wrapper:has(.product_heading.hide-mobile-tablet) {
+      margin-bottom: 0;
+      grid-row-gap: 0;
+    }
+  }
   .product_heading-wrapper.medium {
     position: static;
     grid-column-gap: 3rem;
