@@ -82,6 +82,7 @@
       "name": "Manual Products",
       "settings": {
         "text_heading": "Une rentrée avec style",
+        "hide_title_mobile": true,
         "text_button_text": "Voir les nouveautés",
         "url_button_link": "shopify://collections/nouveautes-de-la-rentree"
       }
