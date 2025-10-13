@@ -133,9 +133,24 @@
     width: 100%;
   }
 
-  /* Cibler le contenu des reviews Judge.me */
-  .judgeme-product-reviews-section .jdgm-widget *,
+  /* FIX POUR LES ÉTOILES - Ne pas appliquer Karla aux icônes */
   .judgeme-product-reviews-section .jdgm-star,
+  .judgeme-product-reviews-section .jdgm-star:before,
+  .judgeme-product-reviews-section .jdgm-star:after,
+  .judgeme-product-reviews-section [class*="jdgm-star"] {
+    font-family: 'JudgeMe Icons' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Cibler le contenu des reviews Judge.me SAUF les étoiles */
+  .judgeme-product-reviews-section .jdgm-widget *:not([class*="jdgm-star"]),
   .judgeme-product-reviews-section .jdgm-rev,
   .judgeme-product-reviews-section .jdgm-rev__body,
   .judgeme-product-reviews-section .jdgm-rev__title,
