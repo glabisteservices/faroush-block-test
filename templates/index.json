@@ -106,8 +106,8 @@
       "name": "Judge.me Reviews Carousel",
       "settings": {
         "title": "Nos clients nous recommandent !",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "bloc_de_texte_daAqkh": {
