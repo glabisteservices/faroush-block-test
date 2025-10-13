@@ -101,6 +101,15 @@
         "hover_text_color": "#ec8451"
       }
     },
+    "judgeme_carousel_gkGVya": {
+      "type": "judgeme-carousel",
+      "name": "Judge.me Reviews Carousel",
+      "settings": {
+        "title": "Nos clients nous recommandent !",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "bloc_de_texte_daAqkh": {
       "type": "bloc_de_texte",
       "blocks": {
@@ -356,15 +365,6 @@
       "settings": {
         "review_link": "https://www.google.com/search?sa=X&sca_esv=08bd8e8cec846723&rlz=1C1VDKB_frFR1010FR1010&hl=fr-FR&tbm=lcl&sxsrf=AE3TifO5LNmy50aWmTrLwazo6_hkOEZGzg:1755008069968&q=faroush+Avis&rflfq=1&num=20&stick=H4sIAAAAAAAAAONgkxIxNDQ3tTAzNzY0NjOwNDUwtTAxN9nAyPiKkSctsSi_tDhDwbEss3gRKwoXAJawhLs5AAAA&rldimm=11758673136095058474&ved=2ahUKEwizqdrEuoWPAxV_wAIHHYGkOwEQ9fQKegQIVBAF&biw=1920&bih=945&dpr=1#lkt=LocalPoiReviews"
       }
-    },
-    "judgeme_carousel_gkGVya": {
-      "type": "judgeme-carousel",
-      "name": "Judge.me Reviews Carousel",
-      "settings": {
-        "title": "Nos clients nous recommandent !",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     }
   },
   "layout": "theme",
@@ -373,11 +373,11 @@
     "image_pleine_largeur_CJ6868",
     "manual_products_d_hEiEXt",
     "bouton_seul_aCKjVb",
+    "judgeme_carousel_gkGVya",
     "bloc_de_texte_daAqkh",
     "image_pleine_largeur_CwNnri",
     "faq_pAztkk",
     "image_pleine_largeur_rYBBFJ",
-    "temoignage_wLnXBL",
-    "judgeme_carousel_gkGVya"
+    "temoignage_wLnXBL"
   ]
 }
