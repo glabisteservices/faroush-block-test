@@ -106,18 +106,13 @@
         "text_heading": "Vous aimerez aussi"
       }
     },
-    "judgeme_product_reviews_YqKxBF": {
-      "type": "judgeme-product-reviews",
-      "name": "Judge.me Product Reviews",
+    "judgeme_carousel_xXdPGN": {
+      "type": "judgeme-carousel",
+      "name": "Judge.me Reviews Carousel",
       "settings": {
-        "alignment": "center",
-        "background_color": "#f5f2d9",
-        "background_opacity": 50,
-        "text_color": "#6e612b",
+        "title": "Let customers speak for us",
         "padding_top": 36,
-        "padding_bottom": 36,
-        "margin_top": 20,
-        "margin_bottom": 20
+        "padding_bottom": 36
       }
     }
   },
@@ -126,7 +121,7 @@
   "order": [
     "product_hero",
     "product_details_accordion_8fNf6L",
-    "judgeme_product_reviews_YqKxBF",
+    "judgeme_carousel_xXdPGN",
     "3_column_DwLCVV",
     "recommended_products"
   ]
