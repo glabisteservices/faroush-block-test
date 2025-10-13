@@ -128,45 +128,37 @@
   }
 
   #judgeme_product_reviews.jdgm-widget.jdgm-review-widget {
-    font-family: 'Karla', sans-serif;
     color: {{ section.settings.text_color }};
     width: 100%;
   }
 
-  /* FIX POUR LES ÉTOILES - Ne pas appliquer Karla aux icônes */
-  .judgeme-product-reviews-section .jdgm-star,
-  .judgeme-product-reviews-section .jdgm-star:before,
-  .judgeme-product-reviews-section .jdgm-star:after,
-  .judgeme-product-reviews-section [class*="jdgm-star"] {
-    font-family: 'JudgeMe Icons' !important;
-    speak: none;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Cibler le contenu des reviews Judge.me SAUF les étoiles */
-  .judgeme-product-reviews-section .jdgm-widget *:not([class*="jdgm-star"]),
-  .judgeme-product-reviews-section .jdgm-rev,
+  /* NE TOUCHER QU'AUX TEXTES - Laisser les étoiles intactes */
   .judgeme-product-reviews-section .jdgm-rev__body,
   .judgeme-product-reviews-section .jdgm-rev__title,
   .judgeme-product-reviews-section .jdgm-rev__text,
   .judgeme-product-reviews-section .jdgm-rev__buyer-name,
+  .judgeme-product-reviews-section .jdgm-rev__timestamp,
   .judgeme-product-reviews-section .jdgm-verified-badge,
-  .judgeme-product-reviews-section .jdgm-review-widget,
-  .judgeme-product-reviews-section .jdgm-histogram,
-  .judgeme-product-reviews-section .jdgm-write-rev-link {
+  .judgeme-product-reviews-section .jdgm-write-rev-link,
+  .judgeme-product-reviews-section .jdgm-paginate__page,
+  .judgeme-product-reviews-section .jdgm-histogram__row-title,
+  .judgeme-product-reviews-section .jdgm-histogram__row-num,
+  .judgeme-product-reviews-section .jdgm-spinner,
+  .judgeme-product-reviews-section p,
+  .judgeme-product-reviews-section span:not([class*="jdgm-star"]),
+  .judgeme-product-reviews-section div:not([class*="jdgm-star"]) > span:not([class*="jdgm-star"]),
+  .judgeme-product-reviews-section a,
+  .judgeme-product-reviews-section button,
+  .judgeme-product-reviews-section input,
+  .judgeme-product-reviews-section textarea {
     font-family: 'Karla', sans-serif !important;
-    color: {{ section.settings.text_color }} !important;
   }
 
-  /* Style pour les boutons et liens */
-  .judgeme-product-reviews-section .jdgm-write-rev-link,
-  .judgeme-product-reviews-section .jdgm-paginate__page {
+  /* Appliquer la couleur aux textes */
+  .judgeme-product-reviews-section .jdgm-rev__body,
+  .judgeme-product-reviews-section .jdgm-rev__title,
+  .judgeme-product-reviews-section .jdgm-rev__text,
+  .judgeme-product-reviews-section .jdgm-rev__buyer-name {
     color: {{ section.settings.text_color }} !important;
   }
 </style>
