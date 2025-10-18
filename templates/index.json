@@ -81,10 +81,10 @@
       "custom_css": [],
       "name": "Manual Products",
       "settings": {
-        "text_heading": "Une rentrée avec style",
+        "text_heading": "L'automne sans compris",
         "hide_title_mobile": true,
-        "text_button_text": "Voir les nouveautés",
-        "url_button_link": "shopify://collections/nouveautes-de-la-rentree"
+        "text_button_text": "Voir les baskets",
+        "url_button_link": "shopify://collections/basket-barefoot-enfant"
       }
     },
     "bouton_seul_aCKjVb": {
