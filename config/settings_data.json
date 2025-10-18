@@ -35,8 +35,8 @@
           "social_media_icon_MDxAGR"
         ],
         "settings": {
-          "url_link": "",
-          "text_text": "10% offert sur votre prochaine commande"
+          "url_link": "shopify://collections",
+          "text_text": "Jusqu'au 1er Décembre, profitez de la livraison gratuite!"
         }
       }
     },
