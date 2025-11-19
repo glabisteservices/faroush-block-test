@@ -997,7 +997,25 @@
         "lost_permissions_title": "لا يوجد تصريح موقع"
       },
       "units": {
-        "milligram": "ملغ"
+        "milligram": "ملغ",
+        "kilogram": "كجم",
+        "milliliter": "مل",
+        "centiliter": "كل",
+        "cubic_meter": "متر مكعب",
+        "millimeter": "مم",
+        "centimeter": "سم",
+        "square_meter": "متر مربع",
+        "ounce": "أونصة",
+        "pound": "رطل",
+        "fluid_ounce": "أونصة سائلة",
+        "pint": "نقطة",
+        "quart": "كيو تي",
+        "gallon": "فتاة",
+        "inch": "بو",
+        "foot": "باي",
+        "yard": "ياردة",
+        "square_foot": "باي²",
+        "item": "شرط"
       },
       "notifications": {
         "title": "إشعارات"
@@ -1962,7 +1980,129 @@
         "pickup_unavailable_banner_title": {
           "one": "لا توجد متاجر متاحة للعنصر الخاص بك."
         }
+      },
+      "editor": {
+        "navigation": {
+          "store_logo_accessibility_label": "الدخول إلى المتجر الإلكتروني"
+        }
+      },
+      "memberships": {
+        "delivery_promise_unfulfillable": "العنوان غير مدعوم للعضوية الحالية.",
+        "items_split_across_locations_unsupported": "خدمة التوصيل الرئيسية غير متاحة لطلبك. تم تحديث خيارات الشحن."
+      },
+      "tooltip": {
+        "accessibility_label_context": "مزيد من المعلومات حول %{context}",
+        "additional_payment_methods": "طرق الدفع الأخرى"
+      },
+      "review_address_modal": {
+        "title": "التحقق من العنوان",
+        "subtitle_no_match": "هذا العنوان لا يتطابق مع أي من العناوين التي قمت بحفظها.",
+        "subtitle_must_use": "سيتم شحن طلبك إلى هذا العنوان.",
+        "continue": "متابعة مع هذا العنوان",
+        "use_saved_address": "استخدم عنوانًا مختلفًا",
+        "return_to_cart": "العودة إلى سلة التسوق",
+        "subtitle": {
+          "one": "سيتم شحن هذا الطلب إلى العنوان المقدم من قبل {{merchant}} .",
+          "other": "سيتم شحن هذا الطلب إلى العنوان الذي يُقدّمه {{merchant}} . اختر عنوان التسليم.",
+          "many": "سيتم شحن هذا الطلب إلى العنوان الذي يُقدّمه {{merchant}} . اختر عنوان التسليم."
+        }
+      },
+      "remote": {
+        "errors": {
+          "only_remote_merchandise_lines": "الدفع متاح فقط للمنتجات المشتراة من متجر خارجي. يلزم إعادة توجيهك إلى هذا المتجر لإتمام عملية الدفع.",
+          "currency_mismatch": "لا يمكن إضافة هذا العنصر إلى سلة التسوق الخاصة بك لأنه من متجر يستخدم عملة مختلفة.",
+          "max_remote_shops_exceeded": "لا يمكن إضافة هذا المنتج، حيث أن سلة التسوق الخاصة بك تحتوي بالفعل على الحد الأقصى لعدد المنتجات من المتاجر الأخرى.",
+          "currency_mismatch_removal": "لقد تم إزالة أحد العناصر من سلة التسوق الخاصة بك لأنه من متجر يستخدم عملة مختلفة."
+        }
+      },
+      "remote_merchandise_only": {
+        "title": "أكمل عملية الشراء الخاصة بك",
+        "return_to_store_label": "العودة إلى المتجر",
+        "checkout_on_shop_label": "أكمل الدفع في %{shop_name}",
+        "single_shop_transition": "يتم إعادة توجيهك حاليًا إلى %{advertiser} لإكمال عملية الشراء.",
+        "detail_item_label": {
+          "one": "{{count}} مقالة",
+          "other": "{{count}} عناصر",
+          "many": "{{count}} عناصر"
+        },
+        "remote_only_notice": "تُباع هذه المنتجات وتُشحن من متاجر أخرى. يجب عليك دفع ثمن كل طلب على حدة."
+      },
+      "remote_policies": {
+        "unavailable_policy": "لم يتم توفير سياسة %{policy_name} لهذا المتجر. لمزيد من المعلومات، يُرجى التواصل مع %{shop_name} مباشرةً."
+      },
+      "offsite_payment_failed": {
+        "payment_not_processed_title": "فشل الدفع",
+        "payment_not_processed_text": "يرجى مسح رمز الاستجابة السريعة مرة أخرى. إذا لم ينجح الأمر، يُرجى إبلاغ فريقنا وتجربة طريقة دفع أخرى.",
+        "payment_link_expired_title": "انتهت صلاحية رابط الدفع",
+        "payment_link_expired_text": "حاول مسح رمز الاستجابة السريعة مرة أخرى.",
+        "title": "فشل الدفع خارج الموقع"
       }
+    },
+    "pagination": {
+      "previous": "سابق",
+      "next": "التالي"
+    },
+    "links": {
+      "powered_by_shopify": "التجارة الإلكترونية مدعومة من Shopify",
+      "learn_more": "يتعلم أكثر"
+    },
+    "feed": {
+      "more": "أكثر"
+    },
+    "attributes": {
+      "email": "بريد إلكتروني",
+      "password": "كلمة المرور",
+      "password_confirmation": "تأكيد كلمة المرور",
+      "first_name": "الاسم الأول",
+      "last_name": "اسم العائلة",
+      "body": "رسالة",
+      "signature": "عنوان"
+    },
+    "addresses": {
+      "zip_code": "الرمز البريدي",
+      "postal_code": "رمز بريدي",
+      "postcode": "رمز بريدي",
+      "pincode": "الفهرس البريدي",
+      "region": "منطقة",
+      "prefecture": "المحافظة",
+      "province": "مقاطعة",
+      "state": "ولاية",
+      "state_and_territory": "الولاية/الإقليم",
+      "county": "مقاطعة",
+      "emirate": "إمارة",
+      "governorate": "محافظة",
+      "confirm": "هل تريد حقًا حذف هذا العنوان؟"
+    },
+    "collections": {
+      "sorting": {
+        "manual": "مميز",
+        "best_selling": "الأكثر مبيعًا",
+        "az": "أبجديًا، من الألف إلى الياء",
+        "za": "أبجديًا، من الياء إلى الألف",
+        "price_ascending": "السعر: من الأقل إلى الأعلى",
+        "price_descending": "السعر: من الأعلى إلى الأدنى",
+        "date_ascending": "التاريخ، من الأقدم إلى الأحدث",
+        "date_descending": "التاريخ، من الأحدث إلى الأقدم"
+      }
+    },
+    "errors": {
+      "blank": "لا يمكن أن تبقى فارغة",
+      "credit_card_session_expired": "انتهت صلاحية تفويض بطاقتك الائتمانية. يُرجى إدخال معلومات الدفع مرة أخرى. لم يتم خصم أي مبلغ من بطاقتك.",
+      "empty": "لا يمكن أن يكون فارغا",
+      "invalid_email": "يجب أن يكون عنوان بريد إلكتروني صالحًا",
+      "discount_disabled": "لقد تم إلغاء هذا العرض الترويجي.",
+      "discount_expired": "هذا العرض لم يعد صالحًا",
+      "discount_limit_reached": "لقد وصل هذا العرض الترويجي إلى الحد الأقصى للاستخدام.",
+      "discount_not_found": "لم نعثر على عرض ترويجي صالح يطابق هذا الرمز.",
+      "customer_already_used_once_per_customer_discount_notice": "لقد وصل هذا العرض الترويجي إلى الحد الأقصى للاستخدام.",
+      "gift_card_already_applied": "لقد تم تطبيق هذا الرمز على طلبك بالفعل.",
+      "gift_card_code_invalid": "الكود غير صالح",
+      "gift_card_currency_mismatch": "بطاقة الهدية الخاصة بك بعملة %{gift_card_currency}. تواصل معنا إذا كنت ترغب في إعادة إصدارها بعملة %{checkout_currency}.",
+      "gift_card_depleted": "لم يتبق أي أموال على بطاقة الهدية هذه",
+      "gift_card_disabled": "لقد تم إلغاء تفعيل بطاقة الهدية.",
+      "gift_card_expired": "انتهت صلاحية بطاقة الهدية.",
+      "invalid": "غير صالح",
+      "bad_domain": "يحتوي على اسم نطاق غير صالح"
     }
   },
   "customer_accounts": {
