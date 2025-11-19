@@ -505,6 +505,306 @@
         "policy_label": "سياسة",
         "policies_label": "السياسات",
         "select_policy_label": "اختر سياسة"
+      },
+      "wallets": {
+        "errors": {
+          "missing": {
+            "city": "أدخل المدينة",
+            "province": "اختر الولاية/المقاطعة",
+            "country": "حدد البلد/المنطقة",
+            "zip": "أدخل الرمز البريدي",
+            "phone": "أدخل رقم الهاتف",
+            "billing_first_name": "أدخل الاسم الأول لعنوان الفاتورة",
+            "billing_address1": "أدخل عنوان الفاتورة",
+            "billing_address2": "أدخل رقم الشقة أو المنزل لعنوان الفاتورة",
+            "billing_city": "أدخل المدينة لعنوان الفاتورة",
+            "billing_province": "حدد الولاية/المقاطعة/المنطقة لعنوان الفاتورة",
+            "billing_zip": "أدخل الرمز البريدي لعنوان الفاتورة",
+            "contact_info": "أدخل الإحداثيات"
+          },
+          "formatting": {
+            "name_contains_emojis": "قم بإزالة الرموز التعبيرية من اسمك",
+            "postal_code_contains_emoji": "إزالة الرموز التعبيرية من الرمز البريدي الخاص بك",
+            "first_name_too_long": "الاسم الأول يحتوي على عدد كبير جدًا من الحروف",
+            "last_name_too_long": "الاسم يحتوي على عدد كبير جدًا من الحروف",
+            "address_too_long": "سطر العنوان طويل جدًا"
+          },
+          "select_different_shipping_address_to_resolve_errors": "عنوان الشحن الخاص بك غير صحيح. يُرجى اختيار عنوان آخر أو استخدام عنوان جديد.",
+          "unavailable_terminal": {
+            "instructions": "{{walletName}} غير متوفر حاليًا لطلبك. لمواصلة التسوق، يُرجى اختيار طريقة دفع أخرى."
+          },
+          "discount_code": "لم يتم تطبيق رمز الخصم هذا. يُرجى مراجعة رمز الخصم والمحاولة مرة أخرى."
+        },
+        "redirection_notice": "بعد النقر على \" {{buttonLabel}} \"، سيتم إعادة توجيهك إلى {{walletName}} لإكمال عملية الشراء بشكل آمن.",
+        "return_to_checkout": "العودة إلى الدفع",
+        "scrim": {
+          "continue_purchase_in_window": "متابعة عملية الشراء في نافذة {{walletName}}",
+          "and_return_to_checkout": "والعودة إلى الدفع",
+          "cancel": "يلغي"
+        }
+      },
+      "markets": {
+        "invalid_market_manager_error": "يرجى التحقق من بياناتك قبل الانتهاء من الدفع."
+      },
+      "store_credit_errors": {
+        "generic_error": "حدثت مشكلة في رصيدك في المتجر. يُرجى المحاولة مرة أخرى أو تحديث الصفحة."
+      },
+      "note": {
+        "length_exceeds_maximum": "قم بتقليص حجم الملاحظة إلى 5000 حرف أو أقل."
+      },
+      "billing": {
+        "billing_address_title": "بيل في",
+        "same_as_shipping": "نفس عنوان الشحن",
+        "add_address": "استخدم عنوانًا مختلفًا",
+        "edit": "لتعديل",
+        "delete": "يمسح",
+        "address_more": "مزيد من الإجراءات لهذا العنوان",
+        "address_edit": "تغيير العنوان",
+        "address_delete": "حذف العنوان",
+        "address_confirm": "هل تريد حقًا إزالة هذا العنوان من حسابك؟",
+        "address_form": {
+          "add_address": "أضف عنوانًا",
+          "save": "يحفظ",
+          "cancel": "يلغي"
+        },
+        "billing_address_rollup_accessibility_label": "خيارات الفوترة"
+      },
+      "address_management": {
+        "confirm_address_deletion": "هل تريد حقًا حذف العنوان {{address}} ؟"
+      },
+      "redeemable_errors": {
+        "gift_card": {
+          "duplicate": "لقد تم تطبيق بطاقة الهدية على طلبك بالفعل.",
+          "insufficient_funds": "لقد نفدت الأموال من بطاقة الهدايا هذه.",
+          "expired": "انتهت صلاحية بطاقة الهدية هذه.",
+          "not_available": "بطاقة الهدية هذه لم تعد متاحة",
+          "invalid": "أدخل بطاقة هدية صالحة",
+          "currency_mismatch": "يتم قبول بطاقات الهدايا فقط في %{shop_currency}.",
+          "generic": "لم يكن من الممكن إضافة بطاقة الهدية إلى الدفع.",
+          "throttle_limit_exceeded": "لقد وصلت إلى الحد الأقصى لعدد المحاولات. يُرجى المحاولة لاحقًا.",
+          "no_longer_available": "لم يعد من الممكن استخدام بطاقة الهدايا هذه مع هذه الدفعة."
+        },
+        "shop_cash": {
+          "currency_mismatch": "تم تغيير العملة. يُرجى التحقق من رصيدك النقدي وعرضك."
+        }
+      },
+      "vaulted": {
+        "change_button": "لتعديل"
+      },
+      "shop_pay_external": {
+        "errors": {
+          "problem_loading": "حدثت مشكلة أثناء تحميل Shop Pay",
+          "try_again_later": "تحقق من اتصالك أو أغلق هذه النافذة وحاول مرة أخرى بعد بضع لحظات.",
+          "checkout_has_expired": "انتهت صلاحية دفعتك. أغلق هذه النافذة وحاول الدفع مجددًا من {{shopName}} ."
+        },
+        "return_to_store": "العودة إلى {{shopName}}",
+        "return_to_store_simple": "العودة إلى المتجر",
+        "title": "الدفع عبر Shop Pay"
+      },
+      "company_location": {
+        "location_title": "موقع الشركة",
+        "location_rollup_accessibility_label": "خيارات موقع العمل"
+      },
+      "one": {
+        "errors": {
+          "merchandise": {
+            "gift_card_price_must_be_greater_than_zero": "يجب أن يكون سعر بطاقة الهدية أكبر من 0.",
+            "subtotal_limit_reached": "لقد تم الوصول إلى الحد الأقصى لقيمة العناصر.",
+            "gift_card_price_must_not_exceed_limit": "لا يجب أن يتجاوز سعر بطاقة الهدية %{gift_card_limit}.",
+            "signature_mismatch": "اختلاف توقيع المقالة للسطر %{stable_id}."
+          }
+        }
+      },
+      "clipboard": {
+        "copied": "ينسخ",
+        "failed_to_copy": "لم يكن النسخ ممكنا."
+      },
+      "payment_challenge_modal": {
+        "instructions": "أكمل عملية الشراء باستخدام الكود الخاص بك {{paymentMethod}}",
+        "timer_message": "لديك {{timeLeft}} للدفع",
+        "copy_text": "نسخ الكود {{paymentMethod}}",
+        "header": "ادفع باستخدام {{paymentMethod}}",
+        "qr_code": {
+          "instructions": "أكمل عملية الشراء باستخدام الكود الخاص بك {{paymentMethod}}"
+        },
+        "external": {
+          "instructions": "قم بتأكيد الدفع على تطبيقك لإتمام عملية الشراء هذه."
+        },
+        "close": "إغلاق النزاع",
+        "open_app_text": "افتح تطبيق {{paymentMethod}}"
+      },
+      "artifact_errors": {
+        "artifact_dissatisfaction_without_violation": "حدثت مشكلة أثناء معالجة طلبك. يُرجى المحاولة مرة أخرى بعد بضع دقائق."
+      },
+      "merchant_instruction_errors": {
+        "empty_stable_id": "تحتوي التعليمات الخاصة بالمقالات %{position} %{name} على معرف ثابت فارغ.",
+        "invalid_stable_id_target": "تذكر التعليمات الخاصة بالمقالات %{position} %{name} معرف الاستقرار %{stable_id}، ولكن هذا المعرف لا يظهر في أسطر المقالة.",
+        "duplicate_variant_id": "تحتوي التعليمات الخاصة بالمقالات %{position} %{name} على معرف متغير مكرر %{variant_id}.",
+        "invalid_variant_id_target": "تشير التعليمات الخاصة بالمقالات %{name} إلى معرف المتغير %{variant_id}، ولكن هذا المتغير لا يظهر في أسطر المقالة.",
+        "invalid_price_override_target": "التعليمات المتعلقة باستبدال الأسعار لعنصر السلة %{stable_id} غير صالحة لأنه أحد مكونات الحزمة."
+      },
+      "merchandise_unavailable_in_buyer_location": {
+        "banner_title": {
+          "some_products_one": "لا يمكن تسليم هذا المنتج إلى %{location_name}.",
+          "some_products_other": "هذه المنتجات غير متاحة للتسليم إلى %{location_name}.",
+          "all_products_one": "المنتج الموجود في سلة التسوق الخاصة بك غير متاح للتسليم إلى %{location_name}.",
+          "all_products_other": "المنتجات الموجودة في سلة التسوق الخاصة بك غير متاحة للتسليم إلى %{location_name}."
+        },
+        "missing_country_fallback": "بلدك",
+        "indeterminate_location_fallback": "موقعك",
+        "cart_updated": "لقد تم تحديث سلة التسوق الخاصة بك.",
+        "change_address_only": "قم بتغيير عنوان التسليم للاستمرار.",
+        "change_address_or_remove": "تعديل عنوان التسليم أو %{remove_action}.",
+        "empty_cart_action": "إفراغ السلة والعودة إلى المتجر",
+        "unavailable_line_item": "%{اسم_المنتج} / %{متغير_العلامة}",
+        "remove_items_action": {
+          "one": "إزالة المقالة غير المتاحة",
+          "other": "إزالة العناصر غير المتوفرة",
+          "many": "إزالة العناصر غير المتوفرة"
+        }
+      },
+      "b2b_errors": {
+        "lost_b2b_purchasing_permissions": "لم يعد لديك إذن لطلبات B2B. استخدم %{logout_url} لطلب شخصي.",
+        "log_out_link_text": "تسجيل الخروج",
+        "lost_permissions_subtitle": "لم يعد لديك صلاحية تقديم طلبات B2B. سجّل الخروج لتقديم طلب شخصي.",
+        "lost_permissions_title": "لا يوجد تصريح موقع"
+      },
+      "units": {
+        "milligram": "ملغ"
+      },
+      "notifications": {
+        "title": "إشعارات"
+      },
+      "order_payment_collection": {
+        "custom_line_item_description": "المبلغ المستحق الدفع للطلب %{order_name}",
+        "changes_summary": {
+          "added": {
+            "one": "تمت الإضافة",
+            "other": "%{count} تمت إضافتها",
+            "many": "%{count} تمت إضافتها"
+          },
+          "removed": "تم الحذف",
+          "subtracted": "%{count} تم حذفها",
+          "returned": "%{count} تم إرجاعها",
+          "return_line_item_removed": "إزالة %{count} من الإرجاع"
+        },
+        "additional_payment_requested": "مطلوب دفع مبلغ %{total_outstanding}",
+        "checkout_review_and_pay": "تم تحديث طلبك %{order_name}. يُرجى مراجعة هذه التغييرات، ثم الانتقال إلى الدفع لتأكيد طلبك.",
+        "order_updated_on": "تم تحديث طلبك في %{last_edited_at}.",
+        "order_review_and_pay": "تم تحديث طلبك. يُرجى مراجعته والدفع لتأكيد طلبك.",
+        "pay_now": "ادفع الآن"
+      },
+      "change_currency": {
+        "currency_button_label": "%{العملة} (%{رمز العملة})",
+        "credit_card_will_be_charged_html": "سيتم خصم مبلغ %{amount} من بطاقتك الائتمانية",
+        "payment_total_label": "إجمالي الدفع",
+        "conversion_rate": "1 %{من رمز العملة} = %{معدل} %{إلى رمز العملة}",
+        "change_currency_link": "التبديل إلى %{currency_name}",
+        "card_provider_fx_charges_warning": "قد يفرض مزود البطاقة الخاص بك رسومًا على المعاملات التي تتم بعملة %{currency_code}.",
+        "currency_not_supported_by_shop": "العملة التي اخترتها لم تعد متاحة. جميع الأسعار الآن بـ %{currency_code}."
+      },
+      "tips": {
+        "title": "أضف نصيحة",
+        "description": "أظهر دعمك لفريق %{shop_name}",
+        "presets_description": "حدد نسبة الإكرامية",
+        "custom_label": "نصيحة شخصية",
+        "add_tip": "أضف نصيحة",
+        "update_tip": "تغيير الطرف",
+        "message": "شكراً جزيلاً !",
+        "preset_label": "%{tip_percent} %",
+        "no_tip_label": "لا أحد"
+      },
+      "open_graph_meta_tag": {
+        "title_with_products": {
+          "zero": "شراء %{product_name}",
+          "one": "شراء %{product_name} و%{count} من العناصر الأخرى",
+          "other": "شراء %{product_name} و%{count} من العناصر الأخرى",
+          "many": "شراء %{product_name} و%{count} من العناصر الأخرى"
+        }
+      },
+      "localized_fields": {
+        "additional_information": {
+          "title": "معلومات إضافية",
+          "tax_credential_br": "صندوق التقاعد المركزي/صندوق التقاعد الوطني",
+          "shipping_credential_br": "صندوق التقاعد المركزي/صندوق التقاعد الوطني",
+          "shipping_credential_kr": "رمز الجمارك الشخصية",
+          "shipping_credential_cn": "رقم هوية المقيم",
+          "tax_credential_it": "رمز الضريبة (اختياري)",
+          "tax_email_it": "PEC (اختياري)",
+          "tax_credential_cl": "شبق",
+          "shipping_credential_cl": "شبق",
+          "tax_credential_co": "سيدولا/إيفا",
+          "tax_credential_type_co": "تيبو سيدولا",
+          "shipping_credential_co": "سيدولا/إيفا",
+          "shipping_credential_type_co": "تيبو سيدولا",
+          "tax_credential_cr": "رقم التعريف/RUT",
+          "shipping_credential_cr": "رقم التعريف/RUT",
+          "tax_credential_id": "مشروع المياه والصرف الصحي الوطني",
+          "shipping_credential_id": "مشروع المياه والصرف الصحي الوطني",
+          "tax_credential_my": "رقم التعريف الضريبي/التسجيل",
+          "shipping_credential_my": "رقم التعريف الضريبي/التسجيل",
+          "shipping_credential_mx": "طلب التعليقات",
+          "tax_credential_mx": "طلب التعليقات",
+          "tax_credential_type_mx": "النظام الضريبي",
+          "tax_credential_use_mx": "استخدام CFDI",
+          "tax_credential_pe": "مدير الاستخبارات الوطنية/شرطة ألستر الملكية/الشرطة المدنية",
+          "shipping_credential_pe": "مدير الاستخبارات الوطنية/شرطة ألستر الملكية/الشرطة المدنية",
+          "tax_credential_pt": "صندوق التأمين الوطني/صندوق التأمين ضد المخاطر",
+          "shipping_credential_pt": "صندوق التأمين الوطني/صندوق التأمين ضد المخاطر",
+          "tax_credential_es": "مدير الاستخبارات الوطنية/مدير الاستخبارات الوطنية",
+          "shipping_credential_es": "مدير الاستخبارات الوطنية/مدير الاستخبارات الوطنية",
+          "shipping_credential_tw": "رقم الهوية الوطنية/رقم ضريبة القيمة المضافة"
+        }
+      },
+      "post_purchase": {
+        "page_title": "بعد الشراء",
+        "title": "بعد الشراء",
+        "escape_confirmation": "لقد دفعت ثمن طلبك.",
+        "escape_action": "عرض تأكيد الطلب ›",
+        "components": {
+          "close": "يغلق",
+          "expand": "إظهار المزيد",
+          "processing": "جاري المعالجة حاليا...",
+          "submit": "يُقدِّم"
+        }
+      },
+      "change_country": {
+        "cart_updated_based_on_country": "لقد تم تحديث عربة التسوق الخاصة بك وفقًا لبلد التسليم الخاص بك.",
+        "cart_and_currency_updated_based_on_country": "لقد تم تحديث عربة التسوق والعملة الخاصة بك استنادًا إلى بلد الشحن الخاص بك."
+      },
+      "subscriptions": {
+        "recurring_totals": "%{total_price} لكل فترة %{interval}",
+        "recurring_totals_with_policies": {
+          "first_cycles": {
+            "one": "الدفعة الأولى من %{total_price}",
+            "other": "للبدء، %{count} دفعة بقيمة %{total_price} لكل منها",
+            "many": "للبدء، %{count} دفعة بقيمة %{total_price} لكل منها"
+          },
+          "following_cycles": "، ثم %{total_price} لكل فترة %{interval}"
+        },
+        "recurring_total_intervals": {
+          "day": {
+            "one": "يوم",
+            "other": "%{count} يوم",
+            "many": "%{count} أيام"
+          },
+          "week": {
+            "one": "أسبوع",
+            "other": "%{count} أسابيع",
+            "many": "%{count} أسابيع"
+          },
+          "month": {
+            "one": "شهر",
+            "other": "%{count} شهرًا",
+            "many": "%{count} شهرًا"
+          },
+          "year": {
+            "one": "سنة",
+            "other": "%{count} سنة",
+            "many": "%{count} سنة"
+          }
+        },
+        "recurring_totals_with_initial_order_shipping_discount": "الدفعة الأولى هي %{total_price_with_discount}، ثم %{recurring_total}"
       }
     }
   }
