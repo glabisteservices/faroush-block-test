@@ -1227,7 +1227,16 @@
       "default_address_creation_success_notification": "تمت إضافة العنوان الافتراضي",
       "default_address_update_success_notification": "تم تحديث العنوان الافتراضي",
       "loading_add_form_accessibility_message": "تحميل نموذج العنوان الجديد",
-      "loading_edit_form_accessibility_message": "تحميل نموذج تغيير العنوان"
+      "loading_edit_form_accessibility_message": "تحميل نموذج تغيير العنوان",
+      "loading_finished_accessibility_message": "تم تحميل نموذج العنوان",
+      "save": "يحفظ",
+      "save_accessibility_label": "احفظ العنوان {{address}}",
+      "section_title_accessibility_label": "أضف عنوانًا",
+      "update_success_notification": "تم تحديث العنوان",
+      "attention": "إلى انتباه",
+      "attention_help_text": "اسم الشخص أو الخدمة",
+      "loading_form_accessibility_message": "تحميل نموذج العنوان",
+      "attention_company": "الشركة/إلى انتباه"
     },
     "payment_methods": {
       "default": "افتراضيا",
@@ -1517,7 +1526,30 @@
           "many": "إعادة إرسال بطاقات الهدايا"
         },
         "expected_by": "من المقرر أن يتم في {{date}}",
-        "was_expected_by": "من المقرر أن يتم في {{date}}"
+        "was_expected_by": "من المقرر أن يتم في {{date}}",
+        "canceled_label": "تم الإلغاء",
+        "canceled_title": "لقد تم إلغاء طلبك.",
+        "come_back": "ارجع إلى هذه الصفحة لرؤية التحديثات حول حالة شحنتك.",
+        "company_tracking_number": "رقم التتبع {{company}} :",
+        "confirmed_label": "مؤكد",
+        "confirmed_title": "تم تأكيد طلبك",
+        "delivered_label": "تم التوصيل",
+        "estimated_delivery": "من المقرر أن يتم في {{date}}",
+        "in_review_label": "قيد المراجعة حاليا",
+        "in_review_title": "طلبك قيد المراجعة",
+        "no_tracking_number": "لا يوجد رقم تتبع لهذه الشحنة.",
+        "on_its_way_label": "في مرحلة انتقالية",
+        "out_for_delivery_label": "في عملية التسليم",
+        "resume_tracking": "تتبع السيرة الذاتية",
+        "submitted_label": "مطيع",
+        "track_shipment": "تتبع الشحنة",
+        "request_return": "طلب الإرجاع",
+        "attempted_delivery_label": "محاولة التسليم",
+        "preparing_for_shipping_label": "التحضير للشحن",
+        "ready_for_pickup_label": "جاهز للاستلام",
+        "ready_for_pickup_description": "هذه المنتجات جاهزة للاستلام. يُرجى إحضار تأكيد طلبك عند استلامه.",
+        "picked_up_label": "تم سحبه",
+        "submitted_description": "تحقق من تفاصيل الطلب والدفع."
       },
       "status_mark_as_delivered": "وضع علامة كزي رسمي",
       "buy_again": "اشتري مرة أخرى",
@@ -1530,7 +1562,118 @@
       "list_title_pending_orders_accessibility_label": "الطلبات: معلقة",
       "switch_order_type_pending_orders_accessibility_label": "تغيير نوع الطلب، عرض الطلبات المعلقة",
       "switch_order_type_confirmed_orders_accessibility_label": "تغيير نوع الطلب، عرض الطلبات المؤكدة",
-      "group_title_label": "جزء من: {{groupTitle}}"
+      "group_title_label": "جزء من: {{groupTitle}}",
+      "order_list": {
+        "pagination": {
+          "previous": "سابق",
+          "previous_accessibility_label": "الطلبات السابقة",
+          "load_more": "تحميل المزيد",
+          "load_more_accessibility_label": "تحميل المزيد من الطلبات"
+        },
+        "sort_by": "فرز حسب: {{option}}",
+        "sort_hide_options_accessibility_label": "إخفاء خيارات الفرز للطلبات المؤكدة.",
+        "sort_show_options_accessibility_label": "عرض خيارات الفرز للطلبات المؤكدة.",
+        "sort_title": "نوع",
+        "sort": {
+          "date": {
+            "newest": "من الأحدث إلى الأقدم",
+            "oldest": "من الأقدم إلى الأحدث"
+          },
+          "location": {
+            "ascending": "الموقع (من الألف إلى الياء)",
+            "descending": "الموقع (من الياء إلى الألف)"
+          },
+          "order_number": {
+            "ascending": "رقم الطلب (بترتيب تصاعدي)",
+            "descending": "رقم الطلب (بترتيب تنازلي)"
+          },
+          "order_total": {
+            "ascending": "إجمالي الطلبات (بترتيب تصاعدي)",
+            "descending": "إجمالي الطلبات (بترتيب تنازلي)"
+          }
+        },
+        "one_images_accessibility_label": "يتضمن الأمر {{lineItemName1}}",
+        "two_images_accessibility_label": "يتضمن الأمر {{lineItemName1}} و {{lineItemName2}}",
+        "three_images_accessibility_label": "يتضمن الطلب {{lineItemName1}} {{lineItemName2}} و {{lineItemName3}}",
+        "four_images_accessibility_label": "يتضمن الطلب {{lineItemName1}} و {{lineItemName2}} و {{lineItemName3}} و {{lineItemName4}}",
+        "no_filtered_results_description": "قم بإزالة أو تعديل المرشحات لرؤية طلباتك",
+        "no_filtered_results_title": "لم يتم تصفية أي نتائج",
+        "estimated_shortform": "تم تقديره في {{date}}",
+        "payment_status": {
+          "list_view": {
+            "overdue": "متأخر",
+            "due": "مستحق في {{date}}",
+            "due_today": "المستحق اليوم",
+            "paid": "مدفوع",
+            "due_without_date": "ل",
+            "due_on_fulfillment": "المستحقة أثناء معالجة الطلب",
+            "pay_to_confirm": "ادفع للتأكيد",
+            "payment_not_due": "لم يحن موعده بعد"
+          },
+          "gallery_view": {
+            "overdue": "التأخر في الدفع",
+            "due": "الدفع مستحق في {{date}}",
+            "due_today": "الدفع مستحق اليوم",
+            "due_without_date": "الدفع المستحق",
+            "due_on_fulfillment": "يجب أن يتم الدفع عند معالجة الطلب.",
+            "pay_to_confirm": "ادفع للتأكيد",
+            "payment_not_due": "الدفع لم يستحق بعد"
+          }
+        },
+        "sort_currently_sorted_by_accessibility_label": "تم الفرز حاليًا حسب: {{option}}",
+        "carousel": {
+          "one_products_accessibility_label": "يتضمن الطلب كمية قدرها {{lineItemQuantity1}} {{lineItemName1}}",
+          "two_products_accessibility_label": "يتضمن الطلب كمية قدرها {{lineItemQuantity1}} {{lineItemName1}} ، وكمية قدرها {{lineItemQuantity2}} {{lineItemName2}}",
+          "three_products_accessibility_label": "يتضمن الطلب كمية قدرها {{lineItemQuantity1}} {{lineItemName1}} ، وكمية قدرها {{lineItemQuantity2}} {{lineItemName2}} ، وكمية قدرها {{lineItemQuantity3}} {{lineItemName3}}",
+          "four_products_accessibility_label": "يتضمن الطلب كمية قدرها {{lineItemQuantity1}} {{lineItemName1}} ، وكمية قدرها {{lineItemQuantity2}} {{lineItemName2}} ، وكمية قدرها {{lineItemQuantity3}} {{lineItemName3}} ، وكمية قدرها {{lineItemQuantity4}} {{lineItemName4}}",
+          "five_products_accessibility_label": "يتضمن الطلب كمية قدرها {{lineItemQuantity1}} {{lineItemName1}} ، وكمية قدرها {{lineItemQuantity2}} {{lineItemName2}} ، وكمية قدرها {{lineItemQuantity3}} {{lineItemName3}} ، وكمية قدرها {{lineItemQuantity4}} {{lineItemName4}} ، وكمية قدرها {{lineItemQuantity5}} {{lineItemName5}}",
+          "six_products_accessibility_label": "يتضمن الطلب كمية قدرها {{lineItemQuantity1}} {{lineItemName1}} ، وكمية قدرها {{lineItemQuantity2}} {{lineItemName2}} ، وكمية قدرها {{lineItemQuantity3}} {{lineItemName3}} ، وكمية قدرها {{lineItemQuantity4}} {{lineItemName4}} ، وكمية قدرها {{lineItemQuantity5}} {{lineItemName5}} ، وكمية قدرها {{lineItemQuantity6}} {{lineItemName6}}",
+          "six_and_more_products_accessibility_label": "يتضمن الطلب كمية قدرها {{lineItemQuantity1}} {{lineItemName1}} ، وكمية قدرها {{lineItemQuantity2}} {{lineItemName2}} ، وكمية قدرها {{lineItemQuantity3}} {{lineItemName3}} ، وكمية قدرها {{lineItemQuantity4}} {{lineItemName4}} ، وكمية قدرها {{lineItemQuantity5}} {{lineItemName5}} ، وكمية قدرها {{lineItemQuantity6}} {{lineItemName6}} ، والمزيد",
+          "view_order_details": "إظهار تفاصيل الطلب",
+          "previous": "سابق",
+          "next": "التالي"
+        },
+        "show_order_actions_accessibility_label": "عرض إجراءات الأمر للأمر {{name}}",
+        "empty_state_title_for_pending_orders": "الطلبات المعلقة",
+        "more_than_four_products_accessibility_label": "يتضمن الطلب {{lineItemName1}} و {{lineItemName2}} و {{lineItemName3}} و {{numberOfAdditionalProducts}} منتجًا آخر",
+        "plus_more_products": "+ {{numberOfAdditionalProducts}} منتجات",
+        "order_status_message": {
+          "list_view": {
+            "view_order_for_details": "قم بالاطلاع على الطلب لمعرفة التفاصيل",
+            "estimated_delivery": "من المقرر أن يتم في {{date}}",
+            "last_updated": "آخر تحديث في {{date}}"
+          },
+          "table_view": {
+            "estimated_delivery": "من المتوقع التسليم في {{date}}"
+          }
+        },
+        "more_than_three_products_accessibility_label": "يتضمن الطلب {{lineItemName1}} و {{lineItemName2}} و {{numberOfAdditionalProducts}} منتجًا آخر",
+        "plus_more": "+ {{numberOfAdditionalProducts}}",
+        "filter_title": "فلتر",
+        "filter": {
+          "clear_section": "حذف القسم",
+          "clear_all": "حذف الكل",
+          "apply": "يتقدم",
+          "date": {
+            "start_date": "تاريخ البدء",
+            "end_date": "تاريخ الانتهاء",
+            "title": "تاريخ الطلب",
+            "today": "اليوم",
+            "last_7_days": "آخر 7 أيام",
+            "last_30_days": "آخر 30 يومًا",
+            "last_90_days": "آخر 90 يومًا",
+            "last_365_days": "آخر 12 شهرًا",
+            "custom": "تخصيص"
+          }
+        },
+        "no_order_banner": "لاختبار الامتداد الخاص بك على صفحة حالة الطلب، قم بإنشاء طلب.",
+        "location_filter_picker": {
+          "all_location": "جميع المواقع",
+          "current_location": "الموقع الحالي",
+          "switch_view": "تغيير المنظور"
+        },
+        "empty_state_with_location_title": "لا توجد أوامر لـ {{locationName}}"
+      }
     },
     "profile_preview_bar": {
       "customize_button": "تخصيص",
@@ -1655,6 +1798,131 @@
       "step_one": {
         "page_title": "تسجيل الدخول - %{shop_name}",
         "heading": "تسجيل الدخول"
+      }
+    },
+    "B2B": {
+      "account_information": {
+        "company_card_name_label": "اسم الشركة",
+        "company_card_section_accessibility_label": "عمل"
+      },
+      "locations": {
+        "contact_email": "بريد إلكتروني",
+        "contact_list_title": "الناس",
+        "contact_name": "اسم",
+        "contact_permissions": "الأذونات",
+        "contact_phone_number": "رقم التليفون",
+        "location_picker_label": "اسم الموقع",
+        "net_payment_terms_description": "{{name}} : يجب أن يتم دفع المدفوعات خلال {{numberOfDays}} يوم",
+        "payment_details_title": "تفاصيل الدفع",
+        "payment_terms": "مواعيد الدفع",
+        "permissions_label": "أذوناتك",
+        "permissions_title": "الأذونات",
+        "section_title": "موقع",
+        "shipping_address_required": "أضف عنوان الشحن إلى هذا الموقع لبدء تقديم الطلبات.",
+        "tax_details_title": "المعلومات الضريبية",
+        "tax_id": "رقم التعريف الضريبي",
+        "tax_exemptions": "الإعفاءات الضريبية",
+        "multiple_tax_exemptions": "{{taxExemptionsCount}} أخرى",
+        "multiple_tax_exemptions_and": "و",
+        "tax_exemptions_modal_close": "يغلق",
+        "taxes_none": "لا أحد",
+        "tax_exemption_not_applicable": "لذا",
+        "tax_exemptions_modal_button_accessibility_label": "إظهار جميع الإعفاءات الضريبية",
+        "pagination": {
+          "load_more": "تحميل المزيد",
+          "load_more_accessibility_label": "تحميل المزيد من المواقع"
+        },
+        "own_role_contact_name": "أنت",
+        "staff_and_permissions_title": "الموظفين والتراخيص",
+        "location_picker_accessibility_label": "اسم الموقع: {{locationName}}",
+        "deposit_percentage": "إيداع {{percentage}}"
+      },
+      "location_selection": {
+        "description": "إذا كانت عربة التسوق الخاصة بك تحتوي بالفعل على عناصر، فقد يؤثر تغيير موقعها على الأسعار والكميات.",
+        "list_accessibility_label": "قائمة المواقع",
+        "list_item_without_address_accessibility_label": "{{name}} : لا يوجد عنوان",
+        "list_loading_accessibility_message": "قائمة المواقع التي يتم تحميلها",
+        "list_loading_address_accessibility_message": "عنوان {{locationName}} قيد التحميل حاليًا",
+        "list_loading_finished_accessibility_message": "تم تحميل قائمة المواقع",
+        "loading_store_accessibility_message": "الوصول إلى المتجر",
+        "selection_cancel_button": "يلغي",
+        "selection_confirmation_button": "اختر الموقع",
+        "title": "ما هو الموقع الذي تشتريه؟",
+        "continue_to_store": "متابعة إلى المتجر",
+        "no_location_title": "الطلبات الشخصية فقط",
+        "no_location_description": "لم يعد لديك إذن لطلبات {{company}} . لا يزال بإمكانك تقديم طلبات شخصية.",
+        "no_locations_found": "لم يتم العثور على الموقع",
+        "search": "مواقع البحث",
+        "clear_search": "مسح البحث",
+        "try_new_search": "حاول البحث الجديد",
+        "search_location_title": "حدد موقعا",
+        "selection_continue_button": "يكمل",
+        "description_switch_later": "يمكنك دائمًا تغييره لاحقًا",
+        "title_choose_location": "اختر موقعا"
+      },
+      "addresses": {
+        "add_billing_address_button": "إضافة عنوان إرسال الفواتير",
+        "add_billing_address_section_accessibility_label": "إضافة عنوان إرسال الفواتير",
+        "add_shipping_address_button": "أضف عنوان الشحن",
+        "add_shipping_address_section_accessibility_label": "أضف عنوان الشحن",
+        "billing_address_card_title": "عنوان الفاتورة",
+        "cancel_adding_billing_address_accessibility_label": "إلغاء إضافة عنوان الفاتورة",
+        "cancel_adding_shipping_address_accessibility_label": "إلغاء إضافة عنوان الشحن",
+        "save_new_billing_address_accessibility_label": "احفظ عنوان الفاتورة",
+        "save_new_shipping_address_accessibility_label": "احفظ عنوان الشحن",
+        "shipping_address_card_title": "عنوان الشحن"
+      },
+      "orders": {
+        "draft_order_list": {
+          "hide_all": "إخفاء الكل",
+          "show_all": "إظهار الكل",
+          "hide_all_accessibility_label": "إخفاء جميع الطلبات قيد المراجعة حاليًا",
+          "show_all_accessibility_label": "إظهار جميع الطلبات قيد المراجعة حاليًا",
+          "title": "قيد الانتظار",
+          "pagination": {
+            "nav_accessibility_label": "أزرار التنقل للأوامر قيد المراجعة حاليًا"
+          },
+          "show_all_orders_in_review": "إظهار جميع الطلبات قيد المراجعة حاليًا",
+          "show_less_orders_in_review": "إظهار عدد أقل من الطلبات قيد المراجعة",
+          "pending_tab_accessibility_label": {
+            "no_pending_orders": "ليس لديك أي طلبات معلقة",
+            "pending_orders": {
+              "one": "لديك {{count}} طلب معلق",
+              "other": "لديك {{count}} طلب معلق",
+              "many": "لديك {{count}} طلب معلق"
+            },
+            "more_than_pagination_length": "لديك أكثر من {{count}} طلب معلق"
+          },
+          "pending_orders_count_more_than_pagination_length": "{{count}} أو أكثر"
+        },
+        "order_list_column_headers_location": "موقع",
+        "order_list_column_headers_contact": "اتصال",
+        "removed_company_contact_tooltip": "متقاعد من الشركة",
+        "order_list_column_headers_status": "حالة"
+      },
+      "draft_order_details": {
+        "draft_order_subtitle": "تم التأكيد في {{date}} من الطلب {{draftOrderName}}",
+        "loading": "جاري تحميل تفاصيل الطلب",
+        "loading_finished_accessibility_message": "لقد تم تحميل تفاصيل الطلب.",
+        "payment_status": {
+          "draft": {
+            "description": "يتم تحديد تفاصيل الدفع بعد تأكيد الطلب.",
+            "title": "الدفع لم يستحق بعد",
+            "in_review": {
+              "description": "يتم تحديد تفاصيل الدفع بعد تأكيد الطلب.",
+              "title": "الدفع لم يستحق بعد"
+            },
+            "submitted": {
+              "description": "قم بإرسال الدفعة لتأكيد هذا الطلب.",
+              "title": "ادفع للتأكيد",
+              "deposit": {
+                "title": "الدفع مستحق",
+                "due_later": "يجب سداد الرصيد وفقًا لـ {{translatedName}} في {{dueDate}} .",
+                "due_on_fulfillment": "يصبح الرصيد مستحقًا بمجرد معالجة جميع العناصر في الطلب."
+              }
+            }
+          }
+        }
       }
     }
   }
