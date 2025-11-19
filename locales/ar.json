@@ -1355,7 +1355,38 @@
       "wednesdayAbbreviation": "بحر",
       "thursdayAbbreviation": "لعبة",
       "fridayAbbreviation": "الجمعة",
-      "saturdayAbbreviation": "قعد"
+      "saturdayAbbreviation": "قعد",
+      "sundayAbbreviation": "شمس",
+      "showNextMonth": "عرض الشهر القادم {{month}} {{year}}",
+      "showPreviousMonth": "عرض الشهر السابق، {{month}} {{year}}",
+      "rangeStart": "بداية الفترة",
+      "inRange": "خلال الفترة",
+      "rangeEnd": "نهاية الفترة",
+      "autocompleteOptionsAvailable": {
+        "one": "{{count}} عنصر متاح",
+        "other": "{{count}} عناصر متاحة",
+        "many": "{{count}} عناصر متاحة"
+      },
+      "removeItem": "إزالة {{label}}",
+      "removeTag": "إزالة العلامة",
+      "month": {
+        "one": "شهر",
+        "other": "شهر",
+        "many": "شهر"
+      },
+      "mapClusterTitle": {
+        "one": "مجموعة من {{number}} علامة",
+        "other": "مجموعة من {{number}} علامة",
+        "many": "مجموعة من {{number}} علامة"
+      },
+      "expandSheet": "تكبير",
+      "qrCode": "رمز الاستجابة السريعة",
+      "addFile": "إضافة ملف",
+      "dropzoneInvalidFileType": "نوع الملف غير مدعوم",
+      "dropzoneDraggedOver": "إسقاط الملف المراد استيراده",
+      "clipboardCopied": "ينسخ",
+      "clipboardFailedToCopy": "لم يكن النسخ ممكنا.",
+      "clear": "لمحو"
     },
     "orders": {
       "order_status": {
@@ -1500,6 +1531,131 @@
       "switch_order_type_pending_orders_accessibility_label": "تغيير نوع الطلب، عرض الطلبات المعلقة",
       "switch_order_type_confirmed_orders_accessibility_label": "تغيير نوع الطلب، عرض الطلبات المؤكدة",
       "group_title_label": "جزء من: {{groupTitle}}"
+    },
+    "profile_preview_bar": {
+      "customize_button": "تخصيص",
+      "hide_bar": "إخفاء الشريط",
+      "navigate_to_admin": "الوصول إلى واجهة المسؤول",
+      "previewing": "أنت تشاهد حاليًا معاينة لـ:",
+      "saved_at": "تم التسجيل في {{date}} في {{time}}",
+      "viewing": "أنت تشاهد حالياً:",
+      "not_available": "بيانات الملف الشخصي غير متوفرة",
+      "close_preview": "إغلاق المعاينة",
+      "actions_button": "الإجراءات"
+    },
+    "settings": {
+      "title": "إعدادات",
+      "log_out_everywhere": {
+        "title": "تسجيل الخروج على جميع الأجهزة",
+        "description": "إذا فقدت جهازًا أو كنت تعاني من مشكلات أمنية، فقم بتسجيل الخروج من كل مكان لضمان أمان حسابك.",
+        "button": "تسجيل الخروج على جميع الأجهزة",
+        "warning_message": "سيتم تسجيل خروجك أيضًا على هذا الجهاز."
+      },
+      "loading_accessibility_message": "تحميل صفحة الإعدادات"
+    },
+    "date": {
+      "humanize": {
+        "lessThanOneMinuteAgo": "الآن",
+        "yesterday": "أمس في {{time}}",
+        "today": "اليوم في {{time}}",
+        "tomorrow": "غدا في {{time}}",
+        "lessThanOneHourAgo": {
+          "one": "منذ {{count}} دقيقة",
+          "other": "منذ {{count}} دقيقة",
+          "many": "منذ {{count}} دقيقة"
+        }
+      }
+    },
+    "active_inspector": {
+      "extension": {
+        "select": "حدد الامتداد المسمى {{extensionName}}",
+        "unselect": "قم بإلغاء تحديد الامتداد المسمى {{extensionName}}",
+        "move_down": "نقل الامتداد إلى الموضع التالي",
+        "move_up": "نقل الامتداد إلى الموضع السابق",
+        "remove": "إزالة الامتداد",
+        "move_down_tooltip": "وضع أقل",
+        "move_up_tooltip": "وضع أعلى",
+        "remove_tooltip": "يمسح"
+      }
+    },
+    "editor": {
+      "link_new_tab_confirmation": "لا يمكن فتح هذا الرابط في المحرر. سيتم فتحه في نافذة جديدة ( {{resolved_to_link}} ). انقر \"موافق\" للمتابعة."
+    },
+    "throttle": {
+      "too_many_attempts": {
+        "message": "الكثير من التجارب",
+        "description": "من فضلك حاول مرة أخرى بعد بضع دقائق."
+      }
+    },
+    "shop_ads": {
+      "title": "تسوق العروض الحصرية",
+      "subtitle": "متاح لفترة محدودة",
+      "button": "استكشف في المتجر",
+      "previous_button": "سابق",
+      "next_button": "التالي"
+    },
+    "knowledge_base": {
+      "self_serve_returns": {
+        "enabled": "يمكن للعملاء طلب وإدارة الإرجاعات بأنفسهم.",
+        "disabled": "يجب على العملاء الاتصال بالتاجر لطلب الإرجاع."
+      }
+    },
+    "privacy_banner": {
+      "cookie_preferences_link": "تفضيلات ملفات تعريف الارتباط"
+    },
+    "announcement_bar": {
+      "expand_label": "توسيع شريط الإعلانات",
+      "collapse_label": "تصغير شريط الإعلانات",
+      "close_label": "إغلاق شريط الإعلانات"
+    },
+    "subscriptions": {
+      "update_payment_instrument": {
+        "title": "استبدال طريقة الدفع",
+        "loading": "تحميل طرق الدفع",
+        "no_payment_methods_available": "لا توجد طرق دفع متاحة",
+        "select_new_payment_method": "اختر طريقة دفع جديدة",
+        "current_method": "حاضِر",
+        "cancel": "يلغي",
+        "save": "يحفظ",
+        "success": "تم تحديث طريقة الدفع",
+        "use_new_payment_method": "+ استخدم طريقة دفع جديدة"
+      },
+      "subscription_contracts": {
+        "title": "استخدم طريقة الدفع للطلبات المتكررة",
+        "subscription_contracts_updated": "تم تحديث {{succeeded}} اشتراكًا من {{total}} اشتراكًا",
+        "product_details": "تفاصيل المنتج",
+        "load_more": "تحميل المزيد",
+        "more_items": {
+          "one": "{{count}} منتج إضافي",
+          "other": "{{count}} منتجات إضافية",
+          "many": "{{count}} منتجات إضافية"
+        },
+        "product_count": {
+          "one": "{{count}} منتج",
+          "other": "{{count}} منتجات",
+          "many": "{{count}} منتجات"
+        }
+      },
+      "contracts_update_failed": "عدم تحديث بعض عقود الاشتراك",
+      "updating_contracts": {
+        "one": "تحديث إلى اتفاقية الاشتراك {{count}} ...",
+        "other": "جاري تحديث {{count}} عقود الاشتراك...",
+        "many": "جاري تحديث {{count}} عقود الاشتراك..."
+      },
+      "contracts_updated": {
+        "one": "{{count}} تحديث اتفاقية الاشتراك بنجاح",
+        "other": "تم تحديث {{count}} عقود الاشتراك بنجاح",
+        "many": "تم تحديث {{count}} عقود الاشتراك بنجاح"
+      },
+      "invalid_wallet_type_error": "نوع المحفظة الإلكترونية غير صالح."
+    },
+    "sign_in": {
+      "brand_logo_alt_text": "شعار %{shop_name}",
+      "processing": "جاري المعالجة حاليا…",
+      "step_one": {
+        "page_title": "تسجيل الدخول - %{shop_name}",
+        "heading": "تسجيل الدخول"
+      }
     }
   }
 }

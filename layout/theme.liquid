@@ -1,7 +1,13 @@
 <!doctype html>
 <html data-wf-page="689370215f6dcea901024571" data-wf-site="689370215f6dcea901024517" lang="{{ request.locale.iso_code }}">
 
-
+<script>
+  window.addEventListener('load', function(){
+    console.log('HTML lang (on load):', document.documentElement.lang);
+    if(window.Shopify && window.Shopify.currency) console.log('Shopify.currency (on load):', window.Shopify.currency);
+    if(window.Currency && Currency.currentCurrency) console.log('Currency.currentCurrency (on load):', Currency.currentCurrency);
+  });
+</script>
 
 
 
