@@ -70,6 +70,13 @@
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
+      },
+      "14926935257333466880": {
+        "type": "shopify://apps/geos-geolocation/blocks/location-selector-core/3cd5a431-7aea-4ecd-a807-59b3321c525b",
+        "disabled": false,
+        "settings": {
+          "body_font": "sans_serif_n4"
+        }
       }
     }
   }
