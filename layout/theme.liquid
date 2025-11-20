@@ -195,17 +195,17 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
-<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>{{ content_for_header }}
+<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>
+{{ content_for_header }}
 
 {% if localization.country.iso_code == 'AE' %}
   <script>
     (function() {
-      var alreadyRedirected = document.cookie.indexOf('ae_redirect_done=true') !== -1;
-      var targetUrl = 'https://faroush.fr/en-ae';
-
-      if (!alreadyRedirected && window.location.href.indexOf('/en-ae') === -1) {
-        document.cookie = "ae_redirect_done=true; max-age=86400; path=/";
-        window.location.href = targetUrl;
+      // Si la personne est en AE mais n'est pas encore sur le sous-dossier /en-ae,
+      // on la redirige vers la bonne version.
+      if (window.location.pathname.indexOf('/en-ae') === -1) {
+        var newUrl = 'https://faroush.fr/en-ae' + window.location.pathname + window.location.search;
+        window.location.href = newUrl;
       }
     })();
   </script>
