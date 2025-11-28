@@ -262,46 +262,71 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
   {% render 'search_javascript' %}
 
 
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // On intercepte TOUTES les soumissions des formulaires /cart/add
-    document.addEventListener('submit', function(event) {
-      const form = event.target;
+<<script>
+  (function() {
+    function redirectToCart() {
+      window.location.href = '/cart';
+    }
 
-      if (form.matches('form[action*="/cart/add"]')) {
-        event.preventDefault();
-        event.stopImmediatePropagation(); // empêche le JS du thème d'ouvrir le tiroir
+    // Patch global fetch
+    if (window.fetch) {
+      const originalFetch = window.fetch;
+      window.fetch = function() {
+        let url = arguments[0];
+        let isCartAdd = false;
 
-        const formData = new FormData(form);
-
-        fetch('/cart/add.js', {
-          method: 'POST',
-          body: formData,
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Accept': 'application/json'
+        try {
+          if (typeof url === 'string' && url.indexOf('/cart/add') !== -1) {
+            isCartAdd = true;
+          } else if (url && typeof url.url === 'string' && url.url.indexOf('/cart/add') !== -1) {
+            isCartAdd = true;
           }
-        })
-        .then(function(response) {
-          if (response.ok) {
-            // Produit bien ajouté → direction la page panier
-            window.location.href = '/cart';
-          } else {
-            // Cas d'erreur (stock, etc.)
-            return response.json().then(function(error) {
-              console.error('Erreur ajout au panier :', error);
-              alert("Impossible d'ajouter ce produit au panier. Merci de réessayer.");
-            });
-          }
-        })
-        .catch(function(error) {
-          console.error('Erreur réseau :', error);
-          alert("Une erreur est survenue. Merci de réessayer.");
-        });
-      }
-    }, true); // capture = true → on passe AVANT les scripts du thème
-  });
+        } catch(e) {}
+
+        const p = originalFetch.apply(this, arguments);
+
+        if (isCartAdd && p && typeof p.then === 'function') {
+          p.then(function(res) {
+            if (res && res.ok) {
+              redirectToCart();
+            }
+          }).catch(function(e) {
+            console.error('Erreur fetch /cart/add :', e);
+          });
+        }
+
+        return p;
+      };
+    }
+
+    // Patch XMLHttpRequest
+    (function() {
+      const originalOpen = XMLHttpRequest.prototype.open;
+      const originalSend = XMLHttpRequest.prototype.send;
+
+      XMLHttpRequest.prototype.open = function(method, url) {
+        try {
+          this._isCartAdd = typeof url === 'string' && url.indexOf('/cart/add') !== -1;
+        } catch(e) {
+          this._isCartAdd = false;
+        }
+        return originalOpen.apply(this, arguments);
+      };
+
+      XMLHttpRequest.prototype.send = function() {
+        if (this._isCartAdd) {
+          this.addEventListener('load', function() {
+            if (this.status >= 200 && this.status < 300) {
+              redirectToCart();
+            }
+          });
+        }
+        return originalSend.apply(this, arguments);
+      };
+    })();
+  })();
 </script>
+
 
 
 
