@@ -38,12 +38,24 @@
         "judge_me_reviews_featured_carousel_6M9Tmy"
       ],
       "settings": {}
+    },
+    "collection_product_d_3nY9Nd": {
+      "type": "collection-product-d",
+      "name": "Collection Products",
+      "settings": {
+        "text_heading": "",
+        "text_button_text": "VOIR TOUT",
+        "url_button_link": "shopify://collections/tous-les-produits",
+        "collection_collection": "tous-les-produits",
+        "collection_collection_limit": 4
+      }
     }
   },
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
     "cart",
-    "1764300635d637b87b"
+    "1764300635d637b87b",
+    "collection_product_d_3nY9Nd"
   ]
 }
