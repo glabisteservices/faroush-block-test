@@ -11,13 +11,10 @@ document.addEventListener('alpine:init', () => {
         },
 
         setupScrollDisable() {
-            // Trouver le dropdown du mini cart dans le header
-            const miniCartDropdown = document.querySelector('.nav_mini-cart .nav_dropdown.w-dropdown');
-            const miniCartToggle = document.querySelector('.nav_mini-cart .w-dropdown-toggle');
-            
-            console.log('Mini cart dropdown:', miniCartDropdown);
-            console.log('Mini cart toggle:', miniCartToggle);
-            
+    // Fonction neutralisée - Le mini-cart ne s'ouvre plus, tout est redirigé vers /cart
+    console.log('setupScrollDisable() - DÉSACTIVÉ (redirection vers /cart active)');
+    return; // Sortie immédiate, aucun observer n'est créé
+},
             if (miniCartDropdown) {
                 // Observer les changements de classe
                 const observer = new MutationObserver((mutations) => {
@@ -142,17 +139,16 @@ document.addEventListener('alpine:init', () => {
             window.scrollTo(0, this._scrollPosition);
         },
 
-        toggleMiniCart() {
-    console.log('(minicart.js) toggleMiniCart called');
-
-    // L'état sera détecté automatiquement par le MutationObserver
-    // Pas besoin de gérer le scroll ici
-
-    LiquifyHelper.handleTriggerClick();
-
-    this.getCart();
+     
 },
-
+toggleMiniCart() {
+    console.log('(minicart.js) toggleMiniCart - REDIRECTION vers /cart');
+    
+    // Redirection directe vers la page panier au lieu d'ouvrir le mini-cart
+    window.location.href = '/cart';
+    
+    // Le reste du code n'est plus exécuté car on redirige immédiatement
+},
 
         /**
          * Get the cart data.
