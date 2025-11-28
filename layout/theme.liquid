@@ -262,70 +262,76 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
   {% render 'search_javascript' %}
 
 
-<<script>
-  (function() {
-    function redirectToCart() {
-      window.location.href = '/cart';
+  {% render 'search_javascript' %}
+
+  <!-- Masque le tiroir de panier si le thème essaie encore de l’afficher -->
+  <style>
+    #CartDrawer,
+    .cart-drawer,
+    .drawer--cart,
+    .minicart,
+    .mini-cart,
+    .minicart-drawer,
+    [data-minicart] {
+      display: none !important;
     }
+  </style>
 
-    // Patch global fetch
-    if (window.fetch) {
-      const originalFetch = window.fetch;
-      window.fetch = function() {
-        let url = arguments[0];
-        let isCartAdd = false;
+  <!-- Interception des clics sur les boutons d'ajout au panier pour rediriger direct vers /cart -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function handleAddToCartClick(event) {
+        // On remonte jusqu'au bouton cliqué
+        var button = event.target.closest('button, input[type="submit"]');
+        if (!button) return;
 
-        try {
-          if (typeof url === 'string' && url.indexOf('/cart/add') !== -1) {
-            isCartAdd = true;
-          } else if (url && typeof url.url === 'string' && url.url.indexOf('/cart/add') !== -1) {
-            isCartAdd = true;
+        // On ne garde que les vrais boutons de soumission
+        var isSubmit =
+          (button.tagName === 'BUTTON' && (button.type === 'submit' || button.type === '')) ||
+          (button.tagName === 'INPUT' && button.type === 'submit');
+
+        if (!isSubmit) return;
+
+        // On cherche le formulaire /cart/add
+        var form = button.closest('form[action*="/cart/add"]');
+        if (!form) return;
+
+        // Là on est sûr : clic sur un vrai bouton "ajout au panier"
+        event.preventDefault();
+        event.stopImmediatePropagation(); // on coupe le JS du thème (et donc le tiroir)
+
+        var formData = new FormData(form);
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json'
           }
-        } catch(e) {}
+        })
+        .then(function(response) {
+          if (response.ok) {
+            // Ajout OK → direction /cart
+            window.location.href = '/cart';
+          } else {
+            return response.json().then(function(error) {
+              console.error('Erreur ajout au panier :', error);
+              alert("Impossible d'ajouter ce produit au panier. Merci de réessayer.");
+            });
+          }
+        })
+        .catch(function(error) {
+          console.error('Erreur réseau :', error);
+          alert("Une erreur est survenue. Merci de réessayer.");
+        });
+      }
 
-        const p = originalFetch.apply(this, arguments);
+      // On écoute tous les clics AVANT les scripts du thème (capture = true)
+      document.addEventListener('click', handleAddToCartClick, true);
+    });
+  </script>
 
-        if (isCartAdd && p && typeof p.then === 'function') {
-          p.then(function(res) {
-            if (res && res.ok) {
-              redirectToCart();
-            }
-          }).catch(function(e) {
-            console.error('Erreur fetch /cart/add :', e);
-          });
-        }
-
-        return p;
-      };
-    }
-
-    // Patch XMLHttpRequest
-    (function() {
-      const originalOpen = XMLHttpRequest.prototype.open;
-      const originalSend = XMLHttpRequest.prototype.send;
-
-      XMLHttpRequest.prototype.open = function(method, url) {
-        try {
-          this._isCartAdd = typeof url === 'string' && url.indexOf('/cart/add') !== -1;
-        } catch(e) {
-          this._isCartAdd = false;
-        }
-        return originalOpen.apply(this, arguments);
-      };
-
-      XMLHttpRequest.prototype.send = function() {
-        if (this._isCartAdd) {
-          this.addEventListener('load', function() {
-            if (this.status >= 200 && this.status < 300) {
-              redirectToCart();
-            }
-          });
-        }
-        return originalSend.apply(this, arguments);
-      };
-    })();
-  })();
-</script>
 
 
 
