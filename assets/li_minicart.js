@@ -143,15 +143,16 @@ document.addEventListener('alpine:init', () => {
         },
 
         toggleMiniCart() {
-            console.log('(minicart.js) toggleMiniCart called');
+    console.log('(minicart.js) toggleMiniCart called');
 
-            // L'état sera détecté automatiquement par le MutationObserver
-            // Pas besoin de gérer le scroll ici
+    // L'état sera détecté automatiquement par le MutationObserver
+    // Pas besoin de gérer le scroll ici
 
-            LiquifyHelper.handleTriggerClick();
+    LiquifyHelper.handleTriggerClick();
 
-            this.getCart();
-        },
+    this.getCart();
+},
+
 
         /**
          * Get the cart data.
