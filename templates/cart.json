@@ -1,12 +1,49 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-    "sections": {
-        "cart": {
-            "type": "cart"
-        }
+  "sections": {
+    "cart": {
+      "type": "cart",
+      "settings": {
+        "text_heading": "PANIER",
+        "text_continue_shopping": "Continuer les achats",
+        "text_product": "Articles",
+        "text_quantity": "Quantité",
+        "text_price": "Prix",
+        "text_remove": "Supprimer",
+        "text_summary": "Résumé",
+        "text_sum_inkl_vat": "Prix TTX",
+        "text_discount": "Réduction",
+        "text_cart_empty": "Aucun produit dans le panier"
+      }
     },
-    "layout": "theme",
-    "wrapper": "main.main-wrapper",
-    "order": [
-        "cart"
-    ]
+    "1764300635d637b87b": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_6M9Tmy": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_6M9Tmy"
+      ],
+      "settings": {}
+    }
+  },
+  "layout": "theme",
+  "wrapper": "main.main-wrapper",
+  "order": [
+    "cart",
+    "1764300635d637b87b"
+  ]
 }
