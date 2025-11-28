@@ -1,490 +1,274 @@
-document.addEventListener('alpine:init', () => {
+<!doctype html>
+<html data-wf-page="689370215f6dcea901024571" data-wf-site="689370215f6dcea901024517" lang="{{ request.locale.iso_code }}">
 
-    Alpine.data('handleMinicart', () => ({
-        init() {
-            console.log('handleMinicart init')
-            
-            // Attendre que le DOM soit complètement chargé
-            setTimeout(() => {
-                this.setupScrollDisable();
-            }, 500);
-        },
+<script>
+  window.addEventListener('load', function(){
+    console.log('HTML lang (on load):', document.documentElement.lang);
+    if(window.Shopify && window.Shopify.currency) console.log('Shopify.currency (on load):', window.Shopify.currency);
+    if(window.Currency && Currency.currentCurrency) console.log('Currency.currentCurrency (on load):', Currency.currentCurrency);
+  });
+</script>
 
-        setupScrollDisable() {
-    // Fonction neutralisée - Le mini-cart ne s'ouvre plus, tout est redirigé vers /cart
-    console.log('setupScrollDisable() - DÉSACTIVÉ (redirection vers /cart active)');
-    return; // Sortie immédiate, aucun observer n'est créé
-},
-            if (miniCartDropdown) {
-                // Observer les changements de classe
-                const observer = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                        if (mutation.attributeName === 'class') {
-                            const isOpen = mutation.target.classList.contains('w--open');
-                            console.log('Mini cart état changé:', isOpen ? 'OUVERT' : 'FERMÉ');
-                            
-                            if (isOpen) {
-                                this.disableBodyScroll();
-                            } else {
-                                this.enableBodyScroll();
-                            }
-                        }
-                    });
-                });
-                
-                observer.observe(miniCartDropdown, {
-                    attributes: true,
-                    attributeFilter: ['class']
-                });
-                
-                console.log('Observer mis en place sur:', miniCartDropdown);
-            }
 
-            // Aussi ajouter des listeners sur le toggle pour forcer la détection
-            if (miniCartToggle) {
-                miniCartToggle.addEventListener('click', () => {
-                    setTimeout(() => {
-                        const isOpen = miniCartDropdown?.classList.contains('w--open');
-                        console.log('Click détecté - État après click:', isOpen ? 'OUVERT' : 'FERMÉ');
-                        
-                        if (isOpen) {
-                            this.disableBodyScroll();
-                        } else {
-                            this.enableBodyScroll();
-                        }
-                    }, 100);
-                });
-            }
+<!-- Klaviyo Tracking -->
+<script type="text/javascript" async src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Xi2Mbf"></script>
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+  _learnq.push(['account', 'Xi2Mbf']);
+</script>
 
-            // Ajouter des listeners sur tous les boutons de fermeture
-            const closeButtons = document.querySelectorAll('.nav_dropdown-close-button, .nav_mini-cart-close, [data-dropdowntoggle]');
-            closeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    setTimeout(() => {
-                        console.log('Bouton fermeture cliqué - réactivation du scroll');
-                        this.enableBodyScroll();
-                    }, 100);
-                });
-            });
-        },
-        cart: {
-            note: null,
-            attributes: {},
-            items: [],
-            currency: window.Shopify.currency.active,
-            cart_level_discount_applications: [],
-            response: {
-                result : {},
-                show : false,
-                timeout : 5000,
-            },
-            item_count: 0,
-            total_price:0,
-            total_weight: 0,
-            total_discount: 0,
-            original_total_price: 0,
-            items_subtotal_price: 0
-        },
-        _abortController : null,
-        _scrollPosition: 0, // Pour sauvegarder la position de scroll
+<!-- Hotjar Tracking Code for Faroush -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:6522456,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+<head>
+{% render 'visually_io_sdk' %}
+
+<script src="https://cdn-eu.pagesense.io/js/adrienguerault/f733aad4d84341589eaadf016c533a28.js"></script>
+
+
+<!-- Google Tag Manager -->
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:''; j.async=true;
+j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl; f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KBM9ZH58');
+</script>
+<!-- End Google Tag Manager -->
+
+
+  <meta charset="utf-8">
+  <title>{{ page_title }}</title>
+  <meta content="{{ page_description }}" name="description">
+  <meta content="{{ page_title }}" property="og:title">
+  <meta content="{{ page_description }}" property="og:description">
+  <meta content="{{ page_title }}" property="twitter:title">
+  <meta content="{{ page_description }}" property="twitter:description">
+  <meta property="og:type" content="website">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="{{ 'normalize.css' | asset_url }}" rel="stylesheet" type="text/css">
+  <link href="{{ 'webflow.css' | asset_url }}" rel="stylesheet" type="text/css">
+  <link href="{{ 'faroush-v2-template.webflow.css' | asset_url }}" rel="stylesheet" type="text/css">
+  {{ 'minicart-zindex-fix.css' | asset_url | stylesheet_tag }}
+  {{ 'minicart-styles.css' | asset_url | stylesheet_tag }}
+  {% if template contains 'cart' %}
+  {{ 'cart.css' | asset_url | stylesheet_tag }}
+  {% endif %}
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Karla:200,300,regular,500,600,700,800,200italic,300italic:latin,latin-ext"]  }});</script>
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  
+            {% if settings.favicon == blank %}
+              <link href="{{ 'favicon.png' | asset_url }}" rel="shortcut icon" type="image/x-icon">
+            {% else %}
+              <link rel="shortcut icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
+            {% endif %}
         
-        initAbortController() {
-            if(this._abortController) {
-                this._abortController.abort('abort previous request');
-            }
-            this._abortController = new AbortController()
+  
+            {% if settings.apple_touch_icon == blank %}
+              <link href="{{ 'webclip.png' | asset_url }}" rel="apple-touch-icon">
+            {% else %}
+              <link rel="apple-touch-icon" type="image/png" href="{{ settings.apple_touch_icon | img_url: '32x32' }}">
+            {% endif %}
+        <!--  Alpine Focus Plugin  -->
+  <script defer="" src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+  <!--  Alpine JS  -->
+  <script defer="" src="{{ 'alpinejs3.js' | asset_url }}"></script>
+  <!--  Liquify Pro Debugger  -->
+  <script defer="" auto="" min="" src="https://cdn.jsdelivr.net/gh/liquify-pro/core@latest/script.js"></script>
+  {% if page_image %}
+  <meta property="og:image" content="http:{{ page_image | image_url }}">
+  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
+  <meta property="og:image:width" content="{{ page_image.width }}">
+  <meta property="og:image:height" content="{{ page_image.height }}">
+{% endif %}
+  {% case template.name %}
+  {% when 'product' %}
+<script type="application/ld+json">
+  {{ product | structured_data }}
+</script>
+{% when 'article' %}
+<script type="application/ld+json">
+  {{ article | structured_data }}
+</script>
+{% when 'collection' %}
+<script type="application/ld+json">
+                  {
+                     "@context":"http:\/\/schema.org",
+                     "@type":"WebPage",
+                     "url":"{{ shop.url }}",
+                     "mainEntity":{"@type":"offerCatalog",
+                     "name": "{{ collection.title }}",
+                     "url": "{{ collection.url }}",
+                     "numberOfItems":{{ collection.products.size }}}
+              }
+</script>
+{% endcase %}
+{% assign min_price = null %}
+{% assign max_price = 0 %}
+{% for product in collections.all-products.products %}
+  {% for variant in product.variants %}
+    {% assign price = variant.price | money_without_currency | replace: ',', '.' | plus: 0 %}
+    {% if min_price == null or price < min_price %}
+      {% assign min_price = price %}
+    {% endif %}
+    {% if price > max_price %}
+      {% assign max_price = price %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+    <script type="application/ld+json">
+      {
+        "@context" : "https://schema.org",
+        "@type" : "LocalBusiness",
+        "mainEntityOfPage" : {
+          "@type" : "WebPage",
+          "@id" : "{{ shop.url }}"
         },
-        getAbortControllerSignal() {
-            return this._abortController.signal
+        "name" : "{{ shop.name }}",
+        "telephone" : "{{ shop.phone }}",
+        "email" : "{{ shop.email }}",
+        "priceRange" : "{{ min_price | money }} - {{ max_price | money }}",
+        "address" : {
+          "@type" : "PostalAddress",
+          "streetAddress" : "{{ shop.address.address1 }}",
+          "addressLocality" : "{{ shop.address.city }}",
+          "addressRegion" : "{{ shop.address.province }}",
+          "addressCountry" : "{{ shop.address.country_code }}",
+          "postalCode" : "{{ shop.address.zip }}"
         },
-        resetAbortController() {
-            this._abortController = null;
-        },
+        "url" : "{{ shop.url }}"
+      }
+    </script>
+  <style>
+  /* AlpineJS can cause a brief &ldquo;blip&rdquo; where uninitialized templates flash before it loads. x-cloak prevents this by hiding elements until Alpine is ready. Learn more: https://alpinejs.dev/directives/cloak */
+  [x-cloak] { display: none !important; }
+  /* The li-cloak tag is removed during conversion. It&rsquo;s useful for hiding elements in the Webflow Designer to make editing easier. Learn more: https://www.liquify.pro/docu/getting-started#li-cloak */  
+  [li-cloak_disabled] { display: none !important; }
+  /* Setup Font and Background Color if Text is selected */
+  ::selection {
+    color: #FFFFFF;
+    background: #000000;
+  }
+  ::-moz-selection {
+    color: #FFFFFF;
+    background: #000000;
+  }
+</style>
+  <!--  
+IMPORTANT: If you want to make changes to the head or body code on this page, 
+please remove the `li-layout` tag from the body element. 
+This will create a separate layout file for this page, allowing you to apply custom modifications.
+Learn more: https://www.liquify.pro/docu/getting-started#template-structure
 
-        /**
-         * Désactive le scroll de la page
-         */
-        disableBodyScroll() {
-            // Sauvegarder la position actuelle
-            this._scrollPosition = window.scrollY;
-            
-            // Appliquer les styles pour désactiver le scroll
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.top = `-${this._scrollPosition}px`;
-            document.body.style.width = '100%';
-            document.body.style.left = '0';
-            
-            // Ajouter une classe pour le CSS si nécessaire
-            document.body.classList.add('mini-cart-open');
-            document.documentElement.classList.add('mini-cart-open');
-        },
-
-        /**
-         * Réactive le scroll de la page
-         */
-        enableBodyScroll() {
-            // Retirer les styles
-            document.body.style.overflow = '';
-            document.body.style.position = '';
-            document.body.style.top = '';
-            document.body.style.width = '';
-            document.body.style.left = '';
-            
-            // Retirer la classe
-            document.body.classList.remove('mini-cart-open');
-            document.documentElement.classList.remove('mini-cart-open');
-            
-            // Restaurer la position de scroll
-            window.scrollTo(0, this._scrollPosition);
-        },
-
-     
-},
-toggleMiniCart() {
-    console.log('(minicart.js) toggleMiniCart - REDIRECTION vers /cart');
-    
-    // Redirection directe vers la page panier au lieu d'ouvrir le mini-cart
-    window.location.href = '/cart';
-    
-    // Le reste du code n'est plus exécuté car on redirige immédiatement
-},
-
-        /**
-         * Get the cart data.
-         */
-        async getCart() {
-            this.initAbortController()
-            await fetch(window.Shopify.routes.root + 'cart.js', {
-                method: 'GET',
-                signal: this.getAbortControllerSignal(),
-                headers: {'Content-Type': 'application/json'},
-            })
-                .then(response => response.json())
-                .then(data => {
-                    this.resetAbortController();
-
-                    this.cart.item_count = data.item_count;
-
-                    this.cart.items = data.items.map((item) => {
-                        item.title = this.htmlspecialchars_decode(item.title)
-                        return item
-                    })
 
 
-                    this.cart.total_price = data.total_price;
-                    this.cart.total_weight = data.total_weight;
-                    this.cart.total_discount = data.total_discount;
 
-                    this.$dispatch('carttotalitems', data.item_count);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        },
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '745379928491247');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 
-        /**
-         * @param key
-         * @param quantity
-         */
-        increaseCartItemQuantity(key, quantity) {
-            this.updateCartItemQuantity(key, parseInt(quantity) + 1);
-        },
+<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>
+{{ content_for_header }}
 
-        /**
-         * @param key
-         * @param quantity
-         */
-        decreaseCartItemQuantity(key, quantity) {
-            this.updateCartItemQuantity(key, parseInt(quantity) - 1);
-        },
 
-        /**
-         * Update the cart item.
-         *
-         * @param key
-         * @param quantity
-         */
-        updateCartItemQuantity(key, quantity) {
-            this.initAbortController();
-            console.log('updateCartItemQuantity(): key, quantity: ', key, quantity);
-            this.cart.items.filter((product)  => {
-                if(product.key === key) {
-                    product.quantity = quantity
-                }
-            })
-            let updates = {};
-            updates[key] = quantity;
-            fetch(window.Shopify.routes.root + 'cart/update.js', {
-                method: 'POST',
-                signal: this.getAbortControllerSignal(),
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ updates }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    this.resetAbortController();
-                    console.log('updateCartItemQuantity(): ', data);
+<script>
+  (function() {
+    // Ne rien faire si on est déjà sur la version Émirats
+    if (window.location.pathname.indexOf('/en-ae') === -1) {
 
-                    this.$dispatch('cartupdated');
-                    this.$dispatch('showcartmessage', { status: data.status, message: data.message, description: data.description });
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    this.$dispatch('showcartmessage', { status: error?.status, message: error, description: error });
-                });
-        },
+      // Fonction qui gère la redirection si le pays = AE
+      function handleCountry(countryCode) {
+        if (!countryCode) return;
 
-        /**
-         * Format monetary values.
-         */
-        moneyFormat(value, minor = true) {
-            return LiquifyHelper.moneyFormat(value, minor)
-        },
+        countryCode = countryCode.trim().toUpperCase();
+        console.log('IP country (API externe) :', countryCode);
 
-        htmlspecialchars_decode(string) {
-            return LiquifyHelper.htmlspecialchars_decode(string)
-        },
-
-        /**
-         * Shows the minicart api message
-         * @param event
-         */
-        showCartMessage(event) {
-            //console.log("dispatched showCartMessage", event)
-            if(event?.detail?.status) {
-                this.cart.response.result = event.detail ?? {}
-                this.cart.response.show = true
-                setTimeout(() => {
-                    this.cart.response.result = {};
-                    this.cart.response.show = false
-                }, this.cart.response.timeout ?? 5000)
-            }
-        },
-
-        async returnCartItems() {
-            await this.getCart();
-
-            this.$dispatch('currentcartitems', this.cart.items);
-        },
-
-        /**
-         * @deprecated
-         */
-        set open(open) { // deprecated use  LiquifyHelper instead
-            //console.warn('Deprecated "set open" in mini_cart')
-        },
-        /**
-         * @deprecated
-         */
-        get open() { // deprecated use  LiquifyHelper instead
-            //console.warn('Deprecated "get open" in mini_cart')
-            return false;
-        },
-        /**
-         * @deprecated
-         */
-        set note(note) { // deprecated
-            //console.warn('Deprecated "set note" in mini_cart')
-            this.cart.note = note;
-        },
-        /**
-         * @deprecated
-         */
-        get note() { // deprecated
-            //console.warn('Deprecated "get note" in mini_cart')
-            return this.cart.note;
-        },
-        /**
-         * @deprecated
-         */
-        set attributes(attributes) { // deprecated
-            //console.warn('Deprecated "set attributes" in mini_cart')
-            this.cart.attributes = attributes;
-        },
-        /**
-         * @deprecated
-         */
-        get attributes() { // deprecated
-            //console.warn('Deprecated "get attributes" in mini_cart')
-            return this.cart.attributes;
-        },
-        /**
-         * @deprecated
-         */
-        set original_total_price(original_total_price) { //deprecated
-            //console.warn('Deprecated "set original_total_price" in mini_cart')
-            this.cart.original_total_price = original_total_price;
-        },
-        /**
-         * @deprecated
-         */
-        get original_total_price() { //deprecated
-            //console.warn('Deprecated "get original_total_price" in mini_cart')
-            return this.cart.original_total_price;
-        },
-        /**
-         * @deprecated
-         */
-        set total_price(total_price) { //deprecated
-            //console.warn('Deprecated "set total_price" in mini_cart')
-            this.cart.total_price = total_price;
-        },
-        /**
-         * @deprecated
-         */
-        get total_price() { //deprecated
-            //console.warn('Deprecated "get total_price" in mini_cart')
-            return this.cart.total_price;
-        },
-        /**
-         * @deprecated
-         */
-        set total_discount(total_discount) { //deprecated
-            //console.warn('Deprecated "set total_discount" in mini_cart')
-            this.cart.total_discount = total_discount;
-        },
-        /**
-         * @deprecated
-         */
-        get total_discount() { //deprecated
-            //console.warn('Deprecated "get total_discount" in mini_cart')
-            return this.cart.total_discount;
-        },
-        /**
-         * @deprecated
-         */
-        set total_weight(total_weight) { //deprecated
-            //console.warn('Deprecated "set total_weight" in mini_cart')
-            this.cart.total_discount = total_weight;
-        },
-        /**
-         * @deprecated
-         */
-        get total_weight() { //deprecated
-            //console.warn('Deprecated "get total_weight" in mini_cart')
-            return this.cart.total_weight;
-        },
-        /**
-         * @deprecated
-         */
-        set item_count(item_count) { //deprecated
-            //console.warn('Deprecated "set item_count" in mini_cart')
-            this.cart.total_discount = item_count;
-        },
-        /**
-         * @deprecated
-         */
-        get item_count() { //deprecated
-            //console.warn('Deprecated "get item_count" in mini_cart')
-            return this.cart.item_count;
-        },
-        /**
-         * @deprecated
-         */
-        set items_subtotal_price(items_subtotal_price) { //deprecated
-            //console.warn('Deprecated "set items_subtotal_price" in mini_cart')
-            this.cart.items_subtotal_price = items_subtotal_price;
-        },
-        /**
-         * @deprecated
-         */
-        get items_subtotal_price() { //deprecated
-            //console.warn('Deprecated "get items_subtotal_price" in mini_cart')
-            return this.cart.items_subtotal_price;
-        },
-        /**
-         * @deprecated
-         */
-        set products(products) {
-            //console.warn('Deprecated "set products" in mini_cart')
-            this.cart.items = products;
-        },
-        /**
-         * @deprecated
-         */
-        get products() {
-            //console.warn('Deprecated "get products" in mini_cart')
-            return this.cart.items;
-        },
-        /**
-         * @deprecated
-         */
-        set requires_shipping(requires_shipping) {
-            //console.warn('Deprecated "set requires_shipping" in mini_cart')
-        },
-        /**
-         * @deprecated
-         */
-        get requires_shipping() {
-            //console.warn('Deprecated "get requires_shipping" in mini_cart')
-            return false;
-        },
-        /**
-         * @deprecated
-         */
-        set currency(currency) { //deprecated
-            //console.warn('Deprecated "set currency" in mini_cart')
-            this.cart.currency = currency;
-        },
-        /**
-         * @deprecated
-         */
-        get currency() { //deprecated
-            //console.warn('Deprecated "get currency" in mini_cart')
-            return this.cart.currency;
-        },
-        /**
-         * @deprecated
-         */
-        set cart_level_discount_applications(cart_level_discount_applications) { //deprecated
-            //console.warn('Deprecated "set cart_level_discount_applications" in mini_cart')
-            this.cart.cart_level_discount_applications = cart_level_discount_applications;
-        },
-        /**
-         * @deprecated
-         */
-        get cart_level_discount_applications() { //deprecated
-            //console.warn('Deprecated "get cart_level_discount_applications" in mini_cart')
-            return this.cart.cart_level_discount_applications;
-        },
-        /**
-         * @deprecated
-         */
-        set cartApiResponse(cartApiResponse) { //deprecated
-            //console.warn('Deprecated "set cartApiResponse" in mini_cart')
-            this.cart.cartApiResponse = cartApiResponse;
-        },
-        /**
-         * @deprecated
-         */
-        get cartApiResponse() { //deprecated
-            //console.warn('Deprecated "get cartApiResponse" in mini_cart')
-            return this.cart.response;
-        },
-        /**
-         * @deprecated
-         */
-        set total(total) { //deprecated
-            //console.warn('Deprecated "set total" in mini_cart')
-            this.cart.item_count = total.items;
-            this.cart.total_price = total.price;
-            this.cart.total_weight = total.weight;
-            this.cart.total_discount = total.discount;
-        },
-        /**
-         * @deprecated
-         */
-        get total() { //deprecated
-            //console.warn('Deprecated "get total" in mini_cart')
-            return {
-                items: this.cart.item_count,
-                price: this.cart.total_price,
-                weight: this.cart.total_weight,
-                discount: this.cart.total_discount,
-            };
+        if (countryCode === 'AE') {
+          var newUrl = 'https://faroush.fr/en-ae' + window.location.pathname + window.location.search;
+          window.location.href = newUrl;
         }
-    }))
+      }
+
+      // Appel à un service de géolocalisation par IP
+      fetch('https://ipapi.co/country/')
+        .then(function(response) {
+          return response.text();
+        })
+        .then(function(text) {
+          handleCountry(text);
+        })
+        .catch(function(error) {
+          console.warn('Erreur géoloc externe :', error);
+        });
+    }
+  })();
+</script>
+
+</head>
+<body li-page="product" li-layout="theme">
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBM9ZH58"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <div class="page-wrapper">
+    {% render 'global_styles' %}
+    {% section 'header-announcement' %}
+    {% sections 'header_group' %}
+    {{ content_for_layout }}
+    {% sections 'footer_group' %}
 
 
-});
+
+ <!-- Ajouter ici pour les pages produit -->
+  {% if template contains 'product' %}
+    {% section 'sticky-add-to-cart' %}
+  {% endif %}
+</div>
+
+
+  
+</body>
+</html>
+
+
+</body>
+</html>
+
+
+  </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=689370215f6dcea901024517" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="{{ 'webflow.js' | asset_url }}" type="text/javascript"></script>
+  {% render 'search_javascript' %}
+</body>
+</html>
