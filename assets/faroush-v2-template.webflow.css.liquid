@@ -1974,6 +1974,17 @@ figcaption {
   position: relative;
 }
 
+
+/* À ajouter dans ton CSS (ou directement dans la section) */
+.product-price {
+  /* Stabilise les dimensions pendant le chargement */
+  min-width: 6ch; /* Réserve l'espace pour ~6 caractères */
+  display: inline-block;
+  
+  /* Stabilise la hauteur de ligne (empêche les sauts verticaux) */
+  line-height: 1.5;
+}
+
 .product-header_default-state {
   grid-column-gap: 1.5rem;
   grid-row-gap: 1.5rem;
@@ -6408,18 +6419,3 @@ figcaption {
 }
 
 
-.product-price-wrapper {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  flex-wrap: wrap;
-  min-height: 2.5rem; /* à ajuster selon ta taille de police */
-}
-
-.product-price,
-.product-compare-price,
-.product-item_tag {
-  white-space: nowrap;
-}
-
-}
