@@ -380,21 +380,37 @@
       <h1 class="product-title" x-text="product.title"></h1>
       
       <!-- Price -->
+
+      <!-- Price -->
 <div class="product-price-wrapper">
   <span class="product-price" x-text="formatPrice(selectedVariant.price)">
-    {{ selectedVariant.price | money }}
+    {{ selectedVariant.price | money_without_trailing_zeros }}
   </span>
   
-  <span class="product-compare-price" 
-        x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-        x-text="formatPrice(selectedVariant.compare_at_price)">
-    {{ selectedVariant.compare_at_price |  money_without_currency }}
-  </span>
-  
-  <span class="product-item_tag" 
-        x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
-    Sale
-  </span>
+  {% if selectedVariant.compare_at_price > selectedVariant.price %}
+    <span class="product-compare-price" 
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+          x-text="formatPrice(selectedVariant.compare_at_price)">
+      {{ selectedVariant.compare_at_price | money_without_trailing_zeros }}
+    </span>
+    
+    <span class="product-item_tag" 
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
+      Sale
+    </span>
+  {% else %}
+    <span class="product-compare-price" 
+          style="display: none;"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+          x-text="formatPrice(selectedVariant.compare_at_price)">
+    </span>
+    
+    <span class="product-item_tag" 
+          style="display: none;"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
+      Sale
+    </span>
+  {% endif %}
 </div>
       
       <!-- Stock Status -->
