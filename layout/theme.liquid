@@ -10,6 +10,7 @@
 </script>
 
 
+
 <!-- Klaviyo Tracking -->
 <script type="text/javascript" async src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Xi2Mbf"></script>
 <script type="text/javascript">
@@ -194,79 +195,21 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
-<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>
-{{ content_for_header }}
+<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>{{ content_for_header }}
 
-<script>
-  (function() {
+{% if localization.country.iso_code == 'AE' %}
+  <script>
+    (function() {
+      var alreadyRedirected = document.cookie.indexOf('ae_redirect_done=true') !== -1;
+      var targetUrl = 'https://faroush.fr/en-ae';
 
-    function redirectToUAE() {
-      // Si on est déjà sur /en-ae, on ne fait rien
-      if (window.location.pathname.indexOf('/en-ae') !== -1) return;
-
-      // On conserve le path + les paramètres (pour les pages produit, collections, etc.)
-      var newUrl = 'https://faroush.fr/en-ae' + window.location.pathname + window.location.search;
-      window.location.href = newUrl;
-    }
-
-    function getCookie(name) {
-      var match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\\[\\]\\\\\\/\\+^])/g, '\\$1') + '=([^;]*)'));
-      return match ? decodeURIComponent(match[1]) : null;
-    }
-
-    function checkRegionAndRedirect() {
-      // 1) Si l'API Customer Privacy est dispo, on l'utilise
-      if (window.Shopify && window.Shopify.loadFeatures) {
-        window.Shopify.loadFeatures(
-          [{
-            name: 'consent-tracking-api',
-            version: '0.1'
-          }],
-          function(error) {
-            if (error) {
-              console.warn('Shopify.loadFeatures error:', error);
-              fallbackCountryCheck();
-              return;
-            }
-
-            if (window.Shopify.customerPrivacy && typeof window.Shopify.customerPrivacy.getRegion === 'function') {
-              var region = window.Shopify.customerPrivacy.getRegion(); // ex: "AEON", "FR", etc.
-              console.log('customerPrivacy region:', region);
-              if (region && region.slice(0, 2) === 'AE') {
-                redirectToUAE();
-              } else {
-                fallbackCountryCheck();
-              }
-            } else {
-              fallbackCountryCheck();
-            }
-          }
-        );
-      } else {
-        fallbackCountryCheck();
+      if (!alreadyRedirected && window.location.href.indexOf('/en-ae') === -1) {
+        document.cookie = "ae_redirect_done=true; max-age=86400; path=/";
+        window.location.href = targetUrl;
       }
-    }
-
-    function fallbackCountryCheck() {
-      // Fallback : certains shops ont un cookie _shopify_country ou similaire
-      var cookieCountry = getCookie('_shopify_country') || getCookie('shopify_geo') || getCookie('shopify_geo_ip');
-      console.log('fallback country cookie:', cookieCountry);
-      if (!cookieCountry) return;
-
-      // On simplifie : si on voit "AE" quelque part dans ce cookie, on redirige
-      if (cookieCountry.indexOf('AE') !== -1) {
-        redirectToUAE();
-      }
-    }
-
-    if (document.readyState === 'complete' || document.readyState === 'interactive') {
-      checkRegionAndRedirect();
-    } else {
-      document.addEventListener('DOMContentLoaded', checkRegionAndRedirect);
-    }
-
-  })();
-</script>
+    })();
+  </script>
+{% endif %}
 
 </head>
 <body li-page="product" li-layout="theme">
