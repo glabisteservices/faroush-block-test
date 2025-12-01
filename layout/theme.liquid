@@ -281,5 +281,34 @@
   {% render 'search_javascript' %}
 
  
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // On écoute tous les clics sur les boutons Add to Cart
+  document.body.addEventListener('click', function (event) {
+    var btn = event.target.closest('[li-element="add-to-cart"]');
+    if (!btn) return;
+
+    // On sécurise : uniquement sur les pages produit
+    if (!document.body.classList.contains('template-product')) return;
+
+    // URL du panier (sans Liquid, 100% JS)
+    var cartUrl =
+      (window.Shopify &&
+        window.Shopify.routes &&
+        window.Shopify.routes.root
+        ? window.Shopify.routes.root
+        : '/'
+      ) + 'cart';
+
+    // On laisse le temps à addToCart() de finir puis on redirige
+    setTimeout(function () {
+      window.location.href = cartUrl;
+    }, 600);
+  }, true); // true = capture, donc ce handler passe avant les autres
+});
+</script>
+
+
+
 </body>
 </html>
