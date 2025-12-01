@@ -232,6 +232,9 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
 </script>
 
 </head>
+
+
+
 <body li-page="product" li-layout="theme">
 
   <!-- Google Tag Manager (noscript) -->
@@ -332,6 +335,32 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
     });
   </script>
 
+  <!-- Redirection du bouton mini-cart vers /cart -->
+  <script>
+    (function () {
+      console.log('[MINI-CART] Script de redirection vers /cart chargé');
+
+      document.addEventListener('click', function (event) {
+        // On regarde si le clic vient de la zone du mini-cart dans le header
+        var miniCartZone = event.target.closest('.nav_mini-cart');
+        if (!miniCartZone) return;
+
+        console.log('[MINI-CART] Clic détecté dans .nav_mini-cart -> redirection /cart');
+
+        // On empêche le tiroir et tous les autres handlers
+        event.preventDefault();
+        event.stopPropagation();
+        if (typeof event.stopImmediatePropagation === 'function') {
+          event.stopImmediatePropagation();
+        }
+
+        // Redirection vers la page panier
+        window.location.href = '/cart';
+      }, true); // true = phase de capture pour passer AVANT Alpine / Liquify
+    })();
+  </script>
+</body>
+</html>
 
 
 
