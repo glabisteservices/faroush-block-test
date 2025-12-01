@@ -327,12 +327,3 @@ div[class*="mini-cart_footer"] {
 }
 
 
-/* On masque complètement le contenu du mini-cart (drawer) */
-.nav_mini-cart .w-dropdown-list,
-.nav_mini-cart .mini-cart_component {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
-}
-
