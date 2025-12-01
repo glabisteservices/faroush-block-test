@@ -335,3 +335,38 @@ div[class*="mini-cart_footer"] {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* === ALIGNEMENT GLOBAL DES ICÔNES HEADER === */
+.nav_shop-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem; /* même espacement entre les 3 icônes */
+}
+
+.nav_search,
+.nav_account,
+.nav_mini-cart {
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+}
+
+/* Wrapper commun pour les icônes */
+.nav_shop-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Spécifique au mini-cart : badge collé, sans décaler l’icône */
+.nav_mini-cart .nav_shop-icon {
+  position: relative;
+}
+
+.nav_mini-cart .nav_shop-quantity {
+  position: absolute;
+  bottom: -0.15rem;      /* joue sur cette valeur si tu veux le remonter ou descendre légèrement */
+  right: -0.35rem;
+  margin: 0 !important;
+  transform: none !important;
+}
