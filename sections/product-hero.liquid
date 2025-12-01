@@ -185,12 +185,12 @@
   
  /* Product Price - CLS Prevention */
 
-/* Product Price - CLS Prevention */
+/* Product Price - CLS Prevention - SOLUTION DÉFINITIVE */
 .product-price-wrapper {
   display: flex;
   align-items: center;
   gap: 1rem;
-  min-height: 3rem; /* Augmenté */
+  min-height: 3rem;
 }
 
 .product-price {
@@ -199,8 +199,10 @@
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
-  min-width: 11rem; /* Largement augmenté : 7rem → 11rem */
+  width: 11rem; /* width fixe au lieu de min-width */
   display: inline-block;
+  text-align: left; /* Alignement à gauche */
+  flex-shrink: 0; /* Empêche le rétrécissement */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -212,10 +214,13 @@
   font-weight: 400;
   text-decoration: line-through;
   line-height: 1.2;
-  min-width: 9rem; /* Largement augmenté : 6rem → 9rem */
+  width: 9rem; /* width fixe au lieu de min-width */
   display: inline-block;
-}  
-  
+  text-align: left;
+  flex-shrink: 0;
+}
+
+
   .product-tags {
     display: flex;
     flex-wrap: wrap;
