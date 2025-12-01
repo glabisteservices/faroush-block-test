@@ -565,6 +565,54 @@
 .no-scrollbar::-webkit-scrollbar {
     display: none !important;
 }
+
+/* --- Alignement propre des icônes du header --- */
+
+/* Les 3 blocs d’icônes sur la même ligne, centrés */
+.nav_shop-icons,
+.nav_search,
+.nav_account,
+.nav_mini-cart {
+  display: flex;
+  align-items: center;
+}
+
+/* Style commun à toutes les icônes */
+.nav_shop-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;           /* évite les décalages verticaux */
+}
+
+/* Le SVG ne doit pas ajouter de marge interne */
+.nav_shop-icon .icon-embed-xsmall svg {
+  display: block;
+}
+
+/* Espacement homogène entre les icônes */
+.nav_shop-icons {
+  gap: 1.5rem; /* ajuste la valeur si tu veux plus ou moins d’espace */
+}
+
+/* Badge du panier : collé en bas à droite, sans décaler l’icône */
+.nav_shop-icon--cart .nav_shop-quantity {
+  position: absolute;
+  bottom: -4px;      /* ajuste finement si besoin */
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+
+
 </style>
 
 {% schema %}
