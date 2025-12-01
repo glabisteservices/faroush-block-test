@@ -37,6 +37,22 @@ body.mini-cart-open .mini-cart_component {
   color: inherit !important;
 }
 
+/* === POSITIONNEMENT BADGE MINI-CART COLLÉ À L'ICÔNE === */
+.nav_mini-cart .nav_shop-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav_mini-cart .nav_shop-quantity {
+  position: absolute;
+  top: -0.35rem;      /* ajuste si besoin */
+  right: -0.35rem;    /* ajuste si besoin */
+  margin: 0 !important;
+  transform: none !important;
+}
+
 /* === HEADER DU MINICART === */
 .nav_mini-cart .mini-cart_header {
   /* Header styling */
