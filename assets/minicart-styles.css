@@ -37,21 +37,21 @@ body.mini-cart-open .mini-cart_component {
   color: inherit !important;
 }
 
-/* === POSITIONNEMENT BADGE MINI-CART COLLÉ À L'ICÔNE === */
+/* === POSITIONNEMENT BADGE MINI-CART COLLÉ À L'ICÔNE (ALIGNÉ AVEC LES AUTRES) === */
 .nav_mini-cart .nav_shop-icon {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;          /* juste pour pouvoir placer le badge */
+  display: inline-block;       /* comme les autres .nav_shop-icon (w-inline-block) */
+  vertical-align: middle;      /* aligne l’icône sur la même ligne */
 }
 
 .nav_mini-cart .nav_shop-quantity {
   position: absolute;
-  top: -0.35rem;      /* ajuste si besoin */
-  right: -0.35rem;    /* ajuste si besoin */
+  top: -0.25rem;               /* ajuste si tu veux + haut / + bas */
+  right: -0.25rem;             /* ajuste si tu veux + collé au bord */
   margin: 0 !important;
   transform: none !important;
 }
+
 
 /* === HEADER DU MINICART === */
 .nav_mini-cart .mini-cart_header {
