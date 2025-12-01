@@ -6408,3 +6408,40 @@ figcaption {
 }
 
 
+/* === ALIGNEMENT PRIX + BADGES SUR LA FICHE PRODUIT === */
+
+.template-product .product-header_price-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  flex-wrap: wrap;
+}
+
+/* Prix principal */
+.template-product .product-header_price-wrapper [li-js-price="product.selected_or_first_available_variant.price"] {
+  margin: 0 !important;
+}
+
+/* Prix barré (compare_at) */
+.template-product .product-header_price-wrapper [li-js-if*="compare_at_price"] [li-js-price] {
+  margin: 0 !important;
+}
+
+/* Wrapper des tags (Sale / Not in stock) */
+.template-product .product-header_tag-list {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  margin: 0 !important;
+}
+
+/* On neutralise le style "badge de vignette" pour la fiche produit */
+.template-product .product-header_tag-list .product-item_tag {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
