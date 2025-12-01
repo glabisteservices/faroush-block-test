@@ -336,7 +336,7 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
   </script>
 
  
-  <!-- Redirection mini-cart et ajout au panier vers /cart -->
+   <!-- Redirection mini-cart + ajout au panier vers /cart (sans voir le tiroir) -->
   <script>
     (function () {
       console.log('[REDIRECT /cart] script chargé');
@@ -345,7 +345,7 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
         var btn = event.target.closest('button, input[type="submit"], a');
         if (!btn) return;
 
-        /* 1) CLIC SUR LE MINI-CART (icône / zone panier header) -> /cart */
+        /* 1) CLIC SUR LE MINI-CART (icône / zone panier header) -> /cart IMMÉDIATEMENT */
         if (
           btn.closest('.nav_mini-cart') ||      // tout ce qui est cliqué dans le bloc mini-cart du header
           btn.matches('.nav_shop-icon') ||      // icône panier éventuelle
@@ -361,7 +361,7 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
           return;
         }
 
-        /* 2) CLIC SUR UN BOUTON "AJOUTER AU PANIER" -> /cart après l'ajout */
+        /* 2) CLIC SUR UN BOUTON "AJOUTER AU PANIER" -> on POST nous-mêmes puis /cart */
         if (
           btn.matches('[name="add"]') ||                       // bouton natif Shopify
           btn.matches('[data-add-to-cart]') ||                 // boutons custom éventuels
@@ -371,15 +371,54 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
         ) {
           console.log('[REDIRECT /cart] clic sur bouton add-to-cart');
 
-          // On laisse le thème faire son ajout (form ou AJAX),
-          // puis on redirige légèrement après.
-          setTimeout(function () {
+          // On bloque le comportement du thème (donc plus de tiroir)
+          event.preventDefault();
+          event.stopPropagation();
+          if (typeof event.stopImmediatePropagation === 'function') {
+            event.stopImmediatePropagation();
+          }
+
+          var form = btn.closest('form');
+
+          // Si le bouton est dans un formulaire produit, on envoie nous-mêmes la requête d'ajout
+          if (form) {
+            var formData = new FormData(form);
+
+            var action = form.getAttribute('action') || (
+              window.Shopify && window.Shopify.routes && window.Shopify.routes.root
+                ? window.Shopify.routes.root + 'cart/add'
+                : '/cart/add'
+            );
+
+            var method = (form.getAttribute('method') || 'POST').toUpperCase();
+
+            fetch(action, {
+              method: method,
+              body: formData,
+              credentials: 'same-origin'
+            })
+            .then(function (res) {
+              console.log('[REDIRECT /cart] ajout au panier OK, redirection vers /cart');
+              window.location.href = '/cart';
+            })
+            .catch(function (err) {
+              console.warn('[REDIRECT /cart] erreur fetch cart/add, on redirige quand même', err);
+              window.location.href = '/cart';
+            });
+          } else {
+            // Pas de formulaire autour (cas extrême) -> on redirige simplement
+            console.warn('[REDIRECT /cart] bouton add-to-cart sans form, redirection simple vers /cart');
             window.location.href = '/cart';
-          }, 700);
+          }
         }
       }, true); // true = phase de capture -> notre script passe AVANT les autres
     })();
   </script>
+</body>
+</html>
+
+
+
 </body>
 </html>
 
