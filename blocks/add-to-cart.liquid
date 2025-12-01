@@ -68,20 +68,20 @@
 
             {%- comment -%}
               Bouton Add to cart :
-              - garde addToCart($event, true)
-              - ajoute une redirection vers /cart après l'ajout
+              - appelle addToCart() (comme dans ton autre snippet)
+              - redirige vers /cart après un léger délai
             {%- endcomment -%}
             <a
               li-element="add-to-cart"
-              href="#"
+              href="{{ routes.cart_url }}"
               class="button max-width-full w-button"
-              @click.prevent="
-                addToCart($event, true);
-                window.setTimeout(function() {
+              @click="
+                addToCart();
+                window.setTimeout(function () {
                   window.location.href = '{{ routes.cart_url }}';
                 }, 400);
               "
-              :disabled="!addToCartButton"
+              :class="{ 'is-disabled': !addToCartButton }"
             >
               Add to cart
             </a>
