@@ -335,30 +335,57 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
     });
   </script>
 
-  <!-- Redirection du bouton mini-cart vers /cart -->
+ 
+  <!-- Redirection mini-cart et ajout au panier vers /cart -->
   <script>
     (function () {
-      console.log('[MINI-CART] Script de redirection vers /cart chargé');
+      console.log('[REDIRECT /cart] script chargé');
 
       document.addEventListener('click', function (event) {
-        // On regarde si le clic vient de la zone du mini-cart dans le header
-        var miniCartZone = event.target.closest('.nav_mini-cart');
-        if (!miniCartZone) return;
+        var btn = event.target.closest('button, input[type="submit"], a');
+        if (!btn) return;
 
-        console.log('[MINI-CART] Clic détecté dans .nav_mini-cart -> redirection /cart');
-
-        // On empêche le tiroir et tous les autres handlers
-        event.preventDefault();
-        event.stopPropagation();
-        if (typeof event.stopImmediatePropagation === 'function') {
-          event.stopImmediatePropagation();
+        /* 1) CLIC SUR LE MINI-CART (icône / zone panier header) -> /cart */
+        if (
+          btn.closest('.nav_mini-cart') ||      // tout ce qui est cliqué dans le bloc mini-cart du header
+          btn.matches('.nav_shop-icon') ||      // icône panier éventuelle
+          btn.matches('[data-minicart-toggle]') // bouton de toggle custom si présent
+        ) {
+          console.log('[REDIRECT /cart] clic sur mini-cart');
+          event.preventDefault();
+          event.stopPropagation();
+          if (typeof event.stopImmediatePropagation === 'function') {
+            event.stopImmediatePropagation();
+          }
+          window.location.href = '/cart';
+          return;
         }
 
-        // Redirection vers la page panier
-        window.location.href = '/cart';
-      }, true); // true = phase de capture pour passer AVANT Alpine / Liquify
+        /* 2) CLIC SUR UN BOUTON "AJOUTER AU PANIER" -> /cart après l'ajout */
+        if (
+          btn.matches('[name="add"]') ||                       // bouton natif Shopify
+          btn.matches('[data-add-to-cart]') ||                 // boutons custom éventuels
+          btn.matches('.add-to-cart') ||                       // classe générique
+          btn.matches('.product-form__submit') ||              // souvent utilisé par les thèmes Shopify
+          btn.matches('.w-commerce-commerceaddtocartbutton')   // boutons d'ajout Webflow / Liquify
+        ) {
+          console.log('[REDIRECT /cart] clic sur bouton add-to-cart');
+
+          // On laisse le thème faire son ajout (form ou AJAX),
+          // puis on redirige légèrement après.
+          setTimeout(function () {
+            window.location.href = '/cart';
+          }, 700);
+        }
+      }, true); // true = phase de capture -> notre script passe AVANT les autres
     })();
   </script>
+</body>
+</html>
+
+
+
+
 </body>
 </html>
 
