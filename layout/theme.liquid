@@ -280,50 +280,6 @@
   <script src="{{ 'webflow.js' | asset_url }}" type="text/javascript"></script>
   {% render 'search_javascript' %}
 
-  <!-- Redirection mini-cart + ajout au panier vers /cart -->
-  <script>
-    (function () {
-      console.log('[REDIRECT /cart] script chargé');
-
-      document.addEventListener('click', function (event) {
-        var btn = event.target.closest('button, input[type="submit"], a');
-        if (!btn) return;
-
-        /* 1) CLIC SUR LE MINI-CART (icône / zone panier header) -> /cart */
-        if (
-          btn.closest('.nav_mini-cart') ||      // bloc mini-cart du header
-          btn.matches('.nav_shop-icon') ||      // icône panier éventuelle
-          btn.matches('[data-minicart-toggle]') // bouton de toggle custom
-        ) {
-          console.log('[REDIRECT /cart] clic sur mini-cart');
-          event.preventDefault();
-          event.stopPropagation();
-          if (typeof event.stopImmediatePropagation === 'function') {
-            event.stopImmediatePropagation();
-          }
-          window.location.href = '/cart';
-          return;
-        }
-
-        /* 2) CLIC SUR UN BOUTON "AJOUTER AU PANIER" -> redirection après l'ajout */
-        if (
-          btn.matches('[name="add"]') ||                       // bouton natif Shopify
-          btn.matches('[data-add-to-cart]') ||                 // boutons custom
-          btn.matches('.add-to-cart') ||                       // classe générique
-          btn.matches('.product-form__submit') ||              // thèmes Shopify
-          btn.matches('.w-commerce-commerceaddtocartbutton')   // Webflow / Liquify
-        ) {
-          console.log('[REDIRECT /cart] clic sur bouton add-to-cart');
-
-          // On laisse le thème gérer l'ajout (form ou AJAX),
-          // et on redirige juste après. Le tiroir est déjà masqué par le CSS.
-          setTimeout(function () {
-            window.location.href = '/cart';
-          }, 600);
-        }
-      }, true); // phase de capture
-    })();
-  </script>
-
+ 
 </body>
 </html>
