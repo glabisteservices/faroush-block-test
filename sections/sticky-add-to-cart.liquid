@@ -4,14 +4,14 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 9998;
+    z-index: 102;
+    display: none;
     background-color: #f5f2d9;
     padding: 15px 20px 20px;
     border-top: 1px solid rgba(110, 97, 43, 0.2);
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     transform: translateY(100%);
     transition: transform 0.3s ease-in-out;
-    display: none;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
   }
   
   /* Affichage uniquement sur tablet et mobile */
@@ -54,18 +54,26 @@
     min-width: 0;
   }
   
-
+  .sticky-cart-product-name {
+    font-family: Karla;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6e612b;
+    margin: 0 0 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   
   .sticky-cart-product-price {
-    font-family: Karla, sans-serif;
-    font-size: 14px;
+    font-family: Karla;
+    font-size: 16px;
     font-weight: 700;
     color: #6e612b;
     margin: 0;
-    line-height: 1.2;
   }
   
-  .sticky-cart-actions {
+  .sticky-cart-variant-selector {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -77,18 +85,11 @@
     border: 1px solid #6e612b;
     border-radius: 8px;
     background-color: transparent;
-    font-family: Karla, sans-serif;
+    font-family: Karla;
     font-size: 14px;
     font-weight: 600;
     color: #6e612b;
     text-align: center;
-    outline: none;
-  }
-  
-  .sticky-cart-select:focus {
-    border-color: #6e612b;
-    box-shadow: 0 0 0 2px rgba(110, 97, 43, 0.2);
-    outline: none;
   }
   
   .sticky-cart-add-button {
@@ -96,7 +97,7 @@
     border: none;
     border-radius: 8px;
     background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
-    font-family: Karla, sans-serif;
+    font-family: Karla;
     font-size: 14px;
     font-weight: 600;
     color: #f5f2d9;
@@ -104,7 +105,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     white-space: nowrap;
-    min-width: 120px;
+    min-width: 100px;
   }
   
   .sticky-cart-add-button:hover {
@@ -116,25 +117,20 @@
     cursor: not-allowed;
   }
   
-  .sticky-cart-add-button.added-state {
-    background-color: #bdbf85;
-    color: #ec8451;
-  }
-  
   .sticky-cart-out-of-stock {
     padding: 12px 24px;
     border: 1px solid #6e612b;
     border-radius: 8px;
     background-color: transparent;
-    font-family: Karla, sans-serif;
+    font-family: Karla;
     font-size: 14px;
     font-weight: 600;
     color: #6e612b;
     text-align: center;
-    min-width: 120px;
+    min-width: 100px;
   }
   
-  /* Responsive mobile */
+  /* Responsive ajustements */
   @media screen and (max-width: 479px) {
     .section-sticky-add-to-cart {
       padding: 12px 15px 15px;
@@ -149,9 +145,12 @@
       height: 40px;
     }
     
-    .sticky-cart-product-price {
+    .sticky-cart-product-name {
       font-size: 13px;
-      line-height: 1.1;
+    }
+    
+    .sticky-cart-product-price {
+      font-size: 15px;
     }
     
     .sticky-cart-select {
@@ -164,302 +163,148 @@
     .sticky-cart-out-of-stock {
       padding: 10px 18px;
       font-size: 13px;
-      min-width: 100px;
+      min-width: 90px;
     }
   }
 </style>
 
-<div 
-  class="section-sticky-add-to-cart" 
-  x-data="stickyCart()"
-  x-init="init()"
-  :class="{ 'is-visible': isVisible }"
->
+<div class="section-sticky-add-to-cart" id="sticky-add-to-cart" x-data="stickyCart">
   <div class="sticky-cart-container">
     <!-- Informations produit -->
     <div class="sticky-cart-product-info">
-      {% if product.featured_image %}
-        <img 
-          class="sticky-cart-product-image" 
-          src="{{ product.featured_image | image_url: width: 100 }}"
-          alt="{{ product.title | escape }}"
-          loading="lazy"
-        />
-      {% endif %}
+      <img 
+        class="sticky-cart-product-image" 
+        :src="product.featured_image" 
+        :alt="product.title"
+        loading="lazy"
+      />
       <div class="sticky-cart-product-details">
-        <p class="sticky-cart-product-price">
-          {% if product.price_varies %}
-            À partir de 
-            {% if product.price_min %}
-              {{ product.price_min | money }}
-            {% else %}
-              {{ product.variants.first.price | money }}
-            {% endif %}
-          {% else %}
-            {% if product.price %}
-              {{ product.price | money }}
-            {% else %}
-              {{ product.variants.first.price | money }}
-            {% endif %}
-          {% endif %}
-        </p>
+        <h3 class="sticky-cart-product-name" x-text="product.title"></h3>
+        <p class="sticky-cart-product-price" x-text="formatPrice(selected_or_first_available_variant.price)"></p>
       </div>
     </div>
     
-    <!-- Actions -->
-    <div class="sticky-cart-actions">
-      <!-- Sélecteur de variantes si nécessaire -->
-      {% if product.variants.size > 1 and product.has_only_default_variant == false %}
-        <select class="sticky-cart-select" x-model="selectedVariant">
-          {% for variant in product.variants %}
-            <option value="{{ variant.id }}" {% if variant.available == false %}disabled{% endif %}>
-              {{ variant.title }}
-            </option>
-          {% endfor %}
+    <!-- Sélecteur de variantes et bouton d'ajout -->
+    <div class="sticky-cart-variant-selector">
+      <!-- Sélecteur de variantes si multiple options -->
+      <template x-if="product.variants.length > 1">
+        <select 
+          class="sticky-cart-select" 
+          x-model="selectedVariantId"
+          @change="updateSelectedVariant"
+        >
+          <template x-for="variant in product.variants" :key="variant.id">
+            <option 
+              :value="variant.id" 
+              :disabled="!variant.available"
+              x-text="variant.title"
+            ></option>
+          </template>
         </select>
-      {% endif %}
+      </template>
       
-      <!-- Bouton d'ajout -->
-      {% if product.available %}
+      <!-- Bouton d'ajout au panier -->
+      <template x-if="selected_or_first_available_variant.available">
         <button 
           class="sticky-cart-add-button"
-          @click="addToCart()"
-          :disabled="isAdding"
-          :class="{ 'added-state': justAdded }"
-          x-text="buttonText"
-        >
-        </button>
-      {% else %}
+          @click="addToCart($event, true)"
+          :disabled="!addToCartButton"
+          x-text="addToCartButton ? 'Panier' : 'Ajout...'"
+        ></button>
+      </template>
+      
+      <!-- État rupture de stock -->
+      <template x-if="!selected_or_first_available_variant.available">
         <div class="sticky-cart-out-of-stock">
-          Épuisé
+          Rupture
         </div>
-      {% endif %}
+      </template>
     </div>
   </div>
 </div>
 
 <script>
-function stickyCart() {
-  return {
-    isVisible: false,
-    isAdding: false,
-    justAdded: false,
-    selectedVariant: {% if product.selected_or_first_available_variant %}{{ product.selected_or_first_available_variant.id }}{% else %}{{ product.variants.first.id }}{% endif %},
-    buttonText: 'Ajouter au panier',
+document.addEventListener('alpine:init', () => {
+  Alpine.data('stickyCart', () => ({
+    selectedVariantId: null,
     
     init() {
-      this.setupIntersectionObserver();
-      this.watchMiniCartState();
+      this.selectedVariantId = this.selected_or_first_available_variant?.id;
+      this.initStickyBehavior();
     },
     
-    watchMiniCartState() {
-      // Observer les changements sur le mini-cart
-      const miniCart = document.querySelector('[li-element="mini-cart"]');
-      if (miniCart) {
-        const observer = new MutationObserver(() => {
-          const isOpen = miniCart.classList.contains('w--open') || 
-                        miniCart.querySelector('.w-dropdown-list.w--open');
-          
-          if (isOpen) {
-            this.isVisible = false; // Masquer le sticky cart si mini-cart ouvert
-          } else {
-            // Quand le mini-cart se ferme, vérifier si on doit réafficher le sticky
-            this.checkStickyVisibility();
-          }
-        });
-        
-        observer.observe(miniCart, {
-          attributes: true,
-          attributeFilter: ['class'],
-          subtree: true
-        });
+    updateSelectedVariant() {
+      const variant = this.product.variants.find(v => v.id == this.selectedVariantId);
+      if (variant) {
+        this.selected_or_first_available_variant = variant;
       }
     },
     
-    checkStickyVisibility() {
-      // Vérifier si le bouton principal est visible
-      const mainAddButton = document.querySelector('[li-element="add-to-cart"]') || 
-                           document.querySelector('.add-to-cart-button');
-      
-      if (mainAddButton) {
-        const rect = mainAddButton.getBoundingClientRect();
-        const isMainButtonVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
-        
-        // Si le bouton principal n'est pas visible, réafficher le sticky
-        if (!isMainButtonVisible) {
-          this.isVisible = true;
-        }
-      }
+    formatPrice(price) {
+      return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(price / 100);
     },
     
-    setupIntersectionObserver() {
-      const mainAddButton = document.querySelector('[li-element="add-to-cart"]') || 
-                           document.querySelector('.add-to-cart-button');
+    initStickyBehavior() {
+      const stickyCart = document.getElementById('sticky-add-to-cart');
+      const mainAddToCartButton = document.querySelector('[li-element="add-to-cart"]');
       
-      if (!mainAddButton) return;
+      if (!mainAddToCartButton || !stickyCart) return;
       
-      // Observer pour le bouton principal
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          this.isVisible = !entry.isIntersecting;
+          if (entry.isIntersecting) {
+            // Le bouton principal est visible, cacher le sticky
+            stickyCart.classList.remove('is-visible');
+          } else {
+            // Le bouton principal n'est pas visible, afficher le sticky
+            stickyCart.classList.add('is-visible');
+          }
         });
       }, {
         threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
+        rootMargin: '0px 0px -100px 0px' // Déclenche un peu avant que le bouton disparaisse
       });
       
-      observer.observe(mainAddButton);
+      observer.observe(mainAddToCartButton);
       
-      // Observer pour le footer
+      // Cacher le sticky dans le footer
       const footer = document.querySelector('footer');
       if (footer) {
         const footerObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              this.isVisible = false;
+              stickyCart.classList.remove('is-visible');
             }
           });
-        }, { threshold: 0.1 });
+        }, {
+          threshold: 0.1
+        });
         
         footerObserver.observe(footer);
       }
-    },
-    
-    async addToCart() {
-      if (this.isAdding) return;
-      
-      this.isAdding = true;
-      
-      try {
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            items: [{
-              id: this.selectedVariant,
-              quantity: 1
-            }]
-          })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok) {
-          // Succès - déclencher les événements
-          this.$dispatch('cart-item-added', data);
-          window.dispatchEvent(new CustomEvent('cart:item-added', { detail: data }));
-          
-          // Mettre à jour le mini-cart Alpine.js
-          this.updateMiniCart();
-          
-          // Ouvrir le mini-cart
-          this.openMiniCart();
-          
-          // Feedback visuel
-          this.showSuccessFeedback();
-        } else {
-          throw new Error(data.description || 'Erreur lors de l\'ajout au panier');
-        }
-      } catch (error) {
-        console.error('Erreur:', error);
-        this.buttonText = 'Erreur';
-        setTimeout(() => {
-          this.buttonText = 'Ajouter au panier';
-          this.isAdding = false;
-        }, 2000);
-      }
-    },
-    
-    showSuccessFeedback() {
-      this.justAdded = true;
-      this.buttonText = 'Ajouté !';
-      
-      setTimeout(() => {
-        this.justAdded = false;
-        this.buttonText = 'Ajouter au panier';
-        this.isAdding = false;
-      }, 2000);
-    },
-    
-    updateMiniCart() {
-      // Trouver le composant Alpine handleMinicart et déclencher getCart()
-      const miniCartComponent = document.querySelector('[x-data*="handleMinicart"]') || 
-                               document.querySelector('[x-data*="handleMiniCart"]') ||
-                               document.querySelector('[li-element="mini-cart"]');
-      
-      if (miniCartComponent && miniCartComponent._x_dataStack) {
-        const alpineData = miniCartComponent._x_dataStack[0];
-        if (alpineData && typeof alpineData.getCart === 'function') {
-          alpineData.getCart();
-        }
-      }
-      
-      // Événements supplémentaires pour forcer la mise à jour
-      this.$dispatch('cart-updated');
-      window.dispatchEvent(new CustomEvent('cart:updated'));
-    },
-    
-    openMiniCart() {
-      // Délai pour laisser le temps à l'ajout de se terminer
-      setTimeout(() => {
-        // Supprimer les logs de debug maintenant que ça fonctionne
-        
-        // Méthode spécifique pour ton thème - Cibler l'icône exacte
-        const specificSelectors = [
-          '[li-element="mini-cart-toggle"]',
-          '[li-element="mini-cart"] .w-dropdown-toggle',
-          '.nav_shop-icon.w-dropdown-toggle',
-          '[li-element="mini-cart"]'
-        ];
-        
-        for (let selector of specificSelectors) {
-          const element = document.querySelector(selector);
-          if (element) {
-            element.click();
-            return;
-          }
-        }
-        
-        // Méthode Alpine.js pour ton composant handleMiniCart
-        const miniCartComponent = document.querySelector('[x-data="handleMiniCart()"]');
-        if (miniCartComponent && miniCartComponent._x_dataStack) {
-          const alpineData = miniCartComponent._x_dataStack[0];
-          if (alpineData && typeof alpineData.open === 'function') {
-            alpineData.open();
-            return;
-          }
-          if (alpineData && typeof alpineData.toggle === 'function') {
-            alpineData.toggle();
-            return;
-          }
-          if (alpineData) {
-            alpineData.isOpen = true;
-            return;
-          }
-        }
-        
-        // Méthode Webflow dropdown (w-dropdown)
-        const webflowDropdown = document.querySelector('[li-element="mini-cart"].w-dropdown');
-        if (webflowDropdown) {
-          const toggle = webflowDropdown.querySelector('.w-dropdown-toggle');
-          if (toggle) {
-            toggle.click();
-            return;
-          }
-          webflowDropdown.classList.add('w--open');
-          return;
-        }
-        
-      }, 100);
     }
-  }
-}
+  }));
+});
 </script>
 
 {% schema %}
 {
-  "name": "Sticky Add to Cart"
+  "tag": "section",
+  "name": "Sticky Add to Cart",
+  "class": "section-sticky-add-to-cart",
+  "presets": [
+    {
+      "name": "Sticky Add to Cart",
+      "category": "Product"
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  }
 }
 {% endschema %}
