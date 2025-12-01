@@ -309,3 +309,8 @@ div[class*="mini-cart_footer"] {
     overscroll-behavior: none !important;
   }
 }
+
+.nav_mini-cart .nav_dropdown,
+.nav_mini-cart .w-dropdown-list {
+  display: none !important;
+}
