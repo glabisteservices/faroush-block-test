@@ -6408,8 +6408,18 @@ figcaption {
 }
 
 
-/* Neutraliser les transitions sur la zone prix */
-.product-header_price-wrapper,
-.product-header_price-wrapper * {
-  transition: none !important;
+.product-price-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  min-height: 2.5rem; /* à ajuster selon ta taille de police */
+}
+
+.product-price,
+.product-compare-price,
+.product-item_tag {
+  white-space: nowrap;
+}
+
 }
