@@ -68,16 +68,18 @@
 
             {%- comment -%}
               Bouton Add to cart :
-              - conserve addToCart($event, true)
-              - ajoute une redirection propre vers la page /cart après l’ajout
+              - garde addToCart($event, true)
+              - ajoute une redirection vers /cart après l'ajout
             {%- endcomment -%}
             <a
               li-element="add-to-cart"
-              href="{{ routes.cart_url }}"
+              href="#"
               class="button max-width-full w-button"
               @click.prevent="
                 addToCart($event, true);
-                setTimeout(() => { window.location.href = '{{ routes.cart_url }}'; }, 400);
+                window.setTimeout(function() {
+                  window.location.href = '{{ routes.cart_url }}';
+                }, 400);
               "
               :disabled="!addToCartButton"
             >
