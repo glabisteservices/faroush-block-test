@@ -372,7 +372,7 @@
   <span class="product-compare-price" 
         x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
         x-text="formatPrice(selectedVariant.compare_at_price)">
-    {{ selectedVariant.compare_at_price | money }}
+    {{ selectedVariant.compare_at_price |  money_without_currency }}
   </span>
   
   <span class="product-item_tag" 
