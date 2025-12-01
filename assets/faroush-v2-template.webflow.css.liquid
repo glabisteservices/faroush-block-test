@@ -1967,11 +1967,11 @@ figcaption {
 }
 
 .product-header_price-wrapper {
-  display: flex;
+  grid-column-gap: .5rem;
+  grid-row-gap: .5rem;
   align-items: center;
-  column-gap: 0.5rem;
+  display: flex;
   position: relative;
-  flex-wrap: nowrap;
 }
 
 .product-header_default-state {
@@ -6408,3 +6408,8 @@ figcaption {
 }
 
 
+/* Neutraliser les transitions sur la zone prix */
+.product-header_price-wrapper,
+.product-header_price-wrapper * {
+  transition: none !important;
+}
