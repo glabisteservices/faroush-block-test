@@ -6449,3 +6449,50 @@ figcaption {
   text-transform: none;        /* ou uppercase si tu veux SALE */
   line-height: 1;
 }
+
+/* Conteneur général du prix dans le header produit */
+.product-header_price-wrapper {
+  display: flex;
+  align-items: center;      /* aligne verticalement */
+  gap: 0.75rem;             /* espace entre blocs */
+  position: relative;
+}
+
+/* Conteneur direct des prix + badge */
+.product-price-wrapper {
+  display: inline-flex;
+  align-items: baseline;    /* aligne les chiffres sur la ligne de texte */
+  gap: 0.75rem;
+}
+
+/* Prix actuel */
+.product-price {
+  font-family: 'Karla', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #6e612b;
+}
+
+/* Prix barré */
+.product-compare-price {
+  font-family: 'Karla', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #b5a48b;
+  text-decoration: line-through;
+}
+
+/* Badge "Sale" */
+.product-item_tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.9rem;
+  border-radius: 999px;
+  background-color: #ec8451;
+  color: #ffffff;
+  font-family: 'Karla', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+}
