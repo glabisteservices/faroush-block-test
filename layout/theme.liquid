@@ -1,16 +1,44 @@
 <!doctype html>
 <html data-wf-page="689370215f6dcea901024571" data-wf-site="689370215f6dcea901024517" lang="{{ request.locale.iso_code }}">
-<head>
 
+
+
+
+
+<!-- Klaviyo Tracking -->
+<script type="text/javascript" async src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Xi2Mbf"></script>
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+  _learnq.push(['account', 'Xi2Mbf']);
+</script>
+
+<!-- Hotjar Tracking Code for Faroush -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:6522456,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+<head>
+{% render 'visually_io_sdk' %}
+
+<script src="https://cdn-eu.pagesense.io/js/adrienguerault/f733aad4d84341589eaadf016c533a28.js"></script>
 
 
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KBM9ZH58');</script>
+<script>
+(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:''; j.async=true;
+j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl; f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KBM9ZH58');
+</script>
 <!-- End Google Tag Manager -->
+
 
   <meta charset="utf-8">
   <title>{{ page_title }}</title>
@@ -55,7 +83,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <script defer="" src="{{ 'alpinejs3.js' | asset_url }}"></script>
   <!--  Liquify Pro Debugger  -->
   <script defer="" auto="" min="" src="https://cdn.jsdelivr.net/gh/liquify-pro/core@latest/script.js"></script>
-  <link href="{{ canonical_url }}" rel="canonical">
   {% if page_image %}
   <meta property="og:image" content="http:{{ page_image | image_url }}">
   <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
@@ -169,6 +196,14 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
 
 </head>
 <body li-page="product" li-layout="theme">
+
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBM9ZH58"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div class="page-wrapper">
     {% render 'global_styles' %}
     {% section 'header-announcement' %}
@@ -176,10 +211,7 @@ src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
     {{ content_for_layout }}
     {% sections 'footer_group' %}
 
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBM9ZH58"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+
 
  <!-- Ajouter ici pour les pages produit -->
   {% if template contains 'product' %}
