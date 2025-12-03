@@ -437,6 +437,7 @@
 </div>
 
 <script>
+<script>
 function productGallery(product, initialVariant) {
   return {
     product: product,
@@ -453,4 +454,65 @@ function productGallery(product, initialVariant) {
     },
     
     nextImage() {
-      if (this.currentImageIndex < this.product.media.length -
+      if (this.currentImageIndex < this.product.media.length - 1) {
+        this.currentImageIndex++;
+      }
+    },
+    
+    previousImage() {
+      if (this.currentImageIndex > 0) {
+        this.currentImageIndex--;
+      }
+    },
+    
+    setCurrentImage(index) {
+      this.currentImageIndex = index;
+    },
+    
+    updateSelectedVariant(optionIndex, value) {
+      this.selectedOptions[optionIndex] = value;
+
+      const matchingVariant = this.product.variants.find(variant => {
+        return this.selectedOptions.every((option, index) => {
+          return variant[`option${index + 1}`] === option;
+        });
+      });
+
+      if (matchingVariant) {
+        this.selectedVariant = matchingVariant;
+
+        // mettre l'ID de variante dans l’URL sans recharger la page
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.set('variant', matchingVariant.id);
+        window.history.replaceState({}, '', newUrl);
+      }
+    },
+    
+    addToCart() {
+      if (!this.selectedVariant || !this.selectedVariant.available) return;
+
+      const formData = {
+        items: [{
+          id: this.selectedVariant.id,
+          quantity: 1
+        }]
+      };
+
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Événement custom si tu as un mini-panier qui écoute ça
+          window.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
+          console.log('Produit ajouté au panier:', data);
+        })
+        .catch(error => {
+          console.error("Erreur lors de l'ajout au panier :", error);
+        });
+    }
+  }
+}
+</script>
