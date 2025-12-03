@@ -868,15 +868,15 @@
           </span>
           <span x-show="isLoading">Ajout en cours...</span>
         </button>
-<div
-  x-show="message.show"
-  x-transition
-  class="add-to-cart-message"
-  :class="message.type"
->
-  <span x-text="message.text"></span>
-</div>
 
+        <div
+          x-show="message.show"
+          x-transition
+          class="add-to-cart-message"
+          :class="message.type"
+        >
+          <span x-text="message.text"></span>
+        </div>
       </div>
 
       <!-- PICTOS -->
@@ -990,6 +990,7 @@
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Accept': 'application/json'
             },
             body: JSON.stringify(cartData)
           });
@@ -997,9 +998,9 @@
           const result = await response.json();
 
           if (response.ok) {
-            this.showMessage('Produit ajouté au panier !', 'success');
-            this.$dispatch('cartupdated');
-            this.$dispatch('toggleminicart');
+            // ✅ Ajout au panier OK → redirection vers la page panier
+            window.location.href = '/cart';
+            return;
           } else {
             throw new Error(result.message || result.description || "Erreur lors de l'ajout au panier");
           }
