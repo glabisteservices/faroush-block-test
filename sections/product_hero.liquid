@@ -1,673 +1,166 @@
-<style>
-  .product-header_add-to-cart-wrapper {
-    display: flex;
-    flex-direction: column;
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 0.5rem;
-  }
-
-  .is-red {
-    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
-    color: #f5f2d9;
-  }
-
-  .text-size-regular {
-    font-size: 1rem;
-  }
-
-  .button {
-    padding: 0.65rem 1.5rem;
-    border: 1px solid #6e612b;
-    border-radius: 10px;
-    background-color: transparent;
-    font-weight: 500;
-    text-align: center;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .button:hover {
-    background-color: #6e612b;
-    color: #f5f2d9;
-  }
-
-  .product-item_tag {
-    padding: 0.3rem 1.5rem;
-    border-radius: 8px;
-    background-color: #9e8c73;
-    color: white;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  .heading-style-h4 {
-    font-size: 1.25rem;
-    line-height: 1.2;
-    font-weight: 400;
-  }
-
-  .product-header_layout {
-    display: grid;
-    align-items: start;
-    grid-template-columns: 1fr 1fr;
-    grid-column-gap: 3rem;
-    grid-row-gap: 2rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    .product-header_layout {
-      grid-template-columns: 1fr;
-      grid-column-gap: 0;
-    }
-  }
-
-  /* Gallery Styles */
-  .product-gallery-container {
-    position: relative;
-    width: 100%;
-  }
-
-  .product-gallery-main {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    border-radius: 20px;
-    background-color: #eee;
-  }
-
-  .gallery-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transition: opacity 0.3s ease;
-  }
-
-  .gallery-image.hidden {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  /* Navigation Arrows - Positionnées en bas à droite */
-  .gallery-navigation {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    display: flex;
-    gap: 0.5rem;
-    z-index: 10;
-  }
-
-  .nav-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    background-color: rgba(245, 242, 217, 0.9);
-    border: 1px solid #6e612b;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-  }
-
-  .nav-arrow:hover {
-    background-color: #6e612b;
-    color: #f5f2d9;
-  }
-
-  .nav-arrow svg {
-    width: 1.2rem;
-    height: 1.2rem;
-    color: currentColor;
-  }
-
-  .nav-arrow.prev svg {
-    transform: rotate(180deg);
-  }
-
-  /* Thumbnails */
-  .product-thumbnails {
-    display: flex;
-    gap: 0.5rem;
-    overflow-x: auto;
-    padding: 0.5rem 0;
-  }
-
-  .thumbnail-item {
-    flex-shrink: 0;
-    width: 80px;
-    height: 80px;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: border-color 0.3s ease;
-  }
-
-  .thumbnail-item.active {
-    border-color: #6e612b;
-  }
-
-  .thumbnail-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* Product Details */
-  .product-header_product-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1rem 0;
-  }
-
-  .product-title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0;
-  }
-
-  .product-price-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-height: 2.4rem; /* réserve une hauteur fixe pour éviter le jump */
-  }
-
-  .product-price {
-    font-size: 1.5rem;
-    font-weight: 600;
-    display: inline-block;
-    min-width: 6ch; /* espace constant pour 2-3 chiffres + € */
-  }
-
-  .product-compare-price {
-    font-size: 1.2rem;
-    text-decoration: line-through;
-  }
-
-  .product-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .product-description {
-    line-height: 1.6;
-  }
-
-  /* Variant Selection */
-  .variant-selector {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .variant-label {
-    font-weight: 600;
-  }
-
-  .variant-select {
-    padding: 0.75rem 1rem;
-    border: 1px solid #6e612b;
-    border-radius: 10px;
-    background-color: transparent;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-
-  /* Add to Cart */
-  .add-to-cart-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .add-to-cart-button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    border-radius: 10px;
-    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
-    font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .add-to-cart-button:hover {
-    background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1.00);
-  }
-
-  .add-to-cart-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-
-  .stock-status {
-    font-size: 0.9rem;
-    padding: 0.5rem;
-    text-align: center;
-    border-radius: 5px;
-  }
-
-  .in-stock {
-    background-color: #e8f5e8;
-    color: #2d5a2d;
-  }
-
-  .out-of-stock {
-    background-color: #ffe8e8;
-    color: #8b0000;
-  }
-
-  /* Shipping Info */
-  .shipping-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .shipping-icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: #6e612b;
-  }
-
-  .shipping-text {
-    font-size: 0.9rem;
-  }
-
-  /* IMPORTANT : forcer une police système sur tout le bloc produit
-     pour éviter que la police change quand Karla se charge via WebFont */
-  .product-header_component,
-  .product-header_component .product-title,
-  .product-header_component .product-price,
-  .product-header_component .product-compare-price,
-  .product-header_component .product-description,
-  .product-header_component .variant-label,
-  .product-header_component .variant-select,
-  .product-header_component .add-to-cart-button,
-  .product-header_component .stock-status,
-  .product-header_component .shipping-text,
-  .product-header_component .text-size-regular {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif !important;
-    color: #6e612b;
-  }
-
-  .product-header_component .product-item_tag {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif !important;
-  }
-
-  .product-header_component .product-compare-price {
-    color: #9e8c73;
-  }
-
-  .product-header_component .product-item_tag {
-    background-color: #9e8c73;
-  }
-</style>
-
-{% assign initial_variant = product.selected_or_first_available_variant %}
-
-<div class="product-header_component">
-  <div
-    class="product-header_layout"
-    x-data="productGallery({{ product | json | escape }}, {{ initial_variant | json | escape }})"
-    x-init="initGallery()"
-  >
-    <!-- GALLERY -->
-    <div class="product-gallery-container">
-      <div class="product-gallery-main">
-        <template x-for="(media, index) in product.media" :key="media.id">
-          <div x-show="currentImageIndex === index" x-transition:enter.duration.300ms>
-            <img
-              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_1000x1000.jpg') : ''"
-              :alt="media.alt || product.title"
-              class="gallery-image"
-              loading="lazy"
-            >
-          </div>
-        </template>
-
-        <div class="gallery-navigation" x-show="product.media.length > 1">
-          <button class="nav-arrow prev" @click="previousImage()" :disabled="currentImageIndex === 0">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          <button class="nav-arrow next" @click="nextImage()" :disabled="currentImageIndex === product.media.length - 1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="product-thumbnails" x-show="product.media.length > 1">
-        <template x-for="(media, index) in product.media" :key="media.id">
-          <div
-            class="thumbnail-item"
-            :class="{ 'active': currentImageIndex === index }"
-            @click="setCurrentImage(index)"
-          >
-            <img
-              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_200x200.jpg') : ''"
-              :alt="media.alt || product.title"
-              class="thumbnail-image"
-              loading="lazy"
-            >
-          </div>
-        </template>
-      </div>
-    </div>
-
-    <!-- DETAILS PRODUIT -->
-    <div class="product-header_product-details">
-      <!-- Titre : rendu 100% Liquid pour éviter tout shift -->
-      <h1 class="product-title">
-        {{ product.title }}
-      </h1>
-
-      <!-- Prix : Liquid pour le premier rendu, Alpine pour les variantes -->
-      <div class="product-price-wrapper">
-        <span
-          class="product-price"
-          x-text="formatPrice(selectedVariant.price)"
-        >
-          {{ initial_variant.price | money }}
-        </span>
-
-        {% if initial_variant.compare_at_price and initial_variant.compare_at_price > initial_variant.price %}
-          <span
-            class="product-compare-price"
-            x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-            x-text="formatPrice(selectedVariant.compare_at_price)"
-          >
-            {{ initial_variant.compare_at_price | money }}
-          </span>
-          <span
-            class="product-item_tag"
-            x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-          >
-            Sale
-          </span>
-        {% else %}
-          <span
-            class="product-compare-price"
-            x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-            x-text="formatPrice(selectedVariant.compare_at_price)"
-          ></span>
-          <span
-            class="product-item_tag"
-            x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-          >
-            Sale
-          </span>
-        {% endif %}
-      </div>
-
-      <!-- Stock : texte déjà présent au 1er rendu -->
-      <div
-        class="stock-status {% if initial_variant.available %}in-stock{% else %}out-of-stock{% endif %}"
-        :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
-        x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
-      >
-        {% if initial_variant.available %}
-          En stock
-        {% else %}
-          Rupture de stock
-        {% endif %}
-      </div>
-
-      <!-- Tags produits via Liquid (pas de JS inutile) -->
-      {% if section.settings.show_product_tags and product.tags.size > 0 %}
-        <div class="product-tags">
-          {% assign max_tags = section.settings.max_tags_display | default: 3 %}
-          {% for tag in product.tags limit: max_tags %}
-            <span class="product-item_tag">{{ tag }}</span>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      <!-- Description : Liquid pour éviter tout flash -->
-      {% if product.description != blank %}
-        <div class="product-description">
-          {{ product.description }}
-        </div>
-      {% endif %}
-
-      <!-- Sélection de variantes -->
-      {% if product.options.size > 0 %}
-        {% for option in product.options_with_values %}
-          <div class="variant-selector">
-            <label class="variant-label">{{ option.name }}</label>
-            <select
-              class="variant-select"
-              @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)"
-            >
-              {% for value in option.values %}
-                <option
-                  value="{{ value | escape }}"
-                  {% if initial_variant.options[forloop.index0] == value %}selected{% endif %}
-                >
-                  {{ value }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-        {% endfor %}
-      {% endif %}
-
-      <!-- Livraison -->
-      {% if section.settings.show_shipping_info %}
-        <div class="shipping-info">
-          <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-          </svg>
-          <span class="shipping-text">
-            {{ section.settings.shipping_text }}
-          </span>
-        </div>
-      {% endif %}
-
-      <!-- Bouton Ajouter au panier -->
-      <div class="add-to-cart-section">
-        <button
-          class="add-to-cart-button"
-          :disabled="!selectedVariant.available"
-          @click="addToCart()"
-          x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"
-        >
-          {% if initial_variant.available %}
-            Ajouter au panier
-          {% else %}
-            Rupture de stock
-          {% endif %}
-        </button>
-      </div>
-    </div>
-  </div>
+<div class="padding-global padding-section-small">
+          <div class="container-large">
+            <div class="product-header_component">
+              <script src="{{ 'li_custom.js' | asset_url }}" type="text/javascript"></script>
+<div li-element="product-variant-container" class="w-layout-grid product-header_layout" x-data="handleVariant({{ product | json | escape }}, {{ product.options_by_name | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})" x-init="$nextTick(() => { activateVariants() })" @setbundleitem.window="updateBundleItem($event.detail.product, $event.detail.quantity)">
+                <div id="w-node-_4b0e9b61-6f53-1185-9fdd-143753136862-5313685d" class="swiper-container is-product-gallery">
+                  <div class="swiper is-product-gallery">
+                    <div id="my-gallery" li-for:inside="media in product.media" class="swiper-wrapper is-product-gallery">
+        {% for media in product.media %}                            
+                      
+                            {% if media.media_type == 'image' %}    <div li-if="media.media_type == 'image'" class="swiper-slide is-product-gallery">
+    
+                        <div class="product-header_gallery-lightbox"><img loading="lazy" li-object:src="media | image_url: width: 1000" li-object:alt="media.alt" src="{{ media | image_url: width: 1000 }}" alt="{{ media.alt }}" class="product-header_gallery-image"></div>
+                          </div>
+{% endif %}
+                            
+                      
+                            {% if media.media_type == 'video' %}    <div li-if="media.media_type == 'video'" class="swiper-slide is-product-gallery">
+    
+                        <div class="product-header_gallery-lightbox">
+                          <div li-object="media | video_tag: controls: true" class="product-header_gallery-image">{{ media | video_tag: controls: true }}</div>
+                        </div>
+                          </div>
+{% endif %}
+                            
+                    
+                    {% endfor %}    </div>
+                  </div>
+                  <div class="product-header_slider-wrapper">
+                    <div class="swiper_button-wrapper is-product-slider pointer-events-off z-index-1 hide-mobile-landscape">
+                      <a aria-label="Previous Slide" href="#" class="swiper_button swiper-prev pointer-events-on w-inline-block">
+                        <div class="swiper_button-icon is-reversed w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 29.541 22.323">
+                            <g id="Group_44" data-name="Group 44" transform="translate(0 1.014)">
+                              <path id="Path_1" data-name="Path 1" d="M115.445,20.633l9.311-10.148L115.445.338" transform="translate(-97.25 -0.338)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></path>
+                              <line id="Line_1" data-name="Line 1" x1="27.506" transform="translate(0 10.148)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></line>
+                            </g>
+                          </svg></div>
+                      </a>
+                      <a aria-label="Next Slide" href="#" class="swiper_button swiper-next pointer-events-on w-inline-block">
+                        <div class="swiper_button-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewbox="0 0 29.541 22.323">
+                            <g id="Group_44" data-name="Group 44" transform="translate(0 1.014)">
+                              <path id="Path_1" data-name="Path 1" d="M115.445,20.633l9.311-10.148L115.445.338" transform="translate(-97.25 -0.338)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></path>
+                              <line id="Line_1" data-name="Line 1" x1="27.506" transform="translate(0 10.148)" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="3"></line>
+                            </g>
+                          </svg></div>
+                      </a>
+                    </div>
+                    <div class="swiper is-product-thumbnail">
+                      <div li-for:inside="media in product.media" class="swiper-wrapper is-product-thumbnail">
+        {% for media in product.media %}                            
+                        
+                            {% if media.media_type == 'image' %}    <div li-if="media.media_type == 'image'" class="swiper-slide is-product-thumbnail">
+    <img loading="lazy" li-object:src="media | image_url: width: 200" li-object:alt="media.alt" src="{{ media | image_url: width: 200 }}" alt="{{ media.alt }}" class="product-header_thumbnail-image">    </div>
+{% endif %}
+                            
+                        
+                            {% if media.media_type == 'video' %}    <div li-if="media.media_type == 'video'" class="swiper-slide is-product-thumbnail">
+    <img loading="lazy" li-object:src="media | image_url: width: 200" li-object:alt="media.alt" src="{{ media | image_url: width: 200 }}" alt="{{ media.alt }}" class="product-header_thumbnail-image">
+                          <div aria-hidden="true" class="product-header_play-icon w-embed"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--ic" width="100%" height="100%" preserveaspectratio="xMidYMid meet" viewbox="0 0 24 24">
+                              <path fill="currentColor" d="M8 5v14l11-7z"></path>
+                            </svg></div>
+                            </div>
+{% endif %}
+                            
+                      
+                    {% endfor %}    </div>
+                    </div>
+                  </div>
+                  <div class="swiper-slide is-product-thumbnail is-active hide"></div>
+                </div>
+                <div li-content-for-theme-blocks="" id="w-node-_4b0e9b61-6f53-1185-9fdd-143753136879-5313685d" class="product-header_product-details">
+{% content_for 'blocks' %}
 </div>
-
-<script>
-  function productGallery(product, initialVariant) {
-    return {
-      product: product,
-      selectedVariant: initialVariant,
-      selectedOptions: [],
-      currentImageIndex: 0,
-
-      initGallery() {
-        if (this.selectedVariant && this.product.options) {
-          this.selectedOptions = this.product.options.map((option, index) => {
-            return this.selectedVariant['option' + (index + 1)];
-          });
-        }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hide w-embed w-script">
+          <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+          <script>
+  $(".swiper-container").each(function (index) {
+    const thumbsSwiper = new Swiper($(this).find(".swiper.is-product-thumbnail")[0], {
+      slidesPerView: "auto",
+      rewind: false,
+      loopedSlides: 8,
+      slideToClickedSlide: true,
+      spaceBetween: "4%",
+    });
+    const swiper = new Swiper($(this).find(".swiper.is-product-gallery")[0], {
+      mousewheel: {
+        forceToAxis: true
       },
-
-      nextImage() {
-        if (this.currentImageIndex < this.product.media.length - 1) {
-          this.currentImageIndex++;
-        }
+      thumbs: {
+        swiper: thumbsSwiper,
+        slideThumbActiveClass: "is-active",
       },
-
-      previousImage() {
-        if (this.currentImageIndex > 0) {
-          this.currentImageIndex--;
-        }
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
       },
-
-      setCurrentImage(index) {
-        this.currentImageIndex = index;
-      },
-
-      updateSelectedVariant(optionIndex, value) {
-        this.selectedOptions[optionIndex] = value;
-
-        const matchingVariant = this.product.variants.find(variant => {
-          return this.selectedOptions.every((option, index) => {
-            return variant['option' + (index + 1)] === option;
-          });
-        });
-
-        if (matchingVariant) {
-          this.selectedVariant = matchingVariant;
-
-          const newUrl = new URL(window.location);
-          newUrl.searchParams.set('variant', matchingVariant.id);
-          window.history.replaceState({}, '', newUrl);
-        }
-      },
-
-      formatPrice(price) {
-        return new Intl.NumberFormat('fr-FR', {
-          style: 'currency',
-          currency: 'EUR'
-        }).format(price / 100);
-      },
-
-      addToCart() {
-        if (!this.selectedVariant.available) return;
-
-        const formData = {
-          items: [{
-            id: this.selectedVariant.id,
-            quantity: 1
-          }]
-        };
-
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
-        })
-        .then(response => response.json())
-        .then(data => {
-          window.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
-          console.log('Produit ajouté au panier:', data);
-        })
-        .catch(error => {
-          console.error('Erreur lors de l\'ajout au panier:', error);
-        });
+      navigation: {
+        nextEl: $(this).find(".swiper-next")[0],
+        prevEl: $(this).find(".swiper-prev")[0],
       }
-    }
-  }
+    });
+  }); 
 </script>
-
-{% schema %}
-{
-  "tag": "section",
-  "name": "Product Hero",
-  "class": "Section-produit-fiche",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_shipping_info",
-      "label": "Afficher les informations de livraison",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "shipping_text",
-      "label": "Texte de livraison",
-      "default": "Livraison 1 - 3 jours"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_tags",
-      "label": "Afficher les tags produit",
-      "default": true
-    },
-    {
-      "type": "number",
-      "id": "max_tags_display",
-      "label": "Nombre maximum de tags à afficher",
-      "default": 3
-    }
-  ],
-  "blocks": [
-    {
-      "type": "product-name",
-      "name": "Nom du produit",
-      "limit": 1
-    },
-    {
-      "type": "product-price",
-      "name": "Prix du produit",
-      "limit": 1
-    },
-    {
-      "type": "availability",
-      "name": "Disponibilité",
-      "limit": 1
-    },
-    {
-      "type": "add-to-cart",
-      "name": "Bouton d'ajout au panier",
-      "limit": 1
-    },
-    {
-      "type": "@app"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Product Hero",
-      "category": "Liquify",
-      "blocks": [
+        </div> {% schema %} {
+    "tag": "section",
+    "name": "Product Hero",
+    "class": "section_product-header",
+    "blocks": [
         {
-          "type": "product-name"
+            "type": "vendor"
         },
         {
-          "type": "product-price"
+            "type": "product-name"
         },
         {
-          "type": "availability"
+            "type": "product-price"
         },
         {
-          "type": "add-to-cart"
+            "type": "availability"
+        },
+        {
+            "type": "add-to-cart"
+        },
+        {
+            "type": "description"
+        },
+        {
+            "type": "@app"
         }
-      ]
+    ],
+    "presets": [
+        {
+            "name": "Product Hero",
+            "category": "Liquify",
+            "blocks": [
+                {
+                    "type": "vendor"
+                },
+                {
+                    "type": "product-name"
+                },
+                {
+                    "type": "product-price"
+                },
+                {
+                    "type": "availability"
+                },
+                {
+                    "type": "add-to-cart"
+                },
+                {
+                    "type": "description"
+                }
+            ]
+        }
+    ],
+    "enabled_on": {
+        "templates": [
+            "product"
+        ]
     }
-  ],
-  "enabled_on": {
-    "templates": [
-      "product"
-    ]
-  }
-}
-{% endschema %}
+} {% endschema %}
