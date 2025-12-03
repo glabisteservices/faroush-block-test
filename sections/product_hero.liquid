@@ -24,22 +24,19 @@
   .product-gallery-container {
     position: relative;
     width: 100%;
-    height: calc(90vh - 4rem);
     display: flex;
     flex-direction: column;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (min-width: 769px) {
     .product-gallery-container {
-      height: auto;
-      min-height: 300px;
+      min-height: 420px;
     }
   }
 
   .product-gallery-main {
     position: relative;
     width: 100%;
-    flex: 1;
     margin-bottom: 1rem;
     overflow: hidden;
     border-radius: 20px;
@@ -49,20 +46,13 @@
 
   .gallery-slides-container {
     display: flex;
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto;
     transition: transform 0.3s ease;
   }
 
-  @media screen and (max-width: 768px) {
-    .gallery-slides-container {
-      width: 100%;
-    }
-  }
-
   .gallery-slide {
-    width: auto;
-    height: 100%;
+    width: 100%;
     flex-shrink: 0;
     border-radius: 20px;
     overflow: hidden;
@@ -73,10 +63,9 @@
     align-items: center;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (min-width: 769px) {
     .gallery-slide {
-      width: 100%;
-      min-height: 300px;
+      min-height: 400px;
     }
   }
 
@@ -91,10 +80,11 @@
   }
 
   .gallery-image {
-    width: auto;
-    height: 100%;
+    width: 100%;
+    height: auto;
     object-fit: contain;
     object-position: center;
+    display: block;
   }
 
   /* Navigation Arrows */
@@ -163,7 +153,7 @@
 
   .thumbnail-item {
     flex-shrink: 0;
-    width: auto;
+    width: 4rem;
     height: 3.7rem;
     border-radius: 10px;
     overflow: hidden;
@@ -177,10 +167,11 @@
   }
 
   .thumbnail-image {
-    width: auto;
+    width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
+    display: block;
   }
 
   /* === PRODUCT DETAILS === */
@@ -438,12 +429,8 @@
 
     .product-header_component .product-pictos-container .picto-produit div[class*="Div Block"] img[class*="Image"],
     .product-header_component .product-pictos-container .picto-produit img[class*="Image"],
-    .product-header_component .picto-produit div[class*="Div Block"] img,
-    .product-header_component .picto-produit img,
-    .product-pictos-container .picto-produit div[class*="Div Block"] img[class*="Image"],
-    .product-pictos-container .picto-produit img[class*="Image"],
-    .picto-produit div[class*="Div Block"] img,
-    .picto-produit img,
+    .product-header_component .product-pictos-container .picto-produit img,
+    .product-pictos-container .picto-produit img,
     .picto-produit img[class*="Image"] {
       width: auto !important;
       height: 100% !important;
@@ -656,604 +643,3 @@
     white-space: nowrap;
   }
 </style>
-
-<div class="product-header_component" x-data="productForm()">
-  <div class="product-header_layout">
-    <!-- GALLERY -->
-    <div class="product-gallery-container">
-      <div class="product-gallery-main" id="gallery-main">
-        <div class="gallery-slides-container" id="slides-container">
-          {% for media in product.media %}
-            <div class="gallery-slide" data-slide="{{ forloop.index0 }}">
-              {% if media.media_type == 'image' %}
-                <img
-                  src="{{ media | image_url: width: 1000 }}"
-                  alt="{{ media.alt | escape }}"
-                  class="gallery-image"
-                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
-                >
-              {% elsif media.media_type == 'video' %}
-                {{ media | video_tag: controls: true, class: "gallery-image" }}
-              {% endif %}
-            </div>
-          {% endfor %}
-        </div>
-
-        {% if product.media.size > 1 %}
-          <div class="gallery-navigation">
-            <button type="button" class="nav-arrow prev" onclick="previousImage()" id="prev-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-            <button type="button" class="nav-arrow next" onclick="nextImage()" id="next-btn">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        {% endif %}
-      </div>
-
-      {% if product.media.size > 1 %}
-        <div class="product-thumbnails">
-          {% for media in product.media %}
-            <div
-              class="thumbnail-item {% if forloop.first %}active{% endif %}"
-              onclick="setCurrentImage({{ forloop.index0 }})"
-              data-thumbnail="{{ forloop.index0 }}"
-            >
-              <img
-                src="{{ media | image_url: width: 200 }}"
-                alt="{{ media.alt | escape }}"
-                class="thumbnail-image"
-                loading="lazy"
-              >
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-    </div>
-
-    <!-- PRODUCT DETAILS -->
-    <div class="product-header_product-details">
-      <h1 class="product-title product-main-title">{{ product.title }}</h1>
-
-      <!-- PRIX -->
-      <div class="product-price-wrapper">
-        <span
-          class="product-price"
-          x-text="formatPrice(selectedVariant.price)"
-        >
-          {{ product.selected_or_first_available_variant.price | money }}
-        </span>
-
-        <span
-          class="product-compare-price"
-          x-show="selectedVariant.compare_at_price > selectedVariant.price"
-          x-text="formatPrice(selectedVariant.compare_at_price)"
-        >
-          {{ product.selected_or_first_available_variant.compare_at_price | money }}
-        </span>
-
-        <span
-          class="product-item_tag"
-          x-show="selectedVariant.compare_at_price > selectedVariant.price"
-        >
-          Sale
-        </span>
-      </div>
-
-      <!-- STOCK -->
-      <div
-        class="stock-status"
-        :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
-        x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
-      ></div>
-
-      <!-- TAGS PRODUIT -->
-      {% if product.tags.size > 0 %}
-        <div class="product-tags">
-          {% for tag in product.tags limit: 3 %}
-            <span class="product-item_tag">{{ tag }}</span>
-          {% endfor %}
-        </div>
-      {% endif %}
-
-      <!-- DESCRIPTION -->
-      {% if product.description != blank %}
-        <div class="product-description">
-          {{ product.description }}
-        </div>
-      {% endif %}
-
-      <!-- VARIANTS -->
-      {% unless product.has_only_default_variant %}
-        {% for option in product.options_with_values %}
-          <div class="variant-selector">
-            {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
-              <div class="variant-label-row">
-                <label class="variant-label">{{ option.name }}</label>
-                <button type="button" class="size-guide-button" onclick="openSizeGuide()">
-                  Guide des tailles
-                </button>
-              </div>
-            {% else %}
-              <label class="variant-label">{{ option.name }}</label>
-            {% endif %}
-
-            <select
-              class="variant-select"
-              x-model="selectedOptions[{{ forloop.index0 }}]"
-              @change="updateSelectedVariant()"
-            >
-              {% for value in option.values %}
-                <option value="{{ value | escape }}">{{ value }}</option>
-              {% endfor %}
-            </select>
-          </div>
-        {% endfor %}
-      {% endunless %}
-
-      <!-- SHIPPING -->
-      {% if section.settings.show_shipping_info %}
-        <div class="shipping-info">
-          <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-          </svg>
-          <span class="shipping-text" id="dynamic-shipping-text">
-            {% assign customer_country = '' %}
-            {% if customer.default_address.country_code %}
-              {% assign customer_country = customer.default_address.country_code %}
-            {% elsif localization.country.iso_code %}
-              {% assign customer_country = localization.country.iso_code %}
-            {% else %}
-              {% assign customer_country = 'FR' %}
-            {% endif %}
-
-            {% assign shipping_text = 'Livraison : nous contacter' %}
-            {% assign shipping_found = false %}
-
-            {% for shipping_zone in shop.shipping_zones %}
-              {% unless shipping_found %}
-                {% for country in shipping_zone.countries %}
-                  {% if country.iso_code == customer_country %}
-                    {% for rate in shipping_zone.shipping_methods %}
-                      {% if rate.delivery_time != blank %}
-                        {% assign shipping_text = rate.delivery_time %}
-                        {% assign shipping_found = true %}
-                        {% break %}
-                      {% elsif rate.price == 0 %}
-                        {% assign shipping_text = 'Livraison gratuite' %}
-                        {% assign shipping_found = true %}
-                        {% break %}
-                      {% endif %}
-                    {% endfor %}
-                    {% break %}
-                  {% endif %}
-                {% endfor %}
-              {% endunless %}
-            {% endfor %}
-
-            {% unless shipping_found %}
-              {% case customer_country %}
-                {% when 'FR' %}
-                  {% assign shipping_text = '2-4 jours ouvrables' %}
-                {% when 'BE', 'LU', 'CH', 'NL', 'DE', 'AT' %}
-                  {% assign shipping_text = '3-6 jours ouvrables' %}
-                {% when 'ES', 'IT', 'PT' %}
-                  {% assign shipping_text = '4-8 jours ouvrables' %}
-                {% when 'GB', 'IE' %}
-                  {% assign shipping_text = '5-10 jours ouvrables' %}
-                {% else %}
-                  {% assign shipping_text = 'Livraison internationale : nous contacter' %}
-              {% endcase %}
-            {% endunless %}
-
-            Livraison {{ shipping_text }}
-          </span>
-        </div>
-      {% endif %}
-
-      <!-- ADD TO CART -->
-      <div class="add-to-cart-section">
-        <button
-          type="button"
-          class="add-to-cart-button"
-          :disabled="!selectedVariant.available || isLoading"
-          @click="addToCart()"
-        >
-          <span x-show="!isLoading">
-            <span x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></span>
-          </span>
-          <span x-show="isLoading">Ajout en cours...</span>
-        </button>
-
-        <div
-          x-show="message.show"
-          x-transition
-          class="add-to-cart-message"
-          :class="message.type"
-        >
-          <span x-text="message.text"></span>
-        </div>
-      </div>
-
-      <!-- PICTOS -->
-      <div class="product-pictos-container">
-        {% for block in section.blocks %}
-          {% if block.type == "picto-produit" %}
-            <div class="picto-produit" {{ block.shopify_attributes }}>
-              <div class="Div Block 7">
-                {% if block.settings.picto_image %}
-                  <img
-                    class="Image 3"
-                    width="auto"
-                    height="auto"
-                    alt="{{ block.settings.picto_alt | default: block.settings.picto_text | escape }}"
-                    src="{{ block.settings.picto_image | image_url }}"
-                    loading="lazy"
-                  >
-                {% else %}
-                  <img
-                    class="Image 3"
-                    width="auto"
-                    height="auto"
-                    alt="inherit"
-                    src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg"
-                    loading="lazy"
-                  >
-                {% endif %}
-              </div>
-              <div class="texte-picto">
-                {{ block.settings.picto_text | default: "Souple" }}
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-
-  <!-- POPUP GUIDE DES TAILLES -->
-  <div class="size-guide-overlay" id="sizeGuideOverlay" onclick="closeSizeGuide(event)">
-    <div class="size-guide-popup" onclick="event.stopPropagation()">
-      <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
-      <div class="size-guide-content" id="sizeGuideContent">
-        <p>Chargement...</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Alpine data for product form
-  document.addEventListener('alpine:init', () => {
-    Alpine.data('productForm', () => ({
-      selectedOptions: {{ product.selected_or_first_available_variant.options | json }},
-      selectedVariant: {{ product.selected_or_first_available_variant | json }},
-      productVariants: {{ product.variants | json }},
-      isLoading: false,
-      message: {
-        show: false,
-        text: '',
-        type: 'success'
-      },
-
-      init() {
-        this.updateSelectedVariant();
-      },
-
-      updateSelectedVariant() {
-        const matchingVariant = this.productVariants.find(variant => {
-          return this.selectedOptions.every((option, index) => {
-            return variant[`option${index + 1}`] === option;
-          });
-        });
-
-        if (matchingVariant) {
-          this.selectedVariant = matchingVariant;
-          this.updateURL(matchingVariant.id);
-        }
-      },
-
-      formatPrice(cents) {
-        if (typeof LiquifyHelper !== 'undefined' && typeof LiquifyHelper.moneyFormat === 'function') {
-          return LiquifyHelper.moneyFormat(cents, true, '{{ shop.money_with_currency_format }}');
-        }
-
-        return new Intl.NumberFormat('fr-FR', {
-          style: 'currency',
-          currency: '{{ cart.currency.iso_code | default: "EUR" }}'
-        }).format(cents / 100);
-      },
-
-      updateURL(variantId) {
-        const newUrl = new URL(window.location);
-        newUrl.searchParams.set('variant', variantId);
-        window.history.replaceState({}, '', newUrl);
-      },
-
-      async addToCart() {
-        if (!this.selectedVariant.available || this.isLoading) return;
-
-        this.isLoading = true;
-        this.hideMessage();
-
-        try {
-          const cartData = {
-            id: this.selectedVariant.id,
-            quantity: 1
-          };
-
-          const response = await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify(cartData)
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            // ✅ Ajout au panier OK → redirection vers la page panier
-            window.location.href = '/cart';
-            return;
-          } else {
-            throw new Error(result.message || result.description || "Erreur lors de l'ajout au panier");
-          }
-        } catch (error) {
-          console.error('Erreur lors de l’ajout au panier :', error);
-          this.showMessage("Erreur lors de l'ajout au panier. Veuillez réessayer.", 'error');
-        } finally {
-          this.isLoading = false;
-        }
-      },
-
-      showMessage(text, type = 'success') {
-        this.message = {
-          show: true,
-          text,
-          type
-        };
-
-        setTimeout(() => {
-          this.hideMessage();
-        }, 3000);
-      },
-
-      hideMessage() {
-        this.message.show = false;
-      }
-    }));
-  });
-
-  // Gallery logic
-  let currentImageIndex = 0;
-  const totalImages = {{ product.media.size }};
-
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
-
-  function nextImage() {
-    if (totalImages === 0) return;
-    currentImageIndex = (currentImageIndex + 1) % totalImages;
-    updateGalleryDisplay();
-  }
-
-  function previousImage() {
-    if (totalImages === 0) return;
-    currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
-    updateGalleryDisplay();
-  }
-
-  function setCurrentImage(index) {
-    currentImageIndex = index;
-    updateGalleryDisplay();
-  }
-
-  function updateGalleryDisplay() {
-    const slidesContainer = document.getElementById('slides-container');
-    const slides = document.querySelectorAll('.gallery-slide');
-
-    if (!slidesContainer || slides.length === 0) return;
-
-    if (isMobile()) {
-      const offset = currentImageIndex * 100;
-      slidesContainer.style.transform = `translateX(-${offset}%)`;
-    } else {
-      let offset = 0;
-      for (let i = 0; i < currentImageIndex; i++) {
-        const slideWidth = slides[i].offsetWidth;
-        const marginRight = 16;
-        offset += slideWidth + marginRight;
-      }
-      slidesContainer.style.transform = `translateX(-${offset}px)`;
-    }
-
-    const thumbnails = document.querySelectorAll('.thumbnail-item');
-    thumbnails.forEach((thumb, index) => {
-      thumb.classList.toggle('active', index === currentImageIndex);
-    });
-
-    const activeThumbnail = document.querySelector('.thumbnail-item.active');
-    if (activeThumbnail && !isMobile()) {
-      activeThumbnail.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
-    }
-  }
-
-  // Swipe mobile
-  let startX = 0;
-  let startY = 0;
-  let currentX = 0;
-  let currentY = 0;
-  let isDragging = false;
-  let isSwipeActive = false;
-
-  function initializeSwipe() {
-    const galleryMain = document.getElementById('gallery-main');
-    if (!galleryMain || !isMobile()) return;
-
-    galleryMain.addEventListener('touchstart', handleTouchStart, { passive: true });
-    galleryMain.addEventListener('touchmove', handleTouchMove, { passive: true });
-    galleryMain.addEventListener('touchend', handleTouchEnd, { passive: true });
-  }
-
-  function handleTouchStart(e) {
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-    isDragging = true;
-    isSwipeActive = false;
-    currentX = startX;
-    currentY = startY;
-  }
-
-  function handleTouchMove(e) {
-    if (!isDragging) return;
-
-    currentX = e.touches[0].clientX;
-    currentY = e.touches[0].clientY;
-
-    const diffX = Math.abs(currentX - startX);
-    const diffY = Math.abs(currentY - startY);
-
-    if (diffX > 50 && diffX > diffY * 3) {
-      isSwipeActive = true;
-    } else if (diffY > 20) {
-      isDragging = false;
-      isSwipeActive = false;
-    }
-  }
-
-  function handleTouchEnd() {
-    if (!isDragging) return;
-
-    if (isSwipeActive) {
-      const diffX = currentX - startX;
-      const threshold = 50;
-
-      if (Math.abs(diffX) > threshold) {
-        if (diffX > 0) {
-          previousImage();
-        } else {
-          nextImage();
-        }
-      }
-    }
-
-    isDragging = false;
-    isSwipeActive = false;
-  }
-
-  // Size guide
-  function openSizeGuide() {
-    const overlay = document.getElementById('sizeGuideOverlay');
-    const content = document.getElementById('sizeGuideContent');
-
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-
-    fetch('/pages/guide-des-tailles')
-      .then(response => response.text())
-      .then(data => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data, 'text/html');
-        const pageContent =
-          doc.querySelector('.page-content, .rte, main, .content, .page') ||
-          doc.querySelector('body');
-
-        if (pageContent) {
-          content.innerHTML = pageContent.innerHTML;
-        } else {
-          content.innerHTML = '<p>Impossible de charger le guide des tailles.</p>';
-        }
-      })
-      .catch(error => {
-        console.error('Erreur lors du chargement du guide des tailles :', error);
-        content.innerHTML = '<p>Erreur lors du chargement du guide des tailles.</p>';
-      });
-  }
-
-  function closeSizeGuide(event) {
-    if (!event || event.target === document.getElementById('sizeGuideOverlay') || event.target.classList.contains('size-guide-close')) {
-      const overlay = document.getElementById('sizeGuideOverlay');
-      overlay.style.display = 'none';
-      document.body.style.overflow = '';
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    updateGalleryDisplay();
-    initializeSwipe();
-
-    window.addEventListener('resize', function () {
-      setTimeout(() => {
-        updateGalleryDisplay();
-        initializeSwipe();
-      }, 100);
-    });
-  });
-</script>
-
-{% schema %}
-{
-  "name": "Product Hero",
-  "tag": "section",
-  "class": "Section-produit-fiche",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_shipping_info",
-      "label": "Afficher les informations de livraison",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "shipping_text",
-      "label": "Texte de livraison (fallback si besoin)",
-      "default": "Livraison 1 - 3 jours"
-    }
-  ],
-  "blocks": [
-    {
-      "type": "picto-produit",
-      "name": "Picto produit",
-      "limit": 6,
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "picto_image",
-          "label": "Image du picto"
-        },
-        {
-          "type": "text",
-          "id": "picto_text",
-          "label": "Texte du picto",
-          "default": "Souple"
-        },
-        {
-          "type": "text",
-          "id": "picto_alt",
-          "label": "Texte alternatif de l'image"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Product Hero",
-      "category": "Liquify"
-    }
-  ],
-  "enabled_on": {
-    "templates": ["product"]
-  }
-}
-{% endschema %}
