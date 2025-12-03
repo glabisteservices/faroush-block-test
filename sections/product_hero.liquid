@@ -856,7 +856,19 @@
       {% endif %}
 
       <!-- ADD TO CART -->
-      <div
+      <div class="add-to-cart-section">
+        <button
+          type="button"
+          class="add-to-cart-button"
+          :disabled="!selectedVariant.available || isLoading"
+          @click="addToCart()"
+        >
+          <span x-show="!isLoading">
+            <span x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></span>
+          </span>
+          <span x-show="isLoading">Ajout en cours...</span>
+        </button>
+<div
   x-show="message.show"
   x-transition
   class="add-to-cart-message"
@@ -865,6 +877,7 @@
   <span x-text="message.text"></span>
 </div>
 
+      </div>
 
       <!-- PICTOS -->
       <div class="product-pictos-container">
