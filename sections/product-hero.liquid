@@ -184,38 +184,42 @@
   }
   
   /* Product Price - CLS Prevention */
+
   .product-price-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    min-height: 3rem;
-  }
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 3rem;       /* évite le saut vertical */
+}
 
-  .product-price {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #6e612b;
-    font-size: 2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    width: 11rem;
-    display: inline-block;
-    text-align: left;
-    flex-shrink: 0;
-  }
+.product-price,
+.product-compare-price {
+  font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.2;
+  white-space: nowrap;    /* pas de retour à la ligne */
+  display: inline-block;
+}
 
-  .product-compare-price {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: #9e8c73;
-    font-size: 1.5rem;
-    font-weight: 400;
-    text-decoration: line-through;
-    line-height: 1.2;
-    width: 9rem;
-    display: inline-block;
-    text-align: left;
-    flex-shrink: 0;
-  }
-  
+.product-price {
+  color: #6e612b;
+  font-size: 2rem;
+  font-weight: 700;
+  width: 11rem;           /* largeur fixe -> plus de déplacement */
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.product-compare-price {
+  color: #9e8c73;
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-decoration: line-through;
+  width: 9rem;            /* largeur fixe -> le badge “Sale” reste aligné */
+  text-align: left;
+  flex-shrink: 0;
+}
+
+
   .product-tags {
     display: flex;
     flex-wrap: wrap;
