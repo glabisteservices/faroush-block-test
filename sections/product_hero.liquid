@@ -617,13 +617,13 @@
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    min-height: 2.4rem;
+    min-height: 3.4rem;
   }
 
   .product-header_component .product-price {
     display: inline-block;
     font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 1.4rem;
+    font-size: 2.4rem;
     font-weight: 600;
     line-height: 1;
     color: #6e612b;
@@ -633,7 +633,7 @@
   .product-header_component .product-compare-price {
     display: inline-block;
     font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    font-size: 1.1rem;
+    font-size: 2.2rem;
     font-weight: 400;
     line-height: 1;
     color: #9e8c73;
@@ -856,28 +856,15 @@
       {% endif %}
 
       <!-- ADD TO CART -->
-      <div class="add-to-cart-section">
-        <button
-          type="button"
-          class="add-to-cart-button"
-          :disabled="!selectedVariant.available || isLoading"
-          @click="addToCart()"
-        >
-          <span x-show="!isLoading">
-            <span x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></span>
-          </span>
-          <span x-show="isLoading">Ajout en cours...</span>
-        </button>
+      <div
+  x-show="message.show"
+  x-transition
+  class="add-to-cart-message"
+  :class="message.type"
+>
+  <span x-text="message.text"></span>
+</div>
 
-        <div
-          x-show="message.show"
-          x-transition
-          class="add-to-cart-message"
-          :class="message.type"
-        >
-          <span x-text="message.text"></span>
-        </div>
-      </div>
 
       <!-- PICTOS -->
       <div class="product-pictos-container">
