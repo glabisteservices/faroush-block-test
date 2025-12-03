@@ -46,7 +46,7 @@
                     
                             <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a647-f594a625" class="cart_table-item anzahl">
                       <div class="cart_quantity-wrapper">
-                        <div class="text-block-6">Quantité</div><input class="cart_quantity w-input" maxlength="256" name="updates[]" data-name="updates[]" placeholder="1" type="number" id="updates[]" required="" value="{{ item.quantity }}">
+                        <div>Quantity</div><input class="cart_quantity w-input" maxlength="256" name="updates[]" data-name="updates[]" placeholder="1" type="number" id="updates[]" required="" value="{{ item.quantity }}">
                       </div>
                       <a href="{{ item.url_to_remove }}" li-object:href="item.url_to_remove" class="text-size-tiny text-style-link text-align-center w-inline-block">
                         <div>
@@ -98,11 +98,23 @@
                           <div class="text-size-regular">
 {{ section.settings.text_discount }}
 </div>
-                          <div li-object="cart.total_discount | money" class="text-block-8">{{ cart.total_discount | money }}</div>
+                          <div li-object="cart.total_discount | money">{{ cart.total_discount | money }}</div>
                             </div>
 {% endif %}
                       </div>
-                      <div class="cart_action"><input type="submit" data-wait="En cours..." class="button w-button" value="Checkout" name="checkout"><input type="submit" data-wait="Mise à jour en cours..." class="button is-outline w-button" value="Update cart"></div>
+                      <div class="cart_action"><input type="submit" data-wait="Please wait..." class="button w-button" value="Checkout" name="checkout"><input type="submit" data-wait="Please wait..." class="button is-outline w-button" value="Update cart"></div>
+                    </div>
+                  </div>
+                  <div class="cart_table outline-solid-1">
+                    <div class="cart_grid is-header w-hidden-tiny">
+                      <div id="w-node-_4ff72092-e0e6-d591-6af1-5b10f594a670-f594a625" class="cart_table-header">
+                        <p class="text-size-regular">
+{{ section.settings.text_comment }}
+</p>
+                      </div>
+                    </div>
+                    <div class="cart_content">
+                      <div class="form_field-wrapper"><textarea class="form_input is-text-area w-input" maxlength="5000" name="note" data-name="field" placeholder="Comment" id="CartNote"></textarea></div>
                     </div>
                   </div>
                 </div>
@@ -117,10 +129,10 @@
 {% endif %}
             {% if cart.item_count == 0 %}    <div li-if="cart.item_count == 0" class="cart_empty outline-solid-1">
     
-              <div class="text-block-7">
+              <div>
 {{ section.settings.text_cart_empty }}
 </div>
-              <a href="{{ routes.root_url }}" li-object:href="routes.root_url" class="button w-button">Continuer shopping</a>
+              <a href="{{ routes.root_url }}" li-object:href="routes.root_url" class="button w-button">Shop Now</a>
                 </div>
 {% endif %}
           </div>
@@ -133,61 +145,67 @@
             "id": "text_heading",
             "type": "text",
             "label": "Heading",
-            "default": "PAnier"
+            "default": "Cart"
         },
         {
             "id": "text_continue_shopping",
             "type": "text",
             "label": "Continue shopping",
-            "default": "Continuer les achats"
+            "default": "Continue shopping"
         },
         {
             "id": "text_product",
             "type": "text",
             "label": "Product",
-            "default": "Articles"
+            "default": "Product"
         },
         {
             "id": "text_quantity",
             "type": "text",
             "label": "Quantity",
-            "default": "Quantit\u00e9"
+            "default": "Quantity"
         },
         {
             "id": "text_price",
             "type": "text",
             "label": "Price",
-            "default": "Prix"
+            "default": "Price"
         },
         {
             "id": "text_remove",
             "type": "text",
             "label": "Remove",
-            "default": "Supprimer"
+            "default": "Remove"
         },
         {
             "id": "text_summary",
             "type": "text",
             "label": "Summary",
-            "default": "R\u00e9sum\u00e9"
+            "default": "Summary"
         },
         {
             "id": "text_sum_inkl_vat",
             "type": "text",
             "label": "Sum (inkl. Vat.)",
-            "default": "Prix TTX"
+            "default": "Sum (inkl. Vat.)"
         },
         {
             "id": "text_discount",
             "type": "text",
             "label": "Discount",
-            "default": "R\u00e9duction"
+            "default": "Discount"
+        },
+        {
+            "id": "text_comment",
+            "type": "text",
+            "label": "Comment",
+            "default": "Comment"
         },
         {
             "id": "text_cart_empty",
             "type": "text",
             "label": "Cart Empty",
-            "default": "Aucun produit dans le panier"
+            "default": "No Products yet."
         }
     ],
     "presets": [
