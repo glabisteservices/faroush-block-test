@@ -168,63 +168,53 @@
   }
   
   /* Product Details */
-  .product-header_product-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1rem 0;
-  }
   
-  .product-title {
-    font-family: Karla;
-    color: #6e612b;
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0;
-  }
-  
-  /* Product Price - CLS Prevention */
+  /* ====== PRIX PRODUIT (taille & alignement) ====== */
 
-  .product-price-wrapper {
-  display: flex;
+.product-price-wrapper {
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
-  min-height: 3rem;       /* évite le saut vertical */
+  gap: 0.75rem;
+  min-height: 2.4rem;          /* évite les sauts verticaux */
 }
 
+/* Même famille de police partout + chiffres sur une seule ligne */
 .product-price,
 .product-compare-price {
   font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1.2;
-  white-space: nowrap;    /* pas de retour à la ligne */
-  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
 }
 
+/* Prix principal */
 .product-price {
   color: #6e612b;
-  font-size: 2rem;
-  font-weight: 700;
-  width: 11rem;           /* largeur fixe -> plus de déplacement */
-  text-align: left;
-  flex-shrink: 0;
+  font-size: 1.25rem;          /* ~20px */
+  font-weight: 600;
 }
 
+/* Prix barré */
 .product-compare-price {
   color: #9e8c73;
-  font-size: 1.5rem;
+  font-size: 1.1rem;           /* un peu plus petit */
   font-weight: 400;
   text-decoration: line-through;
-  width: 9rem;            /* largeur fixe -> le badge “Sale” reste aligné */
-  text-align: left;
-  flex-shrink: 0;
 }
 
+/* Badge Sale aligné au centre de la ligne de prix */
+.product-item_tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  padding: 0 1rem;
+  border-radius: 8px;
+  background-color: #e74c3c;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
 
-  .product-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
   
   .product-description {
     font-family: Karla;
