@@ -138,6 +138,52 @@
 <script>
 document.addEventListener('alpine:init', () => {
   if (typeof window.productGalleryDesktop === 'function') return;
+  if (!window.moneyFormat) window.moneyFormat = {{ shop.money_format | json }};
+  if (!window.moneyWithCurrencyFormat) window.moneyWithCurrencyFormat = {{ shop.money_with_currency_format | json }};
+  function formatWithDelimiters(number, precision, thousands, decimal) {
+    precision = isNaN(precision) ? 2 : precision;
+    thousands = thousands || ',';
+    decimal = decimal || '.';
+    if (isNaN(number) || number == null) return '0';
+    number = (number / 100).toFixed(precision);
+    var parts = number.split('.');
+    var dollars = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + thousands);
+    var cents = parts[1] ? (decimal + parts[1]) : '';
+    return dollars + cents;
+  }
+  function formatMoney(cents, format) {
+    var fmt = format || window.moneyFormat;
+    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+    var match = fmt.match(placeholderRegex);
+    var value = '';
+    switch (match && match[1]) {
+      case 'amount':
+        value = formatWithDelimiters(cents, 2);
+        break;
+      case 'amount_no_decimals':
+        value = formatWithDelimiters(cents, 0);
+        break;
+      case 'amount_with_comma_separator':
+        value = formatWithDelimiters(cents, 2, '.', ',');
+        break;
+      case 'amount_no_decimals_with_comma_separator':
+        value = formatWithDelimiters(cents, 0, '.', ',');
+        break;
+      case 'amount_with_space_separator':
+      case 'amount_with_period_and_space_separator':
+        value = formatWithDelimiters(cents, 2, ' ', '.');
+        break;
+      case 'amount_no_decimals_with_space_separator':
+        value = formatWithDelimiters(cents, 0, ' ', '.');
+        break;
+      case 'amount_with_apostrophe_separator':
+        value = formatWithDelimiters(cents, 2, "'", '.');
+        break;
+      default:
+        value = formatWithDelimiters(cents, 2);
+    }
+    return fmt.replace(placeholderRegex, value);
+  }
   window.productGalleryDesktop = function(product, initialVariant) {
     return {
       product: product,
@@ -166,6 +212,8 @@ document.addEventListener('alpine:init', () => {
         const m = this.mediaItem(i);
         return m && m.alt ? m.alt : this.product.title;
       },
+      formatMoney(amount) { return formatMoney(amount, window.moneyFormat); },
+      formatPrice(amount) { return this.formatMoney(amount); },
       pairSrc(offset) {
         const idx = this.currentPairIndex + (offset || 0);
         return this.mediaSrc(idx);
