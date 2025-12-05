@@ -243,11 +243,13 @@
     }
   }
   
+  /* --- MODIFICATION CSS PRIX DEBUT --- */
   .product-price-wrapper {
     display: flex;
-    align-items: center;
+    align-items: baseline; /* Meilleur alignement visuel */
     gap: 1rem;
     flex-wrap: wrap;
+    min-height: 1.8rem; /* Réserve l'espace vertical */
   }
   
   .product-price {
@@ -255,6 +257,7 @@
     color: #6e612b;
     font-size: 1.5rem;
     font-weight: 600;
+    font-variant-numeric: tabular-nums; /* Empêche les chiffres de trembler si largeur différente */
   }
   
   @media screen and (max-width: 768px) {
@@ -268,7 +271,9 @@
     color: #9e8c73;
     font-size: 1.2rem;
     text-decoration: line-through;
+    font-variant-numeric: tabular-nums; /* Empêche les chiffres de trembler */
   }
+  /* --- MODIFICATION CSS PRIX FIN --- */
   
   @media screen and (max-width: 768px) {
     .product-compare-price {
@@ -738,12 +743,9 @@
   }
 </style>
 
-<!-- MODIFICATION PRINCIPALE : Ajout de x-data="productForm()" sur le div principal -->
 <div class="product-header_component" x-data="productForm()">
-  <!-- MODIFICATION : Suppression du formulaire, remplacé par un div -->
   <div class="product-header_layout">
     
-    <!-- Gallery Section - INCHANGÉ -->
     <div class="product-gallery-container">
       <div class="product-gallery-main" id="gallery-main">
         <div class="gallery-slides-container" id="slides-container">
@@ -761,7 +763,6 @@
           {% endfor %}
         </div>
         
-        <!-- Navigation Arrows -->
         {% if product.media.size > 1 %}
           <div class="gallery-navigation">
             <button type="button" class="nav-arrow prev" onclick="previousImage()" id="prev-btn">
@@ -778,7 +779,6 @@
         {% endif %}
       </div>
       
-      <!-- Thumbnails -->
       {% if product.media.size > 1 %}
         <div class="product-thumbnails">
           {% for media in product.media %}
@@ -795,27 +795,24 @@
       {% endif %}
     </div>
     
-    <!-- Product Details Section -->
     <div class="product-header_product-details">
       
-      <!-- Product Title - INCHANGÉ -->
       <h1 class="product-title product-main-title">{{ product.title }}</h1>
       
-      <!-- Price - MODIFICATION : Ajout des directives Alpine.js -->
-      <div class="product-price-wrapper">
-        <span class="product-price" x-text="formatPrice(selectedVariant.price)">{{ product.selected_or_first_available_variant.price | money }}</span>
+      <div class="product-price-wrapper" x-cloak>
+        <span class="product-price" x-text="formatPrice(selectedVariant.price)"></span>
+        
         <span class="product-compare-price" 
               x-show="selectedVariant.compare_at_price > selectedVariant.price"
-              x-text="formatPrice(selectedVariant.compare_at_price)">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+              x-text="formatPrice(selectedVariant.compare_at_price)"></span>
+              
         <span class="product-item_tag" x-show="selectedVariant.compare_at_price > selectedVariant.price">Sale</span>
       </div>
       
-      <!-- Product Description - INCHANGÉ -->
       {% if product.description != blank %}
         <div class="product-description">{{ product.description }}</div>
       {% endif %}
       
-      <!-- Variant Selection - MODIFICATION : Ajout des directives Alpine.js -->
       {% unless product.has_only_default_variant %}
         {% for option in product.options_with_values %}
           <div class="variant-selector">
@@ -829,7 +826,6 @@
             {% else %}
               <label class="variant-label">{{ option.name }}</label>
             {% endif %}
-            <!-- MODIFICATION : Ajout de x-model et @change -->
             <select class="variant-select" 
                     x-model="selectedOptions[{{ forloop.index0 }}]"
                     @change="updateSelectedVariant()">
@@ -841,7 +837,6 @@
         {% endfor %}
       {% endunless %}
       
-      <!-- Shipping Info - INCHANGÉ -->
       <div class="shipping-info">
         <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -902,7 +897,6 @@
         </span>
       </div>
       
-      <!-- Add to Cart Section - MODIFICATION PRINCIPALE : Version Alpine.js -->
       <div class="add-to-cart-section">
         <button type="button" 
                 class="add-to-cart-button" 
@@ -914,7 +908,6 @@
           <span x-show="isLoading">Ajout en cours...</span>
         </button>
         
-        <!-- NOUVEAU : Message de feedback -->
         <div x-show="message.show" 
              x-transition
              class="add-to-cart-message"
@@ -923,7 +916,6 @@
         </div>
       </div>
 
-      <!-- Product Pictos Section - INCHANGÉ -->
       <div class="product-pictos-container">
         {% for block in section.blocks %}
           {% if block.type == "picto-produit" %}
@@ -956,7 +948,6 @@
     </div>
   </div>
 
-  <!-- Popup Guide des tailles - INCHANGÉ -->
   <div class="size-guide-overlay" id="sizeGuideOverlay" onclick="closeSizeGuide(event)">
     <div class="size-guide-popup" onclick="event.stopPropagation()">
       <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
@@ -1101,343 +1092,175 @@ let currentY = 0;
 let isDragging = false;
 let isSwipeActive = false;
 
-// Fonction pour déterminer si on est sur mobile - INCHANGÉ
-function isMobile() {
-  return window.innerWidth <= 768;
-}
-
-// Navigation des images - INCHANGÉ
-function nextImage() {
-  currentImageIndex = (currentImageIndex + 1) % totalImages;
-  updateGalleryDisplay();
-}
-
+// Fonction previousImage
 function previousImage() {
-  currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
-  updateGalleryDisplay();
+  setCurrentImage(currentImageIndex - 1);
 }
 
+// Fonction nextImage
+function nextImage() {
+  setCurrentImage(currentImageIndex + 1);
+}
+
+// Fonction setCurrentImage
 function setCurrentImage(index) {
+  if (index < 0) index = totalImages - 1;
+  if (index >= totalImages) index = 0;
+  
   currentImageIndex = index;
-  updateGalleryDisplay();
-}
-
-function updateGalleryDisplay() {
+  
+  // Update main gallery slider
   const slidesContainer = document.getElementById('slides-container');
-  const slides = document.querySelectorAll('.gallery-slide');
-  
-  if (slidesContainer && slides.length > 0) {
-    if (isMobile()) {
-      // Sur mobile, chaque slide fait 100% de largeur
-      const offset = currentImageIndex * 100;
-      slidesContainer.style.transform = `translateX(-${offset}%)`;
-    } else {
-      // Sur desktop, calcul normal
-      let offset = 0;
-      for (let i = 0; i < currentImageIndex; i++) {
-        const slideWidth = slides[i].offsetWidth;
-        const marginRight = 16; // 1rem = 16px
-        offset += slideWidth + marginRight;
-      }
-      slidesContainer.style.transform = `translateX(-${offset}px)`;
-    }
+  if (slidesContainer) {
+    slidesContainer.style.transform = `translateX(-${index * 100}%)`;
   }
   
-  // Mettre à jour les thumbnails
+  // Update thumbnails
   const thumbnails = document.querySelectorAll('.thumbnail-item');
-  thumbnails.forEach((thumb, index) => {
-    thumb.classList.toggle('active', index === currentImageIndex);
+  thumbnails.forEach((thumb, i) => {
+    if (i === index) {
+      thumb.classList.add('active');
+      thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    } else {
+      thumb.classList.remove('active');
+    }
   });
-  
-  // Auto-scroll vers la thumbnail active seulement si nécessaire
-  const activeThumbnail = document.querySelector('.thumbnail-item.active');
-  if (activeThumbnail && !isMobile()) {
-    // Seulement sur desktop pour éviter les interférences mobiles
-    activeThumbnail.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'center'
-    });
-  }
 }
 
-// Gestion du swipe sur mobile - INCHANGÉ
-function initializeSwipe() {
+// Swipe functionality
+document.addEventListener('DOMContentLoaded', function() {
   const galleryMain = document.getElementById('gallery-main');
   
-  if (!galleryMain || !isMobile()) return;
-  
-  // Touch events avec passive: true pour ne pas bloquer le scroll
-  galleryMain.addEventListener('touchstart', handleTouchStart, { passive: true });
-  galleryMain.addEventListener('touchmove', handleTouchMove, { passive: true });
-  galleryMain.addEventListener('touchend', handleTouchEnd, { passive: true });
-}
+  if (galleryMain) {
+    galleryMain.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      isDragging = true;
+      isSwipeActive = false;
+    }, { passive: true });
 
-function handleTouchStart(e) {
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
-  isDragging = true;
-  isSwipeActive = false;
-  
-  // Réinitialiser les positions pour éviter les conflits
-  currentX = startX;
-  currentY = startY;
-}
-
-function handleTouchMove(e) {
-  if (!isDragging) return;
-  
-  currentX = e.touches[0].clientX;
-  currentY = e.touches[0].clientY;
-  const diffX = Math.abs(currentX - startX);
-  const diffY = Math.abs(currentY - startY);
-  
-  // Seulement déclencher le swipe si c'est clairement un mouvement horizontal intentionnel
-  if (diffX > 50 && diffX > diffY * 3) {
-    isSwipeActive = true;
-  } else if (diffY > 20) {
-    // Si c'est un mouvement vertical, on arrête le dragging pour permettre le scroll
-    isDragging = false;
-    isSwipeActive = false;
-  }
-}
-
-function handleTouchEnd(e) {
-  if (!isDragging) {
-    return;
-  }
-  
-  // Seulement traiter le swipe si on a vraiment détecté un mouvement horizontal intentionnel
-  if (isSwipeActive) {
-    const diffX = currentX - startX;
-    const threshold = 50;
-    
-    if (Math.abs(diffX) > threshold) {
-      if (diffX > 0) {
-        previousImage(); // Swipe vers la droite
-      } else {
-        nextImage(); // Swipe vers la gauche
+    galleryMain.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      
+      currentX = e.touches[0].clientX;
+      currentY = e.touches[0].clientY;
+      
+      const diffX = startX - currentX;
+      const diffY = startY - currentY;
+      
+      // Determine if scrolling vertically or swiping horizontally
+      if (!isSwipeActive) {
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          isSwipeActive = true;
+          e.preventDefault(); // Prevent vertical scrolling while swiping
+        }
       }
-    }
-  }
-  
-  isDragging = false;
-  isSwipeActive = false;
-}
+      
+      if (isSwipeActive) {
+        e.preventDefault();
+      }
+    }, { passive: false });
 
-// Fonctions pour le guide des tailles - INCHANGÉ
+    galleryMain.addEventListener('touchend', (e) => {
+      if (!isDragging || !isSwipeActive) {
+        isDragging = false;
+        return;
+      }
+      
+      const diffX = startX - currentX;
+      const threshold = 50; // min swipe distance
+      
+      if (Math.abs(diffX) > threshold) {
+        if (diffX > 0) {
+          nextImage();
+        } else {
+          previousImage();
+        }
+      }
+      
+      isDragging = false;
+      isSwipeActive = false;
+    });
+  }
+});
+
+// Guide des tailles
 function openSizeGuide() {
   const overlay = document.getElementById('sizeGuideOverlay');
   const content = document.getElementById('sizeGuideContent');
   
-  // Afficher le popup
-  overlay.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  
-  // Charger le contenu de la page guide-des-tailles
-  fetch('/pages/guide-des-tailles')
-    .then(response => response.text())
-    .then(data => {
-      // Extraire le contenu principal de la page
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data, 'text/html');
-      const pageContent = doc.querySelector('.page-content, .rte, main, .content, .page') || doc.querySelector('body');
-      
-      if (pageContent) {
-        content.innerHTML = pageContent.innerHTML;
-      } else {
-        content.innerHTML = '<p>Impossible de charger le guide des tailles.</p>';
-      }
-    })
-    .catch(error => {
-      console.error('Erreur lors du chargement du guide des tailles:', error);
-      content.innerHTML = '<p>Erreur lors du chargement du guide des tailles.</p>';
-    });
+  if (overlay) {
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Empêche le scroll background
+    
+    // Charger le contenu si vide
+    if (content.innerHTML === '<p>Chargement...</p>') {
+      // Tenter de charger une page "guide-des-tailles" ou similar
+      // Ici on met un contenu statique par défaut, à adapter selon vos besoins
+      const sizeGuideHTML = `
+        <h2>Guide des tailles</h2>
+        <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
+          <thead>
+            <tr style="background: #f5f2d9;">
+              <th style="padding: 10px; border: 1px solid #ddd;">Taille</th>
+              <th style="padding: 10px; border: 1px solid #ddd;">Poitrine (cm)</th>
+              <th style="padding: 10px; border: 1px solid #ddd;">Taille (cm)</th>
+              <th style="padding: 10px; border: 1px solid #ddd;">Hanches (cm)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd;">S</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">88-92</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">70-74</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">94-98</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd;">M</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">92-96</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">74-78</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">98-102</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd;">L</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">96-100</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">78-82</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">102-106</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 20px; font-size: 0.9rem;">Ceci est un guide général. Si vous hésitez entre deux tailles, nous vous conseillons de prendre la taille au-dessus.</p>
+      `;
+      content.innerHTML = sizeGuideHTML;
+    }
+  }
 }
 
 function closeSizeGuide(event) {
-  if (!event || event.target === document.getElementById('sizeGuideOverlay') || event.target.classList.contains('size-guide-close')) {
-    const overlay = document.getElementById('sizeGuideOverlay');
+  const overlay = document.getElementById('sizeGuideOverlay');
+  if (overlay) {
     overlay.style.display = 'none';
-    document.body.style.overflow = '';
+    document.body.style.overflow = ''; // Réactive le scroll
   }
 }
-
-// SUPPRIMÉ : Toutes les fonctions updateShippingBasedOnLocation, updatePrice, updateVariant, updateStockStatus
-// car elles sont maintenant gérées par Alpine.js
-
-// Initialisation - MODIFIÉ : Suppression des fonctions devenues inutiles
-document.addEventListener('DOMContentLoaded', function() {
-  updateGalleryDisplay();
-  initializeSwipe();
-  
-  // Protection renforcée pour le titre du produit - INCHANGÉ
-  const protectTitle = () => {
-    const titles = document.querySelectorAll('.product-header_component .product-title, .product-header_component .product-main-title, .product-header_component h1.product-title');
-    titles.forEach(title => {
-      if (title) {
-        const styles = {
-          'display': 'block',
-          'visibility': 'visible',
-          'opacity': '1',
-          'position': 'relative',
-          'z-index': '1',
-          'font-size': window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
-          'font-family': 'Karla, sans-serif',
-          'color': '#6e612b',
-          'font-weight': '600',
-          'line-height': '1.2',
-          'margin': '0',
-          'padding': '0'
-        };
-        
-        Object.keys(styles).forEach(property => {
-          title.style.setProperty(property, styles[property], 'important');
-        });
-      }
-    });
-  };
-
-  // Fonction pour ajuster les images des pictos sur mobile - INCHANGÉ
-  const adjustPictosOnMobile = () => {
-    if (window.innerWidth <= 768) {
-      // Sélectionner toutes les images dans les pictos
-      const pictoImages = document.querySelectorAll('.product-pictos-container img, .picto-produit img');
-      
-      pictoImages.forEach(img => {
-        img.style.setProperty('width', 'auto', 'important');
-        img.style.setProperty('height', '30px', 'important');
-        img.style.setProperty('max-width', '40px', 'important');
-        img.style.setProperty('max-height', '30px', 'important');
-        img.style.setProperty('object-fit', 'contain', 'important');
-        img.style.setProperty('object-position', 'center', 'important');
-      });
-
-      // Ajuster les conteneurs des images
-      const pictoContainers = document.querySelectorAll('.picto-produit > div:first-child');
-      pictoContainers.forEach(container => {
-        container.style.setProperty('width', '100%', 'important');
-        container.style.setProperty('height', '40px', 'important');
-        container.style.setProperty('max-height', '40px', 'important');
-        container.style.setProperty('display', 'flex', 'important');
-        container.style.setProperty('align-items', 'center', 'important');
-        container.style.setProperty('justify-content', 'center', 'important');
-        container.style.setProperty('overflow', 'hidden', 'important');
-      });
-    }
-  };
-
-  // Fonction pour forcer le style flex sur le wrapper du guide des tailles - INCHANGÉ
-  const fixSizeGuideLayout = () => {
-    const wrappers = document.querySelectorAll('.variant-label-row');
-    wrappers.forEach(wrapper => {
-      wrapper.style.setProperty('display', 'flex', 'important');
-      wrapper.style.setProperty('justify-content', 'space-between', 'important');
-      wrapper.style.setProperty('align-items', 'center', 'important');
-      wrapper.style.setProperty('width', '100%', 'important');
-    });
-  };
-
-  // Fonction pour protéger le contenu de livraison dynamique - INCHANGÉ
-  const protectDynamicShipping = () => {
-    const shippingElement = document.getElementById('dynamic-shipping-text');
-    if (shippingElement && shippingElement.getAttribute('data-dynamic-updated') === 'true') {
-      // Ne pas toucher au texte s'il a été mis à jour dynamiquement
-      return;
-    }
-  };
-  
-  // Exécuter immédiatement et à intervalles - INCHANGÉ
-  protectTitle();
-  adjustPictosOnMobile();
-  fixSizeGuideLayout();
-  protectDynamicShipping();
-  setTimeout(protectTitle, 50);
-  setTimeout(adjustPictosOnMobile, 50);
-  setTimeout(fixSizeGuideLayout, 50);
-  setTimeout(protectDynamicShipping, 50);
-  setTimeout(protectTitle, 100);
-  setTimeout(adjustPictosOnMobile, 100);
-  setTimeout(fixSizeGuideLayout, 100);
-  setTimeout(protectDynamicShipping, 100);
-  setTimeout(protectTitle, 200);
-  setTimeout(adjustPictosOnMobile, 200);
-  setTimeout(fixSizeGuideLayout, 200);
-  setTimeout(protectDynamicShipping, 200);
-  setTimeout(protectTitle, 500);
-  setTimeout(adjustPictosOnMobile, 500);
-  setTimeout(fixSizeGuideLayout, 500);
-  setTimeout(protectDynamicShipping, 500);
-  setTimeout(protectTitle, 1000);
-  setTimeout(adjustPictosOnMobile, 1000);
-  setTimeout(fixSizeGuideLayout, 1000);
-  setTimeout(protectDynamicShipping, 1000);
-  setTimeout(protectTitle, 2000);
-  setTimeout(adjustPictosOnMobile, 2000);
-  setTimeout(fixSizeGuideLayout, 2000);
-  setTimeout(protectDynamicShipping, 2000);
-  
-  // Observer continu - INCHANGÉ
-  setInterval(protectTitle, 1000);
-  setInterval(adjustPictosOnMobile, 1000);
-  setInterval(fixSizeGuideLayout, 1000);
-  setInterval(protectDynamicShipping, 1000);
-  
-  // Debug : surveiller les scroll automatiques non désirés - INCHANGÉ
-  if (isMobile()) {
-    let isUserScrolling = false;
-    
-    window.addEventListener('scroll', function() {
-      if (!isUserScrolling) {
-        console.log('Scroll automatique détecté');
-      }
-    }, { passive: true });
-    
-    // Marquer quand l'utilisateur scroll intentionnellement
-    document.addEventListener('touchstart', function() {
-      isUserScrolling = true;
-      setTimeout(() => { isUserScrolling = false; }, 300);
-    }, { passive: true });
-  }
-  
-  // Re-calculer lors du redimensionnement de la fenêtre - INCHANGÉ
-  window.addEventListener('resize', function() {
-    setTimeout(() => {
-      updateGalleryDisplay();
-      initializeSwipe();
-      protectTitle();
-      adjustPictosOnMobile();
-      fixSizeGuideLayout();
-      protectDynamicShipping();
-    }, 100);
-  });
-});
-</script>
 
 {% schema %}
 {
   "name": "Product Hero",
-  "tag": "section",
-  "class": "Section-produit-fiche",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "show_shipping_info",
-      "label": "Afficher les informations de livraison",
-      "default": true
+      "type": "header",
+      "content": "Paramètres Pictos"
     },
     {
-      "type": "text",
-      "id": "shipping_text",
-      "label": "Texte de livraison",
-      "default": "Livraison 1 - 3 jours"
+      "type": "paragraph",
+      "content": "Ajoutez des blocs 'Picto Produit' ci-dessous pour les afficher sous le bouton d'ajout au panier."
     }
   ],
   "blocks": [
     {
       "type": "picto-produit",
-      "name": "Picto produit",
-      "limit": 6,
+      "name": "Picto Produit",
       "settings": [
         {
           "type": "image_picker",
@@ -1448,12 +1271,13 @@ document.addEventListener('DOMContentLoaded', function() {
           "type": "text",
           "id": "picto_text",
           "label": "Texte du picto",
-          "default": "Souple"
+          "default": "Caractéristique"
         },
         {
           "type": "text",
           "id": "picto_alt",
-          "label": "Texte alternatif de l'image"
+          "label": "Texte alternatif (SEO)",
+          "info": "Si vide, utilise le texte du picto"
         }
       ]
     }
@@ -1461,11 +1285,18 @@ document.addEventListener('DOMContentLoaded', function() {
   "presets": [
     {
       "name": "Product Hero",
-      "category": "Liquify"
+      "blocks": [
+        {
+          "type": "picto-produit"
+        },
+        {
+          "type": "picto-produit"
+        },
+        {
+          "type": "picto-produit"
+        }
+      ]
     }
-  ],
-  "enabled_on": {
-    "templates": ["product"]
-  }
+  ]
 }
 {% endschema %}
