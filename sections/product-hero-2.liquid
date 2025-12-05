@@ -9,10 +9,6 @@
     assign initial_variant = product.selected_or_first_available_variant
 %}
 
-{% comment %}
-    Le CSS pour masquer la version bureau est déjà dans product-hero.liquid.
-    Nous ajoutons ici le CSS pour assurer que cette section mobile s'affiche uniquement sur mobile (<= 768px).
-{% endcomment %}
 <style>
   /* 1. Cache la section mobile sur le bureau */
   @media (min-width: 769px) {
@@ -30,24 +26,17 @@
       position: relative;
       overflow: hidden;
       width: 100%;
-      /* Utilise la classe desktop existante pour le conteneur principal d'image, mais sans les coins arrondis sur mobile */
-      {% comment %} 
-        Si vous voulez un conteneur avec bordure/fond sur mobile:
-        @media screen and (max-width: 768px) { 
-            .product-gallery-main { border-radius: 0 !important; }
-        }
-      {% endcomment %}
   }
   .mobile-slider-image {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Change de 'contain' à 'cover' pour un look "cover" mobile */
+      object-fit: cover; 
       display: block;
       /* Utiliser l'aspect ratio 1:1 pour un meilleur affichage mobile */
       min-height: 100vw; 
   }
   .product-info-mobile-block {
-      /* Utilisez la même marge interne que votre .product-header_component mobile */
+      /* Utilise la même marge interne que votre .product-header_component mobile */
       padding: 0 0.75rem 2rem; 
       box-sizing: border-box;
       /* Force l'affichage en colonne */
@@ -63,6 +52,35 @@
       display: flex;
       gap: 0.5rem;
       z-index: 5;
+  }
+
+  /* 3. Styles pour la bande de vignettes (CORRECTION) */
+  .product-thumbnails {
+      padding: 0 0.75rem 0.5rem; 
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto; /* Permet le défilement horizontal */
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap; /* Empêche le retour à la ligne */
+      margin-top: 0.5rem;
+  }
+  .thumbnail-item {
+      flex: 0 0 auto; /* Empêche les vignettes de s'étirer ou de se contracter */
+      width: 76px;
+      height: 76px;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      overflow: hidden;
+      cursor: pointer;
+      background-color: #f3eee6;
+      transition: border-color .2s ease;
+      display: inline-block; /* Nécessaire pour white-space: nowrap */
+  }
+  .thumbnail-item.active {
+      border-color: #c9b466; /* Contour actif de votre thème desktop */
+  }
+  .thumbnail-image {
+      width: 100%; height: 100%; object-fit: cover; display: block;
   }
 </style>
 
@@ -104,7 +122,7 @@
       </div>
     </div>
 
-    <div class="product-thumbnails" style="padding: 0 0.75rem 0.5rem;">
+    <div class="product-thumbnails">
       <template x-for="(media, index) in product.media" :key="media.id">
         <div class="thumbnail-item" :class="{ 'active': index === currentImageIndex }" @click="setCurrentImage(index)" :aria-label="'Voir image ' + (index + 1)">
           <img class="thumbnail-image" :src="media.preview_image ? media.preview_image.src : media.src" :alt="media.alt || product.title">
@@ -120,9 +138,9 @@
     <div class="product-price-wrapper">
       <span class="product-price" x-text="formatPrice(selectedVariant && selectedVariant.price ? selectedVariant.price : {{ initial_variant.price }})"></span>
       <span class="product-compare-price" x-show="selectedVariant && selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price" x-text="formatPrice(selectedVariant.compare_at_price)"></span>
-      {% if initial_variant.compare_at_price and initial_variant.compare_at_price > initial_variant.price %}
+      <template x-if="selectedVariant && selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
         <span class="product-item_tag">Promo</span>
-      {% endif %}
+      </template>
     </div>
 
     {% if product.tags.size > 0 %}
