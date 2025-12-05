@@ -866,7 +866,7 @@
                 :disabled="!selectedVariant.available || isLoading"
                 @click="addToCart()">
           <span x-show="!isLoading">
-            <span x-text="selectedVariant.available ? 'PRÉ-COMMANDER' : 'Rupture de stock'"></span>
+            <span x-text="selectedVariant.available ? 'COMMANDER' : 'Rupture de stock'"></span>
           </span>
           <span x-show="isLoading">Ajout en cours...</span>
         </button>
