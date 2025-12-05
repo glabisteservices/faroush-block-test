@@ -1,9 +1,9 @@
 {% assign initial_variant = product.selected_or_first_available_variant %}
 <style>
   [x-cloak] { visibility: hidden !important; }
-  /* La règle critique : masque la section desktop sur mobile */
+  /* Masque la section desktop sur mobile (<= 768px) */
   @media (max-width: 768px) { .product-hero-desktop { display: none !important; } }
-  
+  /* Assure l'affichage sur desktop */
   @media (min-width: 769px) { .product-hero-desktop { display: block !important; } }
   @media (min-width: 769px) { .product-gallery-container { padding-left: 1.5rem; } }
   .product-header_component { width: 100%; margin: 0 auto; padding: 1.5rem 1rem 2rem; box-sizing: border-box; }
@@ -138,6 +138,9 @@
 </section>
 
 <script>
+// Le code JS est inclus ici pour garantir que productGalleryDesktop est défini AVANT le x-cloak.
+// Si vous utilisez un fichier JS externe (alpinejs3.js), vous pouvez supprimer ce bloc <script>.
+// Si vous le laissez, assurez-vous de supprimer la version dupliquée dans le fichier JS externe.
 document.addEventListener('alpine:init', () => {
   if (typeof window.productGalleryDesktop === 'function') return;
   if (!window.moneyFormat) window.moneyFormat = {{ shop.money_format | json }};
@@ -215,7 +218,13 @@ document.addEventListener('alpine:init', () => {
         return m && m.alt ? m.alt : this.product.title;
       },
       formatMoney(amount) { return formatMoney(amount, window.moneyFormat); },
-      formatPrice(amount) { return this.formatMoney(amount); },
+      formatPrice(amount) { 
+        try { 
+          return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount / 100); 
+        } catch(e) { 
+          return this.formatMoney(amount); 
+        } 
+      },
       pairSrc(offset) {
         const idx = this.currentPairIndex + (offset || 0);
         return this.mediaSrc(idx);
@@ -253,7 +262,6 @@ document.addEventListener('alpine:init', () => {
           window.history.replaceState({}, '', newUrl);
         }
       },
-      formatPrice(price) { try { return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price / 100); } catch(e) { return price; } },
       addToCart() {
         if (!this.selectedVariant || !this.selectedVariant.id || !this.selectedVariant.available) return;
         const formData = { items: [{ id: this.selectedVariant.id, quantity: 1 }] };
