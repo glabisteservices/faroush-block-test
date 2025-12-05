@@ -9,69 +9,13 @@
  */
 {
   "sections": {
-    "product_hero": {
-      "type": "product_hero",
-      "blocks": {
-        "picto_produit_3TWQpQ": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_image": "shopify://shop_images/Flexible_soft.png",
-            "picto_text": "Souple",
-            "picto_alt": ""
-          }
-        },
-        "picto_produit_naYXQV": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_image": "shopify://shop_images/Breathable.png",
-            "picto_text": "Respirante",
-            "picto_alt": ""
-          }
-        },
-        "picto_produit_PwdCRQ": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_image": "shopify://shop_images/Sustainable.png",
-            "picto_text": "Eco-conçue",
-            "picto_alt": ""
-          }
-        },
-        "picto_produit_iQrtMd": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_image": "shopify://shop_images/Large_toe_box.png",
-            "picto_text": "Toe-Box large",
-            "picto_alt": ""
-          }
-        },
-        "picto_produit_9zDRFn": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_image": "shopify://shop_images/Light.png",
-            "picto_text": "Légère",
-            "picto_alt": ""
-          }
-        },
-        "picto_produit_nQTAK4": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_image": "shopify://shop_images/Anti_bacteria.png",
-            "picto_text": "Anti-bactérienne",
-            "picto_alt": ""
-          }
-        }
-      },
-      "block_order": [
-        "picto_produit_3TWQpQ",
-        "picto_produit_naYXQV",
-        "picto_produit_PwdCRQ",
-        "picto_produit_iQrtMd",
-        "picto_produit_9zDRFn",
-        "picto_produit_nQTAK4"
-      ],
+    "product_hero_back_in_stock_eUVaHg": {
+      "type": "product_hero_back_in_stock",
+      "name": "Product Hero Back in Stock",
       "settings": {
-        "show_shipping_info": true,
-        "shipping_text": "Livraison 1 - 3 jours"
+        "show_back_in_stock_form": true,
+        "back_in_stock_title": "Soyez notifié(e) du retour en stock",
+        "back_in_stock_message": "Laissez votre email et nous vous préviendrons dès que ce produit sera à nouveau disponible."
       }
     },
     "product_details_accordion_8fNf6L": {
@@ -82,6 +26,15 @@
         "matiere_title": "Matière & composition",
         "livraison_title": "Livraison & retours",
         "entretien_title": "Conseils d'entretien"
+      }
+    },
+    "judgeme_carousel_xXdPGN": {
+      "type": "judgeme-carousel",
+      "name": "Judge.me Reviews Carousel",
+      "settings": {
+        "title": "Let customers speak for us",
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "3_column_DwLCVV": {
@@ -105,21 +58,12 @@
       "settings": {
         "text_heading": "Vous aimerez aussi"
       }
-    },
-    "judgeme_carousel_xXdPGN": {
-      "type": "judgeme-carousel",
-      "name": "Judge.me Reviews Carousel",
-      "settings": {
-        "title": "Let customers speak for us",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
     }
   },
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
-    "product_hero",
+    "product_hero_back_in_stock_eUVaHg",
     "product_details_accordion_8fNf6L",
     "judgeme_carousel_xXdPGN",
     "3_column_DwLCVV",
