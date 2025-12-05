@@ -1,410 +1,125 @@
-{% comment %}
-  Section: Product Hero Mobile
-  Usage: Mobile uniquement (≤768px)
-{% endcomment %}
-
-<style>
-  /* MOBILE ONLY - Cache cette section sur desktop */
-  .product-hero-mobile {
-    display: none;
-  }
-  
-  @media (max-width: 768px) {
-    .product-hero-mobile {
-      display: block;
-      width: 100%;
-      padding: 0;
-    }
-    
-    /* Cache la section desktop sur mobile */
-    .Section-produit-fiche {
-      display: none !important;
-    }
-  }
-
-  /* Galerie principale */
-  .mobile-gallery-container {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .mobile-gallery-main {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4/5;
-    background: #f5f5f5;
-  }
-
-  .mobile-gallery-main img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* Flèches de navigation */
-  .mobile-gallery-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-
-  .mobile-gallery-arrow:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  .mobile-gallery-arrow.prev {
-    left: 16px;
-  }
-
-  .mobile-gallery-arrow.next {
-    right: 16px;
-  }
-
-  /* Miniatures */
-  .mobile-thumbnails {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 16px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .mobile-thumbnails::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mobile-thumbnail {
-    flex-shrink: 0;
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-
-  .mobile-thumbnail.active {
-    border-color: #000;
-  }
-
-  .mobile-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* Informations produit */
-  .mobile-product-info {
-    padding: 20px 16px;
-  }
-
-  .mobile-product-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0 0 12px 0;
-    line-height: 1.3;
-  }
-
-  .mobile-product-price {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .mobile-price-current {
-    font-size: 28px;
-    font-weight: 700;
-    color: #000;
-  }
-
-  .mobile-price-compare {
-    font-size: 20px;
-    color: #999;
-    text-decoration: line-through;
-  }
-
-  .mobile-badge-promo {
-    background: #ff4444;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  /* Tags/Badges */
-  .mobile-product-tags {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-
-  .mobile-tag {
-    padding: 6px 12px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    font-size: 14px;
-    background: white;
-  }
-
-  /* Stock */
-  .mobile-stock-status {
-    margin-bottom: 16px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  .mobile-stock-status.in-stock {
-    color: #22c55e;
-  }
-
-  .mobile-stock-status.out-of-stock {
-    color: #ef4444;
-  }
-
-  /* Description */
-  .mobile-product-description {
-    margin-bottom: 24px;
-    font-size: 15px;
-    line-height: 1.6;
-    color: #333;
-  }
-
-  /* Sélecteur de variantes */
-  .mobile-variant-selector {
-    margin-bottom: 20px;
-  }
-
-  .mobile-variant-label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  .mobile-variant-select {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    background: white;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 16px center;
-  }
-
-  /* Livraison */
-  .mobile-shipping-info {
-    background: #f9fafb;
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* Bouton ATC */
-  .mobile-add-to-cart {
-    width: 100%;
-    padding: 16px;
-    background: #000;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .mobile-add-to-cart:hover:not(:disabled) {
-    background: #333;
-  }
-
-  .mobile-add-to-cart:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-</style>
-
-<div class="product-hero-mobile" 
-     x-data="productGallery({{ product | json }}, {{ product.selected_or_first_available_variant | json }})"
-     x-init="initGallery()">
-  
-  <!-- Galerie d'images -->
-  <div class="mobile-gallery-container">
-    <!-- Image principale -->
-    <div class="mobile-gallery-main">
-      <template x-for="(media, index) in product.media" :key="media.id">
-        <img 
-          :src="media.src" 
-          :alt="product.title"
-          x-show="currentImageIndex === index"
-          loading="lazy"
-        />
-      </template>
-
-      <!-- Flèches de navigation -->
-      <button 
-        class="mobile-gallery-arrow prev" 
-        @click="previousImage()"
-        :disabled="currentImageIndex === 0"
-        aria-label="Image précédente"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M12 16L6 10L12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-
-      <button 
-        class="mobile-gallery-arrow next" 
-        @click="nextImage()"
-        :disabled="currentImageIndex === product.media.length - 1"
-        aria-label="Image suivante"
-      >
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M8 4L14 10L8 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
-
-    <!-- Miniatures -->
-    <div class="mobile-thumbnails">
-      {% for media in product.media %}
-        <div 
-          class="mobile-thumbnail"
-          :class="{ 'active': currentImageIndex === {{ forloop.index0 }} }"
-          @click="setCurrentImage({{ forloop.index0 }})"
-        >
-          <img src="{{ media | image_url: width: 120 }}" alt="{{ product.title }}">
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-
-  <!-- Informations produit -->
-  <div class="mobile-product-info">
-    
-    <!-- Titre -->
-    <h1 class="mobile-product-title">{{ product.title }}</h1>
-
-    <!-- Prix -->
-    <div class="mobile-product-price">
-      <span class="mobile-price-current" x-text="formatPrice(selectedVariant.price)"></span>
-      
-      <template x-if="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
-        <span class="mobile-price-compare" x-text="formatPrice(selectedVariant.compare_at_price)"></span>
-      </template>
-
-      <template x-if="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
-        <span class="mobile-badge-promo">Promo</span>
-      </template>
-    </div>
-
-    <!-- Tags -->
-    {% if product.tags.size > 0 %}
-      <div class="mobile-product-tags">
-        {% for tag in product.tags %}
-          {% if tag contains 'Fille' or tag contains 'Garçon' %}
-            <span class="mobile-tag">{{ tag }}</span>
-          {% endif %}
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    <!-- Statut stock -->
-    <div 
-      class="mobile-stock-status"
-      :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
-      x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
-    ></div>
-
-    <!-- Description -->
-    {% if product.description != blank %}
-      <div class="mobile-product-description">
-        {{ product.description }}
-      </div>
-    {% endif %}
-
-    <!-- Sélecteur de variantes -->
-    {% if product.has_only_default_variant == false %}
-      <div class="mobile-variant-selector">
-        {% for option in product.options_with_values %}
-          <label class="mobile-variant-label">{{ option.name }}</label>
-          <select 
-            class="mobile-variant-select"
-            @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)"
-          >
-            {% for value in option.values %}
-              <option 
-                value="{{ value }}"
-                {% if option.selected_value == value %}selected{% endif %}
-              >
-                {{ value }}
-              </option>
-            {% endfor %}
-          </select>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    <!-- Info livraison -->
-    {% if section.settings.shipping_text != blank %}
-      <div class="mobile-shipping-info">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M13 13H1V3h12v10zm0-12H1C.45 1 0 1.45 0 2v11c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V2c0-.55-.45-1-1-1zm6 6h-2V5h2v2zm0 2h-2V9h2v2zm-2 2h2v-2h-2v2zm2 2h-2v-2h2v2z" fill="currentColor"/>
-        </svg>
-        <span>{{ section.settings.shipping_text }}</span>
-      </div>
-    {% endif %}
-
-    <!-- Bouton Ajouter au panier -->
-    <button 
-      class="mobile-add-to-cart"
-      @click="addToCart()"
-      :disabled="!selectedVariant.available"
-      x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"
-    ></button>
-
-  </div>
-</div>
-
-{% schema %}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
-  "name": "Product Hero Mobile",
-  "settings": [
-    {
-      "type": "text",
-      "id": "shipping_text",
-      "label": "Texte livraison",
-      "default": "Livraison gratuite dès 50€"
-    }
+  "layout": "theme",
+  "order": [
+    "product_hero",
+    "product_hero_mobile",
+    "product_details_accordion_8fNf6L",
+    "3_column_DwLCVV",
+    "recommended_products"
   ],
-  "presets": [
-    {
-      "name": "Product Hero Mobile"
+  "sections": {
+    "product_hero": {
+      "type": "product_hero",
+      "block_order": [
+        "picto_produit_3TWQpQ",
+        "picto_produit_naYXQV",
+        "picto_produit_PwdCRQ",
+        "picto_produit_iQrtMd",
+        "picto_produit_9zDRFn",
+        "picto_produit_nQTAK4"
+      ],
+      "blocks": {
+        "picto_produit_3TWQpQ": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Flexible_soft.png",
+            "picto_text": "Souple"
+          }
+        },
+        "picto_produit_9zDRFn": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Light.png",
+            "picto_text": "Légère"
+          }
+        },
+        "picto_produit_PwdCRQ": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Sustainable.png",
+            "picto_text": "Eco-conçue"
+          }
+        },
+        "picto_produit_iQrtMd": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Large_toe_box.png",
+            "picto_text": "Toe-Box large"
+          }
+        },
+        "picto_produit_nQTAK4": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Anti_bacteria.png",
+            "picto_text": "Anti-bactérienne"
+          }
+        },
+        "picto_produit_naYXQV": {
+          "type": "picto-produit",
+          "settings": {
+            "picto_alt": "",
+            "picto_image": "shopify://shop_images/Breathable.png",
+            "picto_text": "Respirante"
+          }
+        }
+      },
+      "settings": {
+        "shipping_text": "Livraison 1 - 3 jours",
+        "show_shipping_info": true
+      }
+    },
+    "product_hero_mobile": {
+      "type": "product-hero-2",
+      "settings": {
+        "shipping_text": "Livraison 1 - 3 jours"
+      }
+    },
+    "product_details_accordion_8fNf6L": {
+      "type": "product-details-accordion",
+      "name": "Détails produit accordéon",
+      "settings": {
+        "details_title": "Détails produit",
+        "entretien_title": "Conseils d'entretien",
+        "livraison_title": "Livraison & retours",
+        "matiere_title": "Matière & composition"
+      }
+    },
+    "3_column_DwLCVV": {
+      "type": "3-column",
+      "name": "3-column",
+      "settings": {
+        "heading_1": "Souplesse & légèreté",
+        "heading_2": "Large toe-box",
+        "heading_3": "Zéro drop",
+        "image_1": "shopify://shop_images/Souplesse_legerete.jpg",
+        "image_2": "shopify://shop_images/lrge_toe_box.jpg",
+        "image_3": "shopify://shop_images/Zero-drop_2.jpg",
+        "main_title": "Pourquoi choisir la barefoot",
+        "paragraph_1": "Une semelle fine et flexible qui accompagne chaque mouvement, laissant le pied ressentir le sol. Idéal pour un développement naturel et un confort tout au long de la journée.",
+        "paragraph_2": "Une forme respectueuse qui laisse aux orteils toute la place pour s'écarter, s'ancrer et se muscler. Pas de compression, juste la liberté de grandir naturellement.",
+        "paragraph_3": "Une semelle plate, sans différence de hauteur entre talon et avant-pied, qui préserve l'alignement naturel et soutient une posture saine dès les premiers pas."
+      }
+    },
+    "recommended_products": {
+      "type": "recommended_products",
+      "settings": {
+        "text_heading": "Vous aimerez aussi"
+      }
     }
-  ]
+  },
+  "wrapper": "main.main-wrapper"
 }
-{% endschema %}
