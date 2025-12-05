@@ -38,6 +38,10 @@
           "url_link": "shopify://collections",
           "text_text": "Jusqu'au 1er Décembre, profitez de la livraison gratuite!"
         }
+      },
+      "sticky-add-to-cart": {
+        "type": "sticky-add-to-cart",
+        "settings": {}
       }
     },
     "content_for_index": [],
@@ -79,5 +83,11 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".product-price-wrapper {display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;}",
+      ".product-price,.product-compare-price {font-family: Karla, sans-serif; font-variant-numeric: tabular-nums; min-width: 7ch; /* Ajuste à 8–9ch si besoin */ display: inline-block;}"
+    ]
   }
 }
