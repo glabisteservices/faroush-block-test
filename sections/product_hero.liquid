@@ -1,667 +1,551 @@
-<div class="padding-global padding-section-small">
-          <div class="container-large">
-            <div class="product-header_component">
-              <script src="{{ 'li_custom.js' | asset_url }}" type="text/javascript"></script>
-<div li-element="product-variant-container" class="w-layout-grid product-header_layout" x-data="handleVariant({{ product | json | escape }}, {{ product.options_by_name | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})" x-init="$nextTick(() => { activateVariants() })" @setbundleitem.window="updateBundleItem($event.detail.product, $event.detail.quantity)">
-                <div id="w-node-_4b0e9b61-6f53-1185-9fdd-143753136862-5313685d" class="swiper-container is-product-gallery">
-                  <div class="swiper is-product-gallery">
-<div id="my-gallery" li-for:inside="media in product.media" class="swiper-wrapper is-product-gallery">
-  {% for media in product.media %}                            
-    {% if media.media_type == 'image' %}
-      <div li-if="media.media_type == 'image'" class="swiper-slide is-product-gallery">
-        <div class="product-header_gallery-lightbox">
-          <img loading="lazy"
-               li-object:src="media | image_url: width: 1000"
-               li-object:alt="media.alt"
-               src="{{ media | image_url: width: 1000 }}"
-               alt="{{ media.alt }}"
-               class="product-header_gallery-image">
+<style>
+  .product-header_add-to-cart-wrapper {
+    display: flex;
+    flex-direction: column;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.5rem;
+  }
+
+  .is-red {
+    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+    color: #f5f2d9;
+  }
+
+  .text-size-regular {
+    font-family: Karla;
+    color: #9e8c73;
+    font-size: 1rem;
+  }
+
+  .button {
+    padding: 0.65rem 1.5rem;
+    border: 1px solid #6e612b;
+    border-radius: 10px;
+    background-color: transparent;
+    font-family: Karla;
+    color: #6e612b;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #6e612b;
+    color: #f5f2d9;
+  }
+
+  .product-item_tag {
+    padding: 0.3rem 1.5rem;
+    border-radius: 8px;
+    background-color: #9e8c73;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .heading-style-h4 {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  .product-header_layout {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 3rem;
+    grid-row-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .product-header_layout {
+      grid-template-columns: 1fr;
+      grid-column-gap: 0;
+    }
+  }
+
+  /* Gallery Styles */
+  .product-gallery-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .product-gallery-main {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: #eee;
+  }
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery-image.hidden {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* Navigation Arrows - Positionnées en bas à droite */
+  .gallery-navigation {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+
+  .nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(245, 242, 217, 0.9);
+    border: 1px solid #6e612b;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+
+  .nav-arrow:hover {
+    background-color: #6e612b;
+    color: #f5f2d9;
+  }
+
+  .nav-arrow svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: currentColor;
+  }
+
+  .nav-arrow.prev svg {
+    transform: rotate(180deg);
+  }
+
+  /* Thumbnails */
+  .product-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+  }
+
+  .thumbnail-item {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .thumbnail-item.active {
+    border-color: #6e612b;
+  }
+
+  .thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Product Details */
+  .product-header_product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .product-title {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* === PRIX : largeur fixe pour éviter le "wiggle" === */
+  .product-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .product-price,
+  .product-compare-price {
+    font-family: Karla;
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+    width: 8ch; /* largeur fixe pour que le bloc ne bouge plus */
+  }
+
+  .product-price {
+    color: #6e612b;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .product-compare-price {
+    color: #9e8c73;
+    font-size: 1.2rem;
+    text-decoration: line-through;
+  }
+
+  .product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .product-description {
+    font-family: Karla;
+    color: #6e612b;
+    line-height: 1.6;
+  }
+
+  /* Variant Selection */
+  .variant-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .variant-label {
+    font-family: Karla;
+    color: #6e612b;
+    font-weight: 600;
+  }
+
+  .variant-select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #6e612b;
+    border-radius: 10px;
+    background-color: transparent;
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  /* Add to Cart */
+  .add-to-cart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .add-to-cart-button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+    font-family: Karla;
+    color: #f5f2d9;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .add-to-cart-button:hover {
+    background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1.00);
+  }
+
+  .add-to-cart-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .stock-status {
+    font-family: Karla;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .in-stock {
+    background-color: #e8f5e8;
+    color: #2d5a2d;
+  }
+
+  .out-of-stock {
+    background-color: #ffe8e8;
+    color: #8b0000;
+  }
+
+  /* Shipping Info */
+  .shipping-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shipping-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #6e612b;
+  }
+
+  .shipping-text {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 0.9rem;
+  }
+</style>
+
+<div class="product-header_component">
+  <div
+    class="product-header_layout"
+    x-data="productGallery({{ product | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})"
+    x-init="initGallery()"
+  >
+    <!-- Gallery Section -->
+    <div class="product-gallery-container">
+      <div class="product-gallery-main">
+        <!-- Main Images -->
+        <template x-for="(media, index) in product.media" :key="media.id">
+          <div x-show="currentImageIndex === index" x-transition:enter.duration.300ms>
+            <img
+              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_1000x1000.jpg') : ''"
+              :alt="media.alt || product.title"
+              class="gallery-image"
+              loading="lazy"
+            >
+          </div>
+        </template>
+
+        <!-- Navigation Arrows -->
+        <div class="gallery-navigation" x-show="product.media.length > 1">
+          <button class="nav-arrow prev" @click="previousImage()" :disabled="currentImageIndex === 0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          <button class="nav-arrow next" @click="nextImage()" :disabled="currentImageIndex === product.media.length - 1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </div>
-    {% endif %}
-  {% endfor %}
-</div>
-      
+
       <!-- Thumbnails -->
-      {% if product.media.size > 1 %}
-        <div class="product-thumbnails">
-          {% for media in product.media %}
-            <div class="thumbnail-item {% if forloop.first %}active{% endif %}" 
-                 onclick="setCurrentImage({{ forloop.index0 }})"
-                 data-thumbnail="{{ forloop.index0 }}">
-              <img src="{{ media | image_url: width: 200 }}"
-                   alt="{{ media.alt | escape }}"
-                   class="thumbnail-image"
-                   loading="lazy">
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
+      <div class="product-thumbnails" x-show="product.media.length > 1">
+        <template x-for="(media, index) in product.media" :key="media.id">
+          <div
+            class="thumbnail-item"
+            :class="{ 'active': currentImageIndex === index }"
+            @click="setCurrentImage(index)"
+          >
+            <img
+              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_200x200.jpg') : ''"
+              :alt="media.alt || product.title"
+              class="thumbnail-image"
+              loading="lazy"
+            >
+          </div>
+        </template>
+      </div>
     </div>
-    
+
     <!-- Product Details Section -->
     <div class="product-header_product-details">
-      
-      <!-- Product Title - INCHANGÉ -->
-      <h1 class="product-title product-main-title">{{ product.title }}</h1>
-      
-      <!-- Price - MODIFICATION : Ajout des directives Alpine.js -->
+      <!-- Product Title -->
+      <h1 class="product-title" x-text="product.title"></h1>
+
+      <!-- Price -->
       <div class="product-price-wrapper">
-        <span class="product-price" x-text="formatPrice(selectedVariant.price)">{{ product.selected_or_first_available_variant.price | money }}</span>
-        <span class="product-compare-price" 
-              x-show="selectedVariant.compare_at_price > selectedVariant.price"
-              x-text="formatPrice(selectedVariant.compare_at_price)">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
-        <span class="product-item_tag" x-show="selectedVariant.compare_at_price > selectedVariant.price">Sale</span>
+        <span class="product-price" x-text="formatPrice(selectedVariant.price)"></span>
+        <span
+          class="product-compare-price"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+          x-text="formatPrice(selectedVariant.compare_at_price)"
+        ></span>
+        <span
+          class="product-item_tag"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+        >
+          Sale
+        </span>
       </div>
-      
-      <!-- Product Description - INCHANGÉ -->
-      {% if product.description != blank %}
-        <div class="product-description">{{ product.description }}</div>
-      {% endif %}
-      
-      <!-- Variant Selection - MODIFICATION : Ajout des directives Alpine.js -->
-      {% unless product.has_only_default_variant %}
-        {% for option in product.options_with_values %}
+
+      <!-- Stock Status -->
+      <div
+        class="stock-status"
+        :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
+        x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
+      ></div>
+
+      <!-- Product Tags -->
+      <div class="product-tags" x-show="product.tags.length > 0">
+        <template x-for="tag in product.tags.slice(0, 3)" :key="tag">
+          <span class="product-item_tag" x-text="tag"></span>
+        </template>
+      </div>
+
+      <!-- Product Description -->
+      <div class="product-description" x-html="product.description"></div>
+
+      <!-- Variant Selection -->
+      <div x-show="product.options.length > 0">
+        <template x-for="(option, optionIndex) in product.options" :key="option.name">
           <div class="variant-selector">
-            {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
-              <div class="variant-label-row">
-                <label class="variant-label">{{ option.name }}</label>
-                <button type="button" class="size-guide-button" onclick="openSizeGuide()">
-                  Guide des tailles
-                </button>
-              </div>
-            {% else %}
-              <label class="variant-label">{{ option.name }}</label>
-            {% endif %}
-            <!-- MODIFICATION : Ajout de x-model et @change -->
-            <select class="variant-select" 
-                    x-model="selectedOptions[{{ forloop.index0 }}]"
-                    @change="updateSelectedVariant()">
-              {% for value in option.values %}
-                <option value="{{ value | escape }}">{{ value }}</option>
-              {% endfor %}
+            <label class="variant-label" x-text="option.name"></label>
+            <select
+              class="variant-select"
+              @change="updateSelectedVariant(optionIndex, $event.target.value)"
+            >
+              <template x-for="value in option.values" :key="value">
+                <option
+                  :value="value"
+                  :selected="selectedOptions[optionIndex] === value"
+                  x-text="value"
+                ></option>
+              </template>
             </select>
           </div>
-        {% endfor %}
-      {% endunless %}
-      
-      <!-- Shipping Info - INCHANGÉ -->
+        </template>
+      </div>
+
+      <!-- Shipping Info -->
       <div class="shipping-info">
         <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
         </svg>
-        <span class="shipping-text" id="dynamic-shipping-text">
-          {% comment %} Récupération dynamique des zones de livraison Shopify {% endcomment %}
-          {% assign customer_country = '' %}
-          {% if customer.default_address.country_code %}
-            {% assign customer_country = customer.default_address.country_code %}
-          {% elsif localization.country.iso_code %}
-            {% assign customer_country = localization.country.iso_code %}
-          {% else %}
-            {% assign customer_country = 'FR' %}
-          {% endif %}
-
-          {% assign shipping_text = 'Livraison : nous contacter' %}
-          {% assign shipping_found = false %}
-
-          {% comment %} Parcourir les zones de livraison configurées dans Shopify {% endcomment %}
-          {% for shipping_zone in shop.shipping_zones %}
-            {% unless shipping_found %}
-              {% for country in shipping_zone.countries %}
-                {% if country.iso_code == customer_country %}
-                  {% for rate in shipping_zone.shipping_methods %}
-                    {% if rate.delivery_time != blank %}
-                      {% assign shipping_text = rate.delivery_time %}
-                      {% assign shipping_found = true %}
-                      {% break %}
-                    {% elsif rate.price == 0 %}
-                      {% assign shipping_text = 'Livraison gratuite' %}
-                      {% assign shipping_found = true %}
-                      {% break %}
-                    {% endif %}
-                  {% endfor %}
-                  {% break %}
-                {% endif %}
-              {% endfor %}
-            {% endunless %}
-          {% endfor %}
-
-          {% comment %} Fallback si aucune zone trouvée - utiliser les données des paramètres de livraison {% endcomment %}
-          {% unless shipping_found %}
-            {% case customer_country %}
-              {% when 'FR' %}
-                {% assign shipping_text = '2-4 jours ouvrables' %}
-              {% when 'BE', 'LU', 'CH', 'NL', 'DE', 'AT' %}
-                {% assign shipping_text = '3-6 jours ouvrables' %}
-              {% when 'ES', 'IT', 'PT' %}
-                {% assign shipping_text = '4-8 jours ouvrables' %}
-              {% when 'GB', 'IE' %}
-                {% assign shipping_text = '5-10 jours ouvrables' %}
-              {% else %}
-                {% assign shipping_text = 'Livraison internationale : nous contacter' %}
-            {% endcase %}
-          {% endunless %}
-
-          Livraison {{ shipping_text }}
-        </span>
+        <span class="shipping-text">Livraison 1 - 3 jours</span>
       </div>
-      
-      <!-- Add to Cart Section - MODIFICATION PRINCIPALE : Version Alpine.js -->
+
+      <!-- Add to Cart Section -->
       <div class="add-to-cart-section">
-        <button type="button" 
-                class="add-to-cart-button" 
-                :disabled="!selectedVariant.available || isLoading"
-                @click="addToCart()">
-          <span x-show="!isLoading">
-            <span x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></span>
-          </span>
-          <span x-show="isLoading">Ajout en cours...</span>
-        </button>
-        
-        <!-- NOUVEAU : Message de feedback -->
-        <div x-show="message.show" 
-             x-transition
-             class="add-to-cart-message"
-             :class="message.type">
-          <span x-text="message.text"></span>
-        </div>
-      </div>
-
-      <!-- Product Pictos Section - INCHANGÉ -->
-      <div class="product-pictos-container">
-        {% for block in section.blocks %}
-          {% if block.type == "picto-produit" %}
-            <div class="picto-produit" {{ block.shopify_attributes }}>
-              <div class="Div Block 7">
-                {% if block.settings.picto_image %}
-                  <img class="Image 3" 
-                       width="auto" 
-                       height="auto" 
-                       alt="{{ block.settings.picto_alt | default: block.settings.picto_text | escape }}" 
-                       src="{{ block.settings.picto_image | image_url }}" 
-                       loading="lazy">
-                {% else %}
-                  <img class="Image 3" 
-                       width="auto" 
-                       height="auto" 
-                       alt="inherit" 
-                       src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg" 
-                       loading="lazy">
-                {% endif %}
-              </div>
-              <div class="texte-picto">
-                {{ block.settings.picto_text | default: "Souple" }}
-              </div>
-            </div>
-          {% endif %}
-        {% endfor %}
-      </div>
-      
-    </div>
-  </div>
-
-  <!-- Popup Guide des tailles - INCHANGÉ -->
-  <div class="size-guide-overlay" id="sizeGuideOverlay" onclick="closeSizeGuide(event)">
-    <div class="size-guide-popup" onclick="event.stopPropagation()">
-      <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
-      <div class="size-guide-content" id="sizeGuideContent">
-        <p>Chargement...</p>
+        <button
+          class="add-to-cart-button"
+          :disabled="!selectedVariant.available"
+          @click="addToCart()"
+          x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"
+        ></button>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-// NOUVEAU : Alpine.js Component pour le formulaire produit
-document.addEventListener('alpine:init', () => {
-  Alpine.data('productForm', () => ({
-    // État initial
-    selectedOptions: {{ product.selected_or_first_available_variant.options | json }},
-    selectedVariant: {{ product.selected_or_first_available_variant | json }},
-    productVariants: {{ product.variants | json }},
-    isLoading: false,
-    message: {
-      show: false,
-      text: '',
-      type: 'success' // 'success' ou 'error'
-    },
+  function productGallery(product, initialVariant) {
+    return {
+      product: product,
+      selectedVariant: initialVariant,
+      selectedOptions: [],
+      currentImageIndex: 0,
 
-    // Initialisation
-    init() {
-      console.log('Product form initialized');
-      this.updateSelectedVariant();
-    },
+      initGallery() {
+        if (this.selectedVariant && this.product.options) {
+          this.selectedOptions = this.product.options.map((option, index) => {
+            return this.selectedVariant[`option${index + 1}`];
+          });
+        }
+      },
 
-    // Mise à jour de la variante sélectionnée
-    updateSelectedVariant() {
-      const matchingVariant = this.productVariants.find(variant => {
-        return this.selectedOptions.every((option, index) => {
-          return variant[`option${index + 1}`] === option;
+      nextImage() {
+        if (this.currentImageIndex < this.product.media.length - 1) {
+          this.currentImageIndex++;
+        }
+      },
+
+      previousImage() {
+        if (this.currentImageIndex > 0) {
+          this.currentImageIndex--;
+        }
+      },
+
+      setCurrentImage(index) {
+        this.currentImageIndex = index;
+      },
+
+      updateSelectedVariant(optionIndex, value) {
+        this.selectedOptions[optionIndex] = value;
+
+        const matchingVariant = this.product.variants.find((variant) => {
+          return this.selectedOptions.every((option, index) => {
+            return variant[`option${index + 1}`] === option;
+          });
         });
-      });
 
-      if (matchingVariant) {
-        this.selectedVariant = matchingVariant;
-        this.updateURL(matchingVariant.id);
-      }
-    },
+        if (matchingVariant) {
+          this.selectedVariant = matchingVariant;
 
-    // Formatage du prix
-    formatPrice(cents) {
-      if (typeof LiquifyHelper !== 'undefined') {
-        return LiquifyHelper.moneyFormat(cents, true, '{{ shop.money_with_currency_format }}');
-      }
-      return new Intl.NumberFormat('fr-FR', {
-        style: 'currency',
-        currency: '{{ cart.currency.iso_code | default: "EUR" }}'
-      }).format(cents / 100);
-    },
+          const newUrl = new URL(window.location);
+          newUrl.searchParams.set('variant', matchingVariant.id);
+          window.history.replaceState({}, '', newUrl);
+        }
+      },
 
-    // Mise à jour de l'URL
-    updateURL(variantId) {
-      const newUrl = new URL(window.location);
-      newUrl.searchParams.set('variant', variantId);
-      window.history.replaceState({}, '', newUrl);
-    },
+      formatPrice(price) {
+        return new Intl.NumberFormat('fr-FR', {
+          style: 'currency',
+          currency: 'EUR'
+        }).format(price / 100);
+      },
 
-    // FONCTION PRINCIPALE : Ajout au panier
-    async addToCart() {
-      if (!this.selectedVariant.available || this.isLoading) {
-        return;
-      }
+      addToCart() {
+        if (!this.selectedVariant.available) return;
 
-      this.isLoading = true;
-      this.hideMessage();
-
-      try {
-        // Préparer les données
-        const cartData = {
-          id: this.selectedVariant.id,
-          quantity: 1
+        const formData = {
+          items: [
+            {
+              id: this.selectedVariant.id,
+              quantity: 1
+            }
+          ]
         };
 
-        // Ajouter au panier via l'API Shopify
-        const response = await fetch('/cart/add.js', {
+        fetch('/cart/add.js', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(cartData)
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          // Succès
-          this.showMessage('Produit ajouté au panier !', 'success');
-          
-          // IMPORTANT : Déclencher les événements pour le mini-cart
-          this.$dispatch('cartupdated');
-          this.$dispatch('toggleminicart');
-          
-        } else {
-          // Erreur du serveur
-          throw new Error(result.message || result.description || 'Erreur lors de l\'ajout au panier');
-        }
-
-      } catch (error) {
-        console.error('Erreur lors de l\'ajout au panier:', error);
-        this.showMessage('Erreur lors de l\'ajout au panier. Veuillez réessayer.', 'error');
-      } finally {
-        this.isLoading = false;
+          body: JSON.stringify(formData)
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            window.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
+            console.log('Produit ajouté au panier:', data);
+          })
+          .catch((error) => {
+            console.error("Erreur lors de l'ajout au panier:", error);
+          });
       }
-    },
-
-    // Afficher un message
-    showMessage(text, type = 'success') {
-      this.message = {
-        show: true,
-        text: text,
-        type: type
-      };
-      
-      // Masquer automatiquement après 3 secondes
-      setTimeout(() => {
-        this.hideMessage();
-      }, 3000);
-    },
-
-    // Masquer le message
-    hideMessage() {
-      this.message.show = false;
-    }
-  }));
-});
-
-// INCHANGÉ : Variables globales pour la galerie
-let currentImageIndex = 0;
-const totalImages = {{ product.media.size }};
-
-// Variables pour le swipe mobile - INCHANGÉ
-let startX = 0;
-let startY = 0;
-let currentX = 0;
-let currentY = 0;
-let isDragging = false;
-let isSwipeActive = false;
-
-// Fonction pour déterminer si on est sur mobile - INCHANGÉ
-function isMobile() {
-  return window.innerWidth <= 768;
-}
-
-// Navigation des images - INCHANGÉ
-function nextImage() {
-  currentImageIndex = (currentImageIndex + 1) % totalImages;
-  updateGalleryDisplay();
-}
-
-function previousImage() {
-  currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
-  updateGalleryDisplay();
-}
-
-function setCurrentImage(index) {
-  currentImageIndex = index;
-  updateGalleryDisplay();
-}
-
-function updateGalleryDisplay() {
-  const slidesContainer = document.getElementById('slides-container');
-  const slides = document.querySelectorAll('.gallery-slide');
-  
-  if (slidesContainer && slides.length > 0) {
-    if (isMobile()) {
-      // Sur mobile, chaque slide fait 100% de largeur
-      const offset = currentImageIndex * 100;
-      slidesContainer.style.transform = `translateX(-${offset}%)`;
-    } else {
-      // Sur desktop, calcul normal
-      let offset = 0;
-      for (let i = 0; i < currentImageIndex; i++) {
-        const slideWidth = slides[i].offsetWidth;
-        const marginRight = 16; // 1rem = 16px
-        offset += slideWidth + marginRight;
-      }
-      slidesContainer.style.transform = `translateX(-${offset}px)`;
-    }
+    };
   }
-  
-  // Mettre à jour les thumbnails
-  const thumbnails = document.querySelectorAll('.thumbnail-item');
-  thumbnails.forEach((thumb, index) => {
-    thumb.classList.toggle('active', index === currentImageIndex);
-  });
-  
-  // Auto-scroll vers la thumbnail active seulement si nécessaire
-  const activeThumbnail = document.querySelector('.thumbnail-item.active');
-  if (activeThumbnail && !isMobile()) {
-    // Seulement sur desktop pour éviter les interférences mobiles
-    activeThumbnail.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'center'
-    });
-  }
-}
-
-// Gestion du swipe sur mobile - INCHANGÉ
-function initializeSwipe() {
-  const galleryMain = document.getElementById('gallery-main');
-  
-  if (!galleryMain || !isMobile()) return;
-  
-  // Touch events avec passive: true pour ne pas bloquer le scroll
-  galleryMain.addEventListener('touchstart', handleTouchStart, { passive: true });
-  galleryMain.addEventListener('touchmove', handleTouchMove, { passive: true });
-  galleryMain.addEventListener('touchend', handleTouchEnd, { passive: true });
-}
-
-function handleTouchStart(e) {
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
-  isDragging = true;
-  isSwipeActive = false;
-  
-  // Réinitialiser les positions pour éviter les conflits
-  currentX = startX;
-  currentY = startY;
-}
-
-function handleTouchMove(e) {
-  if (!isDragging) return;
-  
-  currentX = e.touches[0].clientX;
-  currentY = e.touches[0].clientY;
-  const diffX = Math.abs(currentX - startX);
-  const diffY = Math.abs(currentY - startY);
-  
-  // Seulement déclencher le swipe si c'est clairement un mouvement horizontal intentionnel
-  if (diffX > 50 && diffX > diffY * 3) {
-    isSwipeActive = true;
-  } else if (diffY > 20) {
-    // Si c'est un mouvement vertical, on arrête le dragging pour permettre le scroll
-    isDragging = false;
-    isSwipeActive = false;
-  }
-}
-
-function handleTouchEnd(e) {
-  if (!isDragging) {
-    return;
-  }
-  
-  // Seulement traiter le swipe si on a vraiment détecté un mouvement horizontal intentionnel
-  if (isSwipeActive) {
-    const diffX = currentX - startX;
-    const threshold = 50;
-    
-    if (Math.abs(diffX) > threshold) {
-      if (diffX > 0) {
-        previousImage(); // Swipe vers la droite
-      } else {
-        nextImage(); // Swipe vers la gauche
-      }
-    }
-  }
-  
-  isDragging = false;
-  isSwipeActive = false;
-}
-
-// Fonctions pour le guide des tailles - INCHANGÉ
-function openSizeGuide() {
-  const overlay = document.getElementById('sizeGuideOverlay');
-  const content = document.getElementById('sizeGuideContent');
-  
-  // Afficher le popup
-  overlay.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-  
-  // Charger le contenu de la page guide-des-tailles
-  fetch('/pages/guide-des-tailles')
-    .then(response => response.text())
-    .then(data => {
-      // Extraire le contenu principal de la page
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(data, 'text/html');
-      const pageContent = doc.querySelector('.page-content, .rte, main, .content, .page') || doc.querySelector('body');
-      
-      if (pageContent) {
-        content.innerHTML = pageContent.innerHTML;
-      } else {
-        content.innerHTML = '<p>Impossible de charger le guide des tailles.</p>';
-      }
-    })
-    .catch(error => {
-      console.error('Erreur lors du chargement du guide des tailles:', error);
-      content.innerHTML = '<p>Erreur lors du chargement du guide des tailles.</p>';
-    });
-}
-
-function closeSizeGuide(event) {
-  if (!event || event.target === document.getElementById('sizeGuideOverlay') || event.target.classList.contains('size-guide-close')) {
-    const overlay = document.getElementById('sizeGuideOverlay');
-    overlay.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-}
-
-// SUPPRIMÉ : Toutes les fonctions updateShippingBasedOnLocation, updatePrice, updateVariant, updateStockStatus
-// car elles sont maintenant gérées par Alpine.js
-
-// Initialisation - MODIFIÉ : Suppression des fonctions devenues inutiles
-document.addEventListener('DOMContentLoaded', function() {
-  updateGalleryDisplay();
-  initializeSwipe();
-  
-  // Protection renforcée pour le titre du produit - INCHANGÉ
-  const protectTitle = () => {
-    const titles = document.querySelectorAll('.product-header_component .product-title, .product-header_component .product-main-title, .product-header_component h1.product-title');
-    titles.forEach(title => {
-      if (title) {
-        const styles = {
-          'display': 'block',
-          'visibility': 'visible',
-          'opacity': '1',
-          'position': 'relative',
-          'z-index': '1',
-          'font-size': window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
-          'font-family': 'Karla, sans-serif',
-          'color': '#6e612b',
-          'font-weight': '600',
-          'line-height': '1.2',
-          'margin': '0',
-          'padding': '0'
-        };
-        
-        Object.keys(styles).forEach(property => {
-          title.style.setProperty(property, styles[property], 'important');
-        });
-      }
-    });
-  };
-
-  // Fonction pour ajuster les images des pictos sur mobile - INCHANGÉ
-  const adjustPictosOnMobile = () => {
-    if (window.innerWidth <= 768) {
-      // Sélectionner toutes les images dans les pictos
-      const pictoImages = document.querySelectorAll('.product-pictos-container img, .picto-produit img');
-      
-      pictoImages.forEach(img => {
-        img.style.setProperty('width', 'auto', 'important');
-        img.style.setProperty('height', '30px', 'important');
-        img.style.setProperty('max-width', '40px', 'important');
-        img.style.setProperty('max-height', '30px', 'important');
-        img.style.setProperty('object-fit', 'contain', 'important');
-        img.style.setProperty('object-position', 'center', 'important');
-      });
-
-      // Ajuster les conteneurs des images
-      const pictoContainers = document.querySelectorAll('.picto-produit > div:first-child');
-      pictoContainers.forEach(container => {
-        container.style.setProperty('width', '100%', 'important');
-        container.style.setProperty('height', '40px', 'important');
-        container.style.setProperty('max-height', '40px', 'important');
-        container.style.setProperty('display', 'flex', 'important');
-        container.style.setProperty('align-items', 'center', 'important');
-        container.style.setProperty('justify-content', 'center', 'important');
-        container.style.setProperty('overflow', 'hidden', 'important');
-      });
-    }
-  };
-
-  // Fonction pour forcer le style flex sur le wrapper du guide des tailles - INCHANGÉ
-  const fixSizeGuideLayout = () => {
-    const wrappers = document.querySelectorAll('.variant-label-row');
-    wrappers.forEach(wrapper => {
-      wrapper.style.setProperty('display', 'flex', 'important');
-      wrapper.style.setProperty('justify-content', 'space-between', 'important');
-      wrapper.style.setProperty('align-items', 'center', 'important');
-      wrapper.style.setProperty('width', '100%', 'important');
-    });
-  };
-
-  // Fonction pour protéger le contenu de livraison dynamique - INCHANGÉ
-  const protectDynamicShipping = () => {
-    const shippingElement = document.getElementById('dynamic-shipping-text');
-    if (shippingElement && shippingElement.getAttribute('data-dynamic-updated') === 'true') {
-      // Ne pas toucher au texte s'il a été mis à jour dynamiquement
-      return;
-    }
-  };
-  
-  // Exécuter immédiatement et à intervalles - INCHANGÉ
-  protectTitle();
-  adjustPictosOnMobile();
-  fixSizeGuideLayout();
-  protectDynamicShipping();
-  setTimeout(protectTitle, 50);
-  setTimeout(adjustPictosOnMobile, 50);
-  setTimeout(fixSizeGuideLayout, 50);
-  setTimeout(protectDynamicShipping, 50);
-  setTimeout(protectTitle, 100);
-  setTimeout(adjustPictosOnMobile, 100);
-  setTimeout(fixSizeGuideLayout, 100);
-  setTimeout(protectDynamicShipping, 100);
-  setTimeout(protectTitle, 200);
-  setTimeout(adjustPictosOnMobile, 200);
-  setTimeout(fixSizeGuideLayout, 200);
-  setTimeout(protectDynamicShipping, 200);
-  setTimeout(protectTitle, 500);
-  setTimeout(adjustPictosOnMobile, 500);
-  setTimeout(fixSizeGuideLayout, 500);
-  setTimeout(protectDynamicShipping, 500);
-  setTimeout(protectTitle, 1000);
-  setTimeout(adjustPictosOnMobile, 1000);
-  setTimeout(fixSizeGuideLayout, 1000);
-  setTimeout(protectDynamicShipping, 1000);
-  setTimeout(protectTitle, 2000);
-  setTimeout(adjustPictosOnMobile, 2000);
-  setTimeout(fixSizeGuideLayout, 2000);
-  setTimeout(protectDynamicShipping, 2000);
-  
-  // Observer continu - INCHANGÉ
-  setInterval(protectTitle, 1000);
-  setInterval(adjustPictosOnMobile, 1000);
-  setInterval(fixSizeGuideLayout, 1000);
-  setInterval(protectDynamicShipping, 1000);
-  
-  // Debug : surveiller les scroll automatiques non désirés - INCHANGÉ
-  if (isMobile()) {
-    let isUserScrolling = false;
-    
-    window.addEventListener('scroll', function() {
-      if (!isUserScrolling) {
-        console.log('Scroll automatique détecté');
-      }
-    }, { passive: true });
-    
-    // Marquer quand l'utilisateur scroll intentionnellement
-    document.addEventListener('touchstart', function() {
-      isUserScrolling = true;
-      setTimeout(() => { isUserScrolling = false; }, 300);
-    }, { passive: true });
-  }
-  
-  // Re-calculer lors du redimensionnement de la fenêtre - INCHANGÉ
-  window.addEventListener('resize', function() {
-    setTimeout(() => {
-      updateGalleryDisplay();
-      initializeSwipe();
-      protectTitle();
-      adjustPictosOnMobile();
-      fixSizeGuideLayout();
-      protectDynamicShipping();
-    }, 100);
-  });
-});
 </script>
 
 {% schema %}
 {
-  "name": "Product Hero",
   "tag": "section",
+  "name": "Product Hero",
   "class": "Section-produit-fiche",
   "settings": [
     {
@@ -675,41 +559,69 @@ document.addEventListener('DOMContentLoaded', function() {
       "id": "shipping_text",
       "label": "Texte de livraison",
       "default": "Livraison 1 - 3 jours"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_tags",
+      "label": "Afficher les tags produit",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "max_tags_display",
+      "label": "Nombre maximum de tags à afficher",
+      "default": 3
     }
   ],
   "blocks": [
     {
-      "type": "picto-produit",
-      "name": "Picto produit",
-      "limit": 6,
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "picto_image",
-          "label": "Image du picto"
-        },
-        {
-          "type": "text",
-          "id": "picto_text",
-          "label": "Texte du picto",
-          "default": "Souple"
-        },
-        {
-          "type": "text",
-          "id": "picto_alt",
-          "label": "Texte alternatif de l'image"
-        }
-      ]
+      "type": "product-name",
+      "name": "Nom du produit",
+      "limit": 1
+    },
+    {
+      "type": "product-price",
+      "name": "Prix du produit",
+      "limit": 1
+    },
+    {
+      "type": "availability",
+      "name": "Disponibilité",
+      "limit": 1
+    },
+    {
+      "type": "add-to-cart",
+      "name": "Bouton d'ajout au panier",
+      "limit": 1
+    },
+    {
+      "type": "@app"
     }
   ],
   "presets": [
     {
       "name": "Product Hero",
-      "category": "Liquify"
+      "category": "Liquify",
+      "blocks": [
+        {
+          "type": "product-name"
+        },
+        {
+          "type": "product-price"
+        },
+        {
+          "type": "availability"
+        },
+        {
+          "type": "add-to-cart"
+        }
+      ]
     }
   ],
   "enabled_on": {
-    "templates": ["product"]
+    "templates": [
+      "product"
+    ]
   }
 }
 {% endschema %}
