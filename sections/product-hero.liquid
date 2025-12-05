@@ -1,655 +1,179 @@
+{% assign initial_variant = product.selected_or_first_available_variant %}
 <style>
-  [x-cloak] {
-    visibility: hidden !important;
-  }
-
-  @media (max-width: 768px) {
-    .Section-produit-fiche {
-      display: none !important;
-    }
-  }
-
-  .product-header_component {
-    width: 100%;
-    margin: 0 auto;
-    padding: 1.5rem 1rem 2rem;
-    box-sizing: border-box;
-  }
-
-  .product-header_layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    grid-column-gap: 3rem;
-    grid-row-gap: 2rem;
-    align-items: flex-start;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  @media screen and (max-width: 900px) {
-    .product-header_layout {
-      grid-template-columns: 1fr;
-      grid-column-gap: 0;
-      max-width: 100%;
-    }
-  }
-
-  /* === GALLERY === */
-
-  .product-gallery-container {
-    position: relative;
-    width: 100%;
-  }
-
-  .product-gallery-main {
-    position: relative;
-    width: 100%;
-    margin-bottom: 1rem;
-    border-radius: 20px;
-    overflow: hidden;
-    background-color: #f3eee6;
-  }
-
-  .product-gallery-main::before {
-    content: "";
-    display: block;
-    padding-bottom: 80%; /* ratio visuel */
-  }
-
-  .product-gallery-main > * {
-    position: absolute;
-    inset: 0;
-  }
-
-  .gallery-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    display: block;
-  }
-
-  .gallery-navigation {
-    position: absolute;
-    bottom: 0.75rem;
-    right: 0.75rem;
-    display: flex;
-    gap: 0.5rem;
-    z-index: 5;
-  }
-
-  .nav-arrow {
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 999px;
-    border: 1px solid #6e612b;
-    background-color: rgba(245, 242, 217, 0.95);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all .2s ease;
-  }
-
-  .nav-arrow[disabled] {
-    opacity: 0.4;
-    cursor: default;
-  }
-
-  .nav-arrow:hover:not([disabled]) {
-    background-color: #6e612b;
-    color: #f5f2d9;
-  }
-
-  .nav-arrow svg {
-    width: 1.1rem;
-    height: 1.1rem;
-  }
-
-  .nav-arrow.prev svg {
-    transform: rotate(180deg);
-  }
-
-  .product-thumbnails {
-    display: flex;
-    gap: 0.5rem;
-    padding-top: 0.5rem;
-    overflow-x: auto;
-  }
-
-  .thumbnail-item {
-    flex: 0 0 auto;
-    width: 76px;
-    height: 76px;
-    border-radius: 12px;
-    border: 2px solid transparent;
-    overflow: hidden;
-    cursor: pointer;
-    background-color: #f3eee6;
-    transition: border-color .2s ease, transform .15s ease;
-  }
-
-  .thumbnail-item.active {
-    border-color: #c9b466;
-  }
-
-  .thumbnail-item:hover {
-    transform: translateY(-1px);
-  }
-
-  .thumbnail-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  @media screen and (max-width: 768px) {
-    .product-header_component {
-      padding-inline: 0.75rem;
-    }
-
-    .product-gallery-main {
-      border-radius: 0;
-    }
-
-    .product-gallery-main::before {
-      padding-bottom: 100%; /* carré sur mobile, proche de ta version d’avant */
-    }
-
-    .product-thumbnails {
-      margin-bottom: 0.5rem;
-    }
-  }
-
-  /* === DETAILS PRODUIT === */
-
-  .product-header_product-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-
-  .product-title {
-    font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    color: #6e612b;
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .product-title {
-      font-size: 1.5rem;
-    }
-  }
-
-  .product-price-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.5rem 0.75rem;
-  }
-
-  .product-price {
-    font-family: Karla;
-    color: #6e612b;
-    font-size: 1.3rem;
-    font-weight: 600;
-  }
-
-  .product-compare-price {
-    font-family: Karla;
-    color: #b7a58b;
-    font-size: 1rem;
-    text-decoration: line-through;
-  }
-
-  .product-item_tag {
-    padding: 0.25rem 0.9rem;
-    border-radius: 999px;
-    background-color: #9e8c73;
-    color: #fff;
-    font-family: Karla;
-    font-size: 0.8rem;
-    font-weight: 500;
-  }
-
-  .stock-status {
-    font-family: Karla;
-    font-size: 0.9rem;
-    padding: 0.5rem 0.75rem;
-    border-radius: 8px;
-    text-align: left;
-  }
-
-  .stock-status.in-stock {
-    background-color: #e8f6e8;
-    color: #246b2a;
-  }
-
-  .stock-status.out-of-stock {
-    background-color: #ffe5e5;
-    color: #9c1c1c;
-  }
-
-  .product-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .product-description {
-    font-family: Karla;
-    color: #6e612b;
-    line-height: 1.6;
-    font-size: 0.95rem;
-  }
-
-  .variant-selector {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .variant-label {
-    font-family: Karla;
-    color: #6e612b;
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .variant-select {
-    padding: 0.8rem 0.9rem;
-    border-radius: 10px;
-    border: 1px solid #6e612b;
-    background-color: #fff;
-    font-family: Karla;
-    font-size: 0.95rem;
-    color: #6e612b;
-  }
-
-  .shipping-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-block: 0.75rem;
-    border-block: 1px solid rgba(0, 0, 0, 0.08);
-  }
-
-  .shipping-icon {
-    width: 1.4rem;
-    height: 1.4rem;
-    color: #6e612b;
-  }
-
-  .shipping-text {
-    font-family: Karla;
-    font-size: 0.9rem;
-    color: #6e612b;
-  }
-
-  .add-to-cart-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-  }
-
-  .add-to-cart-button {
-    width: 100%;
-    padding: 1rem 1.2rem;
-    border-radius: 999px;
-    border: none;
-    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1);
-    color: #f5f2d9;
-    font-family: Karla;
-    font-size: 1.05rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .add-to-cart-button:hover {
-    background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1);
-  }
-
-  .add-to-cart-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
+  [x-cloak] { visibility: hidden !important; }
+  @media (max-width: 768px) { .product-hero-desktop { display: none !important; } }
+  @media (min-width: 769px) { .product-hero-desktop { display: block !important; } }
+  .product-header_component { width: 100%; margin: 0 auto; padding: 1.5rem 1rem 2rem; box-sizing: border-box; }
+  .product-header_layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-column-gap: 3rem; grid-row-gap: 2rem; align-items: flex-start; max-width: 1200px; margin: 0 auto; }
+  @media screen and (max-width: 900px) { .product-header_layout { grid-template-columns: 1fr; grid-column-gap: 0; max-width: 100%; } }
+  .product-gallery-container { position: relative; width: 100%; }
+  .product-gallery-main { position: relative; width: 100%; margin-bottom: 1rem; border-radius: 20px; overflow: hidden; background-color: #f3eee6; }
+  .product-gallery-main::before { content: ""; display: block; padding-bottom: 80%; }
+  .product-gallery-main > * { position: absolute; inset: 0; }
+  .gallery-image { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
+  .gallery-navigation { position: absolute; bottom: 0.75rem; right: 0.75rem; display: flex; gap: 0.5rem; z-index: 5; }
+  .nav-arrow { width: 2.75rem; height: 2.75rem; border-radius: 999px; border: 1px solid #6e612b; background-color: rgba(245, 242, 217, 0.95); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s ease; }
+  .nav-arrow[disabled] { opacity: 0.4; cursor: default; }
+  .nav-arrow:hover:not([disabled]) { background-color: #6e612b; color: #f5f2d9; }
+  .nav-arrow svg { width: 1.1rem; height: 1.1rem; }
+  .nav-arrow.prev svg { transform: rotate(180deg); }
+  .product-thumbnails { display: flex; gap: 0.5rem; padding-top: 0.5rem; overflow-x: auto; }
+  .thumbnail-item { flex: 0 0 auto; width: 76px; height: 76px; border-radius: 12px; border: 2px solid transparent; overflow: hidden; cursor: pointer; background-color: #f3eee6; transition: border-color .2s ease, transform .15s ease; }
+  .thumbnail-item.active { border-color: #c9b466; }
+  .thumbnail-item:hover { transform: translateY(-1px); }
+  .thumbnail-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+  @media screen and (max-width: 768px) { .product-header_component { padding-inline: 0.75rem; } .product-gallery-main { border-radius: 0; } .product-gallery-main::before { padding-bottom: 100%; } .product-thumbnails { margin-bottom: 0.5rem; } }
+  .product-header_product-details { display: flex; flex-direction: column; gap: 1.25rem; }
+  .product-title { font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #6e612b; font-size: 2rem; font-weight: 600; margin: 0; }
+  @media screen and (max-width: 768px) { .product-title { font-size: 1.5rem; } }
+  .product-price-wrapper { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
+  .product-price { font-family: Karla; color: #6e612b; font-size: 1.3rem; font-weight: 600; }
+  .product-compare-price { font-family: Karla; color: #b7a58b; font-size: 1rem; text-decoration: line-through; }
+  .product-item_tag { padding: 0.25rem 0.9rem; border-radius: 999px; background-color: #9e8c73; color: #fff; font-family: Karla; font-size: 0.8rem; font-weight: 500; }
+  .stock-status { font-family: Karla; font-size: 0.9rem; padding: 0.5rem 0.75rem; border-radius: 8px; text-align: left; }
+  .stock-status.in-stock { background-color: #e8f6e8; color: #246b2a; }
+  .stock-status.out-of-stock { background-color: #ffe5e5; color: #9c1c1c; }
+  .product-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .product-description { font-family: Karla; color: #6e612b; line-height: 1.6; font-size: 0.95rem; }
+  .variant-selector { display: flex; flex-direction: column; gap: 0.35rem; }
+  .variant-label { font-family: Karla; color: #6e612b; font-weight: 600; font-size: 0.95rem; }
+  .variant-select { padding: 0.8rem 0.9rem; border-radius: 10px; border: 1px solid #6e612b; background-color: #fff; font-family: Karla; font-size: 0.95rem; color: #6e612b; }
+  .shipping-info { display: flex; align-items: center; gap: 0.5rem; padding-block: 0.75rem; border-block: 1px solid rgba(0, 0, 0, 0.08); }
+  .shipping-icon { width: 1.4rem; height: 1.4rem; color: #6e612b; }
+  .shipping-text { font-family: Karla; font-size: 0.9rem; color: #6e612b; }
+  .add-to-cart-section { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem; }
+  .add-to-cart-button { width: 100%; padding: 1rem 1.2rem; border-radius: 999px; border: none; background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1); color: #f5f2d9; font-family: Karla; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+  .add-to-cart-button:hover { background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1); }
 </style>
 
-<div class="product-header_component">
-  <div
-    class="product-header_layout"
-    x-data="productGallery({{ product | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})"
-    x-init="initGallery()"
-  >
-    <!-- GALLERY -->
+<section class="product-header_component product-hero-desktop" x-data="productGalleryDesktop({{ product | json }}, {{ initial_variant | json }})" x-init="initGallery()" x-cloak>
+  <div class="product-header_layout">
     <div class="product-gallery-container">
       <div class="product-gallery-main">
+        <img class="gallery-image" :src="product.media && product.media.length ? (product.media[currentImageIndex].preview_image ? product.media[currentImageIndex].preview_image.src : product.media[currentImageIndex].src) : '{{ product.featured_image | img_url: '1024x1024' }}'" :alt="product.media && product.media.length ? (product.media[currentImageIndex].alt || product.title) : product.title" @touchstart="touchStart($event)" @touchend="touchEnd($event)">
+        <div class="gallery-navigation">
+          <button type="button" class="nav-arrow prev" @click="previousImage()" :disabled="currentImageIndex === 0" aria-label="Précédent">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="nav-arrow next" @click="nextImage()" :disabled="product.media && currentImageIndex >= product.media.length - 1" aria-label="Suivant">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="product-thumbnails">
         <template x-for="(media, index) in product.media" :key="media.id">
-          <div x-show="currentImageIndex === index" x-transition:enter.duration.250ms>
-            <img
-              class="gallery-image"
-              loading="lazy"
-              :src="media.preview_image ? media.preview_image.src : media.src"
-              :alt="media.alt || product.title"
-            >
+          <div class="thumbnail-item" :class="{ 'active': currentImageIndex === index }" @click="setCurrentImage(index)" :aria-label="'Voir image ' + (index + 1)">
+            <img class="thumbnail-image" :src="media.preview_image ? media.preview_image.src : media.src" :alt="media.alt || product.title">
           </div>
         </template>
       </div>
-
-      <template x-if="product.media && product.media.length > 1">
-        <div class="gallery-navigation">
-          <button
-            type="button"
-            class="nav-arrow prev"
-            @click="previousImage()"
-            :disabled="currentImageIndex === 0"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          <button
-            type="button"
-            class="nav-arrow next"
-            @click="nextImage()"
-            :disabled="!product.media || currentImageIndex === product.media.length - 1"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </template>
-
-      <template x-if="product.media && product.media.length > 1">
-        <div class="product-thumbnails">
-          <template x-for="(media, index) in product.media" :key="'thumb-' + media.id">
-            <button
-              type="button"
-              class="thumbnail-item"
-              :class="{ 'active': currentImageIndex === index }"
-              @click="setCurrentImage(index)"
-            >
-              <img
-                class="thumbnail-image"
-                loading="lazy"
-                :src="media.preview_image ? media.preview_image.src : media.src"
-                :alt="media.alt || product.title"
-              >
-            </button>
-          </template>
-        </div>
-      </template>
     </div>
 
-    <!-- DETAILS -->
     <div class="product-header_product-details">
-      <h1 class="product-title">
-        {{ product.title }}
-      </h1>
+      <h1 class="product-title">{{ product.title }}</h1>
 
       <div class="product-price-wrapper">
-        <span class="product-price" x-text="formatPrice(selectedVariant.price)">
-          {{ product.selected_or_first_available_variant.price | money }}
-        </span>
-
-        <span
-          class="product-compare-price"
-          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-          x-text="formatPrice(selectedVariant.compare_at_price)"
-        >
-          {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
-            {{ product.selected_or_first_available_variant.compare_at_price | money }}
-          {% endif %}
-        </span>
-
-        <span
-          class="product-item_tag"
-          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-        >
-          Promo
-        </span>
-      </div>
-
-      <div
-        class="stock-status in-stock"
-        :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
-        x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
-      >
-        {% if product.selected_or_first_available_variant.available %}
-          En stock
-        {% else %}
-          Rupture de stock
+        <span class="product-price" x-text="formatPrice(selectedVariant && selectedVariant.price ? selectedVariant.price : {{ initial_variant.price }})"></span>
+        <span class="product-compare-price" x-show="selectedVariant && selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price" x-text="formatPrice(selectedVariant.compare_at_price)"></span>
+        {% if initial_variant.compare_at_price and initial_variant.compare_at_price > initial_variant.price %}
+          <span class="product-item_tag">Promo</span>
         {% endif %}
       </div>
 
-      {% if section.settings.show_product_tags and product.tags.size > 0 %}
-        <div class="product-tags">
-          {% for tag in product.tags limit: section.settings.max_tags_display %}
-            <span class="product-item_tag">{{ tag }}</span>
-          {% endfor %}
-        </div>
+      {% if product.tags.size > 0 %}
+      <div class="product-tags">
+        {% for tag in product.tags %}
+          <span class="product-item_tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
       {% endif %}
 
-      <div class="product-description">
-        {{ product.description }}
+      <div>
+        <div class="stock-status" :class="selectedVariant && selectedVariant.available ? 'in-stock' : 'out-of-stock'" x-text="(selectedVariant && selectedVariant.available) ? 'En stock' : 'Rupture de stock'"></div>
       </div>
 
-      {% if product.options_with_values.size > 0 %}
-        {% for option in product.options_with_values %}
-          <div class="variant-selector">
-            <label class="variant-label">{{ option.name }}</label>
-            <select
-              class="variant-select"
-              @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)"
-            >
-              {% for value in option.values %}
-                <option
-                  value="{{ value | escape }}"
-                  {% if option.selected_value == value %}selected{% endif %}
-                >
-                  {{ value }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
-        {% endfor %}
-      {% endif %}
+      <div class="product-description">{{ product.description | strip_html }}</div>
 
-      {% if section.settings.show_shipping_info %}
-        <div class="shipping-info">
-          <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-          </svg>
-          <span class="shipping-text">
-            {{ section.settings.shipping_text }}
-          </span>
-        </div>
-      {% endif %}
+      <div class="variant-selector">
+        {% for option in product.options_with_values %}
+          <label class="variant-label">{{ option.name }}</label>
+          <select class="variant-select" @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)">
+            <template x-for="value in product.options_with_values[{{ forloop.index0 }}].values" :key="value">
+              <option :selected="selectedOptions[{{ forloop.index0 }}] === value" x-text="value"></option>
+            </template>
+          </select>
+        {% endfor %}
+      </div>
+
+      <div class="shipping-info">
+        <svg class="shipping-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7h12v10H3V7zm12 4h3l3 3v3h-6v-6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="shipping-text">Livraison 1 - 3 jours</span>
+      </div>
 
       <div class="add-to-cart-section">
-        <button
-          type="button"
-          class="add-to-cart-button"
-          :disabled="!selectedVariant.available"
-          @click="addToCart()"
-          x-text="selectedVariant.available ? '{{ 'products.product.add_to_cart' | t | escape }}' : '{{ 'products.product.sold_out' | t | escape }}'"
-        >
-          {% if product.selected_or_first_available_variant.available %}
-            {{ 'products.product.add_to_cart' | t }}
-          {% else %}
-            {{ 'products.product.sold_out' | t }}
-          {% endif %}
-        </button>
+        <button type="button" class="add-to-cart-button" @click="addToCart()" :disabled="!(selectedVariant && selectedVariant.available)">Ajouter au panier</button>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <script>
-  function productGallery(product, initialVariant) {
+document.addEventListener('alpine:init', () => {
+  if (typeof window.productGalleryDesktop === 'function') return;
+  window.productGalleryDesktop = function(product, initialVariant) {
     return {
       product: product,
       selectedVariant: initialVariant,
       selectedOptions: [],
       currentImageIndex: 0,
-
+      touchX: null,
       initGallery() {
         if (this.selectedVariant && this.product.options) {
-          this.selectedOptions = this.product.options.map((option, index) => {
-            return this.selectedVariant['option' + (index + 1)];
-          });
+          this.selectedOptions = this.product.options.map((option, index) => this.selectedVariant['option' + (index + 1)]);
         }
       },
-
-      nextImage() {
-        if (!this.product.media) return;
-        if (this.currentImageIndex < this.product.media.length - 1) {
-          this.currentImageIndex++;
-        }
+      nextImage() { if (this.product.media && this.currentImageIndex < this.product.media.length - 1) this.currentImageIndex++; },
+      previousImage() { if (this.currentImageIndex > 0) this.currentImageIndex--; },
+      setCurrentImage(index) { this.currentImageIndex = index; },
+      touchStart(e) { this.touchX = e.touches[0].clientX; },
+      touchEnd(e) {
+        if (this.touchX === null) return;
+        const delta = e.changedTouches[0].clientX - this.touchX;
+        if (Math.abs(delta) > 40) { if (delta < 0) this.nextImage(); else this.previousImage(); }
+        this.touchX = null;
       },
-
-      previousImage() {
-        if (this.currentImageIndex > 0) {
-          this.currentImageIndex--;
-        }
-      },
-
-      setCurrentImage(index) {
-        this.currentImageIndex = index;
-      },
-
       updateSelectedVariant(optionIndex, value) {
         this.selectedOptions[optionIndex] = value;
-
-        var matchingVariant = this.product.variants.find(function (variant) {
-          return this.product.options.every(function (optionName, index) {
-            var selected = this.selectedOptions[index];
-            if (!selected) return true;
-            return variant['option' + (index + 1)] === selected;
-          }, this);
-        }, this);
-
+        const matchingVariant = this.product.variants.find(variant => this.selectedOptions.every((opt, i) => variant['option' + (i + 1)] === opt));
         if (matchingVariant) {
           this.selectedVariant = matchingVariant;
-
-          var url = new URL(window.location.href);
-          url.searchParams.set('variant', matchingVariant.id);
-          window.history.replaceState({}, '', url.toString());
+          const newUrl = new URL(window.location);
+          newUrl.searchParams.set('variant', matchingVariant.id);
+          window.history.replaceState({}, '', newUrl);
         }
       },
-
-      formatPrice(price) {
-        if (typeof price !== 'number') return '';
-        return new Intl.NumberFormat('fr-FR', {
-          style: 'currency',
-          currency: '{{ cart.currency.iso_code | default: shop.currency }}'
-        }).format(price / 100);
-      },
-
+      formatPrice(price) { try { return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(price / 100); } catch(e) { return price; } },
       addToCart() {
-        if (!this.selectedVariant || !this.selectedVariant.available) return;
-
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            items: [{
-              id: this.selectedVariant.id,
-              quantity: 1
-            }]
-          })
-        })
-          .then(function (response) { return response.json(); })
-          .then(function (data) {
-            window.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
-          })
-          .catch(function (error) {
-            console.error('Erreur lors de l\'ajout au panier :', error);
-          });
+        if (!this.selectedVariant || !this.selectedVariant.id || !this.selectedVariant.available) return;
+        const formData = { items: [{ id: this.selectedVariant.id, quantity: 1 }] };
+        fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
+          .then(res => res.json())
+          .then(data => window.dispatchEvent(new CustomEvent('cart:updated', { detail: data })))
+          .catch(err => console.error('Erreur addToCart', err));
       }
-    };
+    }
   }
+});
 </script>
 
 {% schema %}
 {
-  "tag": "section",
   "name": "Product Hero",
-  "class": "Section-produit-fiche",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_shipping_info",
-      "label": "Afficher les informations de livraison",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "shipping_text",
-      "label": "Texte de livraison",
-      "default": "Livraison 1 - 3 jours"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_product_tags",
-      "label": "Afficher les tags produit",
-      "default": true
-    },
-    {
-      "type": "number",
-      "id": "max_tags_display",
-      "label": "Nombre maximum de tags à afficher",
-      "default": 3
-    }
-  ],
-  "blocks": [
-    {
-      "type": "product-name",
-      "name": "Nom du produit",
-      "limit": 1
-    },
-    {
-      "type": "product-price",
-      "name": "Prix du produit",
-      "limit": 1
-    },
-    {
-      "type": "availability",
-      "name": "Disponibilité",
-      "limit": 1
-    },
-    {
-      "type": "add-to-cart",
-      "name": "Bouton d'ajout au panier",
-      "limit": 1
-    },
-    {
-      "type": "@app"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Product Hero",
-      "category": "Liquify",
-      "blocks": [
-        { "type": "product-name" },
-        { "type": "product-price" },
-        { "type": "availability" },
-        { "type": "add-to-cart" }
-      ]
-    }
-  ],
-  "enabled_on": {
-    "templates": [ "product" ]
-  }
+  "tag": "section",
+  "class": "section product-hero-desktop",
+  "settings": [],
+  "templates": ["product"],
+  "presets": [{ "name": "Product Hero" }]
 }
 {% endschema %}
