@@ -1,125 +1,229 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
-{
-  "layout": "theme",
-  "order": [
-    "product_hero",
-    "product_hero_mobile",
-    "product_details_accordion_8fNf6L",
-    "3_column_DwLCVV",
-    "recommended_products"
-  ],
-  "sections": {
-    "product_hero": {
-      "type": "product_hero",
-      "block_order": [
-        "picto_produit_3TWQpQ",
-        "picto_produit_naYXQV",
-        "picto_produit_PwdCRQ",
-        "picto_produit_iQrtMd",
-        "picto_produit_9zDRFn",
-        "picto_produit_nQTAK4"
-      ],
-      "blocks": {
-        "picto_produit_3TWQpQ": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_alt": "",
-            "picto_image": "shopify://shop_images/Flexible_soft.png",
-            "picto_text": "Souple"
-          }
-        },
-        "picto_produit_9zDRFn": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_alt": "",
-            "picto_image": "shopify://shop_images/Light.png",
-            "picto_text": "Légère"
-          }
-        },
-        "picto_produit_PwdCRQ": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_alt": "",
-            "picto_image": "shopify://shop_images/Sustainable.png",
-            "picto_text": "Eco-conçue"
-          }
-        },
-        "picto_produit_iQrtMd": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_alt": "",
-            "picto_image": "shopify://shop_images/Large_toe_box.png",
-            "picto_text": "Toe-Box large"
-          }
-        },
-        "picto_produit_nQTAK4": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_alt": "",
-            "picto_image": "shopify://shop_images/Anti_bacteria.png",
-            "picto_text": "Anti-bactérienne"
-          }
-        },
-        "picto_produit_naYXQV": {
-          "type": "picto-produit",
-          "settings": {
-            "picto_alt": "",
-            "picto_image": "shopify://shop_images/Breathable.png",
-            "picto_text": "Respirante"
-          }
-        }
-      },
-      "settings": {
-        "shipping_text": "Livraison 1 - 3 jours",
-        "show_shipping_info": true
-      }
-    },
-    "product_hero_mobile": {
-      "type": "product-hero-2",
-      "settings": {
-        "shipping_text": "Livraison 1 - 3 jours"
-      }
-    },
-    "product_details_accordion_8fNf6L": {
-      "type": "product-details-accordion",
-      "name": "Détails produit accordéon",
-      "settings": {
-        "details_title": "Détails produit",
-        "entretien_title": "Conseils d'entretien",
-        "livraison_title": "Livraison & retours",
-        "matiere_title": "Matière & composition"
-      }
-    },
-    "3_column_DwLCVV": {
-      "type": "3-column",
-      "name": "3-column",
-      "settings": {
-        "heading_1": "Souplesse & légèreté",
-        "heading_2": "Large toe-box",
-        "heading_3": "Zéro drop",
-        "image_1": "shopify://shop_images/Souplesse_legerete.jpg",
-        "image_2": "shopify://shop_images/lrge_toe_box.jpg",
-        "image_3": "shopify://shop_images/Zero-drop_2.jpg",
-        "main_title": "Pourquoi choisir la barefoot",
-        "paragraph_1": "Une semelle fine et flexible qui accompagne chaque mouvement, laissant le pied ressentir le sol. Idéal pour un développement naturel et un confort tout au long de la journée.",
-        "paragraph_2": "Une forme respectueuse qui laisse aux orteils toute la place pour s'écarter, s'ancrer et se muscler. Pas de compression, juste la liberté de grandir naturellement.",
-        "paragraph_3": "Une semelle plate, sans différence de hauteur entre talon et avant-pied, qui préserve l'alignement naturel et soutient une posture saine dès les premiers pas."
-      }
-    },
-    "recommended_products": {
-      "type": "recommended_products",
-      "settings": {
-        "text_heading": "Vous aimerez aussi"
+{% comment %}
+    Section Hero Produit dédiée au mobile (<= 768px).
+    Utilise Alpine.js pour la galerie et la gestion des variantes.
+{% endcomment %}
+
+{% liquid
+    assign product = product | default: product.selected_or_first_available_variant.product
+    assign initial_variant = product.selected_or_first_available_variant
+%}
+
+<section
+  id="ProductHeroMobile"
+  class="product-hero-mobile-section"
+  x-data="productGallery({{ product | json }}, {{ initial_variant | json }})"
+  x-init="initGallery"
+>
+  <style>
+    /* 1. Cache la section mobile sur le bureau */
+    @media (min-width: 769px) {
+      #ProductHeroMobile {
+        display: none !important;
       }
     }
-  },
-  "wrapper": "main.main-wrapper"
-}
+
+    /* 2. Styles de base pour la galerie */
+    .mobile-slider-container {
+      position: relative;
+      overflow: hidden;
+      /* Assurez-vous que l'image principale prend toute la largeur */
+      width: 100%;
+    }
+    .mobile-slider-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      /* Ajoutez de la hauteur minimale si besoin pour éviter le saut de mise en page */
+      min-height: 250px; 
+    }
+    .thumbnail-strip-container {
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 10px 0;
+      -webkit-overflow-scrolling: touch; /* Améliore le défilement sur iOS */
+    }
+    .thumbnail-strip-item {
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+      margin-right: 8px;
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    .thumbnail-strip-item.active {
+      border-color: #000; /* Contour noir pour la vignette active */
+    }
+    /* 3. Styles pour les flèches de navigation (optionnel) */
+    .slider-nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .slider-prev { left: 10px; }
+    .slider-next { right: 10px; }
+    
+    /* 4. Styles pour le bloc d'info */
+    .product-info-mobile-block {
+      padding: 15px;
+    }
+    .tag-badge {
+      background: #eee;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-right: 5px;
+      font-size: 0.8em;
+      text-transform: uppercase;
+    }
+    .price-container {
+        display: flex;
+        align-items: center;
+        margin: 10px 0;
+    }
+    .product-price {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    .compare-at-price {
+        text-decoration: line-through;
+        margin-left: 10px;
+        color: #777;
+    }
+    .sale-badge {
+        background: red;
+        color: white;
+        padding: 2px 5px;
+        margin-left: 10px;
+        border-radius: 3px;
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+  </style>
+
+  <div>
+    <div class="mobile-slider-container">
+      {% for media in product.media %}
+        {% liquid
+          assign image_url = media | image_url: width: 768
+          assign media_alt = media.alt | default: product.title
+        %}
+        <img
+          class="mobile-slider-image"
+          src="{{ image_url }}"
+          alt="{{ media_alt }}"
+          x-show="currentImageIndex === {{ forloop.index0 }}"
+          x-transition:enter="ease-out duration-300"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="ease-in duration-300"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+        >
+      {% endfor %}
+
+      <button
+        @click="previousImage"
+        x-show="currentImageIndex > 0"
+        class="slider-nav-arrow slider-prev"
+        aria-label="Image précédente"
+      >
+        &lt;
+      </button>
+      <button
+        @click="nextImage"
+        x-show="currentImageIndex < product.media.size - 1"
+        class="slider-nav-arrow slider-next"
+        aria-label="Image suivante"
+      >
+        &gt;
+      </button>
+    </div>
+
+    <div class="thumbnail-strip-container">
+      {% for media in product.media %}
+        {% liquid
+          assign thumbnail_url = media | image_url: width: 100, height: 100, crop: 'center'
+        %}
+        <img
+          src="{{ thumbnail_url }}"
+          alt="Vignette {{ forloop.index }}"
+          @click="setCurrentImage({{ forloop.index0 }})"
+          :class="{ 'active': currentImageIndex === {{ forloop.index0 }} }"
+          class="thumbnail-strip-item"
+        >
+      {% endfor %}
+    </div>
+  </div>
+
+
+  <div class="product-info-mobile-block">
+    <h1 class="product-title">{{ product.title }}</h1>
+
+    <div class="price-container">
+      <span class="product-price" x-text="formatPrice(selectedVariant.price)"></span>
+      <template x-if="selectedVariant.compare_at_price > selectedVariant.price">
+        <span class="compare-at-price" x-text="formatPrice(selectedVariant.compare_at_price)"></span>
+        <span class="sale-badge">Sale</span>
+      </template>
+    </div>
+
+    <div class="product-tags">
+      {% for tag in product.tags %}
+        {% if tag contains 'Fille' or tag contains 'Garçon' %}
+          <span class="tag-badge">{{ tag }}</span>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <p class="stock-status" x-cloak>
+      <span x-show="selectedVariant && selectedVariant.available" style="color: green; font-weight: bold;">En stock</span>
+      <span x-show="!selectedVariant || !selectedVariant.available" style="color: red; font-weight: bold;">Rupture de stock</span>
+    </p>
+
+    <div class="product-description" style="margin-top: 15px;">
+      {{ product.description | truncatewords: 30 }}
+    </div>
+
+    {% for option in product.options_with_values %}
+      <div class="variant-selector-container">
+        <label for="Option{{ forloop.index0 }}" style="display: block; margin-top: 20px; font-weight: bold;">{{ option.name }}</label>
+        <select
+          id="Option{{ forloop.index0 }}"
+          @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)"
+          style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;"
+        >
+          {% for value in option.values %}
+            {% assign option_index = forloop.parentloop.index0 %}
+            <option
+              value="{{ value | escape }}"
+              :selected="selectedOptions[{{ option_index }}] === '{{ value | escape }}'"
+            >
+              {{ value }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endfor %}
+
+    <p class="shipping-info" style="margin-top: 20px; font-style: italic; color: #555;">
+      Livraison 1 - 3 jours
+    </p>
+
+    <button
+      class="add-to-cart-button"
+      @click="addToCart"
+      :disabled="!selectedVariant.available"
+      x-text="selectedVariant.available ? 'Ajouter au panier' : 'Indisponible'"
+      style="width: 100%; padding: 15px; background: black; color: white; border: none; margin-top: 20px; font-size: 1.1em; font-weight: bold; cursor: pointer; border-radius: 4px;"
+    ></button>
+  </div>
+</section>
