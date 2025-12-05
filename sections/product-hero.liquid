@@ -188,20 +188,20 @@
   }
 
   /* Prix produit */
-  .product-price-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
+.product-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
 
-  .product-price {
-    font-family: Karla;
-    color: #6e612b;
-    font-size: 1.5rem;
-    font-weight: 600;
-    white-space: nowrap;
-  }
+.product-price,
+.product-compare-price {
+  font-family: Karla, sans-serif;
+  font-variant-numeric: tabular-nums;
+  min-width: 7ch;       /* Ajuste à 8–9ch si besoin */
+  display: inline-block;
+}
 
   .product-compare-price {
     font-family: Karla;
