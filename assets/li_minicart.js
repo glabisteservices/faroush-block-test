@@ -379,20 +379,24 @@
       <h1 class="product-title" x-text="product.title"></h1>
 
       <!-- Price -->
-      <div class="product-price-wrapper">
-        <span class="product-price" x-text="formatPrice(selectedVariant.price)"></span>
-        <span
-          class="product-compare-price"
-          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-          x-text="formatPrice(selectedVariant.compare_at_price)"
-        ></span>
-        <span
-          class="product-item_tag"
-          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-        >
-          Sale
-        </span>
-      </div>
+<div class="product-price-wrapper" x-cloak>
+  <span
+    class="product-price"
+    x-text="formatPrice(selectedVariant.price)">
+  </span>
+
+  <span
+    class="product-compare-price"
+    x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+    x-text="formatPrice(selectedVariant.compare_at_price)">
+  </span>
+
+  <span
+    class="product-item_tag"
+    x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
+    Sale
+  </span>
+</div>
 
       <!-- Stock Status -->
       <div
