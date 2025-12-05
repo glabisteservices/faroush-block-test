@@ -1,274 +1,532 @@
-<!doctype html>
-<html data-wf-page="689370215f6dcea901024571" data-wf-site="689370215f6dcea901024517" lang="{{ request.locale.iso_code }}">
-
-<script>
-  window.addEventListener('load', function(){
-    console.log('HTML lang (on load):', document.documentElement.lang);
-    if(window.Shopify && window.Shopify.currency) console.log('Shopify.currency (on load):', window.Shopify.currency);
-    if(window.Currency && Currency.currentCurrency) console.log('Currency.currentCurrency (on load):', Currency.currentCurrency);
-  });
-</script>
-
-
-<!-- Klaviyo Tracking -->
-<script type="text/javascript" async src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Xi2Mbf"></script>
-<script type="text/javascript">
-  var _learnq = _learnq || [];
-  _learnq.push(['account', 'Xi2Mbf']);
-</script>
-
-<!-- Hotjar Tracking Code for Faroush -->
-<script>
-    (function(h,o,t,j,a,r){
-        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-        h._hjSettings={hjid:6522456,hjsv:6};
-        a=o.getElementsByTagName('head')[0];
-        r=o.createElement('script');r.async=1;
-        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-        a.appendChild(r);
-    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
-
-<head>
-{% render 'visually_io_sdk' %}
-
-<script src="https://cdn-eu.pagesense.io/js/adrienguerault/f733aad4d84341589eaadf016c533a28.js"></script>
-
-
-<!-- Google Tag Manager -->
-<script>
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
-var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:''; j.async=true;
-j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl; f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KBM9ZH58');
-</script>
-<!-- End Google Tag Manager -->
-
-
-  <meta charset="utf-8">
-  <title>{{ page_title }}</title>
-  <meta content="{{ page_description }}" name="description">
-  <meta content="{{ page_title }}" property="og:title">
-  <meta content="{{ page_description }}" property="og:description">
-  <meta content="{{ page_title }}" property="twitter:title">
-  <meta content="{{ page_description }}" property="twitter:description">
-  <meta property="og:type" content="website">
-  <meta content="summary_large_image" name="twitter:card">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  <meta content="Webflow" name="generator">
-  <link href="{{ 'normalize.css' | asset_url }}" rel="stylesheet" type="text/css">
-  <link href="{{ 'webflow.css' | asset_url }}" rel="stylesheet" type="text/css">
-  <link href="{{ 'faroush-v2-template.webflow.css' | asset_url }}" rel="stylesheet" type="text/css">
-  {{ 'minicart-zindex-fix.css' | asset_url | stylesheet_tag }}
-  {{ 'minicart-styles.css' | asset_url | stylesheet_tag }}
-  {% if template contains 'cart' %}
-  {{ 'cart.css' | asset_url | stylesheet_tag }}
-  {% endif %}
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-  <script type="text/javascript">WebFont.load({  google: {    families: ["Karla:200,300,regular,500,600,700,800,200italic,300italic:latin,latin-ext"]  }});</script>
-  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
-  
-            {% if settings.favicon == blank %}
-              <link href="{{ 'favicon.png' | asset_url }}" rel="shortcut icon" type="image/x-icon">
-            {% else %}
-              <link rel="shortcut icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">
-            {% endif %}
-        
-  
-            {% if settings.apple_touch_icon == blank %}
-              <link href="{{ 'webclip.png' | asset_url }}" rel="apple-touch-icon">
-            {% else %}
-              <link rel="apple-touch-icon" type="image/png" href="{{ settings.apple_touch_icon | img_url: '32x32' }}">
-            {% endif %}
-        <!--  Alpine Focus Plugin  -->
-  <script defer="" src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
-  <!--  Alpine JS  -->
-  <script defer="" src="{{ 'alpinejs3.js' | asset_url }}"></script>
-  <!--  Liquify Pro Debugger  -->
-  <script defer="" auto="" min="" src="https://cdn.jsdelivr.net/gh/liquify-pro/core@latest/script.js"></script>
-  {% if page_image %}
-  <meta property="og:image" content="http:{{ page_image | image_url }}">
-  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
-  <meta property="og:image:width" content="{{ page_image.width }}">
-  <meta property="og:image:height" content="{{ page_image.height }}">
-{% endif %}
-  {% case template.name %}
-  {% when 'product' %}
-<script type="application/ld+json">
-  {{ product | structured_data }}
-</script>
-{% when 'article' %}
-<script type="application/ld+json">
-  {{ article | structured_data }}
-</script>
-{% when 'collection' %}
-<script type="application/ld+json">
-                  {
-                     "@context":"http:\/\/schema.org",
-                     "@type":"WebPage",
-                     "url":"{{ shop.url }}",
-                     "mainEntity":{"@type":"offerCatalog",
-                     "name": "{{ collection.title }}",
-                     "url": "{{ collection.url }}",
-                     "numberOfItems":{{ collection.products.size }}}
-              }
-</script>
-{% endcase %}
-{% assign min_price = null %}
-{% assign max_price = 0 %}
-{% for product in collections.all-products.products %}
-  {% for variant in product.variants %}
-    {% assign price = variant.price | money_without_currency | replace: ',', '.' | plus: 0 %}
-    {% if min_price == null or price < min_price %}
-      {% assign min_price = price %}
-    {% endif %}
-    {% if price > max_price %}
-      {% assign max_price = price %}
-    {% endif %}
-  {% endfor %}
-{% endfor %}
-    <script type="application/ld+json">
-      {
-        "@context" : "https://schema.org",
-        "@type" : "LocalBusiness",
-        "mainEntityOfPage" : {
-          "@type" : "WebPage",
-          "@id" : "{{ shop.url }}"
-        },
-        "name" : "{{ shop.name }}",
-        "telephone" : "{{ shop.phone }}",
-        "email" : "{{ shop.email }}",
-        "priceRange" : "{{ min_price | money }} - {{ max_price | money }}",
-        "address" : {
-          "@type" : "PostalAddress",
-          "streetAddress" : "{{ shop.address.address1 }}",
-          "addressLocality" : "{{ shop.address.city }}",
-          "addressRegion" : "{{ shop.address.province }}",
-          "addressCountry" : "{{ shop.address.country_code }}",
-          "postalCode" : "{{ shop.address.zip }}"
-        },
-        "url" : "{{ shop.url }}"
-      }
-    </script>
-  <style>
-  /* AlpineJS can cause a brief &ldquo;blip&rdquo; where uninitialized templates flash before it loads. x-cloak prevents this by hiding elements until Alpine is ready. Learn more: https://alpinejs.dev/directives/cloak */
-  [x-cloak] { display: none !important; }
-  /* The li-cloak tag is removed during conversion. It&rsquo;s useful for hiding elements in the Webflow Designer to make editing easier. Learn more: https://www.liquify.pro/docu/getting-started#li-cloak */  
-  [li-cloak_disabled] { display: none !important; }
-  /* Setup Font and Background Color if Text is selected */
-  ::selection {
-    color: #FFFFFF;
-    background: #000000;
+<style>
+  .product-header_add-to-cart-wrapper {
+    display: flex;
+    flex-direction: column;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.5rem;
   }
-  ::-moz-selection {
-    color: #FFFFFF;
-    background: #000000;
+
+  .is-red {
+    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+    color: #f5f2d9;
+  }
+
+  .text-size-regular {
+    font-family: Karla;
+    color: #9e8c73;
+    font-size: 1rem;
+  }
+
+  .button {
+    padding: 0.65rem 1.5rem;
+    border: 1px solid #6e612b;
+    border-radius: 10px;
+    background-color: transparent;
+    font-family: Karla;
+    color: #6e612b;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .button:hover {
+    background-color: #6e612b;
+    color: #f5f2d9;
+  }
+
+  .product-item_tag {
+    padding: 0.3rem 1.5rem;
+    border-radius: 8px;
+    background-color: #9e8c73;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .heading-style-h4 {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  .product-header_layout {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 3rem;
+    grid-row-gap: 2rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    .product-header_layout {
+      grid-template-columns: 1fr;
+      grid-column-gap: 0;
+    }
+  }
+
+  /* Gallery Styles */
+  .product-gallery-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .product-gallery-main {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: #eee;
+  }
+
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery-image.hidden {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  /* Navigation Arrows - Positionnées en bas à droite */
+  .gallery-navigation {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+
+  .nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(245, 242, 217, 0.9);
+    border: 1px solid #6e612b;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+
+  .nav-arrow:hover {
+    background-color: #6e612b;
+    color: #f5f2d9;
+  }
+
+  .nav-arrow svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: currentColor;
+  }
+
+  .nav-arrow.prev svg {
+    transform: rotate(180deg);
+  }
+
+  /* Thumbnails */
+  .product-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+  }
+
+  .thumbnail-item {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+
+  .thumbnail-item.active {
+    border-color: #6e612b;
+  }
+
+  .thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Product Details */
+  .product-header_product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .product-title {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  /* === PRIX : largeur fixe pour éviter le "wiggle" === */
+  .product-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .product-price,
+  .product-compare-price {
+    font-family: Karla;
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+    width: 8ch; /* largeur fixe pour que le bloc ne bouge plus */
+  }
+
+  .product-price {
+    color: #6e612b;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .product-compare-price {
+    color: #9e8c73;
+    font-size: 1.2rem;
+    text-decoration: line-through;
+  }
+
+  .product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .product-description {
+    font-family: Karla;
+    color: #6e612b;
+    line-height: 1.6;
+  }
+
+  /* Variant Selection */
+  .variant-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .variant-label {
+    font-family: Karla;
+    color: #6e612b;
+    font-weight: 600;
+  }
+
+  .variant-select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #6e612b;
+    border-radius: 10px;
+    background-color: transparent;
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  /* Add to Cart */
+  .add-to-cart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .add-to-cart-button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+    font-family: Karla;
+    color: #f5f2d9;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .add-to-cart-button:hover {
+    background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1.00);
+  }
+
+  .add-to-cart-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .stock-status {
+    font-family: Karla;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .in-stock {
+    background-color: #e8f5e8;
+    color: #2d5a2d;
+  }
+
+  .out-of-stock {
+    background-color: #ffe8e8;
+    color: #8b0000;
+  }
+
+  /* Shipping Info */
+  .shipping-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shipping-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #6e612b;
+  }
+
+  .shipping-text {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 0.9rem;
   }
 </style>
-  <!--  
-IMPORTANT: If you want to make changes to the head or body code on this page, 
-please remove the `li-layout` tag from the body element. 
-This will create a separate layout file for this page, allowing you to apply custom modifications.
-Learn more: https://www.liquify.pro/docu/getting-started#template-structure
 
+<div class="product-header_component">
+  <div
+    class="product-header_layout"
+    x-data="productGallery({{ product | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})"
+    x-init="initGallery()"
+  >
+    <!-- Gallery Section -->
+    <div class="product-gallery-container">
+      <div class="product-gallery-main">
+        <!-- Main Images -->
+        <template x-for="(media, index) in product.media" :key="media.id">
+          <div x-show="currentImageIndex === index" x-transition:enter.duration.300ms>
+            <img
+              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_1000x1000.jpg') : ''"
+              :alt="media.alt || product.title"
+              class="gallery-image"
+              loading="lazy"
+            >
+          </div>
+        </template>
 
+        <!-- Navigation Arrows -->
+        <div class="gallery-navigation" x-show="product.media.length > 1">
+          <button class="nav-arrow prev" @click="previousImage()" :disabled="currentImageIndex === 0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          <button class="nav-arrow next" @click="nextImage()" :disabled="currentImageIndex === product.media.length - 1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
+      <!-- Thumbnails -->
+      <div class="product-thumbnails" x-show="product.media.length > 1">
+        <template x-for="(media, index) in product.media" :key="media.id">
+          <div
+            class="thumbnail-item"
+            :class="{ 'active': currentImageIndex === index }"
+            @click="setCurrentImage(index)"
+          >
+            <img
+              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_200x200.jpg') : ''"
+              :alt="media.alt || product.title"
+              class="thumbnail-image"
+              loading="lazy"
+            >
+          </div>
+        </template>
+      </div>
+    </div>
 
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '745379928491247');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=745379928491247&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+    <!-- Product Details Section -->
+    <div class="product-header_product-details">
+      <!-- Product Title -->
+      <h1 class="product-title" x-text="product.title"></h1>
 
-<script src="{{ 'li_helper.js' | asset_url }}" type="text/javascript"></script>
-{{ content_for_header }}
+      <!-- Price -->
+      <div class="product-price-wrapper">
+        <span class="product-price" x-text="formatPrice(selectedVariant.price)"></span>
+        <span
+          class="product-compare-price"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+          x-text="formatPrice(selectedVariant.compare_at_price)"
+        ></span>
+        <span
+          class="product-item_tag"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+        >
+          Sale
+        </span>
+      </div>
 
+      <!-- Stock Status -->
+      <div
+        class="stock-status"
+        :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
+        x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
+      ></div>
 
-<script>
-  (function() {
-    // Ne rien faire si on est déjà sur la version Émirats
-    if (window.location.pathname.indexOf('/en-ae') === -1) {
+      <!-- Product Tags -->
+      <div class="product-tags" x-show="product.tags.length > 0">
+        <template x-for="tag in product.tags.slice(0, 3)" :key="tag">
+          <span class="product-item_tag" x-text="tag"></span>
+        </template>
+      </div>
 
-      // Fonction qui gère la redirection si le pays = AE
-      function handleCountry(countryCode) {
-        if (!countryCode) return;
+      <!-- Product Description -->
+      <div class="product-description" x-html="product.description"></div>
 
-        countryCode = countryCode.trim().toUpperCase();
-        console.log('IP country (API externe) :', countryCode);
+      <!-- Variant Selection -->
+      <div x-show="product.options.length > 0">
+        <template x-for="(option, optionIndex) in product.options" :key="option.name">
+          <div class="variant-selector">
+            <label class="variant-label" x-text="option.name"></label>
+            <select
+              class="variant-select"
+              @change="updateSelectedVariant(optionIndex, $event.target.value)"
+            >
+              <template x-for="value in option.values" :key="value">
+                <option
+                  :value="value"
+                  :selected="selectedOptions[optionIndex] === value"
+                  x-text="value"
+                ></option>
+              </template>
+            </select>
+          </div>
+        </template>
+      </div>
 
-        if (countryCode === 'AE') {
-          var newUrl = 'https://faroush.fr/en-ae' + window.location.pathname + window.location.search;
-          window.location.href = newUrl;
-        }
-      }
+      <!-- Shipping Info -->
+      <div class="shipping-info">
+        <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+        </svg>
+        <span class="shipping-text">Livraison 1 - 3 jours</span>
+      </div>
 
-      // Appel à un service de géolocalisation par IP
-      fetch('https://ipapi.co/country/')
-        .then(function(response) {
-          return response.text();
-        })
-        .then(function(text) {
-          handleCountry(text);
-        })
-        .catch(function(error) {
-          console.warn('Erreur géoloc externe :', error);
-        });
-    }
-  })();
-</script>
-
-</head>
-<body li-page="product" li-layout="theme">
-
-  <!-- Google Tag Manager (noscript) -->
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KBM9ZH58"
-            height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
-  <div class="page-wrapper">
-    {% render 'global_styles' %}
-    {% section 'header-announcement' %}
-    {% sections 'header_group' %}
-    {{ content_for_layout }}
-    {% sections 'footer_group' %}
-
-
-
- <!-- Ajouter ici pour les pages produit -->
-  {% if template contains 'product' %}
-    {% section 'sticky-add-to-cart' %}
-  {% endif %}
+      <!-- Add to Cart Section -->
+      <div class="add-to-cart-section">
+        <button
+          class="add-to-cart-button"
+          :disabled="!selectedVariant.available"
+          @click="addToCart()"
+          x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"
+        ></button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script>
+  function productGallery(product, initialVariant) {
+    return {
+      product: product,
+      selectedVariant: initialVariant,
+      selectedOptions: [],
+      currentImageIndex: 0,
 
-  
-</body>
-</html>
+      initGallery() {
+        if (this.selectedVariant && this.product.options) {
+          this.selectedOptions = this.product.options.map((option, index) => {
+            return this.selectedVariant[`option${index + 1}`];
+          });
+        }
+      },
 
+      nextImage() {
+        if (this.currentImageIndex < this.product.media.length - 1) {
+          this.currentImageIndex++;
+        }
+      },
 
-</body>
-</html>
+      previousImage() {
+        if (this.currentImageIndex > 0) {
+          this.currentImageIndex--;
+        }
+      },
 
+      setCurrentImage(index) {
+        this.currentImageIndex = index;
+      },
 
-  </div>
-  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=689370215f6dcea901024517" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="{{ 'webflow.js' | asset_url }}" type="text/javascript"></script>
-  {% render 'search_javascript' %}
-</body>
-</html>
+      updateSelectedVariant(optionIndex, value) {
+        this.selectedOptions[optionIndex] = value;
+
+        const matchingVariant = this.product.variants.find((variant) => {
+          return this.selectedOptions.every((option, index) => {
+            return variant[`option${index + 1}`] === option;
+          });
+        });
+
+        if (matchingVariant) {
+          this.selectedVariant = matchingVariant;
+
+          const newUrl = new URL(window.location);
+          newUrl.searchParams.set('variant', matchingVariant.id);
+          window.history.replaceState({}, '', newUrl);
+        }
+      },
+
+      formatPrice(price) {
+        return new Intl.NumberFormat('fr-FR', {
+          style: 'currency',
+          currency: 'EUR'
+        }).format(price / 100);
+      },
+
+      addToCart() {
+        if (!this.selectedVariant.available) return;
+
+        const formData = {
+          items: [
+            {
+              id: this.selectedVariant.id,
+              quantity: 1
+            }
+          ]
+        };
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+          .then((response
