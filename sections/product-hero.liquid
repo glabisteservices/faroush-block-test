@@ -1,70 +1,23 @@
 <style>
-  .product-header_add-to-cart-wrapper {
-    display: flex;
-    flex-direction: column;
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 0.5rem;
-  }
-  
-  .is-red {
-    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
-    color: #f5f2d9;
-  }
-  
-  .text-size-regular {
-    font-family: Karla;
-    color: #9e8c73;
-    font-size: 1rem;
-  }
-  
-  .button {
-    padding: 0.65rem 1.5rem;
-    border: 1px solid #6e612b;
-    border-radius: 10px;
-    background-color: transparent;
-    font-family: Karla;
-    color: #6e612b;
-    font-weight: 500;
-    text-align: center;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #6e612b;
-    color: #f5f2d9;
-  }
-  
-  .product-item_tag {
-    padding: 0.3rem 1.5rem;
-    border-radius: 8px;
-    background-color: #9e8c73;
-    color: white;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-  
-  .heading-style-h4 {
-    font-family: Karla;
-    color: #6e612b;
-    font-size: 1.25rem;
-    line-height: 1.2;
-    font-weight: 400;
-  }
-  
   .product-header_layout {
     display: grid;
-    align-items: start;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 3rem;
     grid-row-gap: 2rem;
+    align-items: start;
+    min-height: 90vh;
+    padding: 0 20px 2rem 20px; /* Padding-top à 0 sur desktop */
   }
   
   @media screen and (max-width: 768px) {
     .product-header_layout {
       grid-template-columns: 1fr;
       grid-column-gap: 0;
+      min-height: auto;
+      padding: 0 10px; /* Padding de 10px de chaque côté */
+      /* S'assurer qu'il n'y a pas de comportement de scroll forcing */
+      scroll-behavior: auto;
+      align-items: start;
     }
   }
   
@@ -72,31 +25,78 @@
   .product-gallery-container {
     position: relative;
     width: 100%;
+    height: calc(90vh - 4rem);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .product-gallery-container {
+      height: auto;
+      min-height: 300px;
+    }
   }
   
   .product-gallery-main {
     position: relative;
     width: 100%;
-    height: 500px;
+    flex: 1;
     margin-bottom: 1rem;
     overflow: hidden;
     border-radius: 20px;
-    background-color: #eee;
+    background-color: transparent;
+    display: flex;
+  }
+  
+  .gallery-slide {
+    width: auto;
+    height: 100%;
+    flex-shrink: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .gallery-slide {
+      width: 100%;
+      min-height: 300px;
+    }
   }
   
   .gallery-image {
-    width: 100%;
+    width: auto;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
-    transition: opacity 0.3s ease;
   }
   
-  .gallery-image.hidden {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
+  .gallery-slides-container {
+    display: flex;
+    width: auto;
+    height: 100%;
+    transition: transform 0.3s ease;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .gallery-slides-container {
+      width: 100%;
+      transition: transform 0.3s ease;
+    }
+  }
+  
+  .gallery-slide:not(:last-child) {
+    margin-right: 1rem;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .gallery-slide:not(:last-child) {
+      margin-right: 0;
+    }
   }
   
   /* Navigation Arrows */
@@ -106,7 +106,13 @@
     right: 1rem;
     display: flex;
     gap: 0.5rem;
-    z-index: 10;
+    z-index: 2;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .gallery-navigation {
+      display: none; /* Masquer les flèches sur mobile */
+    }
   }
   
   .nav-arrow {
@@ -128,6 +134,11 @@
     color: #f5f2d9;
   }
   
+  .nav-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
   .nav-arrow svg {
     width: 1.2rem;
     height: 1.2rem;
@@ -144,12 +155,18 @@
     gap: 0.5rem;
     overflow-x: auto;
     padding: 0.5rem 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  
+  .product-thumbnails::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
   
   .thumbnail-item {
     flex-shrink: 0;
-    width: 80px;
-    height: 80px;
+    width: auto;
+    height: 3.7rem; /* Hauteur fixe de 3.7rem */
     border-radius: 10px;
     overflow: hidden;
     cursor: pointer;
@@ -162,122 +179,114 @@
   }
   
   .thumbnail-image {
-    width: 100%;
+    width: auto;
     height: 100%;
     object-fit: cover;
+    object-position: center;
   }
   
   /* Product Details */
-  
-  /* ====== PRIX PRODUIT (taille & alignement) ====== */
-
-.product-price-wrapper {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-height: 2.4rem;          /* évite les sauts verticaux */
-}
-
-/* Même famille de police partout + chiffres sur une seule ligne */
-.product-price,
-.product-compare-price {
-  font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-/* Prix principal */
-.product-price {
-  color: #6e612b;
-  font-size: 1.25rem;          /* ~20px */
-  font-weight: 600;
-}
-
-/* Prix barré */
-.product-compare-price {
-  color: #9e8c73;
-  font-size: 1.1rem;           /* un peu plus petit */
-  font-weight: 400;
-  text-decoration: line-through;
-}
-
-/* Badge Sale aligné au centre de la ligne de prix */
-.product-item_tag {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 2rem;
-  padding: 0 1rem;
-  border-radius: 8px;
-  background-color: #e74c3c;
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-  
-  .product-description {
-    font-family: Karla;
-    color: #6e612b;
-    line-height: 1.6;
-  }
-  
-  /* Variant Selection */
-  .variant-selector {
+  .product-header_product-details {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    height: auto;
+    overflow-y: visible;
   }
   
-  .variant-label {
-    font-family: Karla;
-    color: #6e612b;
-    font-weight: 600;
+  @media screen and (max-width: 768px) {
+    .product-header_product-details {
+      height: auto;
+      padding: 1rem 0;
+      width: 100%;
+      box-sizing: border-box;
+      position: static;
+      overflow-y: visible;
+    }
   }
   
-  .variant-select {
-    padding: 0.75rem 1rem;
-    border: 1px solid #6e612b;
-    border-radius: 10px;
-    background-color: transparent;
-    font-family: Karla;
-    color: #6e612b;
-    font-size: 1rem;
-    cursor: pointer;
+  /* Titre du produit - Protection renforcée SEULEMENT pour la section product-hero */
+  .product-header_component .product-header_product-details .product-title,
+  .product-header_component .product-header_product-details h1.product-title,
+  .product-header_component h1.product-title {
+    font-family: Karla, sans-serif !important;
+    color: #6e612b !important;
+    font-size: 1.75rem !important; /* Taille H4 */
+    font-weight: 600 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.2 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
   }
   
-  /* Add to Cart */
-  .add-to-cart-section {
+  @media screen and (max-width: 768px) {
+    .product-header_component .product-header_product-details .product-title,
+    .product-header_component .product-header_product-details h1.product-title,
+    .product-header_component h1.product-title {
+      font-size: 1.5rem !important;
+    }
+  }
+  
+  .product-price-wrapper {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 1rem;
+    flex-wrap: wrap;
   }
   
-  .add-to-cart-button {
-    width: 100%;
-    padding: 1rem;
-    border: none;
-    border-radius: 10px;
-    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
-    font-family: Karla;
-    color: #f5f2d9;
+  .product-price {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 1.5rem;
     font-weight: 600;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
   }
   
-  .add-to-cart-button:hover {
-    background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1.00);
+  @media screen and (max-width: 768px) {
+    .product-price {
+      font-size: 1.3rem;
+    }
   }
   
-  .add-to-cart-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  .product-compare-price {
+    font-family: Karla, sans-serif;
+    color: #9e8c73;
+    font-size: 1.2rem;
+    text-decoration: line-through;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .product-compare-price {
+      font-size: 1rem;
+    }
+  }
+  
+  .product-item_tag {
+    padding: 0.3rem 1rem;
+    border-radius: 8px;
+    background-color: #e74c3c;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
   }
   
   .stock-status {
-    font-family: Karla;
+    font-family: Karla, sans-serif;
     font-size: 0.9rem;
     padding: 0.5rem;
     text-align: center;
@@ -294,6 +303,99 @@
     color: #8b0000;
   }
   
+  .product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .product-tags .product-item_tag {
+    background-color: #9e8c73;
+  }
+  
+  .product-description {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  
+  /* Variant Selection */
+  .variant-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .variant-label {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .variant-select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #6e612b;
+    border-radius: 10px;
+    background-color: white;
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Add to Cart */
+  .add-to-cart-button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #e67e22;
+    font-family: Karla, sans-serif;
+    color: #f5f2d9;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .add-to-cart-button:hover {
+    background-color: #d35400;
+  }
+  
+  .add-to-cart-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  /* NOUVEAU : Styles pour les messages de feedback */
+  .add-to-cart-message {
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-family: Karla, sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .add-to-cart-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .add-to-cart-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+  
   /* Shipping Info */
   .shipping-info {
     display: flex;
@@ -302,261 +404,1076 @@
     padding: 1rem 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .shipping-icon {
     width: 1.5rem;
     height: 1.5rem;
     color: #6e612b;
+    flex-shrink: 0;
   }
   
   .shipping-text {
-    font-family: Karla;
+    font-family: Karla, sans-serif;
     color: #6e612b;
     font-size: 0.9rem;
   }
+
+  /* Pictos Styles */
+  .product-pictos-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    width: 70%;
+    max-width: 70%;
+  }
+
+  /* DESKTOP uniquement : Forcer le flexbox au lieu de la grille */
+  @media screen and (min-width: 769px) {
+    .product-pictos-container {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 1rem !important;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+    }
+
+    /* Conteneur de l'image : hauteur fixe 40px */
+    .product-header_component .product-pictos-container .picto-produit div[class*="Div Block"],
+    .product-header_component .picto-produit div[class*="Div Block"],
+    .product-pictos-container .picto-produit div[class*="Div Block"],
+    .picto-produit div[class*="Div Block"] {
+      width: 100% !important;
+      height: 40px !important;
+      max-height: 40px !important;
+      min-height: 40px !important;
+      flex: 0 0 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Image : 100% du conteneur avec max-height 100% */
+    .product-header_component .product-pictos-container .picto-produit div[class*="Div Block"] img[class*="Image"],
+    .product-header_component .product-pictos-container .picto-produit img[class*="Image"],
+    .product-header_component .picto-produit div[class*="Div Block"] img,
+    .product-header_component .picto-produit img,
+    .product-pictos-container .picto-produit div[class*="Div Block"] img[class*="Image"],
+    .product-pictos-container .picto-produit img[class*="Image"],
+    .picto-produit div[class*="Div Block"] img,
+    .picto-produit img,
+    .picto-produit img[class*="Image"] {
+      width: auto !important;
+      height: 100% !important;
+      max-width: 100% !important;
+      max-height: 100% !important;
+      min-width: auto !important;
+      min-height: auto !important;
+      object-fit: contain !important;
+      object-position: center !important;
+      display: block !important;
+      box-sizing: border-box !important;
+    }
+
+    .product-header_component .picto-produit,
+    .product-pictos-container .picto-produit,
+    .picto-produit {
+      height: 65px !important;
+      max-height: 65px !important;
+      min-height: 65px !important;
+    }
+  }
+
+  /* MOBILE et TABLET : Garder la grille */
+  @media screen and (max-width: 768px) {
+    .product-pictos-container {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+      gap: 1rem !important;
+      justify-items: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+
+  .picto-produit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 80px;
+    height: 60px;
+    max-height: 60px;
+  }
+
+  .picto-produit .Div.Block.7 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    height: 25px;
+    max-height: 25px;
+    flex: 0 0 25px;
+    overflow: hidden;
+  }
+
+  .picto-produit .Image.3 {
+    width: auto !important;
+    height: 25px !important;
+    max-width: 40px !important;
+    max-height: 25px !important;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* Règles spécifiques pour DESKTOP uniquement - Version renforcée */
+  @media screen and (min-width: 769px) {
+    .product-header_component .product-pictos-container .picto-produit .Div.Block.7,
+    .product-header_component .picto-produit .Div.Block.7,
+    .product-pictos-container .picto-produit .Div.Block.7,
+    .picto-produit .Div.Block.7 {
+      width: 100% !important;
+      height: 25px !important;
+      max-height: 25px !important;
+      min-height: 25px !important;
+      flex: 0 0 25px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    .product-header_component .product-pictos-container .picto-produit .Div.Block.7 .Image.3,
+    .product-header_component .product-pictos-container .picto-produit .Image.3,
+    .product-header_component .picto-produit .Div.Block.7 img,
+    .product-header_component .picto-produit img,
+    .product-pictos-container .picto-produit .Div.Block.7 .Image.3,
+    .product-pictos-container .picto-produit .Image.3,
+    .picto-produit .Div.Block.7 img,
+    .picto-produit img,
+    .picto-produit .Image.3 {
+      width: auto !important;
+      height: 25px !important;
+      max-width: 40px !important;
+      max-height: 25px !important;
+      min-width: auto !important;
+      min-height: auto !important;
+      object-fit: contain !important;
+      object-position: center !important;
+      display: block !important;
+      box-sizing: border-box !important;
+    }
+
+    .product-header_component .picto-produit,
+    .product-pictos-container .picto-produit,
+    .picto-produit {
+      height: 45px !important;
+      max-height: 45px !important;
+      min-height: 45px !important;
+    }
+  }
+
+  .picto-produit .texte-picto {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1;
+    margin-top: auto;
+  }
+
+  /* Guide des tailles */
+  .size-guide-button {
+    font-family: Karla, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #6e612b;
+    background: transparent;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    text-align: right;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .size-guide-button:hover {
+    color: #5a4f23;
+  }
+
+  /* NOUVEAU : Style pour la ligne avec le guide des tailles */
+  .variant-label-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* Popup Guide des tailles */
+  .size-guide-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .size-guide-popup {
+    background: white;
+    border-radius: 15px;
+    max-width: 800px;
+    width: 100%;
+    max-height: 90vh;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .size-guide-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6e612b;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1001;
+  }
+
+  .size-guide-content {
+    padding: 2rem;
+    max-height: calc(90vh - 60px);
+    overflow-y: auto;
+    font-family: Karla, sans-serif;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  @media screen and (max-width: 768px) {
+    .size-guide-popup {
+      max-width: 95%;
+      max-height: 85vh;
+    }
+
+    .size-guide-content {
+      padding: 20px 10px;
+      max-height: calc(85vh - 60px);
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .product-pictos-container {
+      display: grid !important;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important;
+      gap: 1rem !important;
+      justify-items: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    
+    .picto-produit {
+      min-width: 70px;
+      height: 60px;
+      max-height: 60px;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+
+    .picto-produit .Div.Block.7 {
+      width: 100% !important;
+      height: 40px !important;
+      max-height: 40px !important;
+      flex: 0 0 40px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      overflow: hidden !important;
+    }
+
+    .product-pictos-container .picto-produit div[class*="Div Block"] img[class*="Image"],
+    .product-pictos-container .picto-produit img[class*="Image"],
+    .picto-produit div[class*="Div Block"] img,
+    .picto-produit img {
+      width: auto !important;
+      height: 30px !important;
+      max-width: 40px !important;
+      max-height: 30px !important;
+      min-width: auto !important;
+      min-height: auto !important;
+      object-fit: contain !important;
+      object-position: center !important;
+    }
+
+    .picto-produit .texte-picto {
+      font-size: 0.75rem !important;
+      line-height: 1 !important;
+      margin-top: 0.25rem !important;
+      flex: 0 0 auto !important;
+    }
+  }
 </style>
 
-<div class="product-header_component">
-  <div class="product-header_layout" 
-       x-data="productGallery({{ product | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})"
-       x-init="initGallery()">
+<!-- MODIFICATION PRINCIPALE : Ajout de x-data="productForm()" sur le div principal -->
+<div class="product-header_component" x-data="productForm()">
+  <!-- MODIFICATION : Suppression du formulaire, remplacé par un div -->
+  <div class="product-header_layout">
     
-    <!-- Gallery Section -->
+    <!-- Gallery Section - INCHANGÉ -->
     <div class="product-gallery-container">
-      <div class="product-gallery-main">
-        <template x-for="(media, index) in product.media" :key="media.id">
-          <div x-show="currentImageIndex === index" x-transition:enter.duration.300ms>
-            <img :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_1000x1000.jpg') : ''"
-                 :alt="media.alt || product.title"
-                 class="gallery-image"
-                 loading="lazy">
-          </div>
-        </template>
-        
-        <div class="gallery-navigation" x-show="product.media.length > 1">
-          <button class="nav-arrow prev" @click="previousImage()" :disabled="currentImageIndex === 0">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          <button class="nav-arrow next" @click="nextImage()" :disabled="currentImageIndex === product.media.length - 1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+      <div class="product-gallery-main" id="gallery-main">
+        <div class="gallery-slides-container" id="slides-container">
+          {% for media in product.media %}
+            <div class="gallery-slide" data-slide="{{ forloop.index0 }}">
+              {% if media.media_type == 'image' %}
+                <img src="{{ media | image_url: width: 1000 }}"
+                     alt="{{ media.alt | escape }}"
+                     class="gallery-image"
+                     loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+              {% elsif media.media_type == 'video' %}
+                {{ media | video_tag: controls: true, class: "gallery-image" }}
+              {% endif %}
+            </div>
+          {% endfor %}
         </div>
+        
+        <!-- Navigation Arrows -->
+        {% if product.media.size > 1 %}
+          <div class="gallery-navigation">
+            <button type="button" class="nav-arrow prev" onclick="previousImage()" id="prev-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <button type="button" class="nav-arrow next" onclick="nextImage()" id="next-btn">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        {% endif %}
       </div>
       
-      <div class="product-thumbnails" x-show="product.media.length > 1">
-        <template x-for="(media, index) in product.media" :key="media.id">
-          <div class="thumbnail-item" 
-               :class="{ 'active': currentImageIndex === index }"
-               @click="setCurrentImage(index)">
-            <img :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_200x200.jpg') : ''"
-                 :alt="media.alt || product.title"
-                 class="thumbnail-image"
-                 loading="lazy">
-          </div>
-        </template>
-      </div>
+      <!-- Thumbnails -->
+      {% if product.media.size > 1 %}
+        <div class="product-thumbnails">
+          {% for media in product.media %}
+            <div class="thumbnail-item {% if forloop.first %}active{% endif %}" 
+                 onclick="setCurrentImage({{ forloop.index0 }})"
+                 data-thumbnail="{{ forloop.index0 }}">
+              <img src="{{ media | image_url: width: 200 }}"
+                   alt="{{ media.alt | escape }}"
+                   class="thumbnail-image"
+                   loading="lazy">
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
     
     <!-- Product Details Section -->
     <div class="product-header_product-details">
-      <h1 class="product-title" x-text="product.title"></h1>
       
-      <!-- Price - LIQUID PUR (sans Alpine) -->
+      <!-- Product Title - INCHANGÉ -->
+      <h1 class="product-title product-main-title">{{ product.title }}</h1>
+      
+      <!-- Price - MODIFICATION : Ajout des directives Alpine.js -->
       <div class="product-price-wrapper">
-        <span class="product-price">
-          {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | round: 2 | replace: '.', ',' }} €
-        </span>
-        
-        {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
-          <span class="product-compare-price">
-            {{ product.selected_or_first_available_variant.compare_at_price | divided_by: 100.0 | round: 2 | replace: '.', ',' }} €
-          </span>
-          
-          <span class="product-item_tag">Sale</span>
-        {% endif %}
+        <span class="product-price" x-text="formatPrice(selectedVariant.price)">{{ product.selected_or_first_available_variant.price | money }}</span>
+        <span class="product-compare-price" 
+              x-show="selectedVariant.compare_at_price > selectedVariant.price"
+              x-text="formatPrice(selectedVariant.compare_at_price)">{{ product.selected_or_first_available_variant.compare_at_price | money }}</span>
+        <span class="product-item_tag" x-show="selectedVariant.compare_at_price > selectedVariant.price">Sale</span>
       </div>
       
-      <div class="stock-status" 
-           :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
-           x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"></div>
+      <!-- Product Description - INCHANGÉ -->
+      {% if product.description != blank %}
+        <div class="product-description">{{ product.description }}</div>
+      {% endif %}
       
-      <div class="product-tags" x-show="product.tags.length > 0">
-        <template x-for="tag in product.tags.slice(0, 3)" :key="tag">
-          <span class="product-item_tag" x-text="tag"></span>
-        </template>
-      </div>
-      
-      <div class="product-description" x-html="product.description"></div>
-      
-      <div x-show="product.options.length > 0">
-        <template x-for="(option, optionIndex) in product.options" :key="option.name">
+      <!-- Variant Selection - MODIFICATION : Ajout des directives Alpine.js -->
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
           <div class="variant-selector">
-            <label class="variant-label" x-text="option.name"></label>
+            {% if option.name contains 'aille' or option.name contains 'Taille' or option.name contains 'Pointure' %}
+              <div class="variant-label-row">
+                <label class="variant-label">{{ option.name }}</label>
+                <button type="button" class="size-guide-button" onclick="openSizeGuide()">
+                  Guide des tailles
+                </button>
+              </div>
+            {% else %}
+              <label class="variant-label">{{ option.name }}</label>
+            {% endif %}
+            <!-- MODIFICATION : Ajout de x-model et @change -->
             <select class="variant-select" 
-                    @change="updateSelectedVariant(optionIndex, $event.target.value)">
-              <template x-for="value in option.values" :key="value">
-                <option :value="value" 
-                        :selected="selectedOptions[optionIndex] === value"
-                        x-text="value"></option>
-              </template>
+                    x-model="selectedOptions[{{ forloop.index0 }}]"
+                    @change="updateSelectedVariant()">
+              {% for value in option.values %}
+                <option value="{{ value | escape }}">{{ value }}</option>
+              {% endfor %}
             </select>
           </div>
-        </template>
-      </div>
+        {% endfor %}
+      {% endunless %}
       
+      <!-- Shipping Info - INCHANGÉ -->
       <div class="shipping-info">
         <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
         </svg>
-        <span class="shipping-text">Livraison 1 - 3 jours</span>
+        <span class="shipping-text" id="dynamic-shipping-text">
+          {% comment %} Récupération dynamique des zones de livraison Shopify {% endcomment %}
+          {% assign customer_country = '' %}
+          {% if customer.default_address.country_code %}
+            {% assign customer_country = customer.default_address.country_code %}
+          {% elsif localization.country.iso_code %}
+            {% assign customer_country = localization.country.iso_code %}
+          {% else %}
+            {% assign customer_country = 'FR' %}
+          {% endif %}
+
+          {% assign shipping_text = 'Livraison : nous contacter' %}
+          {% assign shipping_found = false %}
+
+          {% comment %} Parcourir les zones de livraison configurées dans Shopify {% endcomment %}
+          {% for shipping_zone in shop.shipping_zones %}
+            {% unless shipping_found %}
+              {% for country in shipping_zone.countries %}
+                {% if country.iso_code == customer_country %}
+                  {% for rate in shipping_zone.shipping_methods %}
+                    {% if rate.delivery_time != blank %}
+                      {% assign shipping_text = rate.delivery_time %}
+                      {% assign shipping_found = true %}
+                      {% break %}
+                    {% elsif rate.price == 0 %}
+                      {% assign shipping_text = 'Livraison gratuite' %}
+                      {% assign shipping_found = true %}
+                      {% break %}
+                    {% endif %}
+                  {% endfor %}
+                  {% break %}
+                {% endif %}
+              {% endfor %}
+            {% endunless %}
+          {% endfor %}
+
+          {% comment %} Fallback si aucune zone trouvée - utiliser les données des paramètres de livraison {% endcomment %}
+          {% unless shipping_found %}
+            {% case customer_country %}
+              {% when 'FR' %}
+                {% assign shipping_text = '2-4 jours ouvrables' %}
+              {% when 'BE', 'LU', 'CH', 'NL', 'DE', 'AT' %}
+                {% assign shipping_text = '3-6 jours ouvrables' %}
+              {% when 'ES', 'IT', 'PT' %}
+                {% assign shipping_text = '4-8 jours ouvrables' %}
+              {% when 'GB', 'IE' %}
+                {% assign shipping_text = '5-10 jours ouvrables' %}
+              {% else %}
+                {% assign shipping_text = 'Livraison internationale : nous contacter' %}
+            {% endcase %}
+          {% endunless %}
+
+          Livraison {{ shipping_text }}
+        </span>
       </div>
       
+      <!-- Add to Cart Section - MODIFICATION PRINCIPALE : Version Alpine.js -->
       <div class="add-to-cart-section">
-        <button class="add-to-cart-button" 
-                :disabled="!selectedVariant.available"
-                @click="addToCart()"
-                x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></button>
+        <button type="button" 
+                class="add-to-cart-button" 
+                :disabled="!selectedVariant.available || isLoading"
+                @click="addToCart()">
+          <span x-show="!isLoading">
+            <span x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"></span>
+          </span>
+          <span x-show="isLoading">Ajout en cours...</span>
+        </button>
+        
+        <!-- NOUVEAU : Message de feedback -->
+        <div x-show="message.show" 
+             x-transition
+             class="add-to-cart-message"
+             :class="message.type">
+          <span x-text="message.text"></span>
+        </div>
+      </div>
+
+      <!-- Product Pictos Section - INCHANGÉ -->
+      <div class="product-pictos-container">
+        {% for block in section.blocks %}
+          {% if block.type == "picto-produit" %}
+            <div class="picto-produit" {{ block.shopify_attributes }}>
+              <div class="Div Block 7">
+                {% if block.settings.picto_image %}
+                  <img class="Image 3" 
+                       width="auto" 
+                       height="auto" 
+                       alt="{{ block.settings.picto_alt | default: block.settings.picto_text | escape }}" 
+                       src="{{ block.settings.picto_image | image_url }}" 
+                       loading="lazy">
+                {% else %}
+                  <img class="Image 3" 
+                       width="auto" 
+                       height="auto" 
+                       alt="inherit" 
+                       src="https://cdn.prod.website-files.com/689370215f6dcea901024517/68946f4e84aec1da47fa5e95_SAV.svg" 
+                       loading="lazy">
+                {% endif %}
+              </div>
+              <div class="texte-picto">
+                {{ block.settings.picto_text | default: "Souple" }}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Popup Guide des tailles - INCHANGÉ -->
+  <div class="size-guide-overlay" id="sizeGuideOverlay" onclick="closeSizeGuide(event)">
+    <div class="size-guide-popup" onclick="event.stopPropagation()">
+      <button class="size-guide-close" onclick="closeSizeGuide()">&times;</button>
+      <div class="size-guide-content" id="sizeGuideContent">
+        <p>Chargement...</p>
       </div>
     </div>
   </div>
 </div>
 
 <script>
-<script>
-function productGallery(product, initialVariant) {
-  return {
-    product: product,
-    selectedVariant: initialVariant,
-    selectedOptions: [],
-    currentImageIndex: 0,
-    
-    initGallery() {
-      if (this.selectedVariant && this.product.options) {
-        this.selectedOptions = this.product.options.map((option, index) => {
-          return this.selectedVariant[`option${index + 1}`];
-        });
-      }
+// NOUVEAU : Alpine.js Component pour le formulaire produit
+document.addEventListener('alpine:init', () => {
+  Alpine.data('productForm', () => ({
+    // État initial
+    selectedOptions: {{ product.selected_or_first_available_variant.options | json }},
+    selectedVariant: {{ product.selected_or_first_available_variant | json }},
+    productVariants: {{ product.variants | json }},
+    isLoading: false,
+    message: {
+      show: false,
+      text: '',
+      type: 'success' // 'success' ou 'error'
     },
-    
-    nextImage() {
-      if (this.currentImageIndex < this.product.media.length - 1) {
-        this.currentImageIndex++;
-      }
-    },
-    
-    previousImage() {
-      if (this.currentImageIndex > 0) {
-        this.currentImageIndex--;
-      }
-    },
-    
-    setCurrentImage(index) {
-      this.currentImageIndex = index;
-    },
-    
-    updateSelectedVariant(optionIndex, value) {
-      this.selectedOptions[optionIndex] = value;
 
-      const matchingVariant = this.product.variants.find(variant => {
+    // Initialisation
+    init() {
+      console.log('Product form initialized');
+      this.updateSelectedVariant();
+    },
+
+    // Mise à jour de la variante sélectionnée
+    updateSelectedVariant() {
+      const matchingVariant = this.productVariants.find(variant => {
         return this.selectedOptions.every((option, index) => {
-          return variant[`option${index + 1}`] === option;
+          return variant[option${index + 1}] === option;
         });
       });
 
       if (matchingVariant) {
         this.selectedVariant = matchingVariant;
-
-        // mettre l'ID de variante dans l’URL sans recharger la page
-        const newUrl = new URL(window.location);
-        newUrl.searchParams.set('variant', matchingVariant.id);
-        window.history.replaceState({}, '', newUrl);
+        this.updateURL(matchingVariant.id);
       }
     },
-    
-    addToCart() {
-      if (!this.selectedVariant || !this.selectedVariant.available) return;
 
-      const formData = {
-        items: [{
+    // Formatage du prix
+    formatPrice(cents) {
+      if (typeof LiquifyHelper !== 'undefined') {
+        return LiquifyHelper.moneyFormat(cents, true, '{{ shop.money_with_currency_format }}');
+      }
+      return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: '{{ cart.currency.iso_code | default: "EUR" }}'
+      }).format(cents / 100);
+    },
+
+    // Mise à jour de l'URL
+    updateURL(variantId) {
+      const newUrl = new URL(window.location);
+      newUrl.searchParams.set('variant', variantId);
+      window.history.replaceState({}, '', newUrl);
+    },
+
+    // FONCTION PRINCIPALE : Ajout au panier
+    async addToCart() {
+      if (!this.selectedVariant.available || this.isLoading) {
+        return;
+      }
+
+      this.isLoading = true;
+      this.hideMessage();
+
+      try {
+        // Préparer les données
+        const cartData = {
           id: this.selectedVariant.id,
           quantity: 1
-        }]
-      };
+        };
 
-      fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Événement custom si tu as un mini-panier qui écoute ça
-          window.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
-          console.log('Produit ajouté au panier:', data);
-        })
-        .catch(error => {
-          console.error("Erreur lors de l'ajout au panier :", error);
+        // Ajouter au panier via l'API Shopify
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(cartData)
         });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Succès
+          this.showMessage('Produit ajouté au panier !', 'success');
+          
+          // IMPORTANT : Déclencher les événements pour le mini-cart
+          this.$dispatch('cartupdated');
+          this.$dispatch('toggleminicart');
+          
+        } else {
+          // Erreur du serveur
+          throw new Error(result.message || result.description || 'Erreur lors de l\'ajout au panier');
+        }
+
+      } catch (error) {
+        console.error('Erreur lors de l\'ajout au panier:', error);
+        this.showMessage('Erreur lors de l\'ajout au panier. Veuillez réessayer.', 'error');
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    // Afficher un message
+    showMessage(text, type = 'success') {
+      this.message = {
+        show: true,
+        text: text,
+        type: type
+      };
+      
+      // Masquer automatiquement après 3 secondes
+      setTimeout(() => {
+        this.hideMessage();
+      }, 3000);
+    },
+
+    // Masquer le message
+    hideMessage() {
+      this.message.show = false;
     }
+  }));
+});
+
+// INCHANGÉ : Variables globales pour la galerie
+let currentImageIndex = 0;
+const totalImages = {{ product.media.size }};
+
+// Variables pour le swipe mobile - INCHANGÉ
+let startX = 0;
+let startY = 0;
+let currentX = 0;
+let currentY = 0;
+let isDragging = false;
+let isSwipeActive = false;
+
+// Fonction pour déterminer si on est sur mobile - INCHANGÉ
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+// Navigation des images - INCHANGÉ
+function nextImage() {
+  currentImageIndex = (currentImageIndex + 1) % totalImages;
+  updateGalleryDisplay();
+}
+
+function previousImage() {
+  currentImageIndex = (currentImageIndex - 1 + totalImages) % totalImages;
+  updateGalleryDisplay();
+}
+
+function setCurrentImage(index) {
+  currentImageIndex = index;
+  updateGalleryDisplay();
+}
+
+function updateGalleryDisplay() {
+  const slidesContainer = document.getElementById('slides-container');
+  const slides = document.querySelectorAll('.gallery-slide');
+  
+  if (slidesContainer && slides.length > 0) {
+    if (isMobile()) {
+      // Sur mobile, chaque slide fait 100% de largeur
+      const offset = currentImageIndex * 100;
+      slidesContainer.style.transform = translateX(-${offset}%);
+    } else {
+      // Sur desktop, calcul normal
+      let offset = 0;
+      for (let i = 0; i < currentImageIndex; i++) {
+        const slideWidth = slides[i].offsetWidth;
+        const marginRight = 16; // 1rem = 16px
+        offset += slideWidth + marginRight;
+      }
+      slidesContainer.style.transform = translateX(-${offset}px);
+    }
+  }
+  
+  // Mettre à jour les thumbnails
+  const thumbnails = document.querySelectorAll('.thumbnail-item');
+  thumbnails.forEach((thumb, index) => {
+    thumb.classList.toggle('active', index === currentImageIndex);
+  });
+  
+  // Auto-scroll vers la thumbnail active seulement si nécessaire
+  const activeThumbnail = document.querySelector('.thumbnail-item.active');
+  if (activeThumbnail && !isMobile()) {
+    // Seulement sur desktop pour éviter les interférences mobiles
+    activeThumbnail.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
   }
 }
 
-/* ========== DEBUG : vérifier qu'on cible le bon bloc prix ========== */
-.product-header_component .product-price-wrapper {
-  outline: 1px solid magenta !important; /* Tu dois voir un cadre rose autour des prix */
+// Gestion du swipe sur mobile - INCHANGÉ
+function initializeSwipe() {
+  const galleryMain = document.getElementById('gallery-main');
+  
+  if (!galleryMain || !isMobile()) return;
+  
+  // Touch events avec passive: true pour ne pas bloquer le scroll
+  galleryMain.addEventListener('touchstart', handleTouchStart, { passive: true });
+  galleryMain.addEventListener('touchmove', handleTouchMove, { passive: true });
+  galleryMain.addEventListener('touchend', handleTouchEnd, { passive: true });
 }
 
-/* ========== PRIX : taille & alignement, priorité maximale ========== */
-.product-header_component .product-price-wrapper {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 0.75rem !important;
-  min-height: 2.4rem !important;
+function handleTouchStart(e) {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
+  isDragging = true;
+  isSwipeActive = false;
+  
+  // Réinitialiser les positions pour éviter les conflits
+  currentX = startX;
+  currentY = startY;
 }
 
-/* Même police partout + pas de saut de ligne */
-.product-header_component .product-price,
-.product-header_component .product-compare-price {
-  font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
-  line-height: 1 !important;
-  white-space: nowrap !important;
+function handleTouchMove(e) {
+  if (!isDragging) return;
+  
+  currentX = e.touches[0].clientX;
+  currentY = e.touches[0].clientY;
+  const diffX = Math.abs(currentX - startX);
+  const diffY = Math.abs(currentY - startY);
+  
+  // Seulement déclencher le swipe si c'est clairement un mouvement horizontal intentionnel
+  if (diffX > 50 && diffX > diffY * 3) {
+    isSwipeActive = true;
+  } else if (diffY > 20) {
+    // Si c'est un mouvement vertical, on arrête le dragging pour permettre le scroll
+    isDragging = false;
+    isSwipeActive = false;
+  }
 }
 
-/* Prix principal */
-.product-header_component .product-price {
-  color: #6e612b !important;
-  font-size: 1.25rem !important;   /* ajuste ici si tu veux plus grand/petit */
-  font-weight: 600 !important;
+function handleTouchEnd(e) {
+  if (!isDragging) {
+    return;
+  }
+  
+  // Seulement traiter le swipe si on a vraiment détecté un mouvement horizontal intentionnel
+  if (isSwipeActive) {
+    const diffX = currentX - startX;
+    const threshold = 50;
+    
+    if (Math.abs(diffX) > threshold) {
+      if (diffX > 0) {
+        previousImage(); // Swipe vers la droite
+      } else {
+        nextImage(); // Swipe vers la gauche
+      }
+    }
+  }
+  
+  isDragging = false;
+  isSwipeActive = false;
 }
 
-/* Prix barré */
-.product-header_component .product-compare-price {
-  color: #9e8c73 !important;
-  font-size: 1.1rem !important;
-  font-weight: 400 !important;
-  text-decoration: line-through !important;
+// Fonctions pour le guide des tailles - INCHANGÉ
+function openSizeGuide() {
+  const overlay = document.getElementById('sizeGuideOverlay');
+  const content = document.getElementById('sizeGuideContent');
+  
+  // Afficher le popup
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  
+  // Charger le contenu de la page guide-des-tailles
+  fetch('/pages/guide-des-tailles')
+    .then(response => response.text())
+    .then(data => {
+      // Extraire le contenu principal de la page
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(data, 'text/html');
+      const pageContent = doc.querySelector('.page-content, .rte, main, .content, .page') || doc.querySelector('body');
+      
+      if (pageContent) {
+        content.innerHTML = pageContent.innerHTML;
+      } else {
+        content.innerHTML = '<p>Impossible de charger le guide des tailles.</p>';
+      }
+    })
+    .catch(error => {
+      console.error('Erreur lors du chargement du guide des tailles:', error);
+      content.innerHTML = '<p>Erreur lors du chargement du guide des tailles.</p>';
+    });
 }
 
-/* Badge Sale bien centré sur la ligne de prix */
-.product-header_component .product-item_tag {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 2rem !important;
-  padding: 0 1rem !important;
-  border-radius: 8px !important;
-  background-color: #e74c3c !important;
-  color: #fff !important;
-  font-size: 0.9rem !important;
-  font-weight: 500 !important;
+function closeSizeGuide(event) {
+  if (!event || event.target === document.getElementById('sizeGuideOverlay') || event.target.classList.contains('size-guide-close')) {
+    const overlay = document.getElementById('sizeGuideOverlay');
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
 }
 
+// SUPPRIMÉ : Toutes les fonctions updateShippingBasedOnLocation, updatePrice, updateVariant, updateStockStatus
+// car elles sont maintenant gérées par Alpine.js
 
+// Initialisation - MODIFIÉ : Suppression des fonctions devenues inutiles
+document.addEventListener('DOMContentLoaded', function() {
+  updateGalleryDisplay();
+  initializeSwipe();
+  
+  // Protection renforcée pour le titre du produit - INCHANGÉ
+  const protectTitle = () => {
+    const titles = document.querySelectorAll('.product-header_component .product-title, .product-header_component .product-main-title, .product-header_component h1.product-title');
+    titles.forEach(title => {
+      if (title) {
+        const styles = {
+          'display': 'block',
+          'visibility': 'visible',
+          'opacity': '1',
+          'position': 'relative',
+          'z-index': '1',
+          'font-size': window.innerWidth <= 768 ? '1.5rem' : '1.75rem',
+          'font-family': 'Karla, sans-serif',
+          'color': '#6e612b',
+          'font-weight': '600',
+          'line-height': '1.2',
+          'margin': '0',
+          'padding': '0'
+        };
+        
+        Object.keys(styles).forEach(property => {
+          title.style.setProperty(property, styles[property], 'important');
+        });
+      }
+    });
+  };
+
+  // Fonction pour ajuster les images des pictos sur mobile - INCHANGÉ
+  const adjustPictosOnMobile = () => {
+    if (window.innerWidth <= 768) {
+      // Sélectionner toutes les images dans les pictos
+      const pictoImages = document.querySelectorAll('.product-pictos-container img, .picto-produit img');
+      
+      pictoImages.forEach(img => {
+        img.style.setProperty('width', 'auto', 'important');
+        img.style.setProperty('height', '30px', 'important');
+        img.style.setProperty('max-width', '40px', 'important');
+        img.style.setProperty('max-height', '30px', 'important');
+        img.style.setProperty('object-fit', 'contain', 'important');
+        img.style.setProperty('object-position', 'center', 'important');
+      });
+
+      // Ajuster les conteneurs des images
+      const pictoContainers = document.querySelectorAll('.picto-produit > div:first-child');
+      pictoContainers.forEach(container => {
+        container.style.setProperty('width', '100%', 'important');
+        container.style.setProperty('height', '40px', 'important');
+        container.style.setProperty('max-height', '40px', 'important');
+        container.style.setProperty('display', 'flex', 'important');
+        container.style.setProperty('align-items', 'center', 'important');
+        container.style.setProperty('justify-content', 'center', 'important');
+        container.style.setProperty('overflow', 'hidden', 'important');
+      });
+    }
+  };
+
+  // Fonction pour forcer le style flex sur le wrapper du guide des tailles - INCHANGÉ
+  const fixSizeGuideLayout = () => {
+    const wrappers = document.querySelectorAll('.variant-label-row');
+    wrappers.forEach(wrapper => {
+      wrapper.style.setProperty('display', 'flex', 'important');
+      wrapper.style.setProperty('justify-content', 'space-between', 'important');
+      wrapper.style.setProperty('align-items', 'center', 'important');
+      wrapper.style.setProperty('width', '100%', 'important');
+    });
+  };
+
+  // Fonction pour protéger le contenu de livraison dynamique - INCHANGÉ
+  const protectDynamicShipping = () => {
+    const shippingElement = document.getElementById('dynamic-shipping-text');
+    if (shippingElement && shippingElement.getAttribute('data-dynamic-updated') === 'true') {
+      // Ne pas toucher au texte s'il a été mis à jour dynamiquement
+      return;
+    }
+  };
+  
+  // Exécuter immédiatement et à intervalles - INCHANGÉ
+  protectTitle();
+  adjustPictosOnMobile();
+  fixSizeGuideLayout();
+  protectDynamicShipping();
+  setTimeout(protectTitle, 50);
+  setTimeout(adjustPictosOnMobile, 50);
+  setTimeout(fixSizeGuideLayout, 50);
+  setTimeout(protectDynamicShipping, 50);
+  setTimeout(protectTitle, 100);
+  setTimeout(adjustPictosOnMobile, 100);
+  setTimeout(fixSizeGuideLayout, 100);
+  setTimeout(protectDynamicShipping, 100);
+  setTimeout(protectTitle, 200);
+  setTimeout(adjustPictosOnMobile, 200);
+  setTimeout(fixSizeGuideLayout, 200);
+  setTimeout(protectDynamicShipping, 200);
+  setTimeout(protectTitle, 500);
+  setTimeout(adjustPictosOnMobile, 500);
+  setTimeout(fixSizeGuideLayout, 500);
+  setTimeout(protectDynamicShipping, 500);
+  setTimeout(protectTitle, 1000);
+  setTimeout(adjustPictosOnMobile, 1000);
+  setTimeout(fixSizeGuideLayout, 1000);
+  setTimeout(protectDynamicShipping, 1000);
+  setTimeout(protectTitle, 2000);
+  setTimeout(adjustPictosOnMobile, 2000);
+  setTimeout(fixSizeGuideLayout, 2000);
+  setTimeout(protectDynamicShipping, 2000);
+  
+  // Observer continu - INCHANGÉ
+  setInterval(protectTitle, 1000);
+  setInterval(adjustPictosOnMobile, 1000);
+  setInterval(fixSizeGuideLayout, 1000);
+  setInterval(protectDynamicShipping, 1000);
+  
+  // Debug : surveiller les scroll automatiques non désirés - INCHANGÉ
+  if (isMobile()) {
+    let isUserScrolling = false;
+    
+    window.addEventListener('scroll', function() {
+      if (!isUserScrolling) {
+        console.log('Scroll automatique détecté');
+      }
+    }, { passive: true });
+    
+    // Marquer quand l'utilisateur scroll intentionnellement
+    document.addEventListener('touchstart', function() {
+      isUserScrolling = true;
+      setTimeout(() => { isUserScrolling = false; }, 300);
+    }, { passive: true });
+  }
+  
+  // Re-calculer lors du redimensionnement de la fenêtre - INCHANGÉ
+  window.addEventListener('resize', function() {
+    setTimeout(() => {
+      updateGalleryDisplay();
+      initializeSwipe();
+      protectTitle();
+      adjustPictosOnMobile();
+      fixSizeGuideLayout();
+      protectDynamicShipping();
+    }, 100);
+  });
+});
 </script>
 
+{% schema %}
+{
+  "name": "Product Hero",
+  "tag": "section",
+  "class": "Section-produit-fiche",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_shipping_info",
+      "label": "Afficher les informations de livraison",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Texte de livraison",
+      "default": "Livraison 1 - 3 jours"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "picto-produit",
+      "name": "Picto produit",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "picto_image",
+          "label": "Image du picto"
+        },
+        {
+          "type": "text",
+          "id": "picto_text",
+          "label": "Texte du picto",
+          "default": "Souple"
+        },
+        {
+          "type": "text",
+          "id": "picto_alt",
+          "label": "Texte alternatif de l'image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Hero",
+      "category": "Liquify"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}
 
+Voila le code html de l'élément
+
+<div class="product-price-wrapper">
+        <span class="product-price" x-text="formatPrice(selectedVariant.price)">€59,99 EUR</span>
+        <span class="product-compare-price" x-show="selectedVariant.compare_at_price &gt; selectedVariant.price" x-text="formatPrice(selectedVariant.compare_at_price)">€75,00 EUR</span>
+        <span class="product-item_tag" x-show="selectedVariant.compare_at_price &gt; selectedVariant.price">Sale</span>
+      </div>
