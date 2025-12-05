@@ -1,287 +1,630 @@
-{% assign initial_variant = product.selected_or_first_available_variant %}
 <style>
-  [x-cloak] { visibility: hidden !important; }
-  /* Masque la section desktop sur mobile (<= 768px) */
-  @media (max-width: 768px) { .product-hero-desktop { display: none !important; } }
-  /* Assure l'affichage sur desktop */
-  @media (min-width: 769px) { .product-hero-desktop { display: block !important; } }
-  @media (min-width: 769px) { .product-gallery-container { padding-left: 1.5rem; } }
-  .product-header_component { width: 100%; margin: 0 auto; padding: 1.5rem 1rem 2rem; box-sizing: border-box; }
-  .product-header_layout { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); grid-column-gap: 3rem; grid-row-gap: 2rem; align-items: flex-start; max-width: 1200px; margin: 0 auto; }
-  @media screen and (max-width: 900px) { .product-header_layout { grid-template-columns: 1fr; grid-column-gap: 0; max-width: 100%; } }
-  .product-gallery-container { position: relative; width: 100%; }
-  .product-gallery-main { position: relative; width: 100%; margin-bottom: 1rem; border-radius: 20px; overflow: hidden; background-color: #f3eee6; }
-  .product-gallery-main::before { content: ""; display: block; padding-bottom: 80%; }
-  .product-gallery-main > * { position: absolute; inset: 0; }
-  .gallery-image { width: 100%; height: 100%; object-fit: contain; object-position: center; display: block; }
-  .split-gallery { display: none; }
-  @media (min-width: 769px) {
-    .gallery-single { display: none; }
-    .split-gallery { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1rem; padding-inline: 1rem; }
-    .split-pane { overflow: hidden; }
-    .split-pane.left .gallery-image { object-fit: cover; object-position: left center; }
-    .split-pane.right .gallery-image { object-fit: cover; object-position: right center; }
+  /* ----- VISIBILITÉ SECTION ----- */
+  .product-hero-desktop {
+    display: block;
   }
-  .gallery-navigation { position: absolute; bottom: 0.75rem; right: 0.75rem; display: flex; gap: 0.5rem; z-index: 5; }
-  .nav-arrow { width: 2.75rem; height: 2.75rem; border-radius: 999px; border: 1px solid #6e612b; background-color: rgba(245, 242, 217, 0.95); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all .2s ease; }
-  .nav-arrow[disabled] { opacity: 0.4; cursor: default; }
-  .nav-arrow:hover:not([disabled]) { background-color: #6e612b; color: #f5f2d9; }
-  .nav-arrow svg { width: 1.1rem; height: 1.1rem; }
-  .nav-arrow.prev svg { transform: rotate(180deg); }
-  .product-thumbnails { display: flex; gap: 0.5rem; padding-top: 0.5rem; overflow-x: auto; }
-  .thumbnail-item { flex: 0 0 auto; width: 76px; height: 76px; border-radius: 12px; border: 2px solid transparent; overflow: hidden; cursor: pointer; background-color: #f3eee6; transition: border-color .2s ease, transform .15s ease; }
-  .thumbnail-item.active { border-color: #c9b466; }
-  .thumbnail-item:hover { transform: translateY(-1px); }
-  .thumbnail-image { width: 100%; height: 100%; object-fit: cover; display: block; }
-  @media screen and (max-width: 768px) { .product-header_component { padding-inline: 0.75rem; } .product-gallery-main { border-radius: 0; } .product-gallery-main::before { padding-bottom: 100%; } .product-thumbnails { margin-bottom: 0.5rem; } }
-  .product-header_product-details { display: flex; flex-direction: column; gap: 1.25rem; }
-  .product-title { font-family: Karla, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #6e612b; font-size: 2rem; font-weight: 600; margin: 0; }
-  @media screen and (max-width: 768px) { .product-title { font-size: 1.5rem; } }
-  .product-price-wrapper { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; }
-  .product-price { font-family: Karla; color: #6e612b; font-size: 1.3rem; font-weight: 600; }
-  .product-compare-price { font-family: Karla; color: #b7a58b; font-size: 1rem; text-decoration: line-through; }
-  .product-item_tag { padding: 0.25rem 0.9rem; border-radius: 999px; background-color: #9e8c73; color: #fff; font-family: Karla; font-size: 0.8rem; font-weight: 500; }
-  .stock-status { font-family: Karla; font-size: 0.9rem; padding: 0.5rem 0.75rem; border-radius: 8px; text-align: left; }
-  .stock-status.in-stock { background-color: #e8f6e8; color: #246b2a; }
-  .stock-status.out-of-stock { background-color: #ffe5e5; color: #9c1c1c; }
-  .product-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .product-description { font-family: Karla; color: #6e612b; line-height: 1.6; font-size: 0.95rem; }
-  .variant-selector { display: flex; flex-direction: column; gap: 0.35rem; }
-  .variant-label { font-family: Karla; color: #6e612b; font-weight: 600; font-size: 0.95rem; }
-  .variant-select { padding: 0.8rem 0.9rem; border-radius: 10px; border: 1px solid #6e612b; background-color: #fff; font-family: Karla; font-size: 0.95rem; color: #6e612b; }
-  .shipping-info { display: flex; align-items: center; gap: 0.5rem; padding-block: 0.75rem; border-block: 1px solid rgba(0, 0, 0, 0.08); }
-  .shipping-icon { width: 1.4rem; height: 1.4rem; color: #6e612b; }
-  .shipping-text { font-family: Karla; font-size: 0.9rem; color: #6e612b; }
-  .add-to-cart-section { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.25rem; }
-  .add-to-cart-button { width: 100%; padding: 1rem 1.2rem; border-radius: 999px; border: none; background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1); color: #f5f2d9; font-family: Karla; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-  .add-to-cart-button:hover { background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1); }
+
+  @media screen and (max-width: 768px) {
+    .product-hero-desktop {
+      display: none !important;
+    }
+  }
+
+  /* ----- STYLES GÉNÉRAUX ----- */
+  .product-hero-desktop .product-header_add-to-cart-wrapper {
+    display: flex;
+    flex-direction: column;
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 0.5rem;
+  }
+  
+  .product-hero-desktop .is-red {
+    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+    color: #f5f2d9;
+  }
+  
+  .product-hero-desktop .text-size-regular {
+    font-family: Karla, sans-serif;
+    color: #9e8c73;
+    font-size: 1rem;
+  }
+  
+  .product-hero-desktop .button {
+    padding: 0.65rem 1.5rem;
+    border: 1px solid #6e612b;
+    border-radius: 10px;
+    background-color: transparent;
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-weight: 500;
+    text-align: center;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .product-hero-desktop .button:hover {
+    background-color: #6e612b;
+    color: #f5f2d9;
+  }
+  
+  .product-hero-desktop .product-item_tag {
+    padding: 0.3rem 1.5rem;
+    border-radius: 8px;
+    background-color: #9e8c73;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  .product-hero-desktop .heading-style-h4 {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    font-weight: 400;
+  }
+
+  /* ----- LAYOUT ----- */
+  .product-hero-desktop .product-header_layout {
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 3rem;
+    grid-row-gap: 2rem;
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .product-hero-desktop .product-header_layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-column-gap: 2rem;
+    }
+  }
+  
+  /* ----- GALLERY ----- */
+  .product-hero-desktop .product-gallery-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .product-hero-desktop .product-gallery-main {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    border-radius: 20px;
+    background-color: #eee;
+  }
+  
+  .product-hero-desktop .gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: opacity 0.3s ease;
+    display: block;
+  }
+  
+  .product-hero-desktop .gallery-navigation {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+  }
+  
+  .product-hero-desktop .nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(245, 242, 217, 0.9);
+    border: 1px solid #6e612b;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+  
+  .product-hero-desktop .nav-arrow:hover {
+    background-color: #6e612b;
+    color: #f5f2d9;
+  }
+  
+  .product-hero-desktop .nav-arrow svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    color: currentColor;
+  }
+  
+  .product-hero-desktop .nav-arrow.prev svg {
+    transform: rotate(180deg);
+  }
+  
+  .product-hero-desktop .product-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+  }
+  
+  .product-hero-desktop .thumbnail-item {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  
+  .product-hero-desktop .thumbnail-item.active {
+    border-color: #6e612b;
+  }
+  
+  .product-hero-desktop .thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ----- DETAILS PRODUIT ----- */
+  .product-hero-desktop .product-header_product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+  
+  .product-hero-desktop .product-title {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .product-hero-desktop .product-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .product-hero-desktop .product-price {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+  
+  .product-hero-desktop .product-compare-price {
+    font-family: Karla, sans-serif;
+    color: #9e8c73;
+    font-size: 1.1rem;
+    text-decoration: line-through;
+  }
+  
+  .product-hero-desktop .stock-status {
+    font-family: Karla, sans-serif;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 5px;
+  }
+  
+  .product-hero-desktop .in-stock {
+    background-color: #e8f5e8;
+    color: #2d5a2d;
+  }
+  
+  .product-hero-desktop .out-of-stock {
+    background-color: #ffe8e8;
+    color: #8b0000;
+  }
+  
+  .product-hero-desktop .product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .product-hero-desktop .product-description {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    line-height: 1.6;
+  }
+  
+  .product-hero-desktop .variant-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .product-hero-desktop .variant-label {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-weight: 600;
+  }
+  
+  .product-hero-desktop .variant-select {
+    padding: 0.75rem 1rem;
+    border: 1px solid #6e612b;
+    border-radius: 10px;
+    background-color: transparent;
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+  .product-hero-desktop .add-to-cart-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .product-hero-desktop .add-to-cart-button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    background-color: hsla(19.74193548387097, 80.31%, 62.16%, 1.00);
+    font-family: Karla, sans-serif;
+    color: #f5f2d9;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .product-hero-desktop .add-to-cart-button:hover {
+    background-color: hsla(19.74193548387097, 80.31%, 52.16%, 1.00);
+  }
+  
+  .product-hero-desktop .add-to-cart-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .product-hero-desktop .shipping-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-hero-desktop .shipping-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #6e612b;
+  }
+  
+  .product-hero-desktop .shipping-text {
+    font-family: Karla, sans-serif;
+    color: #6e612b;
+    font-size: 0.9rem;
+  }
 </style>
 
-<section class="product-header_component product-hero-desktop" x-data="productGalleryDesktop({{ product | json }}, {{ initial_variant | json }})" x-init="initGallery()" x-cloak>
-  <div class="product-header_layout">
+<div class="product-header_component">
+  <div
+    class="product-header_layout"
+    x-data="productGallery({{ product | json | escape }}, {{ product.selected_or_first_available_variant | json | escape }})"
+    x-init="initGallery()"
+  >
+
+    <!-- GALLERY -->
     <div class="product-gallery-container">
       <div class="product-gallery-main">
-        <div class="split-gallery">
-          <div class="split-pane left">
-            <img class="gallery-image" :src="pairSrc(0)" :alt="mediaAlt(currentPairIndex)">
+        <template x-for="(media, index) in product.media" :key="media.id">
+          <div x-show="currentImageIndex === index" x-transition:enter.duration.300ms>
+            <img
+              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_1000x1000.jpg') : ''"
+              :alt="media.alt || product.title"
+              class="gallery-image"
+              loading="lazy"
+            >
           </div>
-          <div class="split-pane right">
-            <img class="gallery-image" :src="pairSrc(1)" :alt="mediaAlt(currentPairIndex + 1)">
-          </div>
-        </div>
-        <img class="gallery-image gallery-single" :src="mediaSrc(currentImageIndex)" :alt="mediaAlt(currentImageIndex)" @touchstart="touchStart($event)" @touchend="touchEnd($event)">
-        <div class="gallery-navigation">
-          <button type="button" class="nav-arrow prev" @click="previousPair()" :disabled="currentPairIndex === 0" aria-label="Précédent">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </template>
+
+        <div class="gallery-navigation" x-show="product.media.length > 1">
+          <button class="nav-arrow prev" @click="previousImage()" :disabled="currentImageIndex === 0">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
           </button>
-          <button type="button" class="nav-arrow next" @click="nextPair()" :disabled="product.media && currentPairIndex >= Math.max(0, product.media.length - 2)" aria-label="Suivant">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <button class="nav-arrow next" @click="nextImage()" :disabled="currentImageIndex === product.media.length - 1">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
           </button>
         </div>
       </div>
 
-      <div class="product-thumbnails">
+      <div class="product-thumbnails" x-show="product.media.length > 1">
         <template x-for="(media, index) in product.media" :key="media.id">
-          <div class="thumbnail-item" :class="{ 'active': (index === currentPairIndex) || (index === currentPairIndex + 1) }" @click="setPairFromThumb(index)" :aria-label="'Voir image ' + (index + 1)">
-            <img class="thumbnail-image" :src="media.preview_image ? media.preview_image.src : media.src" :alt="media.alt || product.title">
+          <div
+            class="thumbnail-item"
+            :class="{ 'active': currentImageIndex === index }"
+            @click="setCurrentImage(index)"
+          >
+            <img
+              :src="media.preview_image ? media.preview_image.src.replace('.jpg', '_200x200.jpg') : ''"
+              :alt="media.alt || product.title"
+              class="thumbnail-image"
+              loading="lazy"
+            >
           </div>
         </template>
       </div>
     </div>
 
+    <!-- DETAILS PRODUIT -->
     <div class="product-header_product-details">
-      <h1 class="product-title">{{ product.title }}</h1>
+      <h1 class="product-title">
+        {{ product.title }}
+      </h1>
 
       <div class="product-price-wrapper">
-        <span class="product-price" x-text="formatPrice(selectedVariant && selectedVariant.price ? selectedVariant.price : {{ initial_variant.price }})"></span>
-        <span class="product-compare-price" x-show="selectedVariant && selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price" x-text="formatPrice(selectedVariant.compare_at_price)"></span>
-        {% if initial_variant.compare_at_price and initial_variant.compare_at_price > initial_variant.price %}
-          <span class="product-item_tag">Promo</span>
+        <span
+          class="product-price"
+          x-text="formatPrice(selectedVariant.price)"
+        >
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+
+        <span
+          class="product-compare-price"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+          x-text="formatPrice(selectedVariant.compare_at_price)"
+        >
+          {{ product.selected_or_first_available_variant.compare_at_price | money }}
+        </span>
+
+        <span
+          class="product-item_tag"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+        >
+          Sale
+        </span>
+      </div>
+
+      <div
+        class="stock-status {% if product.selected_or_first_available_variant.available %}in-stock{% else %}out-of-stock{% endif %}"
+        :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
+        x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
+      >
+        {% if product.selected_or_first_available_variant.available %}
+          En stock
+        {% else %}
+          Rupture de stock
         {% endif %}
       </div>
 
-      {% if product.tags.size > 0 %}
-      <div class="product-tags">
-        {% for tag in product.tags %}
-          <span class="product-item_tag">{{ tag }}</span>
-        {% endfor %}
-      </div>
+      {% if section.settings.show_product_tags and product.tags.size > 0 %}
+        <div class="product-tags">
+          {% for tag in product.tags limit: section.settings.max_tags_display %}
+            <span class="product-item_tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
       {% endif %}
 
-      <div>
-        <div class="stock-status" :class="selectedVariant && selectedVariant.available ? 'in-stock' : 'out-of-stock'" x-text="(selectedVariant && selectedVariant.available) ? 'En stock' : 'Rupture de stock'"></div>
-      </div>
+      {% if product.description != blank %}
+        <div class="product-description">
+          {{ product.description }}
+        </div>
+      {% endif %}
 
-      <div class="product-description">{{ product.description | strip_html }}</div>
-
-      <div class="variant-selector">
+      {% unless product.has_only_default_variant %}
         {% for option in product.options_with_values %}
-          <label class="variant-label">{{ option.name }}</label>
-          <select class="variant-select" @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)">
-            <template x-for="value in product.options_with_values[{{ forloop.index0 }}].values" :key="value">
-              <option :selected="selectedOptions[{{ forloop.index0 }}] === value" x-text="value"></option>
-            </template>
-          </select>
+          <div class="variant-selector">
+            <label class="variant-label">{{ option.name }}</label>
+            <select
+              class="variant-select"
+              @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)"
+            >
+              {% for value in option.values %}
+                <option
+                  value="{{ value | escape }}"
+                  {% if option.selected_value == value %}selected{% endif %}
+                >
+                  {{ value }}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
         {% endfor %}
-      </div>
+      {% endunless %}
 
-      <div class="shipping-info">
-        <svg class="shipping-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7h12v10H3V7zm12 4h3l3 3v3h-6v-6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="shipping-text">Livraison 1 - 3 jours</span>
-      </div>
+      {% if section.settings.show_shipping_info %}
+        <div class="shipping-info">
+          <svg class="shipping-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+          </svg>
+          <span class="shipping-text">
+            {{ section.settings.shipping_text }}
+          </span>
+        </div>
+      {% endif %}
 
       <div class="add-to-cart-section">
-        <button type="button" class="add-to-cart-button" @click="addToCart()" :disabled="!(selectedVariant && selectedVariant.available)">Ajouter au panier</button>
+        <button
+          class="add-to-cart-button"
+          :disabled="!selectedVariant.available"
+          @click="addToCart()"
+          x-text="selectedVariant.available ? 'Ajouter au panier' : 'Rupture de stock'"
+        >
+          Ajouter au panier
+        </button>
       </div>
     </div>
   </div>
-</section>
+</div>
 
 <script>
-// Le code JS est inclus ici pour garantir que productGalleryDesktop est défini AVANT le x-cloak.
-// Si vous utilisez un fichier JS externe (alpinejs3.js), vous pouvez supprimer ce bloc <script>.
-// Si vous le laissez, assurez-vous de supprimer la version dupliquée dans le fichier JS externe.
-document.addEventListener('alpine:init', () => {
-  if (typeof window.productGalleryDesktop === 'function') return;
-  if (!window.moneyFormat) window.moneyFormat = {{ shop.money_format | json }};
-  if (!window.moneyWithCurrencyFormat) window.moneyWithCurrencyFormat = {{ shop.money_with_currency_format | json }};
-  function formatWithDelimiters(number, precision, thousands, decimal) {
-    precision = isNaN(precision) ? 2 : precision;
-    thousands = thousands || ',';
-    decimal = decimal || '.';
-    if (isNaN(number) || number == null) return '0';
-    number = (number / 100).toFixed(precision);
-    var parts = number.split('.');
-    var dollars = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' + thousands);
-    var cents = parts[1] ? (decimal + parts[1]) : '';
-    return dollars + cents;
-  }
-  function formatMoney(cents, format) {
-    var fmt = format || window.moneyFormat;
-    var placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
-    var match = fmt.match(placeholderRegex);
-    var value = '';
-    switch (match && match[1]) {
-      case 'amount':
-        value = formatWithDelimiters(cents, 2);
-        break;
-      case 'amount_no_decimals':
-        value = formatWithDelimiters(cents, 0);
-        break;
-      case 'amount_with_comma_separator':
-        value = formatWithDelimiters(cents, 2, '.', ',');
-        break;
-      case 'amount_no_decimals_with_comma_separator':
-        value = formatWithDelimiters(cents, 0, '.', ',');
-        break;
-      case 'amount_with_space_separator':
-      case 'amount_with_period_and_space_separator':
-        value = formatWithDelimiters(cents, 2, ' ', '.');
-        break;
-      case 'amount_no_decimals_with_space_separator':
-        value = formatWithDelimiters(cents, 0, ' ', '.');
-        break;
-      case 'amount_with_apostrophe_separator':
-        value = formatWithDelimiters(cents, 2, "'", '.');
-        break;
-      default:
-        value = formatWithDelimiters(cents, 2);
-    }
-    return fmt.replace(placeholderRegex, value);
-  }
-  window.productGalleryDesktop = function(product, initialVariant) {
-    return {
-      product: product,
-      selectedVariant: initialVariant,
-      selectedOptions: [],
-      currentImageIndex: 0,
-      currentPairIndex: 0,
-      touchX: null,
-      initGallery() {
-        if (this.selectedVariant && this.product.options) {
-          this.selectedOptions = this.product.options.map((option, index) => this.selectedVariant['option' + (index + 1)]);
+  if (typeof productGallery === 'undefined') {
+    function productGallery(product, initialVariant) {
+      return {
+        product: product,
+        selectedVariant: initialVariant,
+        selectedOptions: [],
+        currentImageIndex: 0,
+
+        initGallery() {
+          if (this.selectedVariant && this.product.options) {
+            this.selectedOptions = this.product.options.map((option, index) => {
+              return this.selectedVariant['option' + (index + 1)];
+            });
+          }
+        },
+
+        nextImage() {
+          if (this.currentImageIndex < this.product.media.length - 1) {
+            this.currentImageIndex++;
+          }
+        },
+
+        previousImage() {
+          if (this.currentImageIndex > 0) {
+            this.currentImageIndex--;
+          }
+        },
+
+        setCurrentImage(index) {
+          this.currentImageIndex = index;
+        },
+
+        updateSelectedVariant(optionIndex, value) {
+          this.selectedOptions[optionIndex] = value;
+
+          const matchingVariant = this.product.variants.find((variant) => {
+            return this.selectedOptions.every((option, idx) => {
+              return variant['option' + (idx + 1)] === option;
+            });
+          });
+
+          if (matchingVariant) {
+            this.selectedVariant = matchingVariant;
+
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('variant', matchingVariant.id);
+            window.history.replaceState({}, '', newUrl);
+          }
+        },
+
+        formatPrice(price) {
+          return new Intl.NumberFormat('fr-FR', {
+            style: 'currency',
+            currency: 'EUR'
+          }).format(price / 100);
+        },
+
+        addToCart() {
+          if (!this.selectedVariant || !this.selectedVariant.id || !this.selectedVariant.available) return;
+
+          const formData = {
+            items: [
+              {
+                id: this.selectedVariant.id,
+                quantity: 1
+              }
+            ]
+          };
+
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              window.dispatchEvent(new CustomEvent('cart:updated', { detail: data }));
+              console.log('Produit ajouté au panier (desktop):', data);
+            })
+            .catch((error) => {
+              console.error('Erreur lors de l’ajout au panier (desktop):', error);
+            });
         }
-        this.currentPairIndex = 0;
-      },
-      mediaItem(i) {
-        if (!this.product.media || !this.product.media.length) return null;
-        const idx = Math.max(0, Math.min(i, this.product.media.length - 1));
-        return this.product.media[idx];
-      },
-      mediaSrc(i) {
-        const m = this.mediaItem(i);
-        if (!m) return '{{ product.featured_image | img_url: '1024x1024' }}';
-        return m.preview_image ? m.preview_image.src : m.src;
-      },
-      mediaAlt(i) {
-        const m = this.mediaItem(i);
-        return m && m.alt ? m.alt : this.product.title;
-      },
-      formatMoney(amount) { return formatMoney(amount, window.moneyFormat); },
-      formatPrice(amount) { 
-        try { 
-          return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount / 100); 
-        } catch(e) { 
-          return this.formatMoney(amount); 
-        } 
-      },
-      pairSrc(offset) {
-        const idx = this.currentPairIndex + (offset || 0);
-        return this.mediaSrc(idx);
-      },
-      nextImage() { if (this.product.media && this.currentImageIndex < this.product.media.length - 1) this.currentImageIndex++; },
-      previousImage() { if (this.currentImageIndex > 0) this.currentImageIndex--; },
-      setCurrentImage(index) { this.currentImageIndex = index; },
-      nextPair() {
-        if (!this.product.media || this.product.media.length === 0) return;
-        const maxStart = Math.max(0, this.product.media.length - 2);
-        if (this.currentPairIndex < maxStart) this.currentPairIndex += 2;
-      },
-      previousPair() {
-        if (this.currentPairIndex > 0) this.currentPairIndex -= 2;
-      },
-      setPairFromThumb(index) {
-        const base = Math.floor(index / 2) * 2;
-        const maxStart = Math.max(0, this.product.media.length - 2);
-        this.currentPairIndex = Math.min(base, maxStart);
-      },
-      touchStart(e) { this.touchX = e.touches[0].clientX; },
-      touchEnd(e) {
-        if (this.touchX === null) return;
-        const delta = e.changedTouches[0].clientX - this.touchX;
-        if (Math.abs(delta) > 40) { if (delta < 0) this.nextPair(); else this.previousPair(); }
-        this.touchX = null;
-      },
-      updateSelectedVariant(optionIndex, value) {
-        this.selectedOptions[optionIndex] = value;
-        const matchingVariant = this.product.variants.find(variant => this.selectedOptions.every((opt, i) => variant['option' + (i + 1)] === opt));
-        if (matchingVariant) {
-          this.selectedVariant = matchingVariant;
-          const newUrl = new URL(window.location);
-          newUrl.searchParams.set('variant', matchingVariant.id);
-          window.history.replaceState({}, '', newUrl);
-        }
-      },
-      addToCart() {
-        if (!this.selectedVariant || !this.selectedVariant.id || !this.selectedVariant.available) return;
-        const formData = { items: [{ id: this.selectedVariant.id, quantity: 1 }] };
-        fetch('/cart/add.js', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) })
-          .then(res => res.json())
-          .then(data => window.dispatchEvent(new CustomEvent('cart:updated', { detail: data })))
-          .catch(err => console.error('Erreur addToCart', err));
-      }
+      };
     }
   }
-});
 </script>
 
 {% schema %}
 {
-  "name": "Product Hero",
   "tag": "section",
-  "class": "section product-hero-desktop",
-  "settings": [],
-  "templates": ["product"],
-  "presets": [{ "name": "Product Hero" }]
+  "name": "Product Hero (Desktop)",
+  "class": "Section-produit-fiche product-hero-desktop",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_shipping_info",
+      "label": "Afficher les informations de livraison",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "shipping_text",
+      "label": "Texte de livraison",
+      "default": "Livraison 1 - 3 jours"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_tags",
+      "label": "Afficher les tags produit",
+      "default": true
+    },
+    {
+      "type": "number",
+      "id": "max_tags_display",
+      "label": "Nombre maximum de tags à afficher",
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product-name",
+      "name": "Nom du produit",
+      "limit": 1
+    },
+    {
+      "type": "product-price",
+      "name": "Prix du produit",
+      "limit": 1
+    },
+    {
+      "type": "availability",
+      "name": "Disponibilité",
+      "limit": 1
+    },
+    {
+      "type": "add-to-cart",
+      "name": "Bouton d'ajout au panier",
+      "limit": 1
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Hero (Desktop)",
+      "category": "Liquify"
+    }
+  ],
+  "enabled_on": {
+    "templates": [
+      "product"
+    ]
+  }
 }
 {% endschema %}
