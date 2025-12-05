@@ -1,9 +1,7 @@
 <style>
-
 [x-cloak] {
   visibility: hidden !important;
 }
-
 
   .product-header_add-to-cart-wrapper {
     display: flex;
@@ -188,30 +186,30 @@
     font-weight: 600;
     margin: 0;
   }
-  
-<div class="product-price-wrapper">
-  <span
-    class="product-price"
-    x-cloak
-    x-text="formatPrice(selectedVariant.price)">
-    {{ product.selected_or_first_available_variant.price | money }}
-  </span>
 
-  <span
-    class="product-compare-price"
-    x-cloak
-    x-show="selectedVariant.compare_at_price > selectedVariant.price"
-    x-text="formatPrice(selectedVariant.compare_at_price)">
-    {{ product.selected_or_first_available_variant.compare_at_price | money }}
-  </span>
+  /* Prix produit */
+  .product-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
 
-  <span
-    class="product-item_tag"
-    x-cloak
-    x-show="selectedVariant.compare_at_price > selectedVariant.price">
-    Sale
-  </span>
-</div>
+  .product-price {
+    font-family: Karla;
+    color: #6e612b;
+    font-size: 1.5rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .product-compare-price {
+    font-family: Karla;
+    color: #9e8c73;
+    font-size: 1.2rem;
+    text-decoration: line-through;
+    white-space: nowrap;
+  }
   
   .product-description {
     font-family: Karla;
@@ -368,12 +366,25 @@
       <h1 class="product-title" x-text="product.title"></h1>
       
       <!-- Price -->
-      <div class="product-price-wrapper">
-        <span class="product-price" x-text="formatPrice(selectedVariant.price)"></span>
-        <span class="product-compare-price" 
-              x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
-              x-text="formatPrice(selectedVariant.compare_at_price)"></span>
-        <span class="product-item_tag" x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">Sale</span>
+      <div class="product-price-wrapper" x-cloak>
+        <span
+          class="product-price"
+          x-text="formatPrice(selectedVariant.price)">
+          {{ product.selected_or_first_available_variant.price | money }}
+        </span>
+
+        <span
+          class="product-compare-price"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price"
+          x-text="formatPrice(selectedVariant.compare_at_price)">
+          {{ product.selected_or_first_available_variant.compare_at_price | money }}
+        </span>
+
+        <span
+          class="product-item_tag"
+          x-show="selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price">
+          Sale
+        </span>
       </div>
       
       <!-- Stock Status -->
