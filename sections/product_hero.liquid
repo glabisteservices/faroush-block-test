@@ -419,17 +419,14 @@
       </div>
 
       <!-- Stock : texte déjà présent au 1er rendu -->
-      <div
-        class="stock-status {% if initial_variant.available %}in-stock{% else %}out-of-stock{% endif %}"
-        :class="selectedVariant.available ? 'in-stock' : 'out-of-stock'"
-        x-text="selectedVariant.available ? 'En stock' : 'Rupture de stock'"
-      >
-        {% if initial_variant.available %}
-          En stock
-        {% else %}
-          Rupture de stock
-        {% endif %}
-      </div>
+<!-- Stock : n'afficher que la rupture de stock -->
+<div
+  class="stock-status out-of-stock"
+  x-cloak
+  x-show="!selectedVariant.available"
+>
+  Rupture de stock
+</div>
 
       <!-- Tags produits via Liquid (pas de JS inutile) -->
       {% if section.settings.show_product_tags and product.tags.size > 0 %}
