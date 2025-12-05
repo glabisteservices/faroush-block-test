@@ -1,6 +1,7 @@
 {% comment %}
-    Section Hero Produit dédiée au mobile (<= 768px).
-    Utilise Alpine.js pour la galerie et la gestion des variantes.
+    Mobile-specific product hero section (<= 768px).
+    This section should be included in the product template and is visible only on mobile screens.
+    It reuses the Alpine.js component productGallery(product, initialVariant) defined globally.
 {% endcomment %}
 
 {% liquid
@@ -8,116 +9,79 @@
     assign initial_variant = product.selected_or_first_available_variant
 %}
 
-<section
-  id="ProductHeroMobile"
-  class="product-hero-mobile-section"
-  x-data="productGallery({{ product | json }}, {{ initial_variant | json }})"
-  x-init="initGallery"
->
-  <style>
-    /* 1. Cache la section mobile sur le bureau */
-    @media (min-width: 769px) {
-      #ProductHeroMobile {
-        display: none !important;
-      }
+{% comment %}
+    Le CSS pour masquer la version bureau est déjà dans product-hero.liquid.
+    Nous ajoutons ici le CSS pour assurer que cette section mobile s'affiche uniquement sur mobile (<= 768px).
+{% endcomment %}
+<style>
+  /* 1. Cache la section mobile sur le bureau */
+  @media (min-width: 769px) {
+    .product-hero-mobile {
+      display: none !important;
     }
+  }
 
-    /* 2. Styles de base pour la galerie */
-    .mobile-slider-container {
+  /* 2. Styles de base pour la galerie mobile */
+  .mobile-gallery-wrapper {
+      position: relative;
+      width: 100%;
+  }
+  .mobile-slider-container {
       position: relative;
       overflow: hidden;
-      /* Assurez-vous que l'image principale prend toute la largeur */
       width: 100%;
-    }
-    .mobile-slider-image {
+      /* Utilise la classe desktop existante pour le conteneur principal d'image, mais sans les coins arrondis sur mobile */
+      {% comment %} 
+        Si vous voulez un conteneur avec bordure/fond sur mobile:
+        @media screen and (max-width: 768px) { 
+            .product-gallery-main { border-radius: 0 !important; }
+        }
+      {% endcomment %}
+  }
+  .mobile-slider-image {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover; /* Change de 'contain' à 'cover' pour un look "cover" mobile */
       display: block;
-      /* Ajoutez de la hauteur minimale si besoin pour éviter le saut de mise en page */
-      min-height: 250px; 
-    }
-    .thumbnail-strip-container {
-      overflow-x: auto;
-      white-space: nowrap;
-      padding: 10px 0;
-      -webkit-overflow-scrolling: touch; /* Améliore le défilement sur iOS */
-    }
-    .thumbnail-strip-item {
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border-color 0.2s;
-      margin-right: 8px;
-      display: inline-block;
-      width: 60px;
-      height: 60px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-    .thumbnail-strip-item.active {
-      border-color: #000; /* Contour noir pour la vignette active */
-    }
-    /* 3. Styles pour les flèches de navigation (optionnel) */
-    .slider-nav-arrow {
+      /* Utiliser l'aspect ratio 1:1 pour un meilleur affichage mobile */
+      min-height: 100vw; 
+  }
+  .product-info-mobile-block {
+      /* Utilisez la même marge interne que votre .product-header_component mobile */
+      padding: 0 0.75rem 2rem; 
+      box-sizing: border-box;
+      /* Force l'affichage en colonne */
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+  }
+  /* Réutilisation des styles des flèches desktop pour la navigation mobile */
+  .gallery-navigation-mobile {
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(255, 255, 255, 0.7);
-      border: 1px solid #ccc;
-      border-radius: 50%;
-      padding: 10px;
-      cursor: pointer;
-      z-index: 10;
-    }
-    .slider-prev { left: 10px; }
-    .slider-next { right: 10px; }
-    
-    /* 4. Styles pour le bloc d'info */
-    .product-info-mobile-block {
-      padding: 15px;
-    }
-    .tag-badge {
-      background: #eee;
-      padding: 4px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-right: 5px;
-      font-size: 0.8em;
-      text-transform: uppercase;
-    }
-    .price-container {
-        display: flex;
-        align-items: center;
-        margin: 10px 0;
-    }
-    .product-price {
-        font-size: 1.5em;
-        font-weight: bold;
-    }
-    .compare-at-price {
-        text-decoration: line-through;
-        margin-left: 10px;
-        color: #777;
-    }
-    .sale-badge {
-        background: red;
-        color: white;
-        padding: 2px 5px;
-        margin-left: 10px;
-        border-radius: 3px;
-        font-size: 0.9em;
-        font-weight: bold;
-    }
-  </style>
+      bottom: 0.75rem;
+      right: 0.75rem;
+      display: flex;
+      gap: 0.5rem;
+      z-index: 5;
+  }
+</style>
 
-  <div>
-    <div class="mobile-slider-container">
+<section
+  id="ProductHeroMobile"
+  class="product-header_component product-hero-mobile"
+  x-data="productGallery({{ product | json }}, {{ initial_variant | json }})"
+  x-init="initGallery"
+  x-cloak
+>
+  <div class="mobile-gallery-wrapper">
+    <div class="product-gallery-main mobile-slider-container">
       {% for media in product.media %}
         {% liquid
           assign image_url = media | image_url: width: 768
           assign media_alt = media.alt | default: product.title
         %}
         <img
-          class="mobile-slider-image"
+          class="gallery-image mobile-slider-image"
           src="{{ image_url }}"
           alt="{{ media_alt }}"
           x-show="currentImageIndex === {{ forloop.index0 }}"
@@ -130,37 +94,22 @@
         >
       {% endfor %}
 
-      <button
-        @click="previousImage"
-        x-show="currentImageIndex > 0"
-        class="slider-nav-arrow slider-prev"
-        aria-label="Image précédente"
-      >
-        &lt;
-      </button>
-      <button
-        @click="nextImage"
-        x-show="currentImageIndex < product.media.size - 1"
-        class="slider-nav-arrow slider-next"
-        aria-label="Image suivante"
-      >
-        &gt;
-      </button>
+      <div class="gallery-navigation-mobile">
+        <button type="button" class="nav-arrow prev" @click="previousImage()" :disabled="currentImageIndex === 0" aria-label="Précédent">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="nav-arrow next" @click="nextImage()" :disabled="product.media && currentImageIndex >= product.media.length - 1" aria-label="Suivant">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
     </div>
 
-    <div class="thumbnail-strip-container">
-      {% for media in product.media %}
-        {% liquid
-          assign thumbnail_url = media | image_url: width: 100, height: 100, crop: 'center'
-        %}
-        <img
-          src="{{ thumbnail_url }}"
-          alt="Vignette {{ forloop.index }}"
-          @click="setCurrentImage({{ forloop.index0 }})"
-          :class="{ 'active': currentImageIndex === {{ forloop.index0 }} }"
-          class="thumbnail-strip-item"
-        >
-      {% endfor %}
+    <div class="product-thumbnails" style="padding: 0 0.75rem 0.5rem;">
+      <template x-for="(media, index) in product.media" :key="media.id">
+        <div class="thumbnail-item" :class="{ 'active': index === currentImageIndex }" @click="setCurrentImage(index)" :aria-label="'Voir image ' + (index + 1)">
+          <img class="thumbnail-image" :src="media.preview_image ? media.preview_image.src : media.src" :alt="media.alt || product.title">
+        </div>
+      </template>
     </div>
   </div>
 
@@ -168,62 +117,57 @@
   <div class="product-info-mobile-block">
     <h1 class="product-title">{{ product.title }}</h1>
 
-    <div class="price-container">
-      <span class="product-price" x-text="formatPrice(selectedVariant.price)"></span>
-      <template x-if="selectedVariant.compare_at_price > selectedVariant.price">
-        <span class="compare-at-price" x-text="formatPrice(selectedVariant.compare_at_price)"></span>
-        <span class="sale-badge">Sale</span>
-      </template>
+    <div class="product-price-wrapper">
+      <span class="product-price" x-text="formatPrice(selectedVariant && selectedVariant.price ? selectedVariant.price : {{ initial_variant.price }})"></span>
+      <span class="product-compare-price" x-show="selectedVariant && selectedVariant.compare_at_price && selectedVariant.compare_at_price > selectedVariant.price" x-text="formatPrice(selectedVariant.compare_at_price)"></span>
+      {% if initial_variant.compare_at_price and initial_variant.compare_at_price > initial_variant.price %}
+        <span class="product-item_tag">Promo</span>
+      {% endif %}
     </div>
 
+    {% if product.tags.size > 0 %}
     <div class="product-tags">
       {% for tag in product.tags %}
-        {% if tag contains 'Fille' or tag contains 'Garçon' %}
-          <span class="tag-badge">{{ tag }}</span>
-        {% endif %}
+        <span class="product-item_tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div>
+      <div class="stock-status" :class="selectedVariant && selectedVariant.available ? 'in-stock' : 'out-of-stock'" x-text="(selectedVariant && selectedVariant.available) ? 'En stock' : 'Rupture de stock'"></div>
+    </div>
+
+    <div class="product-description">{{ product.description | strip_html | truncatewords: 30 }}</div>
+
+    <div class="variant-selector">
+      {% for option in product.options_with_values %}
+        <label class="variant-label">{{ option.name }}</label>
+        <select class="variant-select" @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)">
+          <template x-for="value in product.options_with_values[{{ forloop.index0 }}].values" :key="value">
+            <option :selected="selectedOptions[{{ forloop.index0 }}] === value" x-text="value"></option>
+          </template>
+        </select>
       {% endfor %}
     </div>
 
-    <p class="stock-status" x-cloak>
-      <span x-show="selectedVariant && selectedVariant.available" style="color: green; font-weight: bold;">En stock</span>
-      <span x-show="!selectedVariant || !selectedVariant.available" style="color: red; font-weight: bold;">Rupture de stock</span>
-    </p>
-
-    <div class="product-description" style="margin-top: 15px;">
-      {{ product.description | truncatewords: 30 }}
+    <div class="shipping-info">
+      <svg class="shipping-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7h12v10H3V7zm12 4h3l3 3v3h-6v-6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="shipping-text">Livraison 1 - 3 jours</span>
     </div>
 
-    {% for option in product.options_with_values %}
-      <div class="variant-selector-container">
-        <label for="Option{{ forloop.index0 }}" style="display: block; margin-top: 20px; font-weight: bold;">{{ option.name }}</label>
-        <select
-          id="Option{{ forloop.index0 }}"
-          @change="updateSelectedVariant({{ forloop.index0 }}, $event.target.value)"
-          style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;"
-        >
-          {% for value in option.values %}
-            {% assign option_index = forloop.parentloop.index0 %}
-            <option
-              value="{{ value | escape }}"
-              :selected="selectedOptions[{{ option_index }}] === '{{ value | escape }}'"
-            >
-              {{ value }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-    {% endfor %}
-
-    <p class="shipping-info" style="margin-top: 20px; font-style: italic; color: #555;">
-      Livraison 1 - 3 jours
-    </p>
-
-    <button
-      class="add-to-cart-button"
-      @click="addToCart"
-      :disabled="!selectedVariant.available"
-      x-text="selectedVariant.available ? 'Ajouter au panier' : 'Indisponible'"
-      style="width: 100%; padding: 15px; background: black; color: white; border: none; margin-top: 20px; font-size: 1.1em; font-weight: bold; cursor: pointer; border-radius: 4px;"
-    ></button>
+    <div class="add-to-cart-section">
+      <button type="button" class="add-to-cart-button" @click="addToCart()" :disabled="!(selectedVariant && selectedVariant.available)">Ajouter au panier</button>
+    </div>
   </div>
 </section>
+
+{% schema %}
+{
+  "name": "Product Hero Mobile",
+  "tag": "section",
+  "class": "section product-hero-mobile",
+  "settings": [],
+  "templates": ["product"],
+  "presets": [{ "name": "Product Hero Mobile" }]
+}
+{% endschema %}
