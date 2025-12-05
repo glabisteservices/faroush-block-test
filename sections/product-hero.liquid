@@ -1,8 +1,9 @@
 <style>
 
-  [x-cloak] {
+[x-cloak] {
   visibility: hidden !important;
 }
+
 
   .product-header_add-to-cart-wrapper {
     display: flex;
@@ -188,31 +189,29 @@
     margin: 0;
   }
   
-  .product-price-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .product-price {
-    font-family: Karla;
-    color: #6e612b;
-    font-size: 1.5rem;
-    font-weight: 600;
-  }
-  
-  .product-compare-price {
-    font-family: Karla;
-    color: #9e8c73;
-    font-size: 1.2rem;
-    text-decoration: line-through;
-  }
-  
-  .product-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+<div class="product-price-wrapper">
+  <span
+    class="product-price"
+    x-cloak
+    x-text="formatPrice(selectedVariant.price)">
+    {{ product.selected_or_first_available_variant.price | money }}
+  </span>
+
+  <span
+    class="product-compare-price"
+    x-cloak
+    x-show="selectedVariant.compare_at_price > selectedVariant.price"
+    x-text="formatPrice(selectedVariant.compare_at_price)">
+    {{ product.selected_or_first_available_variant.compare_at_price | money }}
+  </span>
+
+  <span
+    class="product-item_tag"
+    x-cloak
+    x-show="selectedVariant.compare_at_price > selectedVariant.price">
+    Sale
+  </span>
+</div>
   
   .product-description {
     font-family: Karla;
