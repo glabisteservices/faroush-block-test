@@ -9,12 +9,6 @@
  */
 {
   "sections": {
-    "collection_products": {
-      "type": "collection_products",
-      "settings": {
-        "show_sorting": false
-      }
-    },
     "17652699347d79fdf5": {
       "type": "apps",
       "blocks": {
@@ -27,12 +21,59 @@
         "judge_me_reviews_preview_badge_Mk9HiJ"
       ],
       "settings": {}
+    },
+    "collection_products": {
+      "type": "collection_products",
+      "settings": {
+        "show_sorting": false
+      }
+    },
+    "17652701804d8199bb": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_cards_carousel_wexiwt": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": true,
+            "reviews_selection": "all",
+            "products": [],
+            "star_rating": "all",
+            "show_review_media": true,
+            "display_order": "media_first",
+            "no_image_fallback": "review_text_only",
+            "max_reviews": 20,
+            "review_length": "small",
+            "text_size": "small",
+            "image_ratio": "1",
+            "reviews_shown": 3,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1100,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#F9F9F9",
+            "stars_color": "",
+            "arrows_color": "#000000",
+            "transition_speed": 4,
+            "header_text": "Qu'en disent nos clients ?",
+            "show_average_rating": false
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_cards_carousel_wexiwt"
+      ],
+      "settings": {}
     }
   },
   "layout": "theme",
   "wrapper": "main.main-wrapper",
   "order": [
     "17652699347d79fdf5",
-    "collection_products"
+    "collection_products",
+    "17652701804d8199bb"
   ]
 }
