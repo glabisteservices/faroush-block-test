@@ -45,8 +45,8 @@
       "settings": {
         "text_heading": "",
         "text_button_text": "VOIR TOUT",
-        "url_button_link": "shopify://collections/tous-les-produits",
-        "collection_collection": "tous-les-produits",
+        "url_button_link": "shopify://collections/chaussures-barefoot-enfant",
+        "collection_collection": "chaussures-barefoot-enfant",
         "collection_collection_limit": 4
       }
     }

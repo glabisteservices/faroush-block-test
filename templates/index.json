@@ -92,7 +92,7 @@
       "name": "Bouton Seul",
       "settings": {
         "text_text": "Voir la collection",
-        "url_link": "shopify://collections/tous-les-produits",
+        "url_link": "shopify://collections/chaussures-barefoot-enfant",
         "button_alignment": "center",
         "button_style": "filled",
         "background_color": "#ec8451",
